@@ -52,8 +52,7 @@
 
                                     <ul class="nav nav-tabs">
                                       <li class=""><a href="#Identitas" data-toggle="tab" aria-expanded="true">Identitas</a></li>
-                                      <li class=""><a href="#CPNS" data-toggle="tab" aria-expanded="true">CPNS</a></li>
-                                      <li class=""><a href="#PNS" data-toggle="tab" aria-expanded="false">PNS</a></li>
+                                      <li class=""><a href="#CPNS" data-toggle="tab" aria-expanded="true">CPNS/PNS</a></li>
                                       <li class=""><a href="#Pangkat_terakhir" data-toggle="tab" aria-expanded="false">Pangkat Terakhir</a></li>
                                       <li class=""><a href="#Gaji_berkala" data-toggle="tab" aria-expanded="false">Gaji Berkala</a></li>
                                       <li class=""><a href="#Pendidikan_terakhir" data-toggle="tab" aria-expanded="false">Pendidikan Terakhir</a></li>
@@ -278,10 +277,163 @@
                                           </div>
                                           <!-- /.tab-pane -->
                                           <div class="tab-pane" id="CPNS">
-                                          222222222222
-                                          </div>
-                                          <div class="tab-pane" id="PNS">
-                                          333333333333
+                                            <div class="box-body">
+                                              <div class="row">
+                                                <div class="col-md-7">
+                                                                  <p class="text-center">
+                                                                    <strong>CPNS</strong>
+                                                                  </p>
+
+                                                      <form class="form-horizontal">
+                                                        <div class="box-body">
+                                                          <div class="col-md-4">
+
+                                                            <div class="form-group">
+                                                              <label for="NIP" class="col-md-4 control-label">NIP</label>
+                                                              <div class="col-md-8">
+                                                                <input class="form-control" id="NIP" placeholder="NIP">
+                                                              </div>
+                                                            </div>
+
+                                                        <div class="form-group">
+                                                          <label for="notaBKN" class="col-md-4 control-label">Nota BKN</label>
+                                                          <div class="col-md-8">
+                                                            <input class="form-control" id="notaBKN" placeholder="Nota BKN">
+                                                          </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                          <label for="tglNotaBKN" class="col-md-4 control-label">Tanggal Nota BKN</label>
+                                                          <div class="col-md-8">
+                                                            <input class="form-control" id="tglNotaBKN" placeholder="Tanggal Nota BKN">
+                                                          </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                          <label for="pejabatMenetapkan" class="col-md-4 control-label">Yang Menetapkan</label>
+                                                          <div class="col-md-8">
+                                                            <input class="form-control" id="pejabatMenetapkan" placeholder="Pejabat Yang Menetapkan">
+                                                          </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                          <label for="noSKCPNS" class="col-md-4 control-label">No SK CPNS</label>
+                                                          <div class="col-md-8">
+                                                            <input class="form-control" id="noSKCPNS" placeholder="No SK CPNS">
+                                                          </div>
+                                                        </div>
+                                                        </div>
+
+                                                        <div class="col-md-6">
+
+                                                          <div class="form-group">
+                                                            <label for="tanggalSKCPNS" class="col-md-4 control-label">Tanggal SK CPNS</label>
+                                                            <div class="col-md-8">
+                                                              <input class="form-control" id="tanggalSKCPNS" placeholder="TAnggal SK CPNS">
+                                                            </div>
+                                                          </div>
+
+                                                          <div class="form-group">
+                                                            <label for="tmtCPNS" class="col-md-4 control-label">tmtCPNS</label>
+                                                            <div class="col-md-8">
+                                                              <input class="form-control" id="tmtCPNS" placeholder="Tamat CPNS">
+                                                            </div>
+                                                          </div>
+
+                                                          <div class="form-group">
+                                                            <label for="golonganRuang" class="col-md-4 control-label">Golongan Ruang</label>
+                                                            <div class="col-md-8">
+                                                              <input class="form-control" id="golonganRuang" placeholder="golonganRuang">
+                                                            </div>
+                                                          </div>
+
+                                                          <div class="form-group">
+                                                            <label for="noSTTP" class="col-md-4 control-label">noSTTP</label>
+                                                            <div class="col-md-8">
+                                                              <input class="form-control" id="noSTTP" placeholder="No STTP">
+                                                            </div>
+                                                          </div>
+
+                                                          <div class="form-group">
+                                                            <label for="tmtTugas" class="col-md-4 control-label">Tamat Tugas</label>
+                                                            <div class="col-md-8">
+                                                              <input class="form-control" id="tmtTugas" placeholder="Tamat Tugas">
+                                                            </div>
+                                                          </div>
+
+                                                        </div>
+                                                        </div>
+
+                                                        <!-- /.box-body -->
+                                                        <div class="box-footer">
+                                                          <button type="submit" class="btn btn-default">Cancel</button>
+                                                          <button type="submit" class="btn btn-default">Edit</button>
+                                                          <button type="submit" class="btn btn-info">Submit</button>
+                                                        </div>
+                                                        <!-- /.box-footer -->
+                                                      </form>
+                                                </div>
+                                                <div class="col-md-4">
+                                                                  <p class="text-center">
+                                                                    <strong>PNS</strong>
+                                                                  </p>
+                                                                  <form class="form-horizontal">
+                                                                    <div class="box-body">
+                                                                        <div class="form-group">
+                                                                          <label for="pejabatMenetapkanPNS" class="col-md-4 control-label">Pejabat Yang Menetapkan</label>
+                                                                          <div class="col-md-8">
+                                                                            <input class="form-control" id="inputEmail3" placeholder="Pejabat Yang Menetapkan">
+                                                                          </div>
+                                                                        </div>
+
+                                                                        <div class="form-group">
+                                                                          <label for="noSKPNS" class="col-md-4 control-label">No SK PNS</label>
+                                                                          <div class="col-md-8">
+                                                                            <input class="form-control" id="noSKPNS" placeholder="No SK PNS">
+                                                                          </div>
+                                                                        </div>
+
+                                                                        <div class="form-group">
+                                                                          <label for="tglSKPNS" class="col-md-4 control-label">Tanggal SK PNS</label>
+                                                                          <div class="col-md-8">
+                                                                            <input class="form-control" id="tglSKPNS" placeholder="Tanggal SK PNS">
+                                                                          </div>
+                                                                        </div>
+
+                                                                        <div class="form-group">
+                                                                          <label for="tmtPNS" class="col-md-4 control-label">TMT PNS</label>
+                                                                          <div class="col-md-8">
+                                                                            <input class="form-control" id="tmtPNS" placeholder="TMT PNS">
+                                                                          </div>
+                                                                        </div>
+
+                                                                        <div class="form-group">
+                                                                          <label for="golRuangPNS" class="col-md-4 control-label">Golongan Ruang PNS</label>
+                                                                          <div class="col-md-8">
+                                                                            <input class="form-control" id="golRuangPNS" placeholder="Golongan Ruang PNS">
+                                                                          </div>
+                                                                        </div>
+
+                                                                        <div class="form-group">
+                                                                          <label for="sumpahPNS" class="col-md-4 control-label">sumpahPNS</label>
+                                                                          <div class="col-md-8">
+                                                                            <input class="form-control" id="sumpahPNS" placeholder="Sumpah PNS">
+                                                                          </div>
+                                                                        </div>
+
+
+
+
+
+
+
+                                                                    </div>
+                                                                  </form>
+
+                                                                  <!-- /.chart-responsive -->
+                                                </div>
+                                              </div>
+                                            </div>
                                           </div>
                                           <div class="tab-pane" id="Pangkat_terakhir">
                                             44444444444444444
