@@ -436,7 +436,219 @@
                                             </div>
                                           </div>
                                           <div class="tab-pane" id="Pangkat_terakhir">
-                                            44444444444444444
+
+                                              <div class="box-body">
+                                                <div class="row">
+                                                  <div class="col-md-8">
+                                                                    <p class="text-center">
+                                                                      <strong>Pangkat Terakhir</strong>
+                                                                    </p>
+
+                                                        <form class="form-horizontal">
+                                                          <div class="box-body">
+                                                            <div class="col-md-4">
+                                                            <div class="form-group">
+                                                              <label for="nip" class="col-md-4 control-label">NIP</label>
+
+                                                              <div class="col-md-8">
+                                                                <input class="form-control" id="nip" placeholder="NIP">
+                                                              </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                              <label for="inputPassword3" class="col-md-4 control-label">NIP Lama</label>
+
+                                                            <div class="col-md-8">
+                                                                <input class="form-control" id="inputPassword3" placeholder="NIP Lama">
+                                                              </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                              <label for="nama" class="col-md-4 control-label">Nama</label>
+
+                                                            <div class="col-md-8">
+                                                                <input class="form-control" id="nama" placeholder="Nama">
+                                                              </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                              <label for="gelarDepan" class="col-md-4 control-label">Gelar Depan</label>
+
+                                                            <div class="col-md-8">
+                                                                <input class="form-control" id="gelarDepan" placeholder="Gelar Depan">
+                                                              </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                              <label for="gelarBelakang" class="col-md-4 control-label">Gelar Belakang</label>
+
+                                                              <div class="col-md-8">
+                                                                <input class="form-control" id="gelarBelakang" placeholder="gelarBelakang">
+                                                              </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                              <label for="tempatLahir" class="col-md-4 control-label">Tempat Lahir</label>
+
+                                                            <div class="col-md-8">
+                                                                <input class="form-control" id="tempatLahir" placeholder="Tempat Lahir">
+                                                              </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                              <label for="tanggalLahir" class="col-md-4 control-label">Tanggal Lahir</label>
+
+                                                              <div class="col-md-8">
+                                                                <input class="form-control" id="tanggalLahir" placeholder="tanggalLahir">
+                                                              </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                              <label for="jeniKelamin" class="col-md-4 control-label">Jenis Kelamin</label>
+
+                                                              <div class="col-md-8">
+                                                                <input class="form-control" id="jenisKelamin" placeholder="Jenis Kelamin">
+                                                              </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                              <label for="agama" class="col-md-4 control-label">Agama</label>
+
+                                                              <div class="col-md-8">
+                                                                <input class="form-control" id="agama" placeholder="Agama">
+                                                              </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                              <label for="statusNikah" class="col-md-4 control-label">Status Nikah</label>
+
+                                                              <div class="col-md-8">
+                                                                <input class="form-control" id="statusNikah" placeholder="Status Nikah">
+                                                              </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                              <label for="golonganDarah" class="col-md-4 control-label">Golongan Darah</label>
+
+                                                              <div class="col-md-8">
+                                                                <input class="form-control" id="golonganDarah" placeholder="Golongan Darah">
+                                                              </div>
+                                                            </div>
+
+
+                                                          </div>
+                                                          <div class="col-md-6">
+
+                                                            <div class="form-group">
+                                                              <label for="alamat" class="col-md-4 control-label">Alamat</label>
+
+                                                              <div class="col-md-8">
+                                                                <input class="form-control" id="alamat" placeholder="Alamat">
+                                                              </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                              <label for="rtrw" class="col-md-4 control-label">RT/RW</label>
+
+                                                              <div class="col-md-2">
+                                                                <input class="form-control" id="rt" placeholder="RT">
+                                                              </div>
+                                                              <div class="col-md-2">
+                                                                <input class="form-control" id="rw" placeholder="RW">
+                                                              </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                              <label for="telepon" class="col-md-4 control-label">Telepon</label>
+
+                                                              <div class="col-md-8">
+                                                                <input class="form-control" id="telepon" placeholder="Telepon">
+                                                              </div>
+
+                                                            </div>
+                                                            <div class="form-group">
+                                                              <label for="kodePos" class="col-md-4 control-label">Kode Pos</label>
+                                                              <div class="col-md-8">
+                                                                <input class="form-control" id="kodePos" placeholder="Kode Pos">
+                                                              </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                              <label for="nomorKarpeg" class="col-md-4 control-label">No KARPEG</label>
+                                                              <div class="col-md-8">
+                                                                <input class="form-control" id="nomorKarpeg" placeholder="No Karpeg">
+                                                              </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                              <label for="noTaspen" class="col-md-4 control-label">noTaspen</label>
+                                                              <div class="col-md-8">
+                                                                <input class="form-control" id="noTaspen" placeholder="noTaspen">
+                                                              </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                              <label for="noAskes" class="col-md-4 control-label">noAskes</label>
+                                                              <div class="col-md-8">
+                                                                <input class="form-control" id="noAskes" placeholder="noAskes">
+                                                              </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                              <label for="noKarisSU" class="col-md-4 control-label">No KARIS/SU</label>
+                                                              <div class="col-md-8">
+                                                                <input class="form-control" id="noKarissu" placeholder="No Karis/SU">
+                                                              </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                              <label for="statusKepegawaian" class="col-sm-4 control-label">Status Kepegawaian</label>
+                                                              <div class="col-md-8">
+                                                                <input class="form-control" id="statusKepegawaian" placeholder="Status Kepegawaian">
+                                                              </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                              <label for="npwp" class="col-md-4 control-label">npwp</label>
+                                                              <div class="col-md-8">
+                                                                <input class="form-control" id="npwp" placeholder="NPWP">
+                                                              </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                              <label for="noKTP" class="col-md-4 control-label">No KTP</label>
+                                                              <div class="col-md-8">
+                                                                <input class="form-control" id="noKTP" placeholder="noKTP">
+                                                              </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                              <label for="jenisKepegawaian" class="col-md-4 control-label">Jenis Kepegawaian</label>
+
+                                                              <div class="col-md-8">
+                                                                <input class="form-control" id="jenisKepegawaian" placeholder="jenisKepegawaian">
+                                                              </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                              <label for="kedudukanPegawai" class="col-md-4 control-label">Kedudukan Pegawai</label>
+
+                                                              <div class="col-md-8">
+                                                                <input class="form-control" id="agama" placeholder="Agama">
+                                                              </div>
+                                                            </div>
+
+                                                          </div>
+                                                          </div>
+
+                                                          <!-- /.box-body -->
+                                                          <div class="box-footer">
+                                                            <button type="submit" class="btn btn-default">Cancel</button>
+                                                            <button type="submit" class="btn btn-info pull-right">Sign in</button>
+                                                          </div>
+                                                          <!-- /.box-footer -->
+                                                        </form>
+                                                  </div>
+                                                  <div class="col-md-2">
+                                                                    <p class="text-center">
+                                                                      <strong>Foto</strong>
+                                                                    </p>
+
+                                                                    <img class="img-responsive" src="https://www.w3schools.com/bootstrap/img_chania.jpg" alt="Chania" width="460" height="345">
+                                                                    <!-- /.chart-responsive -->
+                                                  </div>
+                                                </div>
+                                              </div>
                                           </div>
                                           <div class="tab-pane" id="Gaji_berkala">
                                           5555555555555555555
