@@ -54,7 +54,7 @@
                     left join jakhir ja on du.nipBaru = ja.nip
                     left join unkerja k1 on k1.kunker = ja.kunkers
                     left join unkerja k2 on k2.kunker = ja.kunkersInduk
-                    where du.kedudukanHukum=1  and MONTH(STR_TO_DATE(DU.TLAHIR, '%Y-%m-%d')) = MONTH(NOW()) and day(STR_TO_DATE(DU.TLAHIR, '%Y-%m-%d')) = day(NOW()) and
+                    where du.kedudukanHukum=1  and MONTH(STR_TO_DATE(DU.TLAHIR, '%Y-%m-%d')) = MONTH(NOW()) and day(STR_TO_DATE(DU.TLAHIR, '%Y-%m-%d')) = day(NOW()) and ja.jnsjab=1 and
                     du.nama like '%$searchColumn%' ".$orderQuery." limit $limitStart,$limitLength";
       $DB2 =$this->load->database('simpegRef', TRUE);
       log_message('debug','Query getCurrentBirthday :  '.$querySQL);
