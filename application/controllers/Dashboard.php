@@ -163,15 +163,10 @@ public function agama()
 
 	log_message('INFO','User Id : '.$userId);
 
-			if($this->ion_auth->is_admin()===FALSE)
-		{
-				log_message('DEBUG','inside Not Admin');
-				 $this->render('dashboard/member_index_view');
-		}else
-		{
+
 			log_message('DEBUG','inside Admin');
 		$this->render('dashboard/referensi_agama_view');
-		}
+
 
 }
 public function referensiAgama()
@@ -189,16 +184,11 @@ public function referensiAgama()
 	$crud->fields('nama');
 	$output = $crud->render();
 
-		if($adminSts)
-	{
-			log_message('DEBUG','inside Not Admin');
-			 //$this->render('dashboard/member_index_view');
-			 $this->load->view('dashboard/member_index_view');
-	}else
-	{
+
+
 	//$this->render('dashboard/index_view');
 			$this->load->view('dashboard/grid',$output);
-	}
+	
 }
 
 public function instansiManagement()
