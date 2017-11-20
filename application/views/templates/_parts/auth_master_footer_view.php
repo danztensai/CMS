@@ -5,7 +5,7 @@
     </div>
 </footer>
 <footer class="main-footer">
-    
+
     <strong>Copyright &copy; 2017 Danztensai.</strong> All rights reserved.
     Page rendered in <strong>{elapsed_time}</strong> seconds. <?php echo  (ENVIRONMENT === 'development') ?  'CodeIgniter Version <strong>' . CI_VERSION . '</strong>' : '' ?>
   </footer>
@@ -220,5 +220,10 @@
 <script src="<?php echo base_url()?>assets/adminLte/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
 <!-- SlimScroll -->
 <script src="<?php echo base_url()?>assets/adminLte/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+<script src="<?php echo base_url()?>assets/adminLte/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+<!-- bootstrap datepicker -->
+<script src="<?php echo base_url()?>assets/adminLte/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+<!-- Select2 -->
+<script src="<?php echo base_url()?>assets/adminLte/bower_components/select2/dist/js/select2.full.min.js"></script>
 </body>
 </html>

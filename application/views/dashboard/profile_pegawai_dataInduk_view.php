@@ -1,3 +1,19 @@
+<script>  //Date picker
+$( document ).ready(function() {
+
+$('.select2').select2();
+
+$("select[value]").each(function(){
+  console.log(this.getAttribute("value"));
+  $(this).val(this.getAttribute("value"));
+});
+
+  $('#tglLahir').datepicker({
+    autoclose: true,
+    format: 'yyyy-mm-dd'
+  });
+});
+    </script>
 <div class="tab-pane active" id="dataInduk">
 
                                   <ul class="nav nav-tabs">
@@ -26,14 +42,14 @@
                                                           <label for="inputEmail3" class="col-md-4 control-label">NIP</label>
 
                                                           <div class="col-md-8">
-                                                            <input class="form-control" id="inputEmail3" placeholder="NIP">
+                                                            <input class="form-control" id="inputEmail3" placeholder="NIP" value="<?php echo $identitas['nipBaru'];?>" disabled>
                                                           </div>
                                                         </div>
                                                         <div class="form-group">
                                                           <label for="inputPassword3" class="col-md-4 control-label">NIP Lama</label>
 
                                                         <div class="col-md-8">
-                                                            <input class="form-control" id="inputPassword3" placeholder="NIP Lama">
+                                                            <input class="form-control" id="inputPassword3" placeholder="NIP Lama" value="<?php echo $identitas['nipLama'];?>"   disabled>
                                                           </div>
                                                         </div>
 
@@ -41,7 +57,7 @@
                                                           <label for="nama" class="col-md-4 control-label">Nama</label>
 
                                                         <div class="col-md-8">
-                                                            <input class="form-control" id="nama" placeholder="Nama">
+                                                            <input class="form-control" id="nama" placeholder="Nama" value="<?php echo $identitas['nama'];?>" disabled>
                                                           </div>
                                                         </div>
 
@@ -49,7 +65,7 @@
                                                           <label for="gelarDepan" class="col-md-4 control-label">Gelar Depan</label>
 
                                                         <div class="col-md-8">
-                                                            <input class="form-control" id="gelarDepan" placeholder="Gelar Depan">
+                                                            <input class="form-control" id="gelarDepan" placeholder="Gelar Depan" value="<?php echo $identitas['gelarDepan'];?>" disabled>
                                                           </div>
                                                         </div>
 
@@ -57,7 +73,7 @@
                                                           <label for="gelarBelakang" class="col-md-4 control-label">Gelar Belakang</label>
 
                                                           <div class="col-md-8">
-                                                            <input class="form-control" id="gelarBelakang" placeholder="gelarBelakang">
+                                                            <input class="form-control" id="gelarBelakang" placeholder="gelarBelakang" value="<?php echo $identitas['gelarBlk'];?>" disabled>
                                                           </div>
                                                         </div>
 
@@ -65,7 +81,7 @@
                                                           <label for="tempatLahir" class="col-md-4 control-label">Tempat Lahir</label>
 
                                                         <div class="col-md-8">
-                                                            <input class="form-control" id="tempatLahir" placeholder="Tempat Lahir">
+                                                            <input class="form-control" id="tempatLahir" placeholder="Tempat Lahir" value="<?php echo $identitas['KTLAHIR']?>" disabled >
                                                           </div>
                                                         </div>
 
@@ -73,7 +89,12 @@
                                                           <label for="tanggalLahir" class="col-md-4 control-label">Tanggal Lahir</label>
 
                                                           <div class="col-md-8">
-                                                            <input class="form-control" id="tanggalLahir" placeholder="tanggalLahir">
+                                                            <div class="input-group date">
+                                                                <div class="input-group-addon">
+                                                                  <i class="fa fa-calendar"></i>
+                                                                </div>
+                                                                <input type="text" class="form-control pull-right" id="tglLahir" value="<?php echo $identitas['TLAHIR']?>" disabled>
+                                                              </div>
                                                           </div>
                                                         </div>
 
@@ -81,7 +102,15 @@
                                                           <label for="jeniKelamin" class="col-md-4 control-label">Jenis Kelamin</label>
 
                                                           <div class="col-md-8">
-                                                            <input class="form-control" id="jenisKelamin" placeholder="Jenis Kelamin">
+                                                            <select id="jenisKelamin" disabled="disabled" value="<?php echo $identitas['KJKEL']?>" class="form-control select2" style="width: 100%;">
+
+
+                                                                  <option value="1">Pria</option>
+                                                                  <option value="2">Wanita</option>
+
+                                                            </select>
+
+
                                                           </div>
                                                         </div>
 
@@ -89,7 +118,7 @@
                                                           <label for="agama" class="col-md-4 control-label">Agama</label>
 
                                                           <div class="col-md-8">
-                                                            <input class="form-control" id="agama" placeholder="Agama">
+                                                            <input class="form-control" id="agama" placeholder="Agama" value="<?php echo $identitas['agama'];?>" disabled>
                                                           </div>
                                                         </div>
                                                         <div class="form-group">

@@ -99,7 +99,14 @@ class Dashboard extends Auth_Controller
 
 
 		$userId = $this->ion_auth->get_user_id();
-		$this->data['user']=$this->ion_auth->user()->row();
+		$userLoggedin = $this->ion_auth->user()->row();
+		$this->data['user']=$userLoggedin;
+		log_message('debug',print_r($userLoggedin,TRUE));
+		$identitasSimpeg = $this->Simpeg_model->getIdentitasPegawai($userLoggedin->nip);
+		$agama =$this->Simpeg_model->getAgama();
+		log_message('debug',print_r($identitasSimpeg,TRUE));
+		$this->data['identitas']=$identitasSimpeg;
+		$this->data['agama']=$agama;
 			log_message('INFO','is admin? :'.$this->ion_auth->is_admin());
 			$this->data['user_group']= $this->ion_auth->get_users_groups($userId)->result();
 			log_message('debug','User Group : '.print_r($this->data['user_group'],TRUE));
