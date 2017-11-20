@@ -36,7 +36,7 @@
                                   $dataIndukView= $this->load->view('dashboard/profile_pegawai_pensiun_dataInduk_view', '', TRUE);
                                   $dataIndukRiwayatPegawai=$this->load->view('dashboard/profile_pegawai_pensiun_riwayatPegawai_view','',TRUE);
                                   $dataIndukRiwayatPendidikan = $this->load->view('dashboard/profile_pegawai_pensiun_riwayatPendidikan_view','',TRUE);
-                                  $dataIndukRiwayatKeluarga = $this->load->view('dashboard/profile_pegawai_riwayatKeluarga_view','',TRUE);
+                                  $dataIndukRiwayatKeluarga = $this->load->view('dashboard/profile_pegawai_pensiun_riwayatKeluarga_view','',TRUE);
                                   echo $dataIndukView;
                                   echo $dataIndukRiwayatPegawai;
                                   echo $dataIndukRiwayatPendidikan;
