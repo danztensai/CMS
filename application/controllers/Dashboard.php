@@ -75,6 +75,24 @@ class Dashboard extends Auth_Controller
     	$this->render('dashboard/datasibucupu_view');
 	}
 
+	public function dataPegawaiTkk()
+	{
+		$userId = $this->ion_auth->get_user_id();
+		$this->data['user']=$this->ion_auth->user()->row();
+			log_message('INFO','is admin? :'.$this->ion_auth->is_admin());
+			$this->data['user_group']= $this->ion_auth->get_users_groups($userId)->result();
+			log_message('debug','User Group : '.print_r($this->data['user_group'],TRUE));
+
+		$this->data['users_instansi']=$this->Users_model->getUsersinstansi($userId );
+
+		$this->data['menu']=$this->Menu_model->menuMaster();
+
+		log_message('INFO','User Id : '.$userId);
+
+
+    	$this->render('dashboard/dataPegawaiTkk_view.php');
+	}
+
 	public function dataPegawaiPensiun()
 	{
 		$userId = $this->ion_auth->get_user_id();
@@ -91,6 +109,24 @@ class Dashboard extends Auth_Controller
 
 
     	$this->render('dashboard/dataPegawaiPensiun_view.php');
+	}
+
+	public function dataPegawaiPindahKeluar()
+	{
+		$userId = $this->ion_auth->get_user_id();
+		$this->data['user']=$this->ion_auth->user()->row();
+			log_message('INFO','is admin? :'.$this->ion_auth->is_admin());
+			$this->data['user_group']= $this->ion_auth->get_users_groups($userId)->result();
+			log_message('debug','User Group : '.print_r($this->data['user_group'],TRUE));
+
+		$this->data['users_instansi']=$this->Users_model->getUsersinstansi($userId );
+
+		$this->data['menu']=$this->Menu_model->menuMaster();
+
+		log_message('INFO','User Id : '.$userId);
+
+
+    	$this->render('dashboard/dataPegawaiPindahKeluar_view.php');
 	}
 
 
