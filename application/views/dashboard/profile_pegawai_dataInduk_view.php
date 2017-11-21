@@ -2,16 +2,100 @@
 $( document ).ready(function() {
 
 $('.select2').select2();
+$('.selectAgama').select2();
 
 $("select[value]").each(function(){
-  console.log(this.getAttribute("value"));
+  //console.log(this.getAttribute("value"));
   $(this).val(this.getAttribute("value"));
 });
+
+$(':checkbox').each(function(){
+    console.log("Checked Value : "+this.getAttribute("value"));
+    var sumpahPNS = this.getAttribute("value");
+
+    if(sumpahPNS==1)
+    {
+      $(this).prop('checked',true);
+    }else
+    {
+      $(this).prop('checked',false);
+    }
+
+})
 
   $('#tglLahir').datepicker({
     autoclose: true,
     format: 'yyyy-mm-dd'
   });
+
+$('#editIdentitas').click(function (){
+//console.log('Click Edit');
+
+$.each($('input,select,textarea', '#formIdentitas'),function(k){
+      //  console.log(k+' '+$(this).attr('disabled'));
+        var isDisabled = $(this).is(':disabled');
+        if (isDisabled) {
+            $(this).prop('disabled', false);
+        }
+    });
+
+});
+
+
+$('#cancelIdentitas').click(function (){
+
+
+$.each($('input,select,textarea', '#formIdentitas'),function(k){
+      //  console.log(k+' '+$(this).attr('disabled'));
+        var isDisabled = $(this).is(':disabled');
+        if (!isDisabled) {
+            $(this).prop('disabled', true);
+        }
+    });
+
+});
+
+$('#editCPNS').click(function (){
+
+
+$.each($('input,select,textarea', '#formCPNS'),function(k){
+      //  console.log(k+' '+$(this).attr('disabled'));
+        var isDisabled = $(this).is(':disabled');
+        if (isDisabled) {
+            $(this).prop('disabled', false);
+        }
+    });
+    $.each($('input,select,textarea', '#formPNS'),function(k){
+          //  console.log(k+' '+$(this).attr('disabled'));
+            var isDisabled = $(this).is(':disabled');
+            if (isDisabled) {
+                $(this).prop('disabled', false);
+            }
+        });
+});
+
+
+
+$('#cancelCPNS').click(function (){
+
+
+$.each($('input,select,textarea', '#formCPNS'),function(k){
+      //  console.log(k+' '+$(this).attr('disabled'));
+        var isDisabled = $(this).is(':disabled');
+        if (!isDisabled) {
+            $(this).prop('disabled', true);
+        }
+    });
+    $.each($('input,select,textarea', '#formPNS'),function(k){
+          //  console.log(k+' '+$(this).attr('disabled'));
+            var isDisabled = $(this).is(':disabled');
+            if (!isDisabled) {
+                $(this).prop('disabled', true);
+            }
+        });
+
+});
+
 });
     </script>
 <div class="tab-pane active" id="dataInduk">
@@ -35,21 +119,21 @@ $("select[value]").each(function(){
                                                                   <strong>Identitas</strong>
                                                                 </p>
 
-                                                    <form class="form-horizontal">
+                                                    <form class="form-horizontal" id="formIdentitas">
                                                       <div class="box-body">
                                                         <div class="col-md-4">
                                                         <div class="form-group">
-                                                          <label for="inputEmail3" class="col-md-4 control-label">NIP</label>
+                                                          <label for="inputNipBaru" class="col-md-4 control-label">NIP</label>
 
                                                           <div class="col-md-8">
-                                                            <input class="form-control" id="inputEmail3" placeholder="NIP" value="<?php echo $identitas['nipBaru'];?>" disabled>
+                                                            <input class="form-control" id="inputNipBaru" placeholder="NIP" value="<?php echo $identitas['nipBaru'];?>" disabled>
                                                           </div>
                                                         </div>
                                                         <div class="form-group">
-                                                          <label for="inputPassword3" class="col-md-4 control-label">NIP Lama</label>
+                                                          <label for="inputNipLama" class="col-md-4 control-label">NIP Lama</label>
 
                                                         <div class="col-md-8">
-                                                            <input class="form-control" id="inputPassword3" placeholder="NIP Lama" value="<?php echo $identitas['nipLama'];?>"   disabled>
+                                                            <input class="form-control" id="inputNipLama" placeholder="NIP Lama" value="<?php echo $identitas['nipLama'];?>"   disabled>
                                                           </div>
                                                         </div>
 
@@ -94,7 +178,7 @@ $("select[value]").each(function(){
                                                                   <i class="fa fa-calendar"></i>
                                                                 </div>
                                                                 <input type="text" class="form-control pull-right" id="tglLahir" value="<?php echo $identitas['TLAHIR']?>" disabled>
-                                                              </div>
+                                                            </div>
                                                           </div>
                                                         </div>
 
@@ -118,21 +202,38 @@ $("select[value]").each(function(){
                                                           <label for="agama" class="col-md-4 control-label">Agama</label>
 
                                                           <div class="col-md-8">
-                                                            <input class="form-control" id="agama" placeholder="Agama" value="<?php echo $identitas['agama'];?>" disabled>
+                                                            <select id="agama" disabled="disabled" value="<?php echo $identitas['agamaId']?>" class="form-control selectAgama" style="width: 100%;">
+                                                              <?php
+                                                                foreach ($agama as $value) {
+                                                                  ?>
+                                                                    <option value="<?php echo $value['kode'];?>"><?php echo $value['nama'];?></option>
+                                                              <?php
+                                                              }
+                                                              ?>
+                                                            </select>
                                                           </div>
                                                         </div>
+                                                        <br>
                                                         <div class="form-group">
                                                           <label for="statusNikah" class="col-md-4 control-label">Status Nikah</label>
 
                                                           <div class="col-md-8">
-                                                            <input class="form-control" id="statusNikah" placeholder="Status Nikah">
+                                                            <select id="statusNikah" disabled="disabled" value="<?php echo $identitas['jenisKawin']?>" class="form-control selectAgama" style="width: 100%;">
+                                                              <?php
+                                                                foreach ($relationShipSts as $value) {
+                                                                  ?>
+                                                                    <option value="<?php echo $value['kode'];?>"><?php echo $value['nama'];?></option>
+                                                              <?php
+                                                              }
+                                                              ?>
+                                                            </select>
                                                           </div>
                                                         </div>
                                                         <div class="form-group">
                                                           <label for="golonganDarah" class="col-md-4 control-label">Golongan Darah</label>
 
                                                           <div class="col-md-8">
-                                                            <input class="form-control" id="golonganDarah" placeholder="Golongan Darah">
+                                                            <input class="form-control" id="golonganDarah" placeholder="Golongan Darah" value="<?php echo $identitas['KGOLDAR']?>" disabled>
                                                           </div>
                                                         </div>
 
@@ -144,83 +245,99 @@ $("select[value]").each(function(){
                                                           <label for="alamat" class="col-md-4 control-label">Alamat</label>
 
                                                           <div class="col-md-8">
-                                                            <input class="form-control" id="alamat" placeholder="Alamat">
+                                                            <input class="form-control" id="alamat" placeholder="Alamat" value="<?php echo $identitas['alamat']?>" disabled >
                                                           </div>
                                                         </div>
                                                         <div class="form-group">
                                                           <label for="rtrw" class="col-md-4 control-label">RT/RW</label>
 
                                                           <div class="col-md-2">
-                                                            <input class="form-control" id="rt" placeholder="RT">
+                                                            <input class="form-control" id="rt" placeholder="RT" value="<?php echo $identitas['ALRT']?>" disabled>
                                                           </div>
                                                           <div class="col-md-2">
-                                                            <input class="form-control" id="rw" placeholder="RW">
+                                                            <input class="form-control" id="rw" placeholder="RW" value="<?php echo $identitas['ALRW']?>" disabled>
                                                           </div>
                                                         </div>
                                                         <div class="form-group">
                                                           <label for="telepon" class="col-md-4 control-label">Telepon</label>
 
                                                           <div class="col-md-8">
-                                                            <input class="form-control" id="telepon" placeholder="Telepon">
+                                                            <input class="form-control" id="telepon" placeholder="Telepon" value="<?php echo $identitas['noTelpon']?>" disabled>
                                                           </div>
 
                                                         </div>
                                                         <div class="form-group">
                                                           <label for="kodePos" class="col-md-4 control-label">Kode Pos</label>
                                                           <div class="col-md-8">
-                                                            <input class="form-control" id="kodePos" placeholder="Kode Pos">
+                                                            <input class="form-control" id="kodePos" placeholder="Kode Pos" value="<?php echo $identitas['KPOS']?>" disabled>
                                                           </div>
                                                         </div>
                                                         <div class="form-group">
                                                           <label for="nomorKarpeg" class="col-md-4 control-label">No KARPEG</label>
                                                           <div class="col-md-8">
-                                                            <input class="form-control" id="nomorKarpeg" placeholder="No Karpeg">
+                                                            <input class="form-control" id="nomorKarpeg" placeholder="No Karpeg" value="<?php echo $identitas['kartuPegawai']?>" disabled>
                                                           </div>
                                                         </div>
                                                         <div class="form-group">
-                                                          <label for="noTaspen" class="col-md-4 control-label">noTaspen</label>
+                                                          <label for="noTaspen" class="col-md-4 control-label">No Taspen</label>
                                                           <div class="col-md-8">
-                                                            <input class="form-control" id="noTaspen" placeholder="noTaspen">
+                                                            <input class="form-control" id="noTaspen" placeholder="noTaspen" value="<?php echo $identitas['taspen']?>" disabled>
                                                           </div>
                                                         </div>
                                                         <div class="form-group">
-                                                          <label for="noAskes" class="col-md-4 control-label">noAskes</label>
+                                                          <label for="noAskes" class="col-md-4 control-label">No Askes</label>
                                                           <div class="col-md-8">
-                                                            <input class="form-control" id="noAskes" placeholder="noAskes">
+                                                            <input class="form-control" id="noAskes" placeholder="noAskes" value="<?php echo $identitas['askesNomor']?>" disabled>
                                                           </div>
                                                         </div>
                                                         <div class="form-group">
                                                           <label for="noKarisSU" class="col-md-4 control-label">No KARIS/SU</label>
                                                           <div class="col-md-8">
-                                                            <input class="form-control" id="noKarissu" placeholder="No Karis/SU">
+                                                            <input class="form-control" id="noKarissu" placeholder="No Karis/SU" value="<?php echo $identitas['NKARIS_SU']?>" disabled>
                                                           </div>
                                                         </div>
-                                                        <div class="form-group">
-                                                          <label for="statusKepegawaian" class="col-sm-4 control-label">Status Kepegawaian</label>
-                                                          <div class="col-md-8">
-                                                            <input class="form-control" id="statusKepegawaian" placeholder="Status Kepegawaian">
-                                                          </div>
-                                                        </div>
+
 
                                                         <div class="form-group">
                                                           <label for="npwp" class="col-md-4 control-label">npwp</label>
                                                           <div class="col-md-8">
-                                                            <input class="form-control" id="npwp" placeholder="NPWP">
+                                                            <input class="form-control" id="npwp" placeholder="NPWP" value="<?php echo $identitas['npwpNomor']?>" disabled>
                                                           </div>
                                                         </div>
 
                                                         <div class="form-group">
                                                           <label for="noKTP" class="col-md-4 control-label">No KTP</label>
                                                           <div class="col-md-8">
-                                                            <input class="form-control" id="noKTP" placeholder="noKTP">
+                                                            <input class="form-control" id="noKTP" placeholder="No KTP" value="<?php echo $identitas['NOPEN']?>" disabled>
                                                           </div>
                                                         </div>
-
+                                                        <div class="form-group">
+                                                          <label for="statusKepegawaian" class="col-sm-4 control-label">Status Kepegawaian</label>
+                                                          <div class="col-md-8">
+                                                            <select id="statusKepegawaian" disabled="disabled" value="<?php echo $identitas['statusCpnsPns']?>" class="form-control" style="width: 100%;">
+                                                              <?php
+                                                                foreach ($statusPegawai as $value) {
+                                                                  ?>
+                                                                    <option value="<?php echo $value['kode'];?>"><?php echo $value['nama'];?></option>
+                                                              <?php
+                                                              }
+                                                              ?>
+                                                            </select>
+                                                          </div>
+                                                        </div>
                                                         <div class="form-group">
                                                           <label for="jenisKepegawaian" class="col-md-4 control-label">Jenis Kepegawaian</label>
 
                                                           <div class="col-md-8">
-                                                            <input class="form-control" id="jenisKepegawaian" placeholder="jenisKepegawaian">
+                                                            <select id="jenisKepegawaian" disabled="disabled" value="<?php echo $identitas['jenisPegawai']?>" class="form-control" style="width: 100%;">
+                                                              <?php
+                                                                foreach ($jenisPegawai as $value) {
+                                                                  ?>
+                                                                    <option value="<?php echo $value['kode'];?>"><?php echo $value['nama'];?></option>
+                                                              <?php
+                                                              }
+                                                              ?>
+                                                            </select>
                                                           </div>
                                                         </div>
 
@@ -228,32 +345,47 @@ $("select[value]").each(function(){
                                                           <label for="kedudukanPegawai" class="col-md-4 control-label">Kedudukan Pegawai</label>
 
                                                           <div class="col-md-8">
-                                                            <input class="form-control" id="agama" placeholder="Agama">
+                                                            <select id="kedudukanPegawai" disabled="disabled" value="<?php echo $identitas['kedudukanHukum']?>" class="form-control" style="width: 100%;">
+                                                              <?php
+                                                                foreach ($statusPegawai as $value) {
+                                                                  ?>
+                                                                    <option value="<?php echo $value['kode'];?>"><?php echo $value['nama'];?></option>
+                                                              <?php
+                                                              }
+                                                              ?>
+                                                            </select>
                                                           </div>
                                                         </div>
 
                                                       </div>
+                                                    </form>
                                                       </div>
 
                                                       <!-- /.box-body -->
 
                                                       <!-- /.box-footer -->
-                                                    </form>
+
                                               </div>
                                               <div class="col-md-2">
                                                                 <p class="text-center">
                                                                   <strong>Foto</strong>
                                                                 </p>
 
-                                                                <img class="img-responsive" src="https://www.w3schools.com/bootstrap/img_chania.jpg" alt="Chania" width="460" height="345">
+                                                                <img class="img-responsive" src="<?php echo $identitas['FILE_BMP'];?>" alt="Foto" width="460" height="345">
+                                                                <div class="form-group">
+                                                                  <label for="exampleInputFile">Upload Foto</label>
+                                                                  <input type="file" id="exampleInputFile">
+
+                                                                  <p class="help-block">Upload Foto Anda Disini</p>
+                                                                </div>
                                                                 <!-- /.chart-responsive -->
                                               </div>
                                             </div>
                                           </div>
                                           <div class="box-footer">
-                                            <button type="submit" class="btn btn-default">Cancel</button>
-                                            <button type="submit" class="btn btn-default">Edit</button>
-                                            <button type="submit" class="btn btn-info">Save</button>
+                                            <button id="cancelIdentitas" type="submit" class="btn btn-danger">Cancel</button>
+                                            <button id="editIdentitas" class="btn btn-warning">Edit</button>
+                                            <button id="submitIdentitas" type="submit" class="btn btn-primary">Save</button>
                                           </div>
                                         </div>
                                         <!-- /.tab-pane -->
@@ -265,42 +397,57 @@ $("select[value]").each(function(){
                                                                   <strong>CPNS</strong>
                                                                 </p>
 
-                                                    <form class="form-horizontal">
+                                                    <form class="form-horizontal" id="formCPNS">
                                                       <div class="box-body">
                                                         <div class="col-md-4">
 
                                                           <div class="form-group">
                                                             <label for="NIP" class="col-md-4 control-label">NIP</label>
+
                                                             <div class="col-md-8">
-                                                              <input class="form-control" id="NIP" placeholder="NIP">
+                                                              <input style='font-size: 12px;' class="form-control" id="NIP" placeholder="NIP" value="<?php echo $cpnspns['0']['nipBaru'] ?>" disabled>
                                                             </div>
                                                           </div>
 
                                                       <div class="form-group">
                                                         <label for="notaBKN" class="col-md-4 control-label">Nota BKN</label>
                                                         <div class="col-md-8">
-                                                          <input class="form-control" id="notaBKN" placeholder="Nota BKN">
+                                                          <input class="form-control" id="notaBKN" placeholder="Nota BKN" value="<?php echo $cpnspns['0']['NTBAKN'] ?>" disabled>
                                                         </div>
                                                       </div>
 
                                                       <div class="form-group">
                                                         <label for="tglNotaBKN" class="col-md-4 control-label">Tanggal Nota BKN</label>
                                                         <div class="col-md-8">
-                                                          <input class="form-control" id="tglNotaBKN" placeholder="Tanggal Nota BKN">
+
+                                                          <div class="input-group date">
+                                                              <div class="input-group-addon">
+                                                                <i class="fa fa-calendar"></i>
+                                                              </div>
+                                                              <input type="text" class="form-control pull-right" id="tglNotaBKN" value="<?php echo $cpnspns['0']['TNTBAKN']?>" disabled>
+                                                          </div>
                                                         </div>
                                                       </div>
 
                                                       <div class="form-group">
-                                                        <label for="pejabatMenetapkan" class="col-md-4 control-label">Yang Menetapkan</label>
+                                                        <label for="pejabatMenetapkanCPNS" class="col-md-4 control-label">Yang Menetapkan</label>
                                                         <div class="col-md-8">
-                                                          <input class="form-control" id="pejabatMenetapkan" placeholder="Pejabat Yang Menetapkan">
+                                                          <select id="pejabatMenetapkanCPNS" disabled="disabled" value="<?php echo $cpnspns['0']['KPEJ_CPNS']?>" class="form-control" style="width: 100%;">
+                                                            <?php
+                                                              foreach ($pejabat as $value) {
+                                                                ?>
+                                                                  <option value="<?php echo $value['kode'];?>"><?php echo $value['nama'];?></option>
+                                                            <?php
+                                                            }
+                                                            ?>
+                                                          </select>
                                                         </div>
                                                       </div>
 
                                                       <div class="form-group">
                                                         <label for="noSKCPNS" class="col-md-4 control-label">No SK CPNS</label>
                                                         <div class="col-md-8">
-                                                          <input class="form-control" id="noSKCPNS" placeholder="No SK CPNS">
+                                                          <input class="form-control" id="noSKCPNS" placeholder="No SK CPNS" value="<?php echo $cpnspns['0']['nomorSkCpns']?>" disabled >
                                                         </div>
                                                       </div>
                                                       </div>
@@ -310,35 +457,59 @@ $("select[value]").each(function(){
                                                         <div class="form-group">
                                                           <label for="tanggalSKCPNS" class="col-md-4 control-label">Tanggal SK CPNS</label>
                                                           <div class="col-md-8">
-                                                            <input class="form-control" id="tanggalSKCPNS" placeholder="TAnggal SK CPNS">
+                                                            <div class="input-group date">
+                                                                <div class="input-group-addon">
+                                                                  <i class="fa fa-calendar"></i>
+                                                                </div>
+                                                                <input type="text" class="form-control pull-right" id="tanggalSKCPNS" value="<?php echo $cpnspns['0']['tglSkCpns']?>" disabled>
+                                                            </div>
                                                           </div>
                                                         </div>
 
                                                         <div class="form-group">
-                                                          <label for="tmtCPNS" class="col-md-4 control-label">tmtCPNS</label>
+                                                          <label for="tmtCPNS" class="col-md-4 control-label">TMT CPNS</label>
                                                           <div class="col-md-8">
-                                                            <input class="form-control" id="tmtCPNS" placeholder="Tamat CPNS">
+                                                            <div class="input-group date">
+                                                                <div class="input-group-addon">
+                                                                  <i class="fa fa-calendar"></i>
+                                                                </div>
+                                                                <input type="text" class="form-control pull-right" id="tmtCPNS" value="<?php echo $cpnspns['0']['tmtCpns']?>" disabled>
+                                                            </div>
                                                           </div>
                                                         </div>
 
                                                         <div class="form-group">
                                                           <label for="golonganRuang" class="col-md-4 control-label">Golongan Ruang</label>
                                                           <div class="col-md-8">
-                                                            <input class="form-control" id="golonganRuang" placeholder="golonganRuang">
+
+                                                            <select id="golonganRuang" disabled="disabled" value="<?php echo $cpnspns['0']['KGOLRU_CPNS']?>" class="form-control" style="width: 100%;">
+                                                              <?php
+                                                                foreach ($jenisGolongan as $value) {
+                                                                  ?>
+                                                                    <option value="<?php echo $value['kode'];?>"><?php echo $value['nama'];?> -<?php echo $value['pangkat'];?> </option>
+                                                              <?php
+                                                              }
+                                                              ?>
+                                                            </select>
                                                           </div>
                                                         </div>
 
                                                         <div class="form-group">
-                                                          <label for="noSTTP" class="col-md-4 control-label">noSTTP</label>
+                                                          <label for="noSTTP" class="col-md-4 control-label">No STTP</label>
                                                           <div class="col-md-8">
-                                                            <input class="form-control" id="noSTTP" placeholder="No STTP">
+                                                            <input class="form-control" id="noSTTP" placeholder="No STTP" value="<?php echo $cpnspns['0']['nomorSttpl']?>" disabled>
                                                           </div>
                                                         </div>
 
                                                         <div class="form-group">
                                                           <label for="tmtTugas" class="col-md-4 control-label">Tamat Tugas</label>
                                                           <div class="col-md-8">
-                                                            <input class="form-control" id="tmtTugas" placeholder="Tamat Tugas">
+                                                            <div class="input-group date">
+                                                                <div class="input-group-addon">
+                                                                  <i class="fa fa-calendar"></i>
+                                                                </div>
+                                                                <input type="text" class="form-control pull-right" id="tmtTugas" value="<?php echo $cpnspns['0']['tglSttpl']?>" disabled>
+                                                            </div>
                                                           </div>
                                                         </div>
 
@@ -347,9 +518,9 @@ $("select[value]").each(function(){
 
                                                       <!-- /.box-body -->
                                                       <div class="box-footer">
-                                                        <button type="submit" class="btn btn-default">Cancel</button>
-                                                        <button type="submit" class="btn btn-default">Edit</button>
-                                                        <button type="submit" class="btn btn-info">Submit</button>
+                                                        <button id="cancelCPNS" class="btn btn-danger">Cancel</button>
+                                                        <button id="editCPNS"  class="btn btn-warning">Edit</button>
+                                                        <button id="saveCPNS" type="submit" class="btn btn-info">Submit</button>
                                                       </div>
                                                       <!-- /.box-footer -->
                                                     </form>
@@ -358,50 +529,89 @@ $("select[value]").each(function(){
                                                                 <p class="text-center">
                                                                   <strong>PNS</strong>
                                                                 </p>
-                                                                <form class="form-horizontal">
+                                                                <form class="form-horizontal" id="formPNS">
                                                                   <div class="box-body">
                                                                       <div class="form-group">
                                                                         <label for="pejabatMenetapkanPNS" class="col-md-4 control-label">Pejabat Yang Menetapkan</label>
                                                                         <div class="col-md-8">
-                                                                          <input class="form-control" id="inputEmail3" placeholder="Pejabat Yang Menetapkan">
+
+                                                                          <select id="pejabatMenetapkanPNS" disabled="disabled" value="<?php echo $cpnspns['0']['KPEJ_PNS']?>" class="form-control" style="width: 100%;">
+                                                                            <?php
+                                                                              foreach ($pejabat as $value) {
+                                                                                ?>
+                                                                                  <option value="<?php echo $value['kode'];?>"><?php echo $value['nama'];?></option>
+                                                                            <?php
+                                                                            }
+                                                                            ?>
+                                                                          </select>
                                                                         </div>
                                                                       </div>
 
                                                                       <div class="form-group">
                                                                         <label for="noSKPNS" class="col-md-4 control-label">No SK PNS</label>
                                                                         <div class="col-md-8">
-                                                                          <input class="form-control" id="noSKPNS" placeholder="No SK PNS">
+                                                                          <input class="form-control" id="noSKPNS" placeholder="No SK PNS" value="<?php echo $cpnspns['0']['nomorSkPns']?>" disabled>
                                                                         </div>
                                                                       </div>
 
                                                                       <div class="form-group">
                                                                         <label for="tglSKPNS" class="col-md-4 control-label">Tanggal SK PNS</label>
                                                                         <div class="col-md-8">
-                                                                          <input class="form-control" id="tglSKPNS" placeholder="Tanggal SK PNS">
+
+                                                                          <div class="input-group date">
+                                                                              <div class="input-group-addon">
+                                                                                <i class="fa fa-calendar"></i>
+                                                                              </div>
+                                                                              <input type="text" class="form-control pull-right" id="tglSKPNS" value="<?php echo $cpnspns['0']['tglSkPns']?>" disabled>
+                                                                          </div>
                                                                         </div>
                                                                       </div>
 
                                                                       <div class="form-group">
                                                                         <label for="tmtPNS" class="col-md-4 control-label">TMT PNS</label>
                                                                         <div class="col-md-8">
-                                                                          <input class="form-control" id="tmtPNS" placeholder="TMT PNS">
+
+                                                                          <div class="input-group date">
+                                                                              <div class="input-group-addon">
+                                                                                <i class="fa fa-calendar"></i>
+                                                                              </div>
+                                                                              <input type="text" class="form-control pull-right" id="tmtPNS" value="<?php echo $cpnspns['0']['tmtPns']?>" disabled>
+                                                                          </div>
                                                                         </div>
                                                                       </div>
 
                                                                       <div class="form-group">
                                                                         <label for="golRuangPNS" class="col-md-4 control-label">Golongan Ruang PNS</label>
                                                                         <div class="col-md-8">
-                                                                          <input class="form-control" id="golRuangPNS" placeholder="Golongan Ruang PNS">
+
+                                                                          <select id="golRuangPNS" disabled="disabled" value="<?php echo $cpnspns['0']['KGOLRU_PNS']?>" class="form-control" style="width: 100%;">
+                                                                            <?php
+                                                                              foreach ($jenisGolongan as $value) {
+                                                                                ?>
+                                                                                  <option value="<?php echo $value['kode'];?>"><?php echo $value['nama'];?> -<?php echo $value['pangkat'];?> </option>
+                                                                            <?php
+                                                                            }
+                                                                            ?>
+                                                                          </select>
                                                                         </div>
                                                                       </div>
 
                                                                       <div class="form-group">
-                                                                        <label for="sumpahPNS" class="col-md-4 control-label">sumpahPNS</label>
+                                                                        <label for="sumpahPNS" class="col-md-4 control-label">Sumpah PNS</label>
                                                                         <div class="col-md-8">
-                                                                          <input class="form-control" id="sumpahPNS" placeholder="Sumpah PNS">
+
+                                                                          <label>
+                                                                              <input id="sumpahPNS" type="checkbox" value="<?php echo $cpnspns['0']['sumpahPNS']?>" disabled>
+                                                                                Sudah
+                                                                              </label>
                                                                         </div>
                                                                       </div>
                                                                     </div>
+                                                                    <!-- <div class="box-footer">
+                                                                      <button id="cancelPNS" class="btn btn-danger">Cancel</button>
+                                                                      <button id="editPNS"  class="btn btn-warning">Edit</button>
+                                                                      <button id="savePNS" type="submit" class="btn btn-info">Submit</button>
+                                                                    </div> -->
                                                                 </form>
                                               </div>
                                             </div>

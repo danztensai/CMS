@@ -51,8 +51,10 @@ INNER JOIN revReferenceSimpeg.agama a on a.kode = d.agamaId WHERE d.nipbaru = '$
 					$data['NKARIS_SU']=$row->NKARIS_SU;
 					$data['npwpNomor']=$row->nama;
 					$data['NOPEN']=$row->NOPEN;
-					$data['FILE_BMP']=$row->FILE_BMP;
+					$data['FILE_BMP']=base_url().'assets/foto/'.$row->FILE_BMP;
 					$data['agamaId']=$row->agamaId;
+					$data['statusCpnsPns']=$row->statusCpnsPns;
+					$data['kedudukanHukum']=$row->kedudukanHukum;
 
 				//	array_push($stackData,$data);
 				}
@@ -66,21 +68,74 @@ INNER JOIN revReferenceSimpeg.agama a on a.kode = d.agamaId WHERE d.nipbaru = '$
 			}
 		}
 
-		public function getAgama()
+		public function getCPNSPNSInfoByNip($nip)
 		{
 			  $DB2 =$this->load->database('simpegRef', TRUE);
-		$querySQL = "SELECT * FROM agama";
+		$querySQL = "SELECT nipBaru, nipLama, statusCpnsPns, NTBAKN, TNTBAKN, KPEJ_CPNS, nomorSkCpns, tglSkCpns, tmtCpns,
+		 KGOLRU_CPNS, nomorSttpl, tglSttpl, tglSpmt, KPEJ_PNS,nomorSkPns, tglSkPns, tmtPns, KGOLRU_PNS, sumpahPNS
+								FROM cpnspns WHERE nipBaru = '$nip'";
 
-		$data = array();
+		$dataRet = array();
 		$stackData = array();
 
-		log_message('debug','getAgama	: '.$querySQL);
+		log_message('debug','getCPNSByNip	: '.$querySQL);
 		$query = $DB2->query($querySQL);
 
 		if($query->num_rows()>0)
 			{ $count = 1;
 				foreach($query->result() as $row)
 				{
+					$data = array();
+					$data['nipBaru']=$row->nipBaru;
+					$data['nipLama']=$row->nipLama;
+					$data['statusCpnsPns']=$row->statusCpnsPns;
+					$data['NTBAKN']=$row->NTBAKN;
+					$data['TNTBAKN']=$row->TNTBAKN;
+					$data['KPEJ_CPNS']=$row->KPEJ_CPNS;
+					$data['nomorSkCpns']=$row->nomorSkCpns;
+					$data['tglSkCpns']=$row->tglSkCpns;
+					$data['tmtCpns']=$row->tmtCpns;
+					$data['KGOLRU_CPNS']=$row->KGOLRU_CPNS;
+					$data['nomorSttpl']=$row->nomorSttpl;
+					$data['tglSttpl']=$row->tglSttpl;
+					$data['KPEJ_PNS']=$row->KPEJ_PNS;
+					$data['nomorSkPns']=$row->nomorSkPns;
+					$data['tglSkPns']=$row->tglSkPns;
+					$data['tmtPns']=$row->tmtPns;
+					$data['KGOLRU_PNS']=$row->KGOLRU_PNS;
+					$data['sumpahPNS']=$row->sumpahPNS;
+
+
+					array_push($stackData,$data);
+				}
+				$query->free_result();
+				return $stackData;
+			}else
+			{
+
+				$query->free_result();
+				return $dataRet;
+			}
+		}
+
+
+
+		public function getRelationStatus()
+		{
+			  $DB2 =$this->load->database('simpegRef', TRUE);
+		$querySQL = "SELECT * FROM statusperkawinan";
+
+		$dataRet = array();
+		$stackData = array();
+
+		log_message('debug','getRelationStatus	: '.$querySQL);
+		$query = $DB2->query($querySQL);
+
+		if($query->num_rows()>0)
+			{ $count = 1;
+				foreach($query->result() as $row)
+				{
+					$data = array();
 					$data['kode']=$row->kode;
 					$data['nama']=$row->nama;
 
@@ -92,7 +147,194 @@ INNER JOIN revReferenceSimpeg.agama a on a.kode = d.agamaId WHERE d.nipbaru = '$
 			{
 
 				$query->free_result();
-				return $data;
+				return $dataRet;
+			}
+		}
+
+		public function getJenisGolongan()
+		{
+			  $DB2 =$this->load->database('simpegRef', TRUE);
+		$querySQL = "SELECT * FROM jenisgolongan";
+
+		$dataRet = array();
+		$stackData = array();
+
+		log_message('debug','getRelationStatus	: '.$querySQL);
+		$query = $DB2->query($querySQL);
+
+		if($query->num_rows()>0)
+			{ $count = 1;
+				foreach($query->result() as $row)
+				{
+					$data = array();
+					$data['kode']=$row->Golongan_id;
+					$data['nama']=$row->golNama;
+					$data['pangkat']=$row->golPangkat;
+
+					array_push($stackData,$data);
+				}
+				$query->free_result();
+				return $stackData;
+			}else
+			{
+
+				$query->free_result();
+				return $dataRet;
+			}
+		}
+
+		public function getJenisPegawai()
+		{
+			  $DB2 =$this->load->database('simpegRef', TRUE);
+		$querySQL = "SELECT * FROM jenispegawai";
+
+		$dataRet = array();
+		$stackData = array();
+
+		log_message('debug','getJenisPegawai	: '.$querySQL);
+		$query = $DB2->query($querySQL);
+
+		if($query->num_rows()>0)
+			{ $count = 1;
+				foreach($query->result() as $row)
+				{
+					$data = array();
+					$data['kode']=$row->kode;
+					$data['nama']=$row->nama;
+
+					array_push($stackData,$data);
+				}
+				$query->free_result();
+				return $stackData;
+			}else
+			{
+
+				$query->free_result();
+				return $dataRet;
+			}
+		}
+
+		public function getJenisPejabatMenetapkan()
+		{
+				$DB2 =$this->load->database('simpegRef', TRUE);
+		$querySQL = "SELECT * FROM pejabatmenetapkan";
+
+		$dataRet = array();
+		$stackData = array();
+
+		log_message('debug','getJenisPejabatMenetapkan	: '.$querySQL);
+		$query = $DB2->query($querySQL);
+
+		if($query->num_rows()>0)
+			{ $count = 1;
+				foreach($query->result() as $row)
+				{
+					$data = array();
+					$data['kode']=$row->kpej;
+					$data['nama']=$row->npej;
+
+					array_push($stackData,$data);
+				}
+				$query->free_result();
+				return $stackData;
+			}else
+			{
+
+				$query->free_result();
+				return $dataRet;
+			}
+		}
+
+		public function getStatusPegawai()
+		{
+			  $DB2 =$this->load->database('simpegRef', TRUE);
+		$querySQL = "SELECT * FROM statuspegawai";
+
+		$dataRet = array();
+		$stackData = array();
+
+		log_message('debug','getStatusPegawai	: '.$querySQL);
+		$query = $DB2->query($querySQL);
+
+		if($query->num_rows()>0)
+			{ $count = 1;
+				foreach($query->result() as $row)
+				{
+					$data = array();
+					$data['kode']=$row->kStatusPegawai;
+					$data['nama']=$row->nStatusPegawai;
+
+					array_push($stackData,$data);
+				}
+				$query->free_result();
+				return $stackData;
+			}else
+			{
+
+				$query->free_result();
+				return $dataRet;
+			}
+		}
+
+		public function getKedudukanPegawai()
+		{
+			  $DB2 =$this->load->database('simpegRef', TRUE);
+		$querySQL = "SELECT * FROM kedudukanpegawai";
+
+		$dataRet = array();
+		$stackData = array();
+
+		log_message('debug','getKedudukanPegawai	: '.$querySQL);
+		$query = $DB2->query($querySQL);
+
+		if($query->num_rows()>0)
+			{ $count = 1;
+				foreach($query->result() as $row)
+				{
+					$data = array();
+					$data['kode']=$row->id;
+					$data['nama']=$row->nama;
+
+					array_push($stackData,$data);
+				}
+				$query->free_result();
+				return $stackData;
+			}else
+			{
+
+				$query->free_result();
+				return $dataRet;
+			}
+		}
+
+		public function getAgama()
+		{
+			  $DB2 =$this->load->database('simpegRef', TRUE);
+		$querySQL = "SELECT * FROM agama";
+
+		$dataRet = array();
+		$stackData = array();
+
+		log_message('debug','getAgama	: '.$querySQL);
+		$query = $DB2->query($querySQL);
+
+		if($query->num_rows()>0)
+			{ $count = 1;
+				foreach($query->result() as $row)
+				{
+					$data = array();
+					$data['kode']=$row->kode;
+					$data['nama']=$row->nama;
+
+					array_push($stackData,$data);
+				}
+				$query->free_result();
+				return $stackData;
+			}else
+			{
+
+				$query->free_result();
+				return $dataRet;
 			}
 		}
 		public function getJenisKelamin()
