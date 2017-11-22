@@ -140,6 +140,7 @@ class Dashboard extends Auth_Controller
 		//log_message('debug',print_r($userLoggedin,TRUE));
 		$identitasSimpeg = $this->Simpeg_model->getIdentitasPegawai($userLoggedin->nip);
 		$cpnspnsSimpeg = $this->Simpeg_model->getCPNSPNSInfoByNip($userLoggedin->nip);
+		$pangkatTerakhir = $this->Simpeg_model->getPangkatAkhirByNip($userLoggedin->nip);
 		//log_message('debug',print_r($cpnspnsSimpeg,TRUE));
 		//log_message('debug',print_r($userLoggedin,TRUE));
 		$agama =$this->Simpeg_model->getAgama();
@@ -151,14 +152,21 @@ class Dashboard extends Auth_Controller
 		$kedudukanPegawai = $this->Simpeg_model->getKedudukanPegawai();
 		$jenisPejabatMenetapkan = $this->Simpeg_model->getJenisPejabatMenetapkan();
 		$jenisGolongan = $this->Simpeg_model->getJenisGolongan();
+		$jenisSTLUD = $this->Simpeg_model->getStlud();
+		$jenisNaikPangkat = $this->Simpeg_model->getJenisNaikPangkat();
+
 
 		$this->data['identitas']=$identitasSimpeg;
 		$this->data['cpnspns']=$cpnspnsSimpeg;
+		$this->data['pangkatTerakhir']=$pangkatTerakhir;
 		$this->data['kedudukanPegawai']=$kedudukanPegawai;
 		$this->data['statusPegawai']=$statusPegawai;
 		$this->data['jenisPegawai'] = $jenisPegawai;
 		$this->data['pejabat'] = $jenisPejabatMenetapkan;
 		$this->data['jenisGolongan']=$jenisGolongan;
+		$this->data['jenisNaikPangkat']=$jenisNaikPangkat;
+		$this->data['stlud']=$jenisSTLUD;
+
 
 		$this->data['agama']=$agama;
 		$this->data['relationShipSts'] = $relationShipSts;

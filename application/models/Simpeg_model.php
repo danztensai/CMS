@@ -118,6 +118,49 @@ INNER JOIN revReferenceSimpeg.agama a on a.kode = d.agamaId WHERE d.nipbaru = '$
 			}
 		}
 
+		public function getPangkatAkhirByNip($nip)
+		{
+				$DB2 =$this->load->database('simpegRef', TRUE);
+		$querySQL = "select * from golonganAkhir where nip='$nip';";
+
+		$data = array();
+		$stackData = array();
+
+		log_message('debug','getPangkatAkhirByNip: '.$querySQL);
+		$query = $DB2->query($querySQL);
+
+		if($query->num_rows()>0)
+			{ $count = 1;
+				foreach($query->result() as $row)
+				{
+					$data['nip']=$row->nip;
+					$data['KSTLUD']=$row->KSTLUD;
+					$data['NSTLUD']=$row->NSTLUD;
+					$data['TSTLUD']=$row->TSTLUD;
+					$data['NNTBAKN']=$row->NNTBAKN;
+					$data['TNTBAKN']=$row->TNTBAKN;
+					$data['PTETAP']=$row->PTETAP;
+					$data['NSKPANG']=$row->NSKPANG;
+					$data['TSKPANG']=$row->TSKPANG;
+					$data['TMTPANG']=$row->TMTPANG;
+					$data['KGOLRU']=$row->KGOLRU;
+					$data['MSKERJA']=$row->MSKERJA;
+					$data['GPOK']=$row->GPOK;
+					$data['KNPANG']=$row->KNPANG;
+
+				//	array_push($stackData,$data);
+				}
+				$query->free_result();
+				return $data;
+			}else
+			{
+
+				$query->free_result();
+				return $data;
+			}
+		}
+
+
 
 
 		public function getRelationStatus()
@@ -138,6 +181,68 @@ INNER JOIN revReferenceSimpeg.agama a on a.kode = d.agamaId WHERE d.nipbaru = '$
 					$data = array();
 					$data['kode']=$row->kode;
 					$data['nama']=$row->nama;
+
+					array_push($stackData,$data);
+				}
+				$query->free_result();
+				return $stackData;
+			}else
+			{
+
+				$query->free_result();
+				return $dataRet;
+			}
+		}
+
+		public function getJenisNaikPangkat()
+		{
+			  $DB2 =$this->load->database('simpegRef', TRUE);
+		$querySQL = "SELECT * FROM naikPangkat";
+
+		$dataRet = array();
+		$stackData = array();
+
+		log_message('debug','getRelationStatus	: '.$querySQL);
+		$query = $DB2->query($querySQL);
+
+		if($query->num_rows()>0)
+			{ $count = 1;
+				foreach($query->result() as $row)
+				{
+					$data = array();
+					$data['kode']=$row->knpang;
+					$data['nama']=$row->nnpang;
+
+					array_push($stackData,$data);
+				}
+				$query->free_result();
+				return $stackData;
+			}else
+			{
+
+				$query->free_result();
+				return $dataRet;
+			}
+		}
+
+		public function getStlud()
+		{
+			  $DB2 =$this->load->database('simpegRef', TRUE);
+		$querySQL = "SELECT * FROM stlud";
+
+		$dataRet = array();
+		$stackData = array();
+
+		log_message('debug','getRelationStatus	: '.$querySQL);
+		$query = $DB2->query($querySQL);
+
+		if($query->num_rows()>0)
+			{ $count = 1;
+				foreach($query->result() as $row)
+				{
+					$data = array();
+					$data['kode']=$row->KSTLUD;
+					$data['nama']=$row->NSTLUD;
 
 					array_push($stackData,$data);
 				}
@@ -376,7 +481,7 @@ INNER JOIN revReferenceSimpeg.agama a on a.kode = d.agamaId WHERE d.nipbaru = '$
                   left join jakhir ja on du.nipBaru = ja.nip
                   left join unkerja k1 on k1.kunker = ja.kunkers
                   left join unkerja k2 on k2.kunker = ja.kunkersInduk
-                  where du.kedudukanHukum=1  and MONTH(STR_TO_DATE(DU.TLAHIR, '%Y-%m-%d')) = MONTH(NOW()) and day(STR_TO_DATE(DU.TLAHIR, '%Y-%m-%d')) = day(NOW()) and
+                  where du.kedudukanHukum=1 and du.statusHidupPensiunPindah =1  and ja.jnsjab=1 and MONTH(STR_TO_DATE(DU.TLAHIR, '%Y-%m-%d')) = MONTH(NOW()) and day(STR_TO_DATE(DU.TLAHIR, '%Y-%m-%d')) = day(NOW()) and
                   du.nama like '%$searchColumn%' ";
 
 
@@ -444,7 +549,7 @@ INNER JOIN revReferenceSimpeg.agama a on a.kode = d.agamaId WHERE d.nipbaru = '$
         {
 
           $query->free_result();
-          return $data;
+          return null;
         }
     }
 

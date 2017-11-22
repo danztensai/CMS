@@ -15,11 +15,11 @@ class Menu_model extends CI_Model {
         $sts = False;
         if($query->num_rows()>0)
         {
-          log_message('debug','Exist '.$querySQL);
+        //  log_message('debug','Exist '.$querySQL);
           return TRUE;
         }else {
           {
-            log_message('debug','NotExist '.$querySQL);
+          //  log_message('debug','NotExist '.$querySQL);
             return FALSE;
           }
         }
@@ -27,7 +27,7 @@ class Menu_model extends CI_Model {
       public function subMenu($parent_id)
   		{
   			$querySQL = "SELECT menu_order,idMenu, menu_name, menu_link, parent_id FROM menu where parent_id=$parent_id ORDER BY menu_order ASC";
-        log_message('debug','SubMenu Query'.$querySQL);
+      //  log_message('debug','SubMenu Query'.$querySQL);
   			$data = array();
   			$stackData = array();
   			$query = $this->db->query($querySQL);
@@ -42,12 +42,12 @@ class Menu_model extends CI_Model {
   						$data['parent_id']=$row->parent_id;
 
               if($this->checkSubMenu($row->idMenu)){
-                log_message('debug','Sub Menu Exist For : '.$row->idMenu.' '.$row->menu_name.' ');
+              //  log_message('debug','Sub Menu Exist For : '.$row->idMenu.' '.$row->menu_name.' ');
                 $data['subMenu']=$this->subMenu($row->idMenu);
 
               }else{
 
-                  log_message('debug','Sub Menu Not Exist For : '.$row->idMenu.' '.$row->menu_name.' ');
+                //  log_message('debug','Sub Menu Not Exist For : '.$row->idMenu.' '.$row->menu_name.' ');
                   unset($data['subMenu']);
               }
   						array_push($stackData,$data);
@@ -64,7 +64,7 @@ class Menu_model extends CI_Model {
   		public function menuMaster()
   		{
   			$querySQL = "SELECT menu_order, idMenu, menu_name, menu_link, parent_id FROM menu where parent_id = 0 or parent_id is null  ORDER BY menu_order ASC";
-        log_message('debug','Query Menu Root :  '.$querySQL);
+      //  log_message('debug','Query Menu Root :  '.$querySQL);
   			$data = array();
   			$stackData = array();
   			$query = $this->db->query($querySQL);
