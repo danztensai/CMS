@@ -507,7 +507,6 @@
                         <input class="form-control" id="jenisBahasa" placeholder="Jenis Bahasa">
                       </div>
                     </div>
-
                   </div>
                 </div>
               </form>
