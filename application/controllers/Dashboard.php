@@ -113,20 +113,56 @@ class Dashboard extends Auth_Controller
 
 	public function dataPegawaiPindahKeluar()
 	{
+
+
 		$userId = $this->ion_auth->get_user_id();
-		$this->data['user']=$this->ion_auth->user()->row();
-			log_message('INFO','is admin? :'.$this->ion_auth->is_admin());
-			$this->data['user_group']= $this->ion_auth->get_users_groups($userId)->result();
-			log_message('debug','User Group : '.print_r($this->data['user_group'],TRUE));
+		$userLoggedin = $this->ion_auth->user()->row();
+		$this->data['user']=$userLoggedin;
+		//log_message('debug',print_r($userLoggedin,TRUE));
+		$identitasSimpeg = $this->Simpeg_model->getIdentitasPegawai($userLoggedin->nip);
+		$cpnspnsSimpeg = $this->Simpeg_model->getCPNSPNSInfoByNip($userLoggedin->nip);
+		$pangkatTerakhir = $this->Simpeg_model->getPangkatAkhirByNip($userLoggedin->nip);
+		//log_message('debug',print_r($cpnspnsSimpeg,TRUE));
+		//log_message('debug',print_r($userLoggedin,TRUE));
+		$agama =$this->Simpeg_model->getAgama();
+		//log_message('debug',print_r($agama,TRUE));
+		$relationShipSts = $this->Simpeg_model->getRelationStatus();
+		//log_message('debug',print_r($relationShipSts,TRUE));
+		$jenisPegawai = $this->Simpeg_model->getJenisPegawai();
+		$statusPegawai = $this->Simpeg_model->getStatusPegawai();
+		$kedudukanPegawai = $this->Simpeg_model->getKedudukanPegawai();
+		$jenisPejabatMenetapkan = $this->Simpeg_model->getJenisPejabatMenetapkan();
+		$jenisGolongan = $this->Simpeg_model->getJenisGolongan();
+		$jenisSTLUD = $this->Simpeg_model->getStlud();
+		$jenisNaikPangkat = $this->Simpeg_model->getJenisNaikPangkat();
+
+
+		$this->data['identitas']=$identitasSimpeg;
+		$this->data['cpnspns']=$cpnspnsSimpeg;
+		$this->data['pangkatTerakhir']=$pangkatTerakhir;
+		$this->data['kedudukanPegawai']=$kedudukanPegawai;
+		$this->data['statusPegawai']=$statusPegawai;
+		$this->data['jenisPegawai'] = $jenisPegawai;
+		$this->data['pejabat'] = $jenisPejabatMenetapkan;
+		$this->data['jenisGolongan']=$jenisGolongan;
+		$this->data['jenisNaikPangkat']=$jenisNaikPangkat;
+		$this->data['stlud']=$jenisSTLUD;
+
+
+		$this->data['agama']=$agama;
+		$this->data['relationShipSts'] = $relationShipSts;
+		//log_message('INFO','is admin? :'.$this->ion_auth->is_admin());
+		$this->data['user_group']= $this->ion_auth->get_users_groups($userId)->result();
+		//log_message('debug','User Group : '.print_r($this->data['user_group'],TRUE));
 
 		$this->data['users_instansi']=$this->Users_model->getUsersinstansi($userId );
 
 		$this->data['menu']=$this->Menu_model->menuMaster();
 
-		log_message('INFO','User Id : '.$userId);
+		//log_message('INFO','User Id : '.$userId);
 
+			$this->render('dashboard/profile_pegawai_pindahKeluar_view');
 
-    	$this->render('dashboard/dataPegawaiPindahKeluar_view.php');
 	}
 
 
