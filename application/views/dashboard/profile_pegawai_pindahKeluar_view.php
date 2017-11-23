@@ -10,7 +10,7 @@
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
         <li>Dashboard</li>
-        <li class="active">Profile Pegawai</li>
+        <li class="active">Pegawai Pindah Keluar</li>
       </ol>
     </section>
     <!-- Main content -->
