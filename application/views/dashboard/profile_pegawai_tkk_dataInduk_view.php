@@ -1,7 +1,135 @@
+<script>  //Date picker
+$( document ).ready(function() {
+
+  $('.select2').select2();
+  $('.selectAgama').select2();
+
+  $("select[value]").each(function(){
+    //console.log(this.getAttribute("value"));
+    $(this).val(this.getAttribute("value"));
+  });
+
+  $(':checkbox').each(function(){
+    console.log("Checked Value : "+this.getAttribute("value"));
+    var sumpahPNS = this.getAttribute("value");
+
+    if(sumpahPNS==1)
+    {
+      $(this).prop('checked',true);
+    }else
+    {
+      $(this).prop('checked',false);
+    }
+
+  })
+
+  $('#tglLahir').datepicker({
+    autoclose: true,
+    format: 'yyyy-mm-dd'
+  });
+
+  $('#editIdentitas').click(function (){
+    //console.log('Click Edit');
+
+    $.each($('input,select,textarea', '#formIdentitas'),function(k){
+      //  console.log(k+' '+$(this).attr('disabled'));
+      var isDisabled = $(this).is(':disabled');
+      if (isDisabled) {
+        $(this).prop('disabled', false);
+      }
+    });
+
+  });
+
+
+  $('#cancelIdentitas').click(function (){
+
+
+    $.each($('input,select,textarea', '#formIdentitas'),function(k){
+      //  console.log(k+' '+$(this).attr('disabled'));
+      var isDisabled = $(this).is(':disabled');
+      if (!isDisabled) {
+        $(this).prop('disabled', true);
+      }
+    });
+
+  });
+
+  $('#editCPNS').click(function (){
+
+
+    $.each($('input,select,textarea', '#formCPNS'),function(k){
+      //  console.log(k+' '+$(this).attr('disabled'));
+      var isDisabled = $(this).is(':disabled');
+      if (isDisabled) {
+        $(this).prop('disabled', false);
+      }
+    });
+    $.each($('input,select,textarea', '#formPNS'),function(k){
+      //  console.log(k+' '+$(this).attr('disabled'));
+      var isDisabled = $(this).is(':disabled');
+      if (isDisabled) {
+        $(this).prop('disabled', false);
+      }
+    });
+  });
+
+
+
+  $('#cancelCPNS').click(function (){
+
+
+    $.each($('input,select,textarea', '#formCPNS'),function(k){
+      //  console.log(k+' '+$(this).attr('disabled'));
+      var isDisabled = $(this).is(':disabled');
+      if (!isDisabled) {
+        $(this).prop('disabled', true);
+      }
+    });
+    $.each($('input,select,textarea', '#formPNS'),function(k){
+      //  console.log(k+' '+$(this).attr('disabled'));
+      var isDisabled = $(this).is(':disabled');
+      if (!isDisabled) {
+        $(this).prop('disabled', true);
+      }
+    });
+
+  });
+
+  //cancelPangkatTerakhir
+  $('#editPangkatTerakhir').click(function (){
+    //console.log('Click Edit');
+
+    $.each($('input,select,textarea', '#formPangkatTerakhir'),function(k){
+      //  console.log(k+' '+$(this).attr('disabled'));
+      var isDisabled = $(this).is(':disabled');
+      if (isDisabled) {
+        $(this).prop('disabled', false);
+      }
+    });
+
+  });
+
+
+  $('#cancelPangkatTerakhir').click(function (){
+
+
+    $.each($('input,select,textarea', '#formPangkatTerakhir'),function(k){
+      //  console.log(k+' '+$(this).attr('disabled'));
+      var isDisabled = $(this).is(':disabled');
+      if (!isDisabled) {
+        $(this).prop('disabled', true);
+      }
+    });
+
+  });
+
+});
+</script>
 <div class="tab-pane active" id="dataInduk">
   <ul class="nav nav-tabs">
     <li class=""><a href="#Identitas" data-toggle="tab" aria-expanded="true">Identitas</a></li>
-    <li class=""><a href="#TKK" data-toggle="tab" aria-expanded="true">TKK</a></li>
+    <li class=""><a href="#CPNS" data-toggle="tab" aria-expanded="true">TKK</a></li>
     <li class=""><a href="#Pendidikan_terakhir" data-toggle="tab" aria-expanded="false">Pendidikan Terakhir</a></li>
     <li class=""><a href="#Tempat" data-toggle="tab" aria-expanded="false">Tempat</a></li>
     <li class=""><a href="#Jabatan_terakhir" data-toggle="tab" aria-expanded="false">Jabatan Terakhir</a></li>
@@ -13,238 +141,287 @@
         <div class="row">
           <div class="col-md-8">
             <p class="text-center">
-              <strong>IDENTITAS</strong>
+              <strong>Identitas</strong>
             </p>
-            <form class="form-horizontal">
+            <form class="form-horizontal" id="formIdentitas">
               <div class="box-body">
                 <div class="col-md-4">
                   <div class="form-group">
-                    <label for="NIP" class="col-md-4 control-label">NIP</label>
+                    <label for="inputNipBaru" class="col-md-4 control-label">NIP</label>
                     <div class="col-md-8">
-                      <input class="form-control" id="NIP" placeholder="NIP">
+                      <input class="form-control" id="inputNipBaru" placeholder="NIP" value="<?php echo $identitas['nipBaru'];?>" disabled>
                     </div>
                   </div>
                   <div class="form-group">
-                    <label for="NAMA" class="col-md-4 control-label">Nama</label>
+                    <label for="inputNipLama" class="col-md-4 control-label">NIP Lama</label>
                     <div class="col-md-8">
-                      <input class="form-control" id="NAMA" placeholder="Nama">
+                      <input class="form-control" id="inputNipLama" placeholder="NIP Lama" value="<?php echo $identitas['nipLama'];?>"   disabled>
                     </div>
                   </div>
                   <div class="form-group">
-                    <label for="GLDEPAN" class="col-md-4 control-label">Gelar Depan</label>
+                    <label for="nama" class="col-md-4 control-label">Nama</label>
                     <div class="col-md-8">
-                      <input class="form-control" id="GLDEPAN" placeholder="Gelar Depan">
+                      <input class="form-control" id="nama" placeholder="Nama" value="<?php echo $identitas['nama'];?>" disabled>
                     </div>
                   </div>
                   <div class="form-group">
-                    <label for="GLBLK" class="col-md-4 control-label">Gelar Belakang</label>
+                    <label for="gelarDepan" class="col-md-4 control-label">Gelar Depan</label>
                     <div class="col-md-8">
-                      <input class="form-control" id="GLBLK" placeholder="gelarBelakang">
+                      <input class="form-control" id="gelarDepan" placeholder="Gelar Depan" value="<?php echo $identitas['gelarDepan'];?>" disabled>
                     </div>
                   </div>
                   <div class="form-group">
-                    <label for="KTLAHIR" class="col-md-4 control-label">Tempat Lahir</label>
+                    <label for="gelarBelakang" class="col-md-4 control-label">Gelar Belakang</label>
                     <div class="col-md-8">
-                      <input class="form-control" id="KTLAHIR" placeholder="Tempat Lahir">
+                      <input class="form-control" id="gelarBelakang" placeholder="gelarBelakang" value="<?php echo $identitas['gelarBlk'];?>" disabled>
                     </div>
                   </div>
                   <div class="form-group">
-                    <label for="TLAHIR" class="col-md-4 control-label">Tanggal Lahir</label>
+                    <label for="tempatLahir" class="col-md-4 control-label">Tempat Lahir</label>
                     <div class="col-md-8">
-                      <input class="form-control" id="TLAHIR" placeholder="tanggalLahir">
+                      <input class="form-control" id="tempatLahir" placeholder="Tempat Lahir" value="<?php echo $identitas['KTLAHIR']?>" disabled >
                     </div>
                   </div>
                   <div class="form-group">
-                    <label for="KJKEL" class="col-md-4 control-label">Jenis Kelamin</label>
+                    <label for="tanggalLahir" class="col-md-4 control-label">Tanggal Lahir</label>
                     <div class="col-md-8">
-                      <input class="form-control" id="KJKEL" placeholder="Jenis Kelamin">
+                      <div class="input-group date">
+                        <div class="input-group-addon">
+                          <i class="fa fa-calendar"></i>
+                        </div>
+                        <input type="text" class="form-control pull-right" id="tglLahir" value="<?php echo $identitas['TLAHIR']?>" disabled>
+                      </div>
                     </div>
                   </div>
                   <div class="form-group">
-                    <label for="KAGAMA" class="col-md-4 control-label">Agama</label>
+                    <label for="jeniKelamin" class="col-md-4 control-label">Jenis Kelamin</label>
                     <div class="col-md-8">
-                      <input class="form-control" id="KAGAMA" placeholder="Agama">
+                      <select id="jenisKelamin" disabled="disabled" value="<?php echo $identitas['KJKEL']?>" class="form-control select2" style="width: 100%;">
+                        <option value="1">Pria</option>
+                        <option value="2">Wanita</option>
+                      </select>
                     </div>
                   </div>
                   <div class="form-group">
-                    <label for="KSTATUS" class="col-sm-4 control-label">Status Kepegawaian</label>
+                    <label for="agama" class="col-md-4 control-label">Agama</label>
                     <div class="col-md-8">
-                      <input class="form-control" id="KSTATUS" placeholder="Status Kepegawaian">
+                      <select id="agama" disabled="disabled" value="<?php echo $identitas['agamaId']?>" class="form-control selectAgama" style="width: 100%;">
+                        <?php
+                        foreach ($agama as $value) {
+                          ?>
+                          <option value="<?php echo $value['kode'];?>"><?php echo $value['nama'];?></option>
+                          <?php
+                        }
+                        ?>
+                      </select>
+                    </div>
+                  </div>
+                  <br>
+                  <div class="form-group">
+                    <label for="statusKepegawaian" class="col-sm-4 control-label">Status Kepegawaian</label>
+                    <div class="col-md-8">
+                      <select id="statusKepegawaian" disabled="disabled" value="<?php echo $identitas['statusCpnsPns']?>" class="form-control" style="width: 100%;">
+                        <?php
+                        foreach ($statusPegawai as $value) {
+                          ?>
+                          <option value="<?php echo $value['kode'];?>"><?php echo $value['nama'];?></option>
+                          <?php
+                        }
+                        ?>
+                      </select>
                     </div>
                   </div>
                   <div class="form-group">
-                    <label for="KJPEG" class="col-md-4 control-label">Jenis Kepegawaian</label>
+                    <label for="jenisKepegawaian" class="col-md-4 control-label">Jenis Kepegawaian</label>
                     <div class="col-md-8">
-                      <input class="form-control" id="KJPEG" placeholder="jenisKepegawaian">
+                      <select id="jenisKepegawaian" disabled="disabled" value="<?php echo $identitas['jenisPegawai']?>" class="form-control" style="width: 100%;">
+                        <?php
+                        foreach ($jenisPegawai as $value) {
+                          ?>
+                          <option value="<?php echo $value['kode'];?>"><?php echo $value['nama'];?></option>
+                          <?php
+                        }
+                        ?>
+                      </select>
                     </div>
                   </div>
                   <div class="form-group">
-                    <label for="KDUDUK" class="col-md-4 control-label">Kedudukan Pegawai</label>
+                    <label for="kedudukanPegawai" class="col-md-4 control-label">Kedudukan Pegawai</label>
                     <div class="col-md-8">
-                      <input class="form-control" id="KDUDUK" placeholder="Kedudukan Pegawai">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="KSKAWIN" class="col-md-4 control-label">Status Nikah</label>
-                    <div class="col-md-8">
-                      <input class="form-control" id="KSKAWIN" placeholder="Status Nikah">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="KGOLDAR" class="col-md-4 control-label">Golongan Darah</label>
-                    <div class="col-md-8">
-                      <input class="form-control" id="KGOLDAR" placeholder="Golongan Darah">
+                      <select id="kedudukanPegawai" disabled="disabled" value="<?php echo $identitas['kedudukanHukum']?>" class="form-control" style="width: 100%;">
+                        <?php
+                        foreach ($statusPegawai as $value) {
+                          ?>
+                          <option value="<?php echo $value['kode'];?>"><?php echo $value['nama'];?></option>
+                          <?php
+                        }
+                        ?>
+                      </select>
                     </div>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
-                    <label for="ALJALAN" class="col-md-4 control-label">Alamat</label>
+                    <label for="statusNikah" class="col-md-4 control-label">Status Nikah</label>
                     <div class="col-md-8">
-                      <input class="form-control" id="alamat" placeholder="ALJALAN">
+                      <select id="statusNikah" disabled="disabled" value="<?php echo $identitas['jenisKawin']?>" class="form-control selectAgama" style="width: 100%;">
+                        <?php
+                        foreach ($relationShipSts as $value) {
+                          ?>
+                          <option value="<?php echo $value['kode'];?>"><?php echo $value['nama'];?></option>
+                          <?php
+                        }
+                        ?>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="golonganDarah" class="col-md-4 control-label">Golongan Darah</label>
+                    <div class="col-md-8">
+                      <input class="form-control" id="golonganDarah" placeholder="Golongan Darah" value="<?php echo $identitas['KGOLDAR']?>" disabled>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="alamat" class="col-md-4 control-label">Alamat</label>
+                    <div class="col-md-8">
+                      <input class="form-control" id="alamat" placeholder="Alamat" value="<?php echo $identitas['alamat']?>" disabled >
                     </div>
                   </div>
                   <div class="form-group">
                     <label for="rtrw" class="col-md-4 control-label">RT/RW</label>
                     <div class="col-md-2">
-                      <input class="form-control" id="ALRT" placeholder="RT">
+                      <input class="form-control" id="rt" placeholder="RT" value="<?php echo $identitas['ALRT']?>" disabled>
                     </div>
                     <div class="col-md-2">
-                      <input class="form-control" id="ALRW" placeholder="RW">
+                      <input class="form-control" id="rw" placeholder="RW" value="<?php echo $identitas['ALRW']?>" disabled>
                     </div>
                   </div>
                   <div class="form-group">
-                    <label for="ALTELP" class="col-md-4 control-label">Telepon</label>
+                    <label for="telepon" class="col-md-4 control-label">Telepon</label>
                     <div class="col-md-8">
-                      <input class="form-control" id="ALTELP" placeholder="Telepon">
+                      <input class="form-control" id="telepon" placeholder="Telepon" value="<?php echo $identitas['noTelpon']?>" disabled>
                     </div>
                   </div>
                   <div class="form-group">
-                    <label for="ALKOPROP" class="col-md-4 control-label">Provinsi</label>
+                    <label for="kodePos" class="col-md-4 control-label">Kode Pos</label>
                     <div class="col-md-8">
-                      <input class="form-control" id="ALKOPROP" placeholder="Provinsi">
+                      <input class="form-control" id="kodePos" placeholder="Kode Pos" value="<?php echo $identitas['KPOS']?>" disabled>
                     </div>
                   </div>
                   <div class="form-group">
-                    <label for="ALKOKAB" class="col-md-4 control-label">Kab/Kota/Kotip</label>
+                    <label for="nomorKarpeg" class="col-md-4 control-label">No KARPEG</label>
                     <div class="col-md-8">
-                      <input class="form-control" id="ALKOKAB" placeholder="Kab/Kota/Kotip">
+                      <input class="form-control" id="nomorKarpeg" placeholder="No Karpeg" value="<?php echo $identitas['kartuPegawai']?>" disabled>
                     </div>
                   </div>
                   <div class="form-group">
-                    <label for="ALKOKEC" class="col-md-4 control-label">Kecamatan</label>
+                    <label for="noTaspen" class="col-md-4 control-label">No Taspen</label>
                     <div class="col-md-8">
-                      <input class="form-control" id="ALKOKEC" placeholder="Kecamatan">
+                      <input class="form-control" id="noTaspen" placeholder="noTaspen" value="<?php echo $identitas['taspen']?>" disabled>
                     </div>
                   </div>
                   <div class="form-group">
-                    <label for="ALKODES" class="col-md-4 control-label">Kelurahan</label>
+                    <label for="noAskes" class="col-md-4 control-label">No Askes</label>
                     <div class="col-md-8">
-                      <input class="form-control" id="ALKODES" placeholder="Kelurahan">
+                      <input class="form-control" id="noAskes" placeholder="noAskes" value="<?php echo $identitas['askesNomor']?>" disabled>
                     </div>
                   </div>
                   <div class="form-group">
-                    <label for="KPOS" class="col-md-4 control-label">Kode Pos</label>
+                    <label for="noKarisSU" class="col-md-4 control-label">No KARIS/SU</label>
                     <div class="col-md-8">
-                      <input class="form-control" id="KPOS" placeholder="Kode Pos">
+                      <input class="form-control" id="noKarissu" placeholder="No Karis/SU" value="<?php echo $identitas['NKARIS_SU']?>" disabled>
                     </div>
                   </div>
                   <div class="form-group">
-                    <label for="NKARPEG" class="col-md-4 control-label">No KARPEG</label>
+                    <label for="npwp" class="col-md-4 control-label">NPWP</label>
                     <div class="col-md-8">
-                      <input class="form-control" id="NKARPEG" placeholder="No Karpeg">
+                      <input class="form-control" id="npwp" placeholder="NPWP" value="<?php echo $identitas['npwpNomor']?>" disabled>
                     </div>
                   </div>
                   <div class="form-group">
-                    <label for="NTASPEN" class="col-md-4 control-label">noTaspen</label>
+                    <label for="noKTP" class="col-md-4 control-label">No KTP</label>
                     <div class="col-md-8">
-                      <input class="form-control" id="NTASPEN" placeholder="noTaspen">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="NASKES" class="col-md-4 control-label">noAskes</label>
-                    <div class="col-md-8">
-                      <input class="form-control" id="NASKES" placeholder="noAskes">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="NKARIS_SU" class="col-md-4 control-label">No KARIS/SU</label>
-                    <div class="col-md-8">
-                      <input class="form-control" id="NKARIS_SU" placeholder="No Karis/SU">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="NPWP" class="col-md-4 control-label">NPWP</label>
-                    <div class="col-md-8">
-                      <input class="form-control" id="NPWP" placeholder="NPWP">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="NOPEN" class="col-md-4 control-label">No KTP</label>
-                    <div class="col-md-8">
-                      <input class="form-control" id="NOPEN" placeholder="noKTP">
+                      <input class="form-control" id="noKTP" placeholder="No KTP" value="<?php echo $identitas['NOPEN']?>" disabled>
                     </div>
                   </div>
                 </div>
-              </div>
-              <!-- /.box-body -->
-              <!-- /.box-footer -->
-            </form>
+              </form>
+            </div>
+            <!-- /.box-body -->
+            <!-- /.box-footer -->
           </div>
           <div class="col-md-2">
             <p class="text-center">
               <strong>Foto</strong>
             </p>
-            <img class="img-responsive" src="https://www.w3schools.com/bootstrap/img_chania.jpg" alt="Chania" width="460" height="345">
+            <img class="img-responsive" src="<?php echo $identitas['FILE_BMP'];?>" alt="Foto" width="460" height="345">
+            <div class="form-group">
+              <label for="exampleInputFile">Upload Foto</label>
+              <input type="file" id="exampleInputFile">
+              <p class="help-block">Upload Foto Anda Disini</p>
+            </div>
             <!-- /.chart-responsive -->
           </div>
         </div>
       </div>
       <div class="box-footer">
-        <button type="submit" class="btn btn-default">Cancel</button>
-        <button type="submit" class="btn btn-default">Edit</button>
-        <button type="submit" class="btn btn-info">Save</button>
+        <button id="cancelIdentitas" type="submit" class="btn btn-danger">Cancel</button>
+        <button id="editIdentitas" class="btn btn-warning">Edit</button>
+        <button id="submitIdentitas" type="submit" class="btn btn-primary">Save</button>
       </div>
     </div>
     <!-- /.tab-pane -->
-    <div class="tab-pane" id="TKK">
+    <div class="tab-pane" id="CPNS">
       <div class="box-body">
         <div class="row">
           <div class="col-md-7">
             <p class="text-center">
               <strong>TKK</strong>
             </p>
-            <form class="form-horizontal">
+            <form class="form-horizontal" id="formCPNS">
               <div class="box-body">
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="NIP" class="col-md-4 control-label">NIP</label>
                     <div class="col-md-8">
-                      <input class="form-control" id="NIP" placeholder="NIP">
+                      <input style='font-size: 12px;' class="form-control" id="NIP" placeholder="NIP" value="<?php echo $cpnspns['0']['nipBaru'] ?>" disabled>
                     </div>
                   </div>
                   <div class="form-group">
-                    <label for="notaBKN" class="col-md-4 control-label">Nota BAKN</label>
+                    <label for="notaBKN" class="col-md-4 control-label">Nota BKN</label>
                     <div class="col-md-8">
-                      <input class="form-control" id="notaBKN" placeholder="Nota BAKN">
+                      <input class="form-control" id="notaBKN" placeholder="Nota BKN" value="<?php echo $cpnspns['0']['NTBAKN'] ?>" disabled>
                     </div>
                   </div>
                   <div class="form-group">
-                    <label for="tglNotaBKN" class="col-md-4 control-label">Tanggal Nota BAKN</label>
+                    <label for="tglNotaBKN" class="col-md-4 control-label">Tanggal Nota BKN</label>
                     <div class="col-md-8">
-                      <input class="form-control" id="tglNotaBKN" placeholder="Tanggal Nota BAKN">
+                      <div class="input-group date">
+                        <div class="input-group-addon">
+                          <i class="fa fa-calendar"></i>
+                        </div>
+                        <input type="text" class="form-control pull-right" id="tglNotaBKN" value="<?php echo $cpnspns['0']['TNTBAKN']?>" disabled>
+                      </div>
                     </div>
                   </div>
                   <div class="form-group">
-                    <label for="pejabatMenetapkan" class="col-md-4 control-label">Pejabat yang Menetapkan</label>
+                    <label for="pejabatMenetapkanCPNS" class="col-md-4 control-label">Pejabat Yang Menetapkan</label>
                     <div class="col-md-8">
-                      <input class="form-control" id="pejabatMenetapkan" placeholder="Pejabat Yang Menetapkan">
+                      <select id="pejabatMenetapkanCPNS" disabled="disabled" value="<?php echo $cpnspns['0']['KPEJ_CPNS']?>" class="form-control" style="width: 100%;">
+                        <?php
+                        foreach ($pejabat as $value) {
+                          ?>
+                          <option value="<?php echo $value['kode'];?>"><?php echo $value['nama'];?></option>
+                          <?php
+                        }
+                        ?>
+                      </select>
                     </div>
                   </div>
                   <div class="form-group">
                     <label for="noSKCPNS" class="col-md-4 control-label">No SK CPNS</label>
                     <div class="col-md-8">
-                      <input class="form-control" id="noSKCPNS" placeholder="No SK CPNS">
+                      <input class="form-control" id="noSKCPNS" placeholder="No SK CPNS" value="<?php echo $cpnspns['0']['nomorSkCpns']?>" disabled >
                     </div>
                   </div>
                 </div>
@@ -252,374 +429,360 @@
                   <div class="form-group">
                     <label for="tanggalSKCPNS" class="col-md-4 control-label">Tanggal SK CPNS</label>
                     <div class="col-md-8">
-                      <input class="form-control" id="tanggalSKCPNS" placeholder="Tanggal SK CPNS">
+                      <div class="input-group date">
+                        <div class="input-group-addon">
+                          <i class="fa fa-calendar"></i>
+                        </div>
+                        <input type="text" class="form-control pull-right" id="tanggalSKCPNS" value="<?php echo $cpnspns['0']['tglSkCpns']?>" disabled>
+                      </div>
                     </div>
                   </div>
                   <div class="form-group">
                     <label for="tmtCPNS" class="col-md-4 control-label">TMT CPNS</label>
                     <div class="col-md-8">
-                      <input class="form-control" id="tmtCPNS" placeholder="TMT CPNS">
+                      <div class="input-group date">
+                        <div class="input-group-addon">
+                          <i class="fa fa-calendar"></i>
+                        </div>
+                        <input type="text" class="form-control pull-right" id="tmtCPNS" value="<?php echo $cpnspns['0']['tmtCpns']?>" disabled>
+                      </div>
                     </div>
                   </div>
                   <div class="form-group">
                     <label for="golonganRuang" class="col-md-4 control-label">Golongan Ruang</label>
                     <div class="col-md-8">
-                      <input class="form-control" id="golonganRuang" placeholder="Golongan Ruang">
+                      <select id="golonganRuang" disabled="disabled" value="<?php echo $cpnspns['0']['KGOLRU_CPNS']?>" class="form-control" style="width: 100%;">
+                        <?php
+                        foreach ($jenisGolongan as $value) {
+                          ?>
+                          <option value="<?php echo $value['kode'];?>"><?php echo $value['nama'];?> -<?php echo $value['pangkat'];?> </option>
+                          <?php
+                        }
+                        ?>
+                      </select>
                     </div>
                   </div>
                   <div class="form-group">
-                    <label for="noSTTP" class="col-md-4 control-label">Nomor STTPP</label>
+                    <label for="noSTTP" class="col-md-4 control-label">No STTP</label>
                     <div class="col-md-8">
-                      <input class="form-control" id="noSTTP" placeholder="Nomor STTPP">
+                      <input class="form-control" id="noSTTP" placeholder="No STTP" value="<?php echo $cpnspns['0']['nomorSttpl']?>" disabled>
                     </div>
                   </div>
                   <div class="form-group">
-                    <label for="tglSTTP" class="col-md-4 control-label">Tanggal STTPP</label>
+                    <label for="tanggalLahir" class="col-md-4 control-label">Tanggal STTPP</label>
                     <div class="col-md-8">
-                      <input class="form-control" id="tglSTTP" placeholder="Tanggal STTP">
+                      <div class="input-group date">
+                        <div class="input-group-addon">
+                          <i class="fa fa-calendar"></i>
+                        </div>
+                        <input type="text" class="form-control pull-right" id="tglLahir" value="<?php echo $cpnspns['0']['tglSttpl']?>" disabled>
+                      </div>
                     </div>
                   </div>
                   <div class="form-group">
-                    <label for="tmtTugas" class="col-md-4 control-label">TMT Melaksanakan Tugas</label>
+                    <label for="tmtTugas" class="col-md-4 control-label">Tamat Tugas</label>
                     <div class="col-md-8">
-                      <input class="form-control" id="tmtTugas" placeholder="TMT Melaksanakan Tugas">
+                      <div class="input-group date">
+                        <div class="input-group-addon">
+                          <i class="fa fa-calendar"></i>
+                        </div>
+                        <input type="text" class="form-control pull-right" id="tmtTugas" value="<?php echo $cpnspns['0']['tglSttpl']?>" disabled>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
               <!-- /.box-body -->
               <div class="box-footer">
-                <button type="submit" class="btn btn-default">Cancel</button>
-                <button type="submit" class="btn btn-default">Edit</button>
-                <button type="submit" class="btn btn-info">Submit</button>
+                <button id="cancelCPNS" class="btn btn-danger">Cancel</button>
+                <button id="editCPNS"  class="btn btn-warning">Edit</button>
+                <button id="saveCPNS" type="submit" class="btn btn-info">Submit</button>
               </div>
               <!-- /.box-footer -->
             </form>
           </div>
           <div class="col-md-4">
-            <p class="text-center">
-              <strong>PNS</strong>
-            </p>
-            <form class="form-horizontal">
-              <div class="box-body">
-                <div class="form-group">
-                  <label for="pejabatMenetapkanPNS" class="col-md-4 control-label">Pejabat Yang Menetapkan</label>
-                  <div class="col-md-8">
-                    <input class="form-control" id="inputEmail3" placeholder="Pejabat Yang Menetapkan">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="noSKPNS" class="col-md-4 control-label">No SK PNS</label>
-                  <div class="col-md-8">
-                    <input class="form-control" id="noSKPNS" placeholder="No SK PNS">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="tglSKPNS" class="col-md-4 control-label">Tanggal SK PNS</label>
-                  <div class="col-md-8">
-                    <input class="form-control" id="tglSKPNS" placeholder="Tanggal SK PNS">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="tmtPNS" class="col-md-4 control-label">TMT PNS</label>
-                  <div class="col-md-8">
-                    <input class="form-control" id="tmtPNS" placeholder="TMT PNS">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="golRuangPNS" class="col-md-4 control-label">Golongan Ruang PNS</label>
-                  <div class="col-md-8">
-                    <input class="form-control" id="golRuangPNS" placeholder="Golongan Ruang PNS">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="sumpahPNS" class="col-md-4 control-label">sumpahPNS</label>
-                  <div class="col-md-8">
-                    <input class="form-control" id="sumpahPNS" placeholder="Sumpah PNS">
-                  </div>
-                </div>
-              </div>
-            </form>
-          </div>
         </div>
       </div>
-    </div>
-    <div class="tab-pane" id="Pendidikan_terakhir">
-      <div class="box-body">
-        <div class="row">
-          <div class="col-md-12">
-            <p class="text-center">
-              <strong>PENDIDIKAN</strong>
-            </p>
-            <form class="form-horizontal">
-              <div class="box-body">
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label for="nip" class="col-md-4 control-label">NIP</label>
-                    <div class="col-md-4">
-                      <input class="form-control" id="nip" placeholder="NIP">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="tingkatPendidikan" class="col-md-4 control-label">Tingkat Pendidikan</label>
-                    <div class="col-md-4">
-                      <input class="form-control" id="tingkatPendidikan" placeholder="Tingkat Pendidikan">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="jurusan" class="col-md-4 control-label">Jurusan</label>
-                    <div class="col-md-4">
-                      <input class="form-control" id="jurusan" placeholder="Jurusan">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="namaPendUmum" class="col-md-4 control-label">Nama Pendidikan Umum</label>
-                    <div class="col-md-4">
-                      <input class="form-control" id="namaPendUmum" placeholder="Nama Pendidikan Umum">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="namaSekolah" class="col-md-4 control-label">Nama Sekolah</label>
-                    <div class="col-md-4">
-                      <input class="form-control" id="namaSekolah" placeholder="Nama Sekolah">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="namaDiklatStruktural" class="col-md-4 control-label">Diklat Struktural</label>
-                    <div class="col-md-4">
-                      <input class="form-control" id="namaDiklatStruktural" placeholder="Diklat Struktural">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="namaDiklatFungsional" class="col-md-4 control-label">Diklat Fungsional</label>
-                    <div class="col-md-4">
-                      <input class="form-control" id="namaDiklatFungsional" placeholder="Diklat Fungsional">
-                    </div>
-                  </div>
-
-                  <div class="form-group">
-                    <label for="namaDiklatTeknik" class="col-md-4 control-label">Diklat Teknik</label>
-                    <div class="col-md-4">
-                      <input class="form-control" id="namaDiklatTeknik" placeholder="Diklat Teknik">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="namaPenataran" class="col-md-4 control-label">Penataran</label>
-                    <div class="col-md-4">
-                      <input class="form-control" id="namaPenataran" placeholder="Penataran">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="namaSeminar" class="col-md-4 control-label">Seminar</label>
-                    <div class="col-md-4">
-                      <input class="form-control" id="namaSeminar" placeholder="Seminar">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="namaKursus" class="col-md-4 control-label">Kursus</label>
-                    <div class="col-md-4">
-                      <input class="form-control" id="namaKursus" placeholder="Kursus">
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="tab-pane" id="Tempat">
-      <div class="box-body">
-        <div class="row">
-          <div class="col-md-12">
-            <p class="text-center">
-              <strong>TEMPAT</strong>
-            </p>
-            <form class="form-horizontal">
-              <div class="box-body">
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label for="nip" class="col-md-4 control-label">NIP</label>
-                    <div class="col-md-4">
-                      <input class="form-control" id="nip" placeholder="NIP">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="instansiInduk" class="col-md-4 control-label">Instansi Induk</label>
-                    <div class="col-md-4">
-                      <input class="form-control" id="instansiInduk" placeholder="Instansi Induk">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="provinsi" class="col-md-4 control-label">Provinsi</label>
-                    <div class="col-md-4">
-                      <input class="form-control" id="provinsi" placeholder="Provinsi">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="kabKotaKotip" class="col-md-4 control-label">Kabupaten/Kota</label>
-                    <div class="col-md-4">
-                      <input class="form-control" id="kabKotaKotip" placeholder="Kabupaten/Kota">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="kecamatan" class="col-md-4 control-label">Kecamatan</label>
-                    <div class="col-md-4">
-                      <input class="form-control" id="kecamatan" placeholder="Kecamatan">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="kelurahan" class="col-md-4 control-label">Kelurahan</label>
-                    <div class="col-md-4">
-                      <input class="form-control" id="kelurahan" placeholder="Kelurahan">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="komponen" class="col-md-4 control-label">Komponen</label>
-                    <div class="col-md-4">
-                      <input class="form-control" id="komponen" placeholder="Komponen">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="unitKerja" class="col-md-4 control-label">Unit Kerja</label>
-                    <div class="col-md-4">
-                      <input class="form-control" id="unitKerja" placeholder="Unit Kerja">
-                    </div>
-                  </div>
-
-                  <div class="form-group">
-                    <label for="provinsiLokasiKerja" class="col-md-4 control-label">Provinsi Lokasi Kerja</label>
-                    <div class="col-md-4">
-                      <input class="form-control" id="provinsiLokasiKerja" placeholder="Provinsi Lokasi Kerja">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="kabKotaLokasiKerja" class="col-md-4 control-label">Kota/Kabupaten Lokasi Kerja</label>
-                    <div class="col-md-4">
-                      <input class="form-control" id="kabKotaLokasiKerja" placeholder="Kota/Kab Lokasi Kerja">
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-      <div class="box-footer">
-        <button type="submit" class="btn btn-default">Cancel</button>
-        <button type="submit" class="btn btn-default">Edit</button>
-        <button type="submit" class="btn btn-info">Save</button>
-      </div>
-    </div>
-    <div class="tab-pane" id="Jabatan_terakhir">
-      <div class="box-body">
-        <div class="row">
-          <div class="col-md-12">
-            <p class="text-center">
-              <strong>JABATAN TERAKHIR</strong>
-            </p>
-            <form class="form-horizontal">
-              <div class="box-body">
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label for="nip" class="col-md-2 control-label">NIP</label>
-                    <div class="col-md-8">
-                      <input class="form-control" id="nip" placeholder="NIP">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="pejabatMenetapkanJabatanTerakhir" class="col-md-2 control-label">Pejabat Menetapkan</label>
-                    <div class="col-md-8">
-                      <input class="form-control" id="pejabatMenetapkanJabatanTerakhir" placeholder="Pejabat Menetapkan">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="noSKJabatan" class="col-md-2 control-label">No SK Jabatan</label>
-                    <div class="col-md-8">
-                      <input class="form-control" id="noSKJabatan" placeholder="No SK Jabatan">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="tglSKJabatan" class="col-md-2 control-label">Tanggal SK Jabatan</label>
-                    <div class="col-md-8">
-                      <input class="form-control" id="tglSKJabatan" placeholder="Tanggal SK Jabatan">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="jenisJabatan" class="col-md-2 control-label">Jenis Jabatan</label>
-                    <div class="col-md-8">
-                      <input class="form-control" id="jenisJabatan" placeholder="Jenis Jabatan">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="eselon" class="col-md-2 control-label">Eselon</label>
-                    <div class="col-md-8">
-                      <input class="form-control" id="eselon" placeholder="Eselon">
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label for="subUnitKerja" class="col-md-2 control-label">Sub Unit Kerja</label>
-                    <div class="col-md-8">
-                      <input class="form-control" id="subUnitKerja" placeholder="Sub Unit Kerja">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="subSubUnitKerja" class="col-md-2 control-label">Sub Sub Unit Kerja</label>
-                    <div class="col-md-8">
-                      <input class="form-control" id="subSubUnitKerja" placeholder="Sub Unit Kerja">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="subBagianUnitKerja" class="col-md-2 control-label">Sub Bagian Unit Kerja</label>
-                    <div class="col-md-8">
-                      <input class="form-control" id="subBagianUnitKerja" placeholder="Sub Bagian Unit Kerja">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="namaJabatan" class="col-md-2 control-label">Nama Jabatan</label>
-                    <div class="col-md-8">
-                      <input class="form-control" id="namaJabatan" placeholder="namaJabatan">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="noSKPelantikan" class="col-md-2 control-label">No SK Pelantikan</label>
-                    <div class="col-md-8">
-                      <input class="form-control" id="masaKerjaGolRuang" placeholder="Masa Kerja Gol Ruang">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="tglPelantikan" class="col-md-2 control-label">Tanggal Pelantikan</label>
-                    <div class="col-md-8">
-                      <input class="form-control" id="tglPelantikan" placeholder="Tanggal Pelantikan">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="tmtJabatan" class="col-md-2 control-label">TMT Jabatan</label>
-                    <div class="col-md-8">
-                      <input class="form-control" id="tmtJabatan" placeholder="TMT Jabatan">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="sumpahJabatan" class="col-md-2 control-label">Sumpah Jabatan</label>
-                    <div class="col-md-8">
-                      <input class="form-control" id="sumpahJabatan" placeholder="sumpah Jabatan">
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-      <div class="box-footer">
-        <button type="submit" class="btn btn-default ">Cancel</button>
-        <button type="submit" class="btn btn-default">Edit</button>
-        <button type="submit" class="btn btn-info">Save</button>
-      </div>
-
-
     </div>
   </div>
+  <div class="tab-pane" id="Pendidikan_terakhir">
+    <div class="box-body">
+      <div class="row">
+        <div class="col-md-12">
+          <p class="text-center">
+            <strong>Pendidikan</strong>
+          </p>
+          <form class="form-horizontal">
+            <div class="box-body">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="nip" class="col-md-4 control-label">NIP</label>
+                  <div class="col-md-4">
+                    <input class="form-control" id="nip" placeholder="NIP">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="tingkatPendidikan" class="col-md-4 control-label">Tingkat Pendidikan</label>
+                  <div class="col-md-4">
+                    <input class="form-control" id="tingkatPendidikan" placeholder="Tingkat Pendidikan">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="jurusan" class="col-md-4 control-label">Jurusan</label>
+                  <div class="col-md-4">
+                    <input class="form-control" id="jurusan" placeholder="Jurusan">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="namaPendUmum" class="col-md-4 control-label">Nama Pendidikan Umum</label>
+                  <div class="col-md-4">
+                    <input class="form-control" id="namaPendUmum" placeholder="Nama Pendidikan Umum">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="namaSekolah" class="col-md-4 control-label">Nama Sekolah</label>
+                  <div class="col-md-4">
+                    <input class="form-control" id="namaSekolah" placeholder="Nama Sekolah">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="namaDiklatStruktural" class="col-md-4 control-label">Diklat Struktural</label>
+                  <div class="col-md-4">
+                    <input class="form-control" id="namaDiklatStruktural" placeholder="Diklat Struktural">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="namaDiklatFungsional" class="col-md-4 control-label">Diklat Fungsional</label>
+                  <div class="col-md-4">
+                    <input class="form-control" id="namaDiklatFungsional" placeholder="Diklat Fungsional">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="namaDiklatTeknik" class="col-md-4 control-label">Diklat Teknik</label>
+                  <div class="col-md-4">
+                    <input class="form-control" id="namaDiklatTeknik" placeholder="Diklat Teknik">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="namaPenataran" class="col-md-4 control-label">Penataran</label>
+                  <div class="col-md-4">
+                    <input class="form-control" id="namaPenataran" placeholder="Penataran">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="namaSeminar" class="col-md-4 control-label">Seminar</label>
+                  <div class="col-md-4">
+                    <input class="form-control" id="namaSeminar" placeholder="Seminar">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="namaKursus" class="col-md-4 control-label">Kursus</label>
+                  <div class="col-md-4">
+                    <input class="form-control" id="namaKursus" placeholder="Kursus">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="tab-pane" id="Tempat">
+    <div class="box-body">
+      <div class="row">
+        <div class="col-md-12">
+          <p class="text-center">
+            <strong>Tempat</strong>
+          </p>
+          <form class="form-horizontal">
+            <div class="box-body">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="nip" class="col-md-4 control-label">NIP</label>
+                  <div class="col-md-4">
+                    <input class="form-control" id="nip" placeholder="NIP">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="instansiInduk" class="col-md-4 control-label">Instansi Induk</label>
+                  <div class="col-md-4">
+                    <input class="form-control" id="instansiInduk" placeholder="Instansi Induk">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="provinsi" class="col-md-4 control-label">Provinsi</label>
+                  <div class="col-md-4">
+                    <input class="form-control" id="provinsi" placeholder="Provinsi">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="kabKotaKotip" class="col-md-4 control-label">Kabupaten/Kota</label>
+                  <div class="col-md-4">
+                    <input class="form-control" id="kabKotaKotip" placeholder="Kabupaten/Kota">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="kecamatan" class="col-md-4 control-label">Kecamatan</label>
+                  <div class="col-md-4">
+                    <input class="form-control" id="kecamatan" placeholder="Kecamatan">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="kelurahan" class="col-md-4 control-label">Kelurahan</label>
+                  <div class="col-md-4">
+                    <input class="form-control" id="kelurahan" placeholder="Kelurahan">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="komponen" class="col-md-4 control-label">Komponen</label>
+                  <div class="col-md-4">
+                    <input class="form-control" id="komponen" placeholder="Komponen">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="unitKerja" class="col-md-4 control-label">Unit Kerja</label>
+                  <div class="col-md-4">
+                    <input class="form-control" id="unitKerja" placeholder="Unit Kerja">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="provinsiLokasiKerja" class="col-md-4 control-label">Provinsi Lokasi Kerja</label>
+                  <div class="col-md-4">
+                    <input class="form-control" id="provinsiLokasiKerja" placeholder="Provinsi Lokasi Kerja">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="kabKotaLokasiKerja" class="col-md-4 control-label">Kota/Kabupaten Lokasi Kerja</label>
+                  <div class="col-md-4">
+                    <input class="form-control" id="kabKotaLokasiKerja" placeholder="Kota/Kab Lokasi Kerja">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="box-footer">
+      <button type="submit" class="btn btn-default">Cancel</button>
+      <button type="submit" class="btn btn-default">Edit</button>
+      <button type="submit" class="btn btn-info">Save</button>
+    </div>
+  </div>
+  <div class="tab-pane" id="Jabatan_terakhir">
+    <div class="box-body">
+      <div class="row">
+        <div class="col-md-12">
+          <p class="text-center">
+            <strong>Jabatan Terakhir</strong>
+          </p>
+          <form class="form-horizontal">
+            <div class="box-body">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="nip" class="col-md-2 control-label">NIP</label>
+                  <div class="col-md-8">
+                    <input class="form-control" id="nip" placeholder="NIP">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="pejabatMenetapkanJabatanTerakhir" class="col-md-2 control-label">Pejabat Menetapkan</label>
+                  <div class="col-md-8">
+                    <input class="form-control" id="pejabatMenetapkanJabatanTerakhir" placeholder="Pejabat Menetapkan">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="noSKJabatan" class="col-md-2 control-label">No SK Jabatan</label>
+                  <div class="col-md-8">
+                    <input class="form-control" id="noSKJabatan" placeholder="No SK Jabatan">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="tglSKJabatan" class="col-md-2 control-label">Tanggal SK Jabatan</label>
+                  <div class="col-md-8">
+                    <div class="input-group date">
+                      <div class="input-group-addon">
+                        <i class="fa fa-calendar"></i>
+                      </div>
+                      <input type="text" class="form-control pull-right" id="tglLahir" " disabled>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="jenisJabatan" class="col-md-2 control-label">Jenis Jabatan</label>
+                  <div class="col-md-8">
+                    <input class="form-control" id="jenisJabatan" placeholder="Jenis Jabatan">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="eselon" class="col-md-2 control-label">Eselon</label>
+                  <div class="col-md-8">
+                    <input class="form-control" id="eselon" placeholder="Eselon">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="subUnitKerja" class="col-md-2 control-label">Sub Unit Kerja</label>
+                  <div class="col-md-8">
+                    <input class="form-control" id="subUnitKerja" placeholder="Sub Unit Kerja">
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="subSubUnitKerja" class="col-md-2 control-label">Sub Sub Unit Kerja</label>
+                  <div class="col-md-8">
+                    <input class="form-control" id="subSubUnitKerja" placeholder="Sub Unit Kerja">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="subBagianUnitKerja" class="col-md-2 control-label">Sub Bagian Unit Kerja</label>
+                  <div class="col-md-8">
+                    <input class="form-control" id="subBagianUnitKerja" placeholder="Sub Bagian Unit Kerja">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="namaJabatan" class="col-md-2 control-label">Nama Jabatan</label>
+                  <div class="col-md-8">
+                    <input class="form-control" id="namaJabatan" placeholder="namaJabatan">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="noSKPelantikan" class="col-md-2 control-label">No SK Pelantikan</label>
+                  <div class="col-md-8">
+                    <input class="form-control" id="masaKerjaGolRuang" placeholder="Masa Kerja Gol Ruang">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="tglPelantikan" class="col-md-2 control-label">Tanggal Pelantikan</label>
+                  <div class="col-md-8">
+                    <input class="form-control" id="tglPelantikan" placeholder="Tanggal Pelantikan">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="tmtJabatan" class="col-md-2 control-label">TMT Jabatan</label>
+                  <div class="col-md-8">
+                    <input class="form-control" id="tmtJabatan" placeholder="TMT Jabatan">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="sumpahJabatan" class="col-md-2 control-label">Sumpah Jabatan</label>
+                  <div class="col-md-8">
+                    <input class="form-control" id="sumpahJabatan" placeholder="sumpah Jabatan">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="box-footer">
+      <button type="submit" class="btn btn-default ">Cancel</button>
+      <button type="submit" class="btn btn-default">Edit</button>
+      <button type="submit" class="btn btn-info">Save</button>
+    </div>
+  </div>
+</div>
 </div>

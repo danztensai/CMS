@@ -18,7 +18,7 @@
           <div class="row">
             <div class="col-md-12">
               <p class="text-center">
-                <strong>AYAH</strong>
+                <strong>Ayah</strong>
               </p>
               <form class="form-horizontal">
                 <div class="box-body scroll">
@@ -36,9 +36,14 @@
                       </div>
                     </div>
                     <div class="form-group">
-                      <label for="TGLLAHIR" class="col-md-4 control-label">Tanggal Lahir</label>
+                      <label for="tanggalLahir" class="col-md-4 control-label">Tanggal Lahir</label>
                       <div class="col-md-4">
-                        <input class="form-control" id="TGLLAHIR" placeholder="Tanggal Lahir">
+                        <div class="input-group date">
+                          <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                          </div>
+                          <input type="text" class="form-control pull-right" id="TGLLAHIR" value="" disabled>
+                        </div>
                       </div>
                     </div>
                     <div class="form-group">
@@ -95,7 +100,7 @@
           <div class="row">
             <div class="col-md-12">
               <p class="text-center">
-                <strong>IBU</strong>
+                <strong>Ibu</strong>
               </p>
               <form class="form-horizontal">
                 <div class="box-body scroll">
@@ -113,9 +118,14 @@
                       </div>
                     </div>
                     <div class="form-group">
-                      <label for="TGLLAHIR" class="col-md-4 control-label">Tanggal Lahir</label>
+                      <label for="tanggalLahir" class="col-md-4 control-label">Tanggal Lahir</label>
                       <div class="col-md-4">
-                        <input class="form-control" id="TGLLAHIR" placeholder="Tanggal Lahir">
+                        <div class="input-group date">
+                          <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                          </div>
+                          <input type="text" class="form-control pull-right" id="TGLLAHIR" value="" disabled>
+                        </div>
                       </div>
                     </div>
                     <div class="form-group">
@@ -172,7 +182,7 @@
           <div class="row">
             <div class="col-md-12">
               <p class="text-center">
-                <strong>SUAMI / ISTRI</strong>
+                <strong>Suami/Istri</strong>
               </p>
               <form class="form-horizontal">
                 <div class="box-body scroll">
@@ -190,9 +200,14 @@
                       </div>
                     </div>
                     <div class="form-group">
-                      <label for="TLAHIR" class="col-md-4 control-label">Tanggal Lahir</label>
+                      <label for="tanggalLahir" class="col-md-4 control-label">Tanggal Lahir</label>
                       <div class="col-md-4">
-                        <input class="form-control" id="TLAHIR" placeholder="Tanggal Lahir">
+                        <div class="input-group date">
+                          <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                          </div>
+                          <input type="text" class="form-control pull-right" id="TGLLAHIR" value="" disabled>
+                        </div>
                       </div>
                     </div>
                     <div class="form-group">
@@ -202,9 +217,14 @@
                       </div>
                     </div>
                     <div class="form-group">
-                      <label for="TKAWIN" class="col-md-4 control-label">Tanggal Kawin</label>
+                      <label for="tanggalLahir" class="col-md-4 control-label">Tanggal Kawin</label>
                       <div class="col-md-4">
-                        <input class="form-control" id="TKAWIN" placeholder="Tanggal Kawin">
+                        <div class="input-group date">
+                          <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                          </div>
+                          <input type="text" class="form-control pull-right" id="TKAWIN" value="" disabled>
+                        </div>
                       </div>
                     </div>
                     <div class="form-group">
@@ -237,7 +257,7 @@
           <div class="row">
             <div class="col-md-12">
               <p class="text-center">
-                <strong>ANAK</strong>
+                <strong>Anak</strong>
               </p>
               <form class="form-horizontal">
                 <div class="box-body scroll">
@@ -255,9 +275,14 @@
                       </div>
                     </div>
                     <div class="form-group">
-                      <label for="TGLLAHIR" class="col-md-4 control-label">Tanggal Lahir</label>
+                      <label for="tanggalLahir" class="col-md-4 control-label">Tanggal Lahir</label>
                       <div class="col-md-4">
-                        <input class="form-control" id="TGLLAHIR" placeholder="Tanggal Lahir">
+                        <div class="input-group date">
+                          <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                          </div>
+                          <input type="text" class="form-control pull-right" id="TGLLAHIR" value="" disabled>
+                        </div>
                       </div>
                     </div>
                     <div class="form-group">
