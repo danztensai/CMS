@@ -7,6 +7,147 @@
 		}
 
 
+		public function getTempatPegawai($nip)
+		{
+		$DB2 =$this->load->database('simpegRef', TRUE);
+		$querySQL = "		 SELECT rw1.kwil as kwi1, rw1.nwil as nwil1, rw2.kwil AS kwil2, rw2.nwil as nwil2, rw3.kwil as kwil3,
+		 rw3.nwil as nwil3, rw4.kwil as kwil4, rw4.nwil as nwil4, ru.kunker as kunker, ru.nunker as nunker, ru2.kunker as kunker2, ru2.nunker as nunker2
+		FROM revReferenceSimpeg.jakhir rj
+		LEFT JOIN revReferenceSimpeg.wilayah rw1 on rw1.kwil = CONCAT(SUBSTRING(rj.kwil, 1,2), '00000000')
+		LEFT JOIN revReferenceSimpeg.wilayah rw2 on rw2.kwil = CONCAT(SUBSTRING(rj.kwil, 1,4), '000000')
+		LEFT JOIN revReferenceSimpeg.wilayah rw3 on rw3.kwil = CONCAT(SUBSTRING(rj.kwil, 1,6), '0000')
+		LEFT JOIN revReferenceSimpeg.wilayah rw4 on rw4.kwil = rj.kwil
+		LEFT JOIN revReferenceSimpeg.unkerja2 ru on ru.kunker = CONCAT(SUBSTRING(rj.kunkers, 1,4), '00000000')
+		LEFT JOIN revReferenceSimpeg.unkerja2 ru2 on ru2.kunker = CONCAT(SUBSTRING(rj.kunkers, 1,6), '000000')
+		WHERE rj.NIP = '$nip'";
+
+		$data = array();
+		$stackData = array();
+
+		log_message('debug','getTempatPegawai: '.$querySQL);
+		$query = $DB2->query($querySQL);
+
+		if($query->num_rows()>0)
+			{ $count = 1;
+				foreach($query->result() as $row)
+				{
+					$data['kwi1']=$row->kwi1;
+					$data['nwil1']=$row->nwil1;
+					$data['kwil2']=$row->kwil2;
+					$data['nwil2']=$row->nwil2;
+					$data['kwil3']=$row->kwil3;
+					$data['nwil3']=$row->nwil3;
+					$data['kwil4']=$row->kwil4;
+					$data['nwil4']=$row->nwil4;
+					$data['kunker']=$row->kunker;
+					$data['nunker']=$row->nunker;
+					$data['kunker2']=$row->kunker2;
+					$data['nunker2']=$row->nunker2;
+					//array_push($stackData,$data);
+				}
+				$query->free_result();
+				return $data;
+			}else
+			{
+
+				$query->free_result();
+				return $data;
+			}
+		}
+
+		public function getJabatanTerakhir($nip)
+		{
+		$DB2 =$this->load->database('simpegRef', TRUE);
+		$querySQL = "SELECT rj.NIP as NIP, rj.KPEJ, rp.npej, rj.NSKJABAT, rj.TSKJABAT, rjn.namaJenisJabatan, rj.KESELON, rj.kunkers as kunker1,
+		ru.nunker, ru2.nunker as nunker2, ru3.nunker as nunker3,
+rj.KJAB, rjn.NJAB, rj.NJAB as njab2, rj.TLANTIK, rj.TMTJAB, rj.SJAB,rj.NLANTIK
+FROM revReferenceSimpeg.jakhir rj
+INNER JOIN revReferenceSimpeg.pejabatMenetapkan rp on rp.kpej = rj.KPEJ
+INNER JOIN revReferenceSimpeg.jenisJabatan rjn on rjn.JNSJAB = rj.JNSJAB AND rjn.KJAB = rj.KJAB
+INNER JOIN revReferenceSimpeg.unkerja ru on ru.kunker LIKE CONCAT(SUBSTRING(rj.kunkers, 1,8), '0000')
+INNER JOIN revReferenceSimpeg.unkerja ru2 on ru2.kunker LIKE CONCAT(SUBSTRING(rj.kunkers, 1,10), '00')
+INNER JOIN revReferenceSimpeg.unkerja ru3 on ru3.kunker = rj.kunkers
+WHERE rj.NIP = '$nip'";
+
+		$data = array();
+		$stackData = array();
+
+		log_message('debug','getJabatanTerakhir: '.$querySQL);
+		$query = $DB2->query($querySQL);
+
+		if($query->num_rows()>0)
+			{ $count = 1;
+				foreach($query->result() as $row)
+				{
+					$data['NIP']=$row->NIP;
+					$data['KPEJ']=$row->KPEJ;
+					$data['npej']=$row->npej;
+					$data['NSKJABAT']=$row->NSKJABAT;
+					$data['TSKJABAT']=$row->TSKJABAT;
+					$data['namaJenisJabatan']=$row->namaJenisJabatan;
+					$data['KESELON']=$row->KESELON;
+					$data['kunker1']=$row->kunker1;
+					$data['nunker']=$row->nunker;
+					$data['nunker2']=$row->nunker2;
+					$data['nunker3']=$row->nunker3;
+					$data['KJAB']=$row->KJAB;
+					$data['njab2']=$row->njab2;
+					$data['TLANTIK']=$row->TLANTIK;
+					$data['TMTJAB']=$row->TMTJAB;
+					$data['SJAB']=$row->SJAB;
+					$data['NLANTIK']=$row->NLANTIK;
+
+					//array_push($stackData,$data);
+				}
+				$query->free_result();
+				return $data;
+			}else
+			{
+
+				$query->free_result();
+				return $data;
+			}
+		}
+
+		public function getGajiBerkala($nip)
+		{
+			  $DB2 =$this->load->database('simpegRef', TRUE);
+				$querySQL = "SELECT NIP, NSTAHU, TSTAHU, TMTNGAJ, GPOKKHIR, k.KKANTOR, MSKERJA, FLAG,k.NKANTOR
+				FROM gkkhir g left join kbayar k on g.KKANTOR=k.KKANTOR WHERE NIP = '$nip'";
+
+				$data = array();
+				$stackData = array();
+
+				log_message('debug','getGajiBerkala: '.$querySQL);
+				$query = $DB2->query($querySQL);
+
+				if($query->num_rows()>0)
+					{ $count = 1;
+						foreach($query->result() as $row)
+						{
+							$data['NIP']=$row->NIP;
+							$data['NSTAHU']=$row->NSTAHU;
+							$data['TSTAHU']=$row->TSTAHU;
+							$data['TMTNGAJ']=$row->TMTNGAJ;
+							$data['GPOKKHIR']=$row->GPOKKHIR;
+							$data['KKANTOR']=$row->KKANTOR;
+							$data['NKANTOR']=$row->NKANTOR;
+							$data['MSKERJA']=$row->MSKERJA;
+							$data['FLAG']=$row->FLAG;
+
+
+						 array_push($stackData,$data);
+						}
+						$query->free_result();
+						return $stackData;
+					}else
+					{
+
+						$query->free_result();
+						return $data;
+					}
+		}
+
 		public function getIdentitasPegawai($nip)
 		{
 			  $DB2 =$this->load->database('simpegRef', TRUE);
