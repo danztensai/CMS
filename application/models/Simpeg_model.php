@@ -7,6 +7,50 @@
 		}
 
 
+
+		public function getRiwayatPangkat($nip)
+		{
+			  $DB2 =$this->load->database('simpegRef', TRUE);
+				$querySQL = "SELECT rg.nip, rg.Golongan_idGolongan, rj.golNama, rg.jenisKP, rn.nnpang, rg.tmtGolongan, rg.nomorSk, rg.tanggalSk, rg.kpej, rp.npej
+								FROM revReferenceSimpeg.golonganhistory rg
+								INNER JOIN revReferenceSimpeg.jenisgolongan rj on rj.Golongan_id = rg.Golongan_idGolongan
+								INNER JOIN revReferenceSimpeg.naikPangkat rn on rn.knpang = rg.jenisKP
+								INNER JOIN revReferenceSimpeg.pejabatMenetapkan rp on rp.kpej = rg.kpej
+								WHERE rg.nip = '$nip'
+								ORDER BY rg.tmtGolongan ASC;";
+
+				$data = array();
+				$stackData = array();
+
+				log_message('debug','getRiwayatPangkat: '.$querySQL);
+				$query = $DB2->query($querySQL);
+
+				if($query->num_rows()>0)
+					{ $count = 1;
+						foreach($query->result() as $row)
+						{
+							$data['nip']=$row->nip;
+							$data['idGolongan']=$row->Golongan_idGolongan;
+							$data['golNama']=$row->golNama;
+							$data['jenisKP']=$row->jenisKP;
+							$data['nnpang']=$row->nnpang;
+							$data['tmtGolongan']=$row->tmtGolongan;
+							$data['nomorSk']=$row->nomorSk;
+							$data['tanggalSk']=$row->tanggalSk;
+							$data['kpej']=$row->kpej;
+
+
+						 array_push($stackData,$data);
+						}
+						$query->free_result();
+						return $stackData;
+					}else
+					{
+
+						$query->free_result();
+						return $data;
+					}
+		}
 		public function getTempatPegawai($nip)
 		{
 		$DB2 =$this->load->database('simpegRef', TRUE);
@@ -147,6 +191,7 @@ WHERE rj.NIP = '$nip'";
 						return $data;
 					}
 		}
+
 
 		public function getIdentitasPegawai($nip)
 		{

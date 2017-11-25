@@ -136,7 +136,9 @@ class Dashboard extends Auth_Controller
 		$identitasSimpeg = $this->Simpeg_model->getIdentitasPegawai($userLoggedin->nip);
 		$cpnspnsSimpeg = $this->Simpeg_model->getCPNSPNSInfoByNip($userLoggedin->nip);
 		$pangkatTerakhir = $this->Simpeg_model->getPangkatAkhirByNip($userLoggedin->nip);
+		$riwayatPangkat = $this->Simpeg_model->getRiwayatPangkat($userLoggedin->nip);
 		//log_message('debug',print_r($cpnspnsSimpeg,TRUE));
+
 		//log_message('debug',print_r($userLoggedin,TRUE));
 		$agama =$this->Simpeg_model->getAgama();
 		//log_message('debug',print_r($agama,TRUE));
@@ -152,6 +154,8 @@ class Dashboard extends Auth_Controller
 
 
 		$this->data['identitas']=$identitasSimpeg;
+		$this->data['riwayatPangkat']=$riwayatPangkat;
+
 		$this->data['cpnspns']=$cpnspnsSimpeg;
 		$this->data['pangkatTerakhir']=$pangkatTerakhir;
 		$this->data['kedudukanPegawai']=$kedudukanPegawai;
