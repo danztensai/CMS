@@ -27,6 +27,49 @@ $(':checkbox').each(function(){
     autoclose: true,
     format: 'yyyy-mm-dd'
   });
+$('#submitIdentitas').click(function(){
+
+  // $.each($('input,select,textarea,checkbox', '#formIdentitas'),function(k){
+  //       //  console.log(k+' '+$(this).attr('disabled'));
+  //       console.log(k+' '+$(this).attr('id'));
+  //     });
+  var f = $("#formIdentitas").serialize()
+  console.log(f);
+  var myFile = $('#file').prop('files')[0];
+  console.log(myFile);
+  var file_data = $('#fotofile').prop('files');
+  console.log(file_data);
+  var form_data = new FormData();
+
+  var other_data =$('#formIdentitas').serializeArray() ;
+  var jsonData = JSON.stringify($('#formIdentitas').serializeArray(), null, "  ");
+
+    $.each(other_data,function(key,input){
+        form_data.append(input.name,input.value);
+    });
+
+  form_data.append('file', myFile);
+  form_data.append('json',jsonData);
+  console.log(form_data);
+
+  $.ajax({
+                        url: '<?php echo base_url()?>dashboard/upload_foto', // point to server-side controller method
+                        dataType: 'text', // what to expect back from the server
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        data: form_data,
+                        type: 'post',
+                        success: function (response) {
+                          console.log(response);
+                        },
+                        error: function (response) {
+                          console.log(response);
+                        }
+                    });
+
+
+});
 
 $('#editIdentitas').click(function (){
 //console.log('Click Edit');
@@ -173,21 +216,21 @@ $.each($('input,select,textarea', '#formGaji'),function(k){
                                                                   <strong>Identitas</strong>
                                                                 </p>
 
-                                                    <form class="form-horizontal" id="formIdentitas">
+                                                    <form class="form-horizontal" name="formIdentitas" id="formIdentitas" action="">
                                                       <div class="box-body">
                                                         <div class="col-md-4">
                                                         <div class="form-group">
                                                           <label for="inputNipBaru" class="col-md-4 control-label">NIP</label>
 
                                                           <div class="col-md-8">
-                                                            <input class="form-control" id="inputNipBaru" placeholder="NIP" value="<?php echo $identitas['nipBaru'];?>" disabled>
+                                                            <input class="form-control" name="nipBaru" id="inputNipBaru" placeholder="NIP" value="<?php echo $identitas['nipBaru'];?>" disabled>
                                                           </div>
                                                         </div>
                                                         <div class="form-group">
                                                           <label for="inputNipLama" class="col-md-4 control-label">NIP Lama</label>
 
                                                         <div class="col-md-8">
-                                                            <input class="form-control" id="inputNipLama" placeholder="NIP Lama" value="<?php echo $identitas['nipLama'];?>"   disabled>
+                                                            <input class="form-control"  name="nipLama" id="inputNipLama" placeholder="NIP Lama" value="<?php echo $identitas['nipLama'];?>"   disabled>
                                                           </div>
                                                         </div>
 
@@ -195,7 +238,7 @@ $.each($('input,select,textarea', '#formGaji'),function(k){
                                                           <label for="nama" class="col-md-4 control-label">Nama</label>
 
                                                         <div class="col-md-8">
-                                                            <input class="form-control" id="nama" placeholder="Nama" value="<?php echo $identitas['nama'];?>" disabled>
+                                                            <input class="form-control" name="nama" id="nama" placeholder="Nama" value="<?php echo $identitas['nama'];?>" disabled>
                                                           </div>
                                                         </div>
 
@@ -203,7 +246,7 @@ $.each($('input,select,textarea', '#formGaji'),function(k){
                                                           <label for="gelarDepan" class="col-md-4 control-label">Gelar Depan</label>
 
                                                         <div class="col-md-8">
-                                                            <input class="form-control" id="gelarDepan" placeholder="Gelar Depan" value="<?php echo $identitas['gelarDepan'];?>" disabled>
+                                                            <input class="form-control" name="gelarDepan" id="gelarDepan" placeholder="Gelar Depan" value="<?php echo $identitas['gelarDepan'];?>" disabled>
                                                           </div>
                                                         </div>
 
@@ -211,7 +254,7 @@ $.each($('input,select,textarea', '#formGaji'),function(k){
                                                           <label for="gelarBelakang" class="col-md-4 control-label">Gelar Belakang</label>
 
                                                           <div class="col-md-8">
-                                                            <input class="form-control" id="gelarBelakang" placeholder="gelarBelakang" value="<?php echo $identitas['gelarBlk'];?>" disabled>
+                                                            <input class="form-control" name="gelarBlk"  id="gelarBelakang" placeholder="gelarBelakang" value="<?php echo $identitas['gelarBlk'];?>" disabled>
                                                           </div>
                                                         </div>
 
@@ -219,7 +262,7 @@ $.each($('input,select,textarea', '#formGaji'),function(k){
                                                           <label for="tempatLahir" class="col-md-4 control-label">Tempat Lahir</label>
 
                                                         <div class="col-md-8">
-                                                            <input class="form-control" id="tempatLahir" placeholder="Tempat Lahir" value="<?php echo $identitas['KTLAHIR']?>" disabled >
+                                                            <input class="form-control" id="KTLAHIR" placeholder="Tempat Lahir" value="<?php echo $identitas['KTLAHIR']?>" disabled >
                                                           </div>
                                                         </div>
 
@@ -231,7 +274,7 @@ $.each($('input,select,textarea', '#formGaji'),function(k){
                                                                 <div class="input-group-addon">
                                                                   <i class="fa fa-calendar"></i>
                                                                 </div>
-                                                                <input type="text" class="form-control pull-right" id="tglLahir" value="<?php echo $identitas['TLAHIR']?>" disabled>
+                                                                <input type="text" class="form-control pull-right" id="tglLahir" name="TLAHIR" value="<?php echo $identitas['TLAHIR']?>" disabled>
                                                             </div>
                                                           </div>
                                                         </div>
@@ -240,7 +283,7 @@ $.each($('input,select,textarea', '#formGaji'),function(k){
                                                           <label for="jeniKelamin" class="col-md-4 control-label">Jenis Kelamin</label>
 
                                                           <div class="col-md-8">
-                                                            <select id="jenisKelamin" disabled="disabled" value="<?php echo $identitas['KJKEL']?>" class="form-control select2" style="width: 100%;">
+                                                            <select id="jenisKelamin" disabled="disabled" value="<?php echo $identitas['KJKEL']?>" name="KJKEL" class="form-control select2" style="width: 100%;">
 
 
                                                                   <option value="1">Pria</option>
@@ -256,7 +299,7 @@ $.each($('input,select,textarea', '#formGaji'),function(k){
                                                           <label for="agama" class="col-md-4 control-label">Agama</label>
 
                                                           <div class="col-md-8">
-                                                            <select id="agama" disabled="disabled" value="<?php echo $identitas['agamaId']?>" class="form-control selectAgama" style="width: 100%;">
+                                                            <select id="agama" disabled="disabled" value="<?php echo $identitas['agamaId']?>" name="agamaId" class="form-control selectAgama" style="width: 100%;">
                                                               <?php
                                                                 foreach ($agama as $value) {
                                                                   ?>
@@ -272,7 +315,7 @@ $.each($('input,select,textarea', '#formGaji'),function(k){
                                                           <label for="statusNikah" class="col-md-4 control-label">Status Nikah</label>
 
                                                           <div class="col-md-8">
-                                                            <select id="statusNikah" disabled="disabled" value="<?php echo $identitas['jenisKawin']?>" class="form-control selectAgama" style="width: 100%;">
+                                                            <select id="statusNikah" disabled="disabled" value="<?php echo $identitas['jenisKawin']?>"  name="jenisKawin" class="form-control selectAgama" style="width: 100%;">
                                                               <?php
                                                                 foreach ($relationShipSts as $value) {
                                                                   ?>
@@ -287,7 +330,7 @@ $.each($('input,select,textarea', '#formGaji'),function(k){
                                                           <label for="golonganDarah" class="col-md-4 control-label">Golongan Darah</label>
 
                                                           <div class="col-md-8">
-                                                            <input class="form-control" id="golonganDarah" placeholder="Golongan Darah" value="<?php echo $identitas['KGOLDAR']?>" disabled>
+                                                            <input class="form-control" id="golonganDarah" placeholder="Golongan Darah" name="KGOLDAR" value="<?php echo $identitas['KGOLDAR']?>" disabled>
                                                           </div>
                                                         </div>
 
@@ -299,55 +342,55 @@ $.each($('input,select,textarea', '#formGaji'),function(k){
                                                           <label for="alamat" class="col-md-4 control-label">Alamat</label>
 
                                                           <div class="col-md-8">
-                                                            <input class="form-control" id="alamat" placeholder="Alamat" value="<?php echo $identitas['alamat']?>" disabled >
+                                                            <input class="form-control" id="alamat" placeholder="Alamat" name="alamat" value="<?php echo $identitas['alamat']?>" disabled >
                                                           </div>
                                                         </div>
                                                         <div class="form-group">
                                                           <label for="rtrw" class="col-md-4 control-label">RT/RW</label>
 
                                                           <div class="col-md-2">
-                                                            <input class="form-control" id="rt" placeholder="RT" value="<?php echo $identitas['ALRT']?>" disabled>
+                                                            <input class="form-control" id="rt" placeholder="RT" name="ALRT" value="<?php echo $identitas['ALRT']?>" disabled>
                                                           </div>
                                                           <div class="col-md-2">
-                                                            <input class="form-control" id="rw" placeholder="RW" value="<?php echo $identitas['ALRW']?>" disabled>
+                                                            <input class="form-control" id="rw" placeholder="RW" name="ALRW" value="<?php echo $identitas['ALRW']?>" disabled>
                                                           </div>
                                                         </div>
                                                         <div class="form-group">
                                                           <label for="telepon" class="col-md-4 control-label">Telepon</label>
 
                                                           <div class="col-md-8">
-                                                            <input class="form-control" id="telepon" placeholder="Telepon" value="<?php echo $identitas['noTelpon']?>" disabled>
+                                                            <input class="form-control" id="telepon" placeholder="Telepon" name="noTelpon" value="<?php echo $identitas['noTelpon']?>" disabled>
                                                           </div>
 
                                                         </div>
                                                         <div class="form-group">
                                                           <label for="kodePos" class="col-md-4 control-label">Kode Pos</label>
                                                           <div class="col-md-8">
-                                                            <input class="form-control" id="kodePos" placeholder="Kode Pos" value="<?php echo $identitas['KPOS']?>" disabled>
+                                                            <input class="form-control" id="kodePos" placeholder="Kode Pos" name="KPOS" value="<?php echo $identitas['KPOS']?>" disabled>
                                                           </div>
                                                         </div>
                                                         <div class="form-group">
                                                           <label for="nomorKarpeg" class="col-md-4 control-label">No KARPEG</label>
                                                           <div class="col-md-8">
-                                                            <input class="form-control" id="nomorKarpeg" placeholder="No Karpeg" value="<?php echo $identitas['kartuPegawai']?>" disabled>
+                                                            <input class="form-control" id="nomorKarpeg" placeholder="No Karpeg" name="kartuPegawai" value="<?php echo $identitas['kartuPegawai']?>" disabled>
                                                           </div>
                                                         </div>
                                                         <div class="form-group">
                                                           <label for="noTaspen" class="col-md-4 control-label">No Taspen</label>
                                                           <div class="col-md-8">
-                                                            <input class="form-control" id="noTaspen" placeholder="noTaspen" value="<?php echo $identitas['taspen']?>" disabled>
+                                                            <input class="form-control" id="noTaspen" placeholder="noTaspen" name="taspen" value="<?php echo $identitas['taspen']?>" disabled>
                                                           </div>
                                                         </div>
                                                         <div class="form-group">
                                                           <label for="noAskes" class="col-md-4 control-label">No Askes</label>
                                                           <div class="col-md-8">
-                                                            <input class="form-control" id="noAskes" placeholder="noAskes" value="<?php echo $identitas['askesNomor']?>" disabled>
+                                                            <input class="form-control" id="noAskes" placeholder="noAskes" name="askesNomor" value="<?php echo $identitas['askesNomor']?>" disabled>
                                                           </div>
                                                         </div>
                                                         <div class="form-group">
                                                           <label for="noKarisSU" class="col-md-4 control-label">No KARIS/SU</label>
                                                           <div class="col-md-8">
-                                                            <input class="form-control" id="noKarissu" placeholder="No Karis/SU" value="<?php echo $identitas['NKARIS_SU']?>" disabled>
+                                                            <input class="form-control" id="noKarissu" placeholder="No Karis/SU" name="NKARIS_SU" value="<?php echo $identitas['NKARIS_SU']?>" disabled>
                                                           </div>
                                                         </div>
 
@@ -355,20 +398,20 @@ $.each($('input,select,textarea', '#formGaji'),function(k){
                                                         <div class="form-group">
                                                           <label for="npwp" class="col-md-4 control-label">npwp</label>
                                                           <div class="col-md-8">
-                                                            <input class="form-control" id="npwp" placeholder="NPWP" value="<?php echo $identitas['npwpNomor']?>" disabled>
+                                                            <input class="form-control" id="npwp" placeholder="NPWP" name="npwpNomor" value="<?php echo $identitas['npwpNomor']?>" disabled>
                                                           </div>
                                                         </div>
 
                                                         <div class="form-group">
                                                           <label for="noKTP" class="col-md-4 control-label">No KTP</label>
                                                           <div class="col-md-8">
-                                                            <input class="form-control" id="noKTP" placeholder="No KTP" value="<?php echo $identitas['NOPEN']?>" disabled>
+                                                            <input class="form-control" id="noKTP" placeholder="No KTP" name="NOPEN" value="<?php echo $identitas['NOPEN']?>" disabled>
                                                           </div>
                                                         </div>
                                                         <div class="form-group">
                                                           <label for="statusKepegawaian" class="col-sm-4 control-label">Status Kepegawaian</label>
                                                           <div class="col-md-8">
-                                                            <select id="statusKepegawaian" disabled="disabled" value="<?php echo $identitas['statusCpnsPns']?>" class="form-control" style="width: 100%;">
+                                                            <select id="statusKepegawaian" disabled="disabled" value="<?php echo $identitas['statusCpnsPns']?>"  name="statusCpnsPns" class="form-control" style="width: 100%;">
                                                               <?php
                                                                 foreach ($statusPegawai as $value) {
                                                                   ?>
@@ -383,7 +426,7 @@ $.each($('input,select,textarea', '#formGaji'),function(k){
                                                           <label for="jenisKepegawaian" class="col-md-4 control-label">Jenis Kepegawaian</label>
 
                                                           <div class="col-md-8">
-                                                            <select id="jenisKepegawaian" disabled="disabled" value="<?php echo $identitas['jenisPegawai']?>" class="form-control" style="width: 100%;">
+                                                            <select id="jenisKepegawaian" disabled="disabled" value="<?php echo $identitas['jenisPegawai']?>" name="jenisPegawai"class="form-control" style="width: 100%;">
                                                               <?php
                                                                 foreach ($jenisPegawai as $value) {
                                                                   ?>
@@ -399,7 +442,7 @@ $.each($('input,select,textarea', '#formGaji'),function(k){
                                                           <label for="kedudukanPegawai" class="col-md-4 control-label">Kedudukan Pegawai</label>
 
                                                           <div class="col-md-8">
-                                                            <select id="kedudukanPegawai" disabled="disabled" value="<?php echo $identitas['kedudukanHukum']?>" class="form-control" style="width: 100%;">
+                                                            <select id="kedudukanPegawai" disabled="disabled" value="<?php echo $identitas['kedudukanHukum']?>" name="kedudukanHukum" class="form-control" style="width: 100%;">
                                                               <?php
                                                                 foreach ($statusPegawai as $value) {
                                                                   ?>
@@ -428,7 +471,7 @@ $.each($('input,select,textarea', '#formGaji'),function(k){
                                                                 <img class="img-responsive" src="<?php echo $identitas['FILE_BMP'];?>" alt="Foto" width="460" height="345">
                                                                 <div class="form-group">
                                                                   <label for="exampleInputFile">Upload Foto</label>
-                                                                  <input type="file" id="exampleInputFile">
+                                                                  <input type="file" id="file" name="file" >
 
                                                                   <p class="help-block">Upload Foto Anda Disini</p>
                                                                 </div>
@@ -1162,7 +1205,7 @@ $.each($('input,select,textarea', '#formGaji'),function(k){
                                                           <div class="form-group">
                                                             <label for="nip" class="col-md-2 control-label">NIP</label>
                                                             <div class="col-md-8">
-                                                              <input class="form-control" id="nip" placeholder="NIP" value="<?php $jabatanTerakhir['NIP']?>" disabled>
+                                                              <input class="form-control" id="nip" placeholder="NIP" value="<?php echo $jabatanTerakhir['NIP']?>" disabled>
                                                             </div>
                                                           </div>
 
@@ -1280,7 +1323,7 @@ $.each($('input,select,textarea', '#formGaji'),function(k){
                                                           <div class="form-group">
                                                             <label for="sumpahJabatan" class="col-md-2 control-label">Sumpah Jabatan</label>
                                                             <div class="col-md-8">
-                                                              
+
                                                               <label>
                                                                   <input id="sumpahJabatan" type="checkbox" value="<?php echo $jabatanTerakhir['SJAB']?>" disabled>
                                                                     Sudah
