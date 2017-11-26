@@ -332,17 +332,16 @@ class Dashboard extends Auth_Controller
 					$json = $this->input->post('json');
 					$jsonDecode = json_decode($json);
 
-					$jsonDecode['FILE_BMP']=$data['upload_data']['raw_name'];
+					$jsonDecode['FILE_BMP']=$data['upload_data']['raw_name'].$data['upload_data']['file_ext'];
 					log_message('debug',print_r($jsonDecode,TRUE));
 					$currentDataSimpeg = $this->Simpeg_model->getIdentitasPegawai($nipBaru);
 
 					log_message('debug',print_r($currentDataSimpeg,TRUE));
 					$jsonEncodeCurrentData = json_encode($currentDataSimpeg);
 
-					$dataInsert=Array();
-					$dataInsert['currentData']=$jsonEncodeCurrentData;
 					$dataInsert['table']='datautama,cpnspns';
-					$dataInsert['changedData']=$jsonDecode;
+					$dataInsert['currentData']=$jsonEncodeCurrentData;
+					$dataInsert['changedData']=$json;
 					$this->Simpeg_model->insertData('dataconfirmation',$dataInsert);
 	        // if (isset($_FILES['file']['name'])) {
 	        //     if (0 < $_FILES['file']['error']) {
