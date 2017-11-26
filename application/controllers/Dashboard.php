@@ -151,8 +151,20 @@ class Dashboard extends Auth_Controller
 		$jenisGolongan = $this->Simpeg_model->getJenisGolongan();
 		$jenisSTLUD = $this->Simpeg_model->getStlud();
 		$jenisNaikPangkat = $this->Simpeg_model->getJenisNaikPangkat();
+		$gajiBerkalaPegawaiPensiun = $this->Simpeg_model->getGajiBerkalaPegawaiPensiun($userLoggedin->nip);
+		$tempatPegawaiPensiun = $this->Simpeg_model->getTempatPegawaiPensiun($userLoggedin->nip);
+		$riwayatPensiunKeluargaAyah = $this->Simpeg_model->getRiwayatPensiunKeluargaAyah($userLoggedin->nip);
+		$riwayatPensiunKeluargaIbu = $this->Simpeg_model->getRiwayatPensiunKeluargaIbu($userLoggedin->nip);
+		$riwayatPensiunKeluargaSuamiIstri = $this->Simpeg_model->getRiwayatPensiunKeluargaSuamiIstri($userLoggedin->nip);
+		$riwayatPensiunKeluargaAnak = $this->Simpeg_model->getRiwayatPensiunKeluargaAnak($userLoggedin->nip);
 
+		$this->data['riwayatPensiunKeluargaIbu']=$riwayatPensiunKeluargaIbu;
+		$this->data['riwayatPensiunKeluargaAyah']=$riwayatPensiunKeluargaAyah;
+		$this->data['riwayatPensiunKeluargaSuamiIstri']=$riwayatPensiunKeluargaSuamiIstri;
+		$this->data['riwayatPensiunKeluargaAnak']=$riwayatPensiunKeluargaAnak;
 
+		$this->data['gajiBerkalaPegawaiPensiun']=$gajiBerkalaPegawaiPensiun;
+		$this->data['tempatPegawaiPensiun']=$tempatPegawaiPensiun;
 		$this->data['identitas']=$identitasSimpeg;
 		$this->data['riwayatPangkat']=$riwayatPangkat;
 
