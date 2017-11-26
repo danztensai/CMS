@@ -31,7 +31,7 @@
                     <div class="form-group">
                       <label for="nip" class="col-md-4 control-label">NIP</label>
                       <div class="col-sm-4">
-                        <input class="form-control" id="nip" placeholder="NIP">
+                        <input class="form-control" id="nip" placeholder="NIP" >
                       </div>
                     </div>
                     <div class="form-group">

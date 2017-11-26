@@ -1,7 +1,13 @@
 <style>
 .scroll{
-  height:300px;
+  height:800px;
 overflow-y:scroll;
+}
+.row-bordered:after {
+  content: "";
+  display: block;
+  border-bottom: 2px solid #ccc;
+  margin:  15px;
 }
 </style>
 
@@ -27,61 +33,84 @@ overflow-y:scroll;
                                 <strong>Riwayat Pangkat</strong>
                               </p>
 
-                  <form class="form-horizontal">
+              <form class="form-horizontal" id="formRiwayatPangket">
                     <div class="box-body scroll">
+                      <?php
+                      $counter = 1;
+                      foreach($riwayatPangkat as $rp)
+                      {
+                      ?>
+                    <div class="row row-bordered">
                       <div class="col-md-12">
                         <div class="form-group">
                           <label for="nip" class="col-md-4 control-label">NIP</label>
                           <div class="col-sm-4">
-                            <input class="form-control" id="nip" placeholder="NIP">
+                            <input class="form-control" id="nip" placeholder="NIP" value="<?php echo $rp['nip']?>" disabled>
                           </div>
                         </div>
                         <div class="form-group">
-                          <label for="golRuang" class="col-md-4 control-label">Gol/Ruang</label>
+                          <label for="golRuang"<?php echo $counter;?> class="col-md-4 control-label">Gol/Ruang</label>
                           <div class="col-md-4">
-                            <input class="form-control" id="golRuang" placeholder="Gol/Ruang">
-                          </div>
-                        </div>
-
-                        <div class="form-group">
-                          <label for="kodeNaekPangkat" class="col-md-4 control-label">Kode Naek Pangkat</label>
-                          <div class="col-md-4">
-                            <input class="form-control" id="kodeNaekPangkat" placeholder="Kode Naek Pangkat">
+                            <input class="form-control" id="golRuang<?php echo $counter;?>" placeholder="Gol/Ruang" value="<?php echo $rp['golNama']?>" disabled>
                           </div>
                         </div>
 
                         <div class="form-group">
-                          <label for="tmtPangkat" class="col-md-4 control-label">TMT Pangkat</label>
+                          <label for="kodeNaekPangkat<?php echo $counter;?>" class="col-md-4 control-label">Kode Naek Pangkat</label>
                           <div class="col-md-4">
-                            <input class="form-control" id="tmtPangkat" placeholder="tmtPangkat">
+                            <input class="form-control" id="kodeNaekPangkat<?php echo $counter;?>" placeholder="Kode Naek Pangkat" value="<?php echo $rp['nnpang']?>" disabled>
                           </div>
                         </div>
 
                         <div class="form-group">
-                          <label for="noSkNaikPangkat" class="col-md-4 control-label">No SK Naik Pangkat</label>
+                          <label for="tmtPangkatRiwayat<?php echo $counter;?>" class="col-md-4 control-label">TMT Pangkat</label>
                           <div class="col-md-4">
-                            <input class="form-control" id="noSkNaikPangkat" placeholder="No SK Naik Pangkat">
+                            <div class="input-group date">
+                                <div class="input-group-addon">
+                                  <i class="fa fa-calendar"></i>
+                                </div>
+                                <input type="text" class="form-control pull-right" id="tmtPangkatRiwayat<?php echo $counter;?>" value="<?php echo $rp['tmtGolongan']?>" disabled>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="form-group">
+                          <label for="noSkNaikPangkat<?php echo $counter;?>" class="col-md-4 control-label">No SK Naik Pangkat</label>
+                          <div class="col-md-4">
+                            <input class="form-control" id="noSkNaikPangkat<?php echo $counter;?>" placeholder="No SK Naik Pangkat" value="<?php echo $rp['nomorSk']?>" disabled>
                           </div>
                         </div>
 
                         <div class="form-group">
                           <label for="tglSKNaikPangkat" class="col-md-4 control-label">Tanggal SK Naik Pangkat</label>
                           <div class="col-md-4">
-                            <input class="form-control" id="tglSKNaikPangkat" placeholder="tglSKNaikPangkat">
+
+                            <div class="input-group date">
+                                <div class="input-group-addon">
+                                  <i class="fa fa-calendar"></i>
+                                </div>
+                                <input type="text" class="form-control pull-right" id="tglSKNaikPangkat<?php echo $counter;?>" value="<?php echo $rp['tanggalSk']?>" disabled>
+                            </div>
                           </div>
                         </div>
 
                         <div class="form-group">
-                          <label for="pejabatMenetapkan" class="col-md-4 control-label">Pejabat yang Menetapkan</label>
+                          <label for="pejabatMenetapkan<?php echo $counter;?>" class="col-md-4 control-label">Pejabat yang Menetapkan</label>
                           <div class="col-md-4">
-                            <input class="form-control" id="pejabatMenetapkan" placeholder="Pejabat Yang Menetapkan">
+                            <input class="form-control" id="pejabatMenetapkan<?php echo $counter;?>" placeholder="Pejabat Yang Menetapkan" value="<?php echo $rp['tanggalSk']?>" disabled>
                           </div>
                         </div>
 
 
                       </div>
                     </div>
+                      <?php
+                      $counter++;
+                      }
+                      ?>
+                    </div>
                   </form>
+
             </div>
           </div>
         </div>
@@ -96,63 +125,84 @@ overflow-y:scroll;
                               </p>
                               <form class="form-horizontal">
                                 <div class="box-body scroll">
+                                  <?php
+
+                                  foreach($riwayatJabatan as $rj)
+                                  {
+                                    ?>
+                                <div class="row row-bordered">
                                   <div class="col-md-12">
                                     <div class="form-group">
                                       <label for="nip" class="col-md-4 control-label">NIP</label>
                                       <div class="col-sm-4">
-                                        <input class="form-control" id="nip" placeholder="NIP">
+                                        <input class="form-control" id="nip" placeholder="NIP" value="<?php echo $rj['nip']?>" disabled>
                                       </div>
                                     </div>
                                     <div class="form-group">
                                       <label for="unitKerja" class="col-md-4 control-label">Unit Kerja</label>
                                       <div class="col-md-4">
-                                        <input class="form-control" id="unitKerja" placeholder="Unit Kerja">
+                                        <input class="form-control" id="unitKerja" placeholder="Unit Kerja" value="<?php echo $rj['nunkerUnitOrganisasi']?>" disabled>
                                       </div>
                                     </div>
 
                                     <div class="form-group">
                                       <label for="jenisJabatan" class="col-md-4 control-label">Jenis Jabatan</label>
                                       <div class="col-md-4">
-                                        <input class="form-control" id="jenisJabatan" placeholder="Jenis Jabatan">
+                                        <input class="form-control" id="jenisJabatan" placeholder="Jenis Jabatan" value="<?php echo $rj['jnsjab'];?>" disabled>
                                       </div>
                                     </div>
 
                                     <div class="form-group">
-                                      <label for="eselonJabatan" class="col-md-4 control-label">eselonJabatan</label>
+                                      <label for="eselonJabatan" class="col-md-4 control-label">Eselon Jabatan</label>
                                       <div class="col-md-4">
-                                        <input class="form-control" id="eselonJabatan" placeholder="eselonJabatan">
+                                        <input class="form-control" id="eselonJabatan" placeholder="eselonJabatan" value="<?php echo $rj['KESELON'];?>" disabled>
                                       </div>
                                     </div>
 
                                     <div class="form-group">
-                                      <label for="jabatan" class="col-md-4 control-label">jabatan</label>
+                                      <label for="jabatan" class="col-md-4 control-label">Jabatan</label>
                                       <div class="col-md-4">
-                                        <input class="form-control" id="jabatan" placeholder="jabatan">
+                                        <textArea rows="5"class="form-control" id="jabatan" placeholder="jabatan" disabled><?php echo $rj['njab'];?></textarea>
                                       </div>
                                     </div>
 
                                     <div class="form-group">
-                                      <label for="tmtJabatan" class="col-md-4 control-label">tmtJabatan</label>
+                                      <label for="tmtJabatanRiwayat" class="col-md-4 control-label">tmtJabatan</label>
                                       <div class="col-md-4">
-                                        <input class="form-control" id="tmtJabatan" placeholder="tmtJabatan">
+
+                                        <div class="input-group date">
+                                            <div class="input-group-addon">
+                                              <i class="fa fa-calendar"></i>
+                                            </div>
+                                            <input type="text" class="form-control pull-right" id="tmtJabatanRiwayat" value="<?php echo $rj['tmtJabatan'];?>" disabled>
+                                        </div>
                                       </div>
                                     </div>
 
                                     <div class="form-group">
                                       <label for="noSkNaikJabatan" class="col-md-4 control-label">noSkNaikJabatan</label>
                                       <div class="col-md-4">
-                                        <input class="form-control" id="noSkNaikJabatan" placeholder="noSkNaikJabatan">
+                                        <input class="form-control" id="noSkNaikJabatan" placeholder="noSkNaikJabatan" value="<?php echo $rj['nomorSk'];?>" disabled>
                                       </div>
                                     </div>
 
                                     <div class="form-group">
-                                      <label for="tglSKnaikJabatan" class="col-md-4 control-label">tglSKnaikJabatan</label>
+                                      <label for="tglSKnaikJabatan" class="col-md-4 control-label">Tanggal SK Naik Jabatan</label>
                                       <div class="col-md-4">
-                                        <input class="form-control" id="tglSKnaikJabatan" placeholder="tglSKnaikJabatan">
+                                        <div class="input-group date">
+                                            <div class="input-group-addon">
+                                              <i class="fa fa-calendar"></i>
+                                            </div>
+                                            <input type="text" class="form-control pull-right" id="tglSKnaikJabatan" value="<?php echo $rj['tanggalSk'];?>" disabled>
+                                        </div>
                                       </div>
                                     </div>
 
                                   </div>
+                                </div>
+                                <?php
+                              }
+                              ?>
                                 </div>
                               </form>
             </div>
@@ -179,50 +229,82 @@ overflow-y:scroll;
                               </p>
                               <form class="form-horizontal">
                                 <div class="box-body scroll">
-                                  <div class="col-md-12">
-                                    <div class="form-group">
-                                      <label for="nip" class="col-md-4 control-label">NIP</label>
-                                      <div class="col-sm-4">
-                                        <input class="form-control" id="nip" placeholder="NIP">
-                                      </div>
-                                    </div>
-                                    <div class="form-group">
-                                      <label for="namaBintangJasa" class="col-md-4 control-label">Nama Bintang Jasa</label>
-                                      <div class="col-md-4">
-                                        <input class="form-control" id="namaBintangJasa" placeholder="namaBintangJasa">
-                                      </div>
-                                    </div>
+                                  <?php
+                                  if(count($riwayatJasa)>0){
+                                    foreach($riwayatJasa as $rjas){?>
+                                      <div class="row row-bordered">
+                                      <div class="col-md-12">
+                                        <div class="form-group">
+                                          <label for="nip" class="col-md-4 control-label">NIP</label>
+                                          <div class="col-sm-4">
+                                            <input class="form-control" id="nip" placeholder="NIP" value="<?php echo $rjas['nip'];?>" disabled >
+                                          </div>
+                                        </div>
+                                        <div class="form-group">
+                                          <label for="namaBintangJasa" class="col-md-4 control-label">Nama Bintang Jasa</label>
+                                          <div class="col-md-4">
+                                            <input class="form-control" id="namaBintangJasa" placeholder="namaBintangJasa" value="<?php echo $rjas['NBINTANG'];?>" disabled>
+                                          </div>
+                                        </div>
 
-                                    <div class="form-group">
-                                      <label for="noSK" class="col-md-4 control-label">noSK</label>
-                                      <div class="col-md-4">
-                                        <input class="form-control" id="noSK" placeholder="noSK">
+                                        <div class="form-group">
+                                          <label for="noSK" class="col-md-4 control-label">No SK</label>
+                                          <div class="col-md-4">
+                                            <input class="form-control" id="noSK" placeholder="noSK" value="<?php echo $rjas['skNomor'];?>" disabled>
+                                          </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                          <label for="tglSK" class="col-md-4 control-label">Tanggal SK</label>
+                                          <div class="col-md-4">
+
+                                            <div class="input-group date">
+                                                <div class="input-group-addon">
+                                                  <i class="fa fa-calendar"></i>
+                                                </div>
+                                                <input type="text" class="form-control pull-right" id="tglSK" value="<?php echo $rjas['skDate'];?>" disabled>
+                                            </div>
+                                          </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                          <label for="thnPerolehan" class="col-md-4 control-label">Tahun Perolehan</label>
+                                          <div class="col-md-4">
+
+                                            <div class="input-group date">
+                                                <div class="input-group-addon">
+                                                  <i class="fa fa-calendar"></i>
+                                                </div>
+                                                <input type="text" class="form-control pull-right" id="thnPerolehan" value="<?php echo $rjas['tahun'];?>" disabled>
+                                            </div>
+                                          </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                          <label for="asalPerolehan" class="col-md-4 control-label">Asal Perolehan</label>
+                                          <div class="col-md-4">
+                                            <input class="form-control" id="asalPerolehan" placeholder="asalPerolehan" value="<?php echo $rjas['AOLEH'];?>" disabled>
+                                          </div>
+                                        </div>
+
+
                                       </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                      <label for="tglSK" class="col-md-4 control-label">tglSK</label>
-                                      <div class="col-md-4">
-                                        <input class="form-control" id="tglSK" placeholder="tglSK">
                                       </div>
-                                    </div>
+                                  <?php
+                                   }
+                                  ?>
 
-                                    <div class="form-group">
-                                      <label for="thnPerolehan" class="col-md-4 control-label">Tahun Perolehan</label>
-                                      <div class="col-md-4">
-                                        <input class="form-control" id="thnPerolehan" placeholder="thnPerolehan">
-                                      </div>
-                                    </div>
+                                  <?php
+                                  }
+                                  else {
+                                    ?>
+                                    <p class="text-center">
+                                      <strong>Tidak ada Data</strong>
+                                    </p>
+                                  <?php
+                                  }
+                                  ?>
 
-                                    <div class="form-group">
-                                      <label for="asalPerolehan" class="col-md-4 control-label">Asal Perolehan</label>
-                                      <div class="col-md-4">
-                                        <input class="form-control" id="asalPerolehan" placeholder="asalPerolehan">
-                                      </div>
-                                    </div>
-
-
-                                  </div>
                                 </div>
                               </form>
             </div>
@@ -307,7 +389,7 @@ overflow-y:scroll;
                                       </div>
                                     </div>
 
-                                    
+
 
 
                                   </div>

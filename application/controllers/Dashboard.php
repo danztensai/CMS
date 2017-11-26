@@ -287,6 +287,70 @@ class Dashboard extends Auth_Controller
 
 	}
 
+	function upload_foto() {
+
+
+	        //upload file
+	        $config['upload_path'] = 'assets/foto/';
+	        $config['allowed_types'] = '*';
+	        $config['max_filename'] = '255';
+	        $config['encrypt_name'] = TRUE;
+	        $config['max_size'] = '1024'; //1 MB
+					$this->load->library('upload', $config);
+
+					if ( ! $this->upload->do_upload('file'))
+                {
+                        $error = array('error' => $this->upload->display_errors());
+												log_message('debug',print_r($error,TRUE));
+                        // $this->load->view('upload_form', $error);
+                }
+                else
+                {
+                        $data = array('upload_data' => $this->upload->data());
+												log_message('debug',print_r($data,TRUE));
+
+                        // $this->load->view('upload_success', $data);
+                }
+
+					log_message('debug','Uploading Foto');
+
+					$nipBaru = $this->input->post('nipBaru');
+					log_message('debug','From Post Form '.$nipBaru);
+
+					$json = $this->input->post('json');
+					$jsonDecode = json_decode($json);
+
+					$jsonDecode['FILE_BMP']=$data['upload_data']['raw_name'];
+					log_message('debug',print_r($jsonDecode,TRUE));
+					$currentDataSimpeg = $this->Simpeg_model->getIdentitasPegawai($nipBaru);
+
+					log_message('debug',print_r($currentDataSimpeg,TRUE));
+					$jsonEncodeCurrentData = json_encode($currentDataSimpeg);
+
+					$dataInsert=Array();
+					$dataInsert['currentData']=$jsonEncodeCurrentData;
+					$dataInsert['table']='datautama,cpnspns';
+					$dataInsert['changedData']=$jsonDecode;
+					$this->Simpeg_model->insertData('dataconfirmation',$dataInsert);
+	        // if (isset($_FILES['file']['name'])) {
+	        //     if (0 < $_FILES['file']['error']) {
+	        //         echo 'Error during file upload' . $_FILES['file']['error'];
+	        //     } else {
+	        //         if (file_exists('uploads/' . $_FILES['file']['name'])) {
+	        //             echo 'File already exists : assets/foto/' . $_FILES['file']['name'];
+	        //         } else {
+	        //             $this->load->library('upload', $config);
+	        //             if (!$this->upload->do_upload('file')) {
+	        //                 echo $this->upload->display_errors();
+	        //             } else {
+	        //                 echo 'File successfully uploaded : uploads/' . $_FILES['file']['name'];
+	        //             }
+	        //         }
+	        //     }
+	        // } else {
+	        //     echo 'Please choose a file';
+	        // }
+	    }
 
 	public function profilePegawai()
 	{
@@ -302,6 +366,10 @@ class Dashboard extends Auth_Controller
 		$gajiBerkala = $this->Simpeg_model->getGajiBerkala($userLoggedin->nip);
 		$tempatPegawai = $this->Simpeg_model->getTempatPegawai($userLoggedin->nip);
 		$jabatanTerakhir = $this->Simpeg_model->getJabatanTerakhir($userLoggedin->nip);
+		$riwayatPangkat = $this->Simpeg_model->getRiwayatPangkat($userLoggedin->nip);
+		$riwayatJabatan = $this->Simpeg_model->getRiwayatJabatan($userLoggedin->nip);
+		$riwayatJasa = $this->Simpeg_model->getRiwayatJasa($userLoggedin->nip);
+		$riwayatDpp = $this->Simpeg_model->getRiwayatDPP($userLoggedin->nip);
 		//log_message('debug',print_r($cpnspnsSimpeg,TRUE));
 		//log_message('debug',print_r($userLoggedin,TRUE));
 		$agama =$this->Simpeg_model->getAgama();
@@ -315,9 +383,14 @@ class Dashboard extends Auth_Controller
 		$jenisGolongan = $this->Simpeg_model->getJenisGolongan();
 		$jenisSTLUD = $this->Simpeg_model->getStlud();
 		$jenisNaikPangkat = $this->Simpeg_model->getJenisNaikPangkat();
-
+		log_message('debug','Isi Riwayat Jasa : '.count($riwayatJasa));
 
 		$this->data['identitas']=$identitasSimpeg;
+		$this->data['riwayatPangkat']=$riwayatPangkat;
+		$this->data['riwayatJabatan']=$riwayatJabatan;
+		$this->data['riwayatJasa']=$riwayatJasa;
+		$this->data['riwayatDpp']=$riwayatDpp;
+
 		$this->data['cpnspns']=$cpnspnsSimpeg;
 		$this->data['pangkatTerakhir']=$pangkatTerakhir;
 		$this->data['gaji']=$gajiBerkala;
