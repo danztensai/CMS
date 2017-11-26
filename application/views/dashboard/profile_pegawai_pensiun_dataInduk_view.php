@@ -750,45 +750,45 @@ $( document ).ready(function() {
             <div class="box-body">
               <div class="col-md-12">
                 <div class="form-group">
-                  <label for="nip" class="col-md-4 control-label">NIP</label>
+                  <label for="NIP" class="col-md-4 control-label">NIP</label>
                   <div class="col-md-4">
-                    <input class="form-control" id="nip" placeholder="NIP">
+                    <input class="form-control" id="NIP" placeholder="Masa Kerja Gol Ruang" value="<?php echo $gajiBerkalaPegawaiPensiun['NIP']?>" disabled>
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="noSuratPemberitahuan" class="col-md-4 control-label">No Surat Pemberitahuan</label>
+                  <label for="NSTAHU" class="col-md-4 control-label">No Surat Pemberitahuan</label>
                   <div class="col-md-4">
-                    <input class="form-control" id="noSuratPemberitahuan" placeholder="No Surat Pemberitahuan">
+                    <input class="form-control" id="NSTAHU" placeholder="Masa Kerja Gol Ruang" value="<?php echo $gajiBerkalaPegawaiPensiun['NSTAHU']?>" disabled>
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="tglSuratPemberitahuan" class="col-md-4 control-label">Tanggal Surat Pemberitahuan</label>
+                  <label for="TSTAHU" class="col-md-4 control-label">Tanggal Surat Pemberitahuan</label>
                   <div class="col-md-4">
-                    <input class="form-control" id="tglSuratPemberitahuan" placeholder="Tanggal Surat Pemberitahuan">
+                    <input class="form-control" id="TSTAHU" placeholder="Masa Kerja Gol Ruang" value="<?php echo $gajiBerkalaPegawaiPensiun['TSTAHU']?>" disabled>
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="tmtKenaikanGajih" class="col-md-4 control-label">TMT Kenaikan Gaji</label>
+                  <label for="TMTNGAJ" class="col-md-4 control-label">TMT Kenaikan Gaji</label>
                   <div class="col-md-4">
-                    <input class="form-control" id="tmtKenaikanGaji" placeholder="tmtKenaikanGaji">
+                    <input class="form-control" id="TMTNGAJ" placeholder="Masa Kerja Gol Ruang" value="<?php echo $gajiBerkalaPegawaiPensiun['TMTNGAJ']?>" disabled>
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="masaKerjaGolRuangGajiBerkala" class="col-md-4 control-label">Masa Kerja Gol Ruang</label>
+                  <label for="MSKERJA" class="col-md-4 control-label">Masa Kerja Gol Ruang</label>
                   <div class="col-md-4">
-                    <input class="form-control" id="masaKerjaGolRuangGajiBerkala" placeholder="Masa Kerja Gol Ruang">
+                    <input class="form-control" id="MSKERJA" placeholder="Masa Kerja Gol Ruang" value="<?php echo $gajiBerkalaPegawaiPensiun['MSKERJA']?>" disabled>
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="gajiPokokTerakhir" class="col-md-4 control-label">Gaji Pokok Terakhir</label>
+                  <label for="GPOKKHIR" class="col-md-4 control-label">Gaji Pokok Terakhir</label>
                   <div class="col-md-4">
-                    <input class="form-control" id="gajiPokok" placeholder="Gaji Pokok" value="<?php echo $pangkatTerakhir['GPOK']?>" disabled>
+                    <input class="form-control" id="GPOKKHIR" placeholder="Masa Kerja Gol Ruang" value="<?php echo $gajiBerkalaPegawaiPensiun['GPOKKHIR']?>" disabled>
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="kantorBayar" class="col-md-4 control-label">Kantor Bayar</label>
+                  <label for="KKANTOR" class="col-md-4 control-label">Kantor Bayar</label>
                   <div class="col-md-4">
-                    <input class="form-control" id="kantorBayar" placeholder="Kantor Bayar">
+                    <input class="form-control" id="KKANTOR" placeholder="Masa Kerja Gol Ruang" value="<?php echo $gajiBerkalaPegawaiPensiun['KKANTOR']?>" disabled>
                   </div>
                 </div>
               </div>
@@ -897,63 +897,63 @@ $( document ).ready(function() {
             <div class="box-body">
               <div class="col-md-12">
                 <div class="form-group">
-                  <label for="nip" class="col-md-4 control-label">NIP</label>
+                  <label for="NIP" class="col-md-4 control-label">NIP</label>
                   <div class="col-md-4">
-                    <input class="form-control" id="nip" placeholder="NIP">
+                    <input class="form-control" id="NIP" placeholder="Masa Kerja Gol Ruang" value="<?php echo $tempatPegawaiPensiun['NIP']?>" disabled>
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="instansiInduk" class="col-md-4 control-label">Instansi Induk</label>
+                  <label for="NINSIND" class="col-md-4 control-label">Instansi Induk</label>
                   <div class="col-md-4">
-                    <input class="form-control" id="instansiInduk" placeholder="Instansi Induk">
+                    <input class="form-control" id="NINSIND" placeholder="Masa Kerja Gol Ruang" value="<?php echo $tempatPegawaiPensiun['NINSIND']?>" disabled>
                   </div>
                 </div>
                 <div class="form-group">
                   <label for="provinsi" class="col-md-4 control-label">Provinsi</label>
                   <div class="col-md-4">
-                    <input class="form-control" id="provinsi" placeholder="Provinsi">
+                    <input class="form-control" id="provinsi" placeholder="Masa Kerja Gol Ruang" value="<?php echo $tempatPegawaiPensiun['provinsi']?>" disabled>
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="kabKotaKotip" class="col-md-4 control-label">Kabupaten/Kota</label>
+                  <label for="kecamatan" class="col-md-4 control-label">Kabupaten/Kota</label>
                   <div class="col-md-4">
-                    <input class="form-control" id="kabKotaKotip" placeholder="Kabupaten/Kota">
+                    <input class="form-control" id="kecamatan" placeholder="Masa Kerja Gol Ruang" value="<?php echo $tempatPegawaiPensiun['kecamatan']?>" disabled>
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="kecamatan" class="col-md-4 control-label">Kecamatan</label>
+                  <label for="kecamatan" class="col-md-4 control-label">kecamatan</label>
                   <div class="col-md-4">
-                    <input class="form-control" id="kecamatan" placeholder="Kecamatan">
+                    <input class="form-control" id="kelurahan" placeholder="Masa Kerja Gol Ruang" value="<?php echo $tempatPegawaiPensiun['kecamatan']?>" disabled>
                   </div>
                 </div>
                 <div class="form-group">
                   <label for="kelurahan" class="col-md-4 control-label">Kelurahan</label>
                   <div class="col-md-4">
-                    <input class="form-control" id="kelurahan" placeholder="Kelurahan">
+                    <input class="form-control" id="kelurahan" placeholder="Masa Kerja Gol Ruang" value="<?php echo $tempatPegawaiPensiun['kelurahan']?>" disabled>
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="komponen" class="col-md-4 control-label">Komponen</label>
+                  <label for="nunker" class="col-md-4 control-label">Komponen</label>
                   <div class="col-md-4">
-                    <input class="form-control" id="komponen" placeholder="Komponen">
+                    <input class="form-control" id="nunker" placeholder="Masa Kerja Gol Ruang" value="<?php echo $tempatPegawaiPensiun['nunker']?>" disabled>
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="unitKerja" class="col-md-4 control-label">Unit Kerja</label>
+                  <label for="subUnker" class="col-md-4 control-label">Unit Kerja</label>
                   <div class="col-md-4">
-                    <input class="form-control" id="unitKerja" placeholder="Unit Kerja">
+                    <input class="form-control" id="subUnker" placeholder="Masa Kerja Gol Ruang" value="<?php echo $tempatPegawaiPensiun['subUnker']?>" disabled>
                   </div>
                 </div>
                 <div class="form-group">
                   <label for="provinsiLokasiKerja" class="col-md-4 control-label">Provinsi Lokasi Kerja</label>
                   <div class="col-md-4">
-                    <input class="form-control" id="provinsiLokasiKerja" placeholder="Provinsi Lokasi Kerja">
+                    <input class="form-control" id="KKANTOR" placeholder="Masa Kerja Gol Ruang" value="" disabled>
                   </div>
                 </div>
                 <div class="form-group">
                   <label for="kabKotaLokasiKerja" class="col-md-4 control-label">Kota/Kabupaten Lokasi Kerja</label>
                   <div class="col-md-4">
-                    <input class="form-control" id="kabKotaLokasiKerja" placeholder="Kota/Kab Lokasi Kerja">
+                    <input class="form-control" id="KKANTOR" placeholder="Masa Kerja Gol Ruang" value="" disabled>
                   </div>
                 </div>
               </div>
