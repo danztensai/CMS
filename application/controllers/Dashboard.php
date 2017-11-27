@@ -534,9 +534,45 @@ class Dashboard extends Auth_Controller
 		$userId = $this->ion_auth->get_user_id();
 		$this->data['user']=$this->ion_auth->user()->row();
 		$this->data['menu']=$this->Menu_model->menuMaster();
-
 		$this->render('dashboard/kepegawaian_view');
 	}
+
+	public function instansiInduk()
+	{
+		log_message('debug','Inside Page Dashboard Ref insinduk');
+		$userId = $this->ion_auth->get_user_id();
+		$this->data['user']=$this->ion_auth->user()->row();
+		log_message('INFO','is admin? :'.$this->ion_auth->is_admin());
+		$this->data['user_group']= $this->ion_auth->get_users_groups($userId)->result();
+		log_message('debug','User Group : '.print_r($this->data['user_group'],TRUE));
+		$this->data['users_instansi']=$this->Users_model->getUsersinstansi($userId );
+		$this->data['menu']=$this->Menu_model->menuMaster();
+		log_message('INFO','User Id : '.$userId);
+		log_message('DEBUG','inside Admin');
+		$this->render('dashboard/referensi_instansiInduk_view');
+	}
+
+
+public function referensiInstansiInduk()
+{
+	log_message('debug','Trying to load Grocer Ref Agama');
+	$adminSts = $this->ion_auth->is_admin()===FALSE;
+	$this->db = $this->load->database('simpegRef',true);
+	log_message('debug','after Load new Db');
+	$crud = new grocery_CRUD();
+	$crud->set_table('insinduk')
+					->set_subject('Modifikasi Instansi Induk')
+					->columns('KINSIND','NINSIND')
+					->display_as('KINSIND','Kode Instansi')
+					->display_as('NINSIND','Nama Instansi');
+	$crud->fields('NINSIND');
+	$output = $crud->render();
+
+
+	//$this->render('dashboard/index_view');
+			$this->load->view('dashboard/grid',$output);
+
+}
 
 public function agama()
 {
@@ -559,6 +595,7 @@ public function agama()
 
 
 }
+
 public function referensiAgama()
 {
 	log_message('debug','Trying to load Grocer Ref Agama');
@@ -570,10 +607,8 @@ public function referensiAgama()
 					->set_subject('Modifikasi Agama')
 					->columns('kode','nama')
 					->display_as('nama','agama');
-
 	$crud->fields('nama');
 	$output = $crud->render();
-
 
 
 	//$this->render('dashboard/index_view');
