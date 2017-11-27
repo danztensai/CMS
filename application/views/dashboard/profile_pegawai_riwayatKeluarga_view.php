@@ -10,7 +10,7 @@ overflow-y:scroll;
     <ul class="nav nav-tabs">
       <li><a href="#ayah" data-toggle="tab">Ayah</a></li>
       <li><a href="#ibu" data-toggle="tab">Ibu</a></li>
-      <li><a href="#istri" data-toggle="tab">Istri</a></li>
+      <li><a href="#suamiIstri" data-toggle="tab">Suami/Istri</a></li>
       <li><a href="#anak" data-toggle="tab">Anak</a></li>
     </ul>
     <div class="tab-content">
@@ -18,504 +18,311 @@ overflow-y:scroll;
         <div class="box-body">
           <div class="row">
             <div class="col-md-12">
-                              <p class="text-center">
-                                <strong>Ayah</strong>
-                              </p>
-
-                  <form class="form-horizontal">
-                    <div class="box-body scroll">
-                      <div class="col-md-12">
-
-                        <div class="form-group">
-                          <label for="nama" class="col-md-4 control-label">Nama</label>
-                          <div class="col-md-4">
-                            <input class="form-control" id="nama" placeholder="Nama">
-                          </div>
-                        </div>
-
-                        <div class="form-group">
-                          <label for="tempatLahir" class="col-md-4 control-label">Tempat Lahir</label>
-                          <div class="col-md-4">
-                            <input class="form-control" id="tempatLahir" placeholder="Tempat Lahir">
-                          </div>
-                        </div>
-
-                        <div class="form-group">
-                          <label for="namaSekolah" class="col-md-4 control-label">Nama Sekolah</label>
-                          <div class="col-md-4">
-                            <input class="form-control" id="namaSekolah" placeholder="Nama Sekolah">
-                          </div>
-                        </div>
-
-                        <div class="form-group">
-                          <label for="tempat" class="col-md-4 control-label">Tempat</label>
-                          <div class="col-md-4">
-                            <input class="form-control" id="noSkNaikPangkat" placeholder="Tempat">
-                          </div>
-                        </div>
-
-                        <div class="form-group">
-                          <label for="namaKepalaSekolah" class="col-md-4 control-label">Nama Kepala Sekolah/Dekan</label>
-                          <div class="col-md-4">
-                            <input class="form-control" id="namaKepalaSekolah" placeholder="Nama Kepala Sekolah/Dekan">
-                          </div>
-                        </div>
-
-                        <div class="form-group">
-                          <label for="noSTTB" class="col-md-4 control-label">No STTB</label>
-                          <div class="col-md-4">
-                            <input class="form-control" id="noSTTB" placeholder="No STTB">
-                          </div>
-                        </div>
-                        <div class="form-group">
-                          <label for="tglSTTB" class="col-md-4 control-label">Tanggal STTB</label>
-                          <div class="col-md-4">
-                            <input class="form-control" id="tglSTTB" placeholder="Tanggal STTB">
-                          </div>
-                        </div>
-
-                        <div class="form-group">
-                          <label for="dataTerakhir" class="col-md-4 control-label">dataTerakhir</label>
-                          <div class="col-md-4">
-                            <input class="form-control" id="dataTerakhir" placeholder="dataTerakhir">
-                          </div>
-                        </div>
-
+              <p class="text-center">
+                <strong>Ayah</strong>
+              </p>
+              <form class="form-horizontal">
+                <div class="box-body scroll">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="NAYAH" class="col-md-4 control-label">Nama Ayah</label>
+                      <div class="col-md-4">
+                        <input class="form-control" id="NAYAH" placeholder="Nama Ayah" value="<?php echo $riwayatKeluargaAyah['NAYAH'];?>" disabled>
                       </div>
                     </div>
-                  </form>
+                    <div class="form-group">
+                      <label for="TLAHIR" class="col-md-4 control-label">Tempat Lahir</label>
+                      <div class="col-md-4">
+                        <input class="form-control" id="NAYAH" placeholder="Tempat Lahir" value="<?php echo $riwayatKeluargaAyah['TLAHIR'];?>" disabled>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="tanggalLahir" class="col-md-4 control-label">Tanggal Lahir</label>
+                      <div class="col-md-4">
+                        <div class="input-group date">
+                          <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                          </div>
+                          <input class="form-control" id="TGLLAHIR" placeholder="Tanggal Lahir" value="<?php echo $riwayatKeluargaAyah['TGLLAHIR'];?>" disabled>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="KKERJA" class="col-md-4 control-label">Pekerjaan</label>
+                      <div class="col-md-4">
+                        <input class="form-control" id="nama" placeholder="Pekerjaan" value="<?php echo $riwayatKeluargaAyah['nama'];?>" disabled>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="ALJALAN" class="col-md-4 control-label">Alamat Rumah</label>
+                      <div class="col-md-4">
+                        <input class="form-control" id="ALJALAN" placeholder="Alamat Rumah" value="<?php echo $riwayatKeluargaAyah['ALJALAN'];?>" disabled>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="ALRT" class="col-md-4 control-label">RT</label>
+                      <div class="col-md-4">
+                        <input class="form-control" id="ALRT" placeholder="RT" value="<?php echo $riwayatKeluargaAyah['ALRT'];?>" disabled>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="ALRW" class="col-md-4 control-label">RW</label>
+                      <div class="col-md-4">
+                        <input class="form-control" id="ALRW" placeholder="RW" value="<?php echo $riwayatKeluargaAyah['ALRW'];?>" disabled>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="NOTELP" class="col-md-4 control-label">No. Telepon</label>
+                      <div class="col-md-4">
+                        <input class="form-control" id="NOTELP" placeholder="No Telepon" value="<?php echo $riwayatKeluargaAyah['NOTELP'];?>" disabled>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="WIL" class="col-md-4 control-label">Kota / Kabupaten</label>
+                      <div class="col-md-4">
+                        <input class="form-control" id="WIL" placeholder="Kota / Kabupaten" value="<?php echo $riwayatKeluargaAyah['WIL'];?>" disabled>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="KPOS" class="col-md-4 control-label">Kode Pos</label>
+                      <div class="col-md-4">
+                        <input class="form-control" id="KPOS" placeholder="Kode Pos" value="<?php echo $riwayatKeluargaAyah['KPOS'];?>" disabled>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
             </div>
           </div>
         </div>
       </div>
-      <!-- /.tab-pane -->
-      <div class="tab-pane" id="struktural">
+      <div class="tab-pane" id="ibu">
         <div class="box-body">
           <div class="row">
             <div class="col-md-12">
-                              <p class="text-center">
-                                <strong>Struktural</strong>
-                              </p>
-                              <form class="form-horizontal">
-                                <div class="box-body scroll">
-                                  <div class="col-md-12">
-                                    <div class="form-group">
-                                      <label for="nip" class="col-md-4 control-label">NIP</label>
-                                      <div class="col-sm-4">
-                                        <input class="form-control" id="nip" placeholder="NIP">
-                                      </div>
-                                    </div>
-                                    <div class="form-group">
-                                      <label for="namaDiklatStrukturalPendidikan" class="col-md-4 control-label">Nama Diklat Struktural</label>
-                                      <div class="col-md-4">
-                                        <input class="form-control" id="namaDiklatStrukturalPendidikan" placeholder="Nama Diklat Struktural">
-                                      </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                      <label for="tempat" class="col-md-4 control-label">Tempat</label>
-                                      <div class="col-md-4">
-                                        <input class="form-control" id="tempat" placeholder="Tempat">
-                                      </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                      <label for="penyelenggara" class="col-md-4 control-label">Penyelenggara</label>
-                                      <div class="col-md-4">
-                                        <input class="form-control" id="penyelenggara" placeholder="Penyelenggara">
-                                      </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                      <label for="jabatan" class="col-md-4 control-label">jabatan</label>
-                                      <div class="col-md-4">
-                                        <input class="form-control" id="jabatan" placeholder="jabatan">
-                                      </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                      <label for="angkatan" class="col-md-4 control-label">Angkatan</label>
-                                      <div class="col-md-4">
-                                        <input class="form-control" id="angkatan" placeholder="Angkatan">
-                                      </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                      <label for="tglMulai" class="col-md-4 control-label">Tanggal Mulai</label>
-                                      <div class="col-md-4">
-                                        <input class="form-control" id="tglMulai" placeholder="Tanggal Mulai">
-                                      </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                      <label for="tglAkhir" class="col-md-4 control-label">Tanggal Akhir</label>
-                                      <div class="col-md-4">
-                                        <input class="form-control" id="tglAkhir" placeholder="Tanggal Akhir">
-                                      </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                      <label for="jumlahJam" class="col-md-4 control-label">Jumlah Jam</label>
-                                      <div class="col-md-4">
-                                        <input class="form-control" id="jumlahJam" placeholder="Jumlah Jam">
-                                      </div>
-                                    </div>
-
-
-
-                                    <div class="form-group">
-                                      <label for="noSTTP" class="col-md-4 control-label">STPP</label>
-                                      <div class="col-md-4">
-                                        <input class="form-control" id="noSTTP" placeholder="No STTP">
-                                      </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                      <label for="tglSTTP" class="col-md-4 control-label">Tanggal STPP</label>
-                                      <div class="col-md-4">
-                                        <input class="form-control" id="tglSTTP" placeholder="Tanggal STTP">
-                                      </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                      <label for="dataTerakhir" class="col-md-4 control-label">Data Terakhir</label>
-                                      <div class="col-md-4">
-                                        <input class="form-control" id="dataTerakhir" placeholder="Data Terakhir">
-                                      </div>
-                                    </div>
-
-                                  </div>
-                                </div>
-                              </form>
+              <p class="text-center">
+                <strong>Ibu</strong>
+              </p>
+              <form class="form-horizontal">
+                <div class="box-body scroll">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="NIBU" class="col-md-4 control-label">Nama Ibu</label>
+                      <div class="col-md-4">
+                        <input class="form-control" id="NIBU" placeholder="Nama Ibu" value="<?php echo $riwayatKeluargaIbu['NIBU'];?>" disabled>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="TLAHIR" class="col-md-4 control-label">Tempat Lahir</label>
+                      <div class="col-md-4">
+                        <input class="form-control" id="TLAHIR" placeholder="Tempat Lahir" value="<?php echo $riwayatKeluargaIbu['TLAHIR'];?>" disabled>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="TGLLAHIR" class="col-md-4 control-label">Tanggal Lahir</label>
+                      <div class="col-md-4">
+                        <div class="input-group date">
+                          <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                          </div>
+                          <input class="form-control" id="TGLLAHIR" placeholder="Tanggal Lahir" value="<?php echo $riwayatKeluargaIbu['TGLLAHIR'];?>" disabled>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="nama" class="col-md-4 control-label">Pekerjaan</label>
+                      <div class="col-md-4">
+                        <input class="form-control" id="nama" placeholder="Pekerjaan" value="<?php echo $riwayatKeluargaIbu['nama'];?>" disabled>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="ALJALAN" class="col-md-4 control-label">Alamat Rumah</label>
+                      <div class="col-md-4">
+                        <input class="form-control" id="ALJALAN" placeholder="Alamat Rumah" value="<?php echo $riwayatKeluargaIbu['ALJALAN'];?>" disabled>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="ALRT" class="col-md-4 control-label">RT</label>
+                      <div class="col-md-4">
+                        <input class="form-control" id="ALRT" placeholder="RT" value="<?php echo $riwayatKeluargaIbu['ALRT'];?>" disabled>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="ALRW" class="col-md-4 control-label">RW</label>
+                      <div class="col-md-4">
+                        <input class="form-control" id="ALRW" placeholder="RW" value="<?php echo $riwayatKeluargaIbu['ALRW'];?>" disabled>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="NOTELP" class="col-md-4 control-label">No. Telepon</label>
+                      <div class="col-md-4">
+                        <input class="form-control" id="NOTELP" placeholder="No. Telepon" value="<?php echo $riwayatKeluargaIbu['NOTELP'];?>" disabled>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="WIL" class="col-md-4 control-label">Kota / Kabupaten</label>
+                      <div class="col-md-4">
+                        <input class="form-control" id="WIL" placeholder="Kota / Kabupaten" value="<?php echo $riwayatKeluargaIbu['WIL'];?>" disabled>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="KPOS" class="col-md-4 control-label">Kode Pos</label>
+                      <div class="col-md-4">
+                        <input class="form-control" id="KPOS" placeholder="Kode Pos" value="<?php echo $riwayatKeluargaIbu['KPOS'];?>" disabled>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
             </div>
           </div>
         </div>
       </div>
-      <!-- /.tab-pane -->
-      <div class="tab-pane" id="fungsional">
+      <div class="tab-pane" id="suamiIstri">
         <div class="box-body">
           <div class="row">
             <div class="col-md-12">
-                              <p class="text-center">
-                                <strong>Fungsional</strong>
-                              </p>
-                              <form class="form-horizontal">
-                                <div class="box-body scroll">
-                                  <div class="col-md-12">
-                                    <div class="form-group">
-                                      <label for="nip" class="col-md-4 control-label">NIP</label>
-                                      <div class="col-sm-4">
-                                        <input class="form-control" id="nip" placeholder="NIP">
-                                      </div>
-                                    </div>
-                                    <div class="form-group">
-                                      <label for="namaDiklatStrukturalPendidikan" class="col-md-4 control-label">Nama Diklat Struktural</label>
-                                      <div class="col-md-4">
-                                        <input class="form-control" id="namaDiklatStrukturalPendidikan" placeholder="Nama Diklat Struktural">
-                                      </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                      <label for="tempat" class="col-md-4 control-label">Tempat</label>
-                                      <div class="col-md-4">
-                                        <input class="form-control" id="tempat" placeholder="Tempat">
-                                      </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                      <label for="penyelenggara" class="col-md-4 control-label">Penyelenggara</label>
-                                      <div class="col-md-4">
-                                        <input class="form-control" id="penyelenggara" placeholder="Penyelenggara">
-                                      </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                      <label for="jabatan" class="col-md-4 control-label">jabatan</label>
-                                      <div class="col-md-4">
-                                        <input class="form-control" id="jabatan" placeholder="jabatan">
-                                      </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                      <label for="angkatan" class="col-md-4 control-label">Angkatan</label>
-                                      <div class="col-md-4">
-                                        <input class="form-control" id="angkatan" placeholder="Angkatan">
-                                      </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                      <label for="tglMulai" class="col-md-4 control-label">Tanggal Mulai</label>
-                                      <div class="col-md-4">
-                                        <input class="form-control" id="tglMulai" placeholder="Tanggal Mulai">
-                                      </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                      <label for="tglAkhir" class="col-md-4 control-label">Tanggal Akhir</label>
-                                      <div class="col-md-4">
-                                        <input class="form-control" id="tglAkhir" placeholder="Tanggal Akhir">
-                                      </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                      <label for="jumlahJam" class="col-md-4 control-label">Jumlah Jam</label>
-                                      <div class="col-md-4">
-                                        <input class="form-control" id="jumlahJam" placeholder="Jumlah Jam">
-                                      </div>
-                                    </div>
-
-
-
-                                    <div class="form-group">
-                                      <label for="noSTTP" class="col-md-4 control-label">STPP</label>
-                                      <div class="col-md-4">
-                                        <input class="form-control" id="noSTTP" placeholder="No STTP">
-                                      </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                      <label for="tglSTTP" class="col-md-4 control-label">Tanggal STPP</label>
-                                      <div class="col-md-4">
-                                        <input class="form-control" id="tglSTTP" placeholder="Tanggal STTP">
-                                      </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                      <label for="dataTerakhir" class="col-md-4 control-label">Data Terakhir</label>
-                                      <div class="col-md-4">
-                                        <input class="form-control" id="dataTerakhir" placeholder="Data Terakhir">
-                                      </div>
-                                    </div>
-
-                                  </div>
-                                </div>
-                              </form>
+              <p class="text-center">
+                <strong>Suami/Istri</strong>
+              </p>
+              <form class="form-horizontal">
+                <div class="box-body scroll">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="NISUA" class="col-md-4 control-label">Nama Istri / Suami</label>
+                      <div class="col-md-4">
+                        <input class="form-control" id="NISUA" placeholder="Nama Istri / Suami" value="<?php echo $riwayatKeluargaSuamiIstri['NISUA'];?>" disabled>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="KTLAHIR" class="col-md-4 control-label">Tempat Lahir</label>
+                      <div class="col-md-4">
+                        <input class="form-control" id="KTLAHIR" placeholder="Tempat Lahir" value="<?php echo $riwayatKeluargaSuamiIstri['KTLAHIR'];?>" disabled>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="TLAHIR" class="col-md-4 control-label">Tanggal Lahir</label>
+                      <div class="col-md-4">
+                        <div class="input-group date">
+                          <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                          </div>
+                          <input class="form-control" id="TLAHIR" placeholder="Tanggal Lahir" value="<?php echo $riwayatKeluargaSuamiIstri['TLAHIR'];?>" disabled>
+                      </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="nama" class="col-md-4 control-label">Pendidikan</label>
+                      <div class="col-md-4">
+                        <input class="form-control" id="nama" placeholder="Pendidikan" value="<?php echo $riwayatKeluargaSuamiIstri['nama'];?>" disabled>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="TKAWIN" class="col-md-4 control-label">Tanggal Kawin</label>
+                      <div class="col-md-4">
+                        <div class="input-group date">
+                          <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                          </div>
+                          <input class="form-control" id="TKAWIN" placeholder="Tanggal Kawin" value="<?php echo $riwayatKeluargaSuamiIstri['TKAWIN'];?>" disabled>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="STUNJ" class="col-md-4 control-label">Status Tunjangan</label>
+                      <div class="col-md-4">
+                        <input class="form-control" id="STUNJ" placeholder="Status Tunjangan" value="<?php echo $riwayatKeluargaSuamiIstri['STUNJ'];?>" disabled>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="KKERJA" class="col-md-4 control-label">Pekerjaan</label>
+                      <div class="col-md-4">
+                        <input class="form-control" id="KKERJA" placeholder="Pekerjaan" value="<?php echo $riwayatKeluargaSuamiIstri['KKERJA'];?>" disabled>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="ISAKHIR" class="col-md-4 control-label">Istri / Suami Terakhir</label>
+                      <div class="col-md-4">
+                        <input class="form-control" id="ISAKHIR" placeholder="Istri / Suami Terakhir" value="<?php echo $riwayatKeluargaSuamiIstri['ISAKHIR'];?>" disabled>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
             </div>
           </div>
         </div>
       </div>
-      <!-- /.tab-pane -->
-      <div class="tab-pane" id="teknis">
+      <div class="tab-pane" id="anak">
         <div class="box-body">
           <div class="row">
             <div class="col-md-12">
-                              <p class="text-center">
-                                <strong>Teknis</strong>
-                              </p>
-                              <form class="form-horizontal">
-                                <div class="box-body scroll">
-                                  <div class="col-md-12">
-                                    <div class="form-group">
-                                      <label for="nip" class="col-md-4 control-label">NIP</label>
-                                      <div class="col-sm-4">
-                                        <input class="form-control" id="nip" placeholder="NIP">
-                                      </div>
-                                    </div>
-                                    <div class="form-group">
-                                      <label for="namaDiklatStrukturalPendidikan" class="col-md-4 control-label">Nama Diklat Teknis</label>
-                                      <div class="col-md-4">
-                                        <input class="form-control" id="namaDiklatStrukturalPendidikan" placeholder="Nama Diklat Struktural">
-                                      </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                      <label for="tempat" class="col-md-4 control-label">Tempat</label>
-                                      <div class="col-md-4">
-                                        <input class="form-control" id="tempat" placeholder="Tempat">
-                                      </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                      <label for="penyelenggara" class="col-md-4 control-label">Penyelenggara</label>
-                                      <div class="col-md-4">
-                                        <input class="form-control" id="penyelenggara" placeholder="Penyelenggara">
-                                      </div>
-                                    </div>
-
-
-
-                                    <div class="form-group">
-                                      <label for="angkatan" class="col-md-4 control-label">Angkatan</label>
-                                      <div class="col-md-4">
-                                        <input class="form-control" id="angkatan" placeholder="Angkatan">
-                                      </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                      <label for="tglMulai" class="col-md-4 control-label">Tanggal Mulai</label>
-                                      <div class="col-md-4">
-                                        <input class="form-control" id="tglMulai" placeholder="Tanggal Mulai">
-                                      </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                      <label for="tglAkhir" class="col-md-4 control-label">Tanggal Akhir</label>
-                                      <div class="col-md-4">
-                                        <input class="form-control" id="tglAkhir" placeholder="Tanggal Akhir">
-                                      </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                      <label for="jumlahJam" class="col-md-4 control-label">Jumlah Jam</label>
-                                      <div class="col-md-4">
-                                        <input class="form-control" id="jumlahJam" placeholder="Jumlah Jam">
-                                      </div>
-                                    </div>
-
-
-
-                                    <div class="form-group">
-                                      <label for="noSTTP" class="col-md-4 control-label">STPP</label>
-                                      <div class="col-md-4">
-                                        <input class="form-control" id="noSTTP" placeholder="No STTP">
-                                      </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                      <label for="tglSTTP" class="col-md-4 control-label">Tanggal STPP</label>
-                                      <div class="col-md-4">
-                                        <input class="form-control" id="tglSTTP" placeholder="Tanggal STTP">
-                                      </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                      <label for="dataTerakhir" class="col-md-4 control-label">Data Terakhir</label>
-                                      <div class="col-md-4">
-                                        <input class="form-control" id="dataTerakhir" placeholder="Data Terakhir">
-                                      </div>
-                                    </div>
-
-                                  </div>
-                                </div>
-                              </form>
+              <p class="text-center">
+                <strong>Anak</strong>
+              </p>
+              <form class="form-horizontal">
+                <div class="box-body scroll">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="NANAK" class="col-md-4 control-label">Nama Anak</label>
+                      <div class="col-md-4">
+                        <input class="form-control" id="NANAK" placeholder="Nama Anak" value="<?php echo $riwayatKeluargaAnak['NANAK'];?>" disabled>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="TLAHIR" class="col-md-4 control-label">Tempat Lahir</label>
+                      <div class="col-md-4">
+                        <input class="form-control" id="TLAHIR" placeholder="Tempat Lahir" value="<?php echo $riwayatKeluargaAnak['TLAHIR'];?>" disabled>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="TGLLAHIR" class="col-md-4 control-label">Tanggal Lahir</label>
+                      <div class="col-md-4">
+                        <div class="input-group date">
+                          <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                          </div>
+                          <input class="form-control" id="TGLLAHIR" placeholder="Tanggal Lahir" value="<?php echo $riwayatKeluargaAnak['TGLLAHIR'];?>" disabled>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="NKELAMIN" class="col-md-4 control-label">Kelamin</label>
+                      <div class="col-md-4">
+                        <input class="form-control" id="NKELAMIN" placeholder="Kelamin" value="<?php echo $riwayatKeluargaAnak['NKELAMIN'];?>" disabled>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="KELUARGA" class="col-md-4 control-label">Hubungan Keluarga</label>
+                      <div class="col-md-4">
+                        <input class="form-control" id="KELUARGA" placeholder="Hubungan Keluarga" value="<?php echo $riwayatKeluargaAnak['KELUARGA'];?>" disabled>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="TUNJ" class="col-md-4 control-label">Tunjangan</label>
+                      <div class="col-md-4">
+                        <input class="form-control" id="TUNJ" placeholder="Tunjangan" value="<?php echo $riwayatKeluargaAnak['TUNJ'];?>" disabled>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="TIJASAH" class="col-md-4 control-label">Tingkat Pendidikan Umum</label>
+                      <div class="col-md-4">
+                        <input class="form-control" id="TIJASAH" placeholder="Tingkat Pendidikan Umum" value="<?php echo $riwayatKeluargaAnak['TIJASAH'];?>" disabled>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="nama" class="col-md-4 control-label">Pekerjaan</label>
+                      <div class="col-md-4">
+                        <input class="form-control" id="nama" placeholder="Pekerjaan" value="<?php echo $riwayatKeluargaAnak['nama'];?>" disabled>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
             </div>
           </div>
         </div>
       </div>
-      <!-- /.tab-pane -->
-      <div class="tab-pane" id="penataran">
-        <div class="box-body">
-          <div class="row">
-            <div class="col-md-12">
-                              <p class="text-center">
-                                <strong>Penataran</strong>
-                              </p>
-                              <form class="form-horizontal">
-                                <div class="box-body scroll">
-                                  <div class="col-md-12">
-                                    <div class="form-group">
-                                      <label for="nip" class="col-md-4 control-label">NIP</label>
-                                      <div class="col-sm-4">
-                                        <input class="form-control" id="nip" placeholder="NIP">
-                                      </div>
-                                    </div>
-                                    <div class="form-group">
-                                      <label for="namaDiklatStrukturalPendidikan" class="col-md-4 control-label">Nama Penataran</label>
-                                      <div class="col-md-4">
-                                        <input class="form-control" id="namaDiklatStrukturalPendidikan" placeholder="Nama Diklat Struktural">
-                                      </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                      <label for="tempat" class="col-md-4 control-label">Tempat</label>
-                                      <div class="col-md-4">
-                                        <input class="form-control" id="tempat" placeholder="Tempat">
-                                      </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                      <label for="penyelenggara" class="col-md-4 control-label">Penyelenggara</label>
-                                      <div class="col-md-4">
-                                        <input class="form-control" id="penyelenggara" placeholder="Penyelenggara">
-                                      </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                      <label for="jabatan" class="col-md-4 control-label">jabatan</label>
-                                      <div class="col-md-4">
-                                        <input class="form-control" id="jabatan" placeholder="jabatan">
-                                      </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                      <label for="angkatan" class="col-md-4 control-label">Angkatan</label>
-                                      <div class="col-md-4">
-                                        <input class="form-control" id="angkatan" placeholder="Angkatan">
-                                      </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                      <label for="tglMulai" class="col-md-4 control-label">Tanggal Mulai</label>
-                                      <div class="col-md-4">
-                                        <input class="form-control" id="tglMulai" placeholder="Tanggal Mulai">
-                                      </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                      <label for="tglAkhir" class="col-md-4 control-label">Tanggal Akhir</label>
-                                      <div class="col-md-4">
-                                        <input class="form-control" id="tglAkhir" placeholder="Tanggal Akhir">
-                                      </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                      <label for="jumlahJam" class="col-md-4 control-label">Jumlah Jam</label>
-                                      <div class="col-md-4">
-                                        <input class="form-control" id="jumlahJam" placeholder="Jumlah Jam">
-                                      </div>
-                                    </div>
-
-
-
-                                    <div class="form-group">
-                                      <label for="noSTTP" class="col-md-4 control-label">STPP</label>
-                                      <div class="col-md-4">
-                                        <input class="form-control" id="noSTTP" placeholder="No STTP">
-                                      </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                      <label for="tglSTTP" class="col-md-4 control-label">Tanggal STPP</label>
-                                      <div class="col-md-4">
-                                        <input class="form-control" id="tglSTTP" placeholder="Tanggal STTP">
-                                      </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                      <label for="dataTerakhir" class="col-md-4 control-label">Data Terakhir</label>
-                                      <div class="col-md-4">
-                                        <input class="form-control" id="dataTerakhir" placeholder="Data Terakhir">
-                                      </div>
-                                    </div>
-
-                                  </div>
-                                </div>
-                              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- /.tab-pane -->
-      <div class="tab-pane" id="seminar">
-        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-        Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-        when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-        It has survived not only five centuries, but also the leap into electronic typesetting,
-        remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset
-        sheets containing Lorem Ipsum passages, and more recently with desktop publishing software
-        like Aldus PageMaker including versions of Lorem Ipsum.
-      </div>
-      <!-- /.tab-pane -->
-      <div class="tab-pane" id="kursus">
-        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-        Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-        when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-        It has survived not only five centuries, but also the leap into electronic typesetting,
-        remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset
-        sheets containing Lorem Ipsum passages, and more recently with desktop publishing software
-        like Aldus PageMaker including versions of Lorem Ipsum.
-      </div>
-      <!-- /.tab-pane -->
 
     </div>
     <!-- /.tab-content -->
