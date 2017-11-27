@@ -157,14 +157,16 @@ class Dashboard extends Auth_Controller
 		$riwayatPensiunKeluargaIbu = $this->Simpeg_model->getRiwayatPensiunKeluargaIbu($userLoggedin->nip);
 		$riwayatPensiunKeluargaSuamiIstri = $this->Simpeg_model->getRiwayatPensiunKeluargaSuamiIstri($userLoggedin->nip);
 		$riwayatPensiunKeluargaAnak = $this->Simpeg_model->getRiwayatPensiunKeluargaAnak($userLoggedin->nip);
+		$riwayatJabatanPensiun = $this->Simpeg_model->getRiwayatJabatanPensiun($userLoggedin->nip);
+
 
 		$this->data['riwayatPensiunKeluargaIbu']=$riwayatPensiunKeluargaIbu;
 		$this->data['riwayatPensiunKeluargaAyah']=$riwayatPensiunKeluargaAyah;
 		$this->data['riwayatPensiunKeluargaSuamiIstri']=$riwayatPensiunKeluargaSuamiIstri;
 		$this->data['riwayatPensiunKeluargaAnak']=$riwayatPensiunKeluargaAnak;
-
 		$this->data['gajiBerkalaPegawaiPensiun']=$gajiBerkalaPegawaiPensiun;
 		$this->data['tempatPegawaiPensiun']=$tempatPegawaiPensiun;
+		$this->data['riwayatJabatanPensiun']=$riwayatJabatanPensiun;
 		$this->data['identitas']=$identitasSimpeg;
 		$this->data['riwayatPangkat']=$riwayatPangkat;
 

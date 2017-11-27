@@ -135,6 +135,7 @@
 						return $data;
 					}
 		}
+
 		public function getRiwayatJabatan($nip)
 		{
 			  $DB2 =$this->load->database('simpegRef', TRUE);
@@ -180,6 +181,53 @@
 						return $data;
 					}
 		}
+
+		public function getRiwayatJabatanPensiun($nip)
+		{
+				$DB2 =$this->load->database('simpegRef', TRUE);
+				$querySQL = "SELECT rj.nip, rj.nunkerUnitOrganisasi, rj.KESELON, re.nama, rj.njab,
+				SUBSTRING(rj.kwil, 1,2) as 'kode_propinsi', SUBSTRING(rj.kwil, 3,2) as 'kode_kabupaten',
+										rj.tmtJabatan, rj.nomorSk, rj.tanggalSk, rj.jnsjab
+										FROM revReferenceSimpeg.jabatan rj
+										INNER JOIN revReferenceSimpeg.eselon re on rj.KESELON = re.ideselon
+										WHERE rj.nip = '$nip'
+										ORDER BY rj.tmtJabatan asc ";
+
+				$data = array();
+				$stackData = array();
+
+				log_message('debug','riwayatJabatan: '.$querySQL);
+				$query = $DB2->query($querySQL);
+
+				if($query->num_rows()>0)
+					{ $count = 1;
+						foreach($query->result() as $row)
+						{
+							$data['nip']=$row->nip;
+							$data['nunkerUnitOrganisasi']=$row->nunkerUnitOrganisasi;
+							$data['KESELON']=$row->KESELON;
+							$data['nama']=$row->nama;
+							$data['njab']=$row->njab;
+							$data['kode_propinsi']=$row->kode_propinsi;
+							$data['kode_kabupaten']=$row->kode_kabupaten;
+							$data['tmtJabatan']=$row->tmtJabatan;
+							$data['nomorSk']=$row->nomorSk;
+							$data['tanggalSk']=$row->tanggalSk;
+							$data['jnsjab']=$row->jnsjab;
+
+
+						 array_push($stackData,$data);
+						}
+						$query->free_result();
+						return $stackData;
+					}else
+					{
+
+						$query->free_result();
+						return $data;
+					}
+		}
+
 		public function getTempatPegawai($nip)
 		{
 		$DB2 =$this->load->database('simpegRef', TRUE);
