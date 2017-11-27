@@ -157,14 +157,16 @@ class Dashboard extends Auth_Controller
 		$riwayatPensiunKeluargaIbu = $this->Simpeg_model->getRiwayatPensiunKeluargaIbu($userLoggedin->nip);
 		$riwayatPensiunKeluargaSuamiIstri = $this->Simpeg_model->getRiwayatPensiunKeluargaSuamiIstri($userLoggedin->nip);
 		$riwayatPensiunKeluargaAnak = $this->Simpeg_model->getRiwayatPensiunKeluargaAnak($userLoggedin->nip);
+		$riwayatJabatanPensiun = $this->Simpeg_model->getRiwayatJabatanPensiun($userLoggedin->nip);
+
 
 		$this->data['riwayatPensiunKeluargaIbu']=$riwayatPensiunKeluargaIbu;
 		$this->data['riwayatPensiunKeluargaAyah']=$riwayatPensiunKeluargaAyah;
 		$this->data['riwayatPensiunKeluargaSuamiIstri']=$riwayatPensiunKeluargaSuamiIstri;
 		$this->data['riwayatPensiunKeluargaAnak']=$riwayatPensiunKeluargaAnak;
-
 		$this->data['gajiBerkalaPegawaiPensiun']=$gajiBerkalaPegawaiPensiun;
 		$this->data['tempatPegawaiPensiun']=$tempatPegawaiPensiun;
+		$this->data['riwayatJabatanPensiun']=$riwayatJabatanPensiun;
 		$this->data['identitas']=$identitasSimpeg;
 		$this->data['riwayatPangkat']=$riwayatPangkat;
 
@@ -381,6 +383,11 @@ class Dashboard extends Auth_Controller
 		$riwayatJabatan = $this->Simpeg_model->getRiwayatJabatan($userLoggedin->nip);
 		$riwayatJasa = $this->Simpeg_model->getRiwayatJasa($userLoggedin->nip);
 		$riwayatDpp = $this->Simpeg_model->getRiwayatDPP($userLoggedin->nip);
+		$riwayatKeluargaAyah = $this->Simpeg_model->getRiwayatKeluargaAyah($userLoggedin->nip);
+		$riwayatKeluargaIbu = $this->Simpeg_model->getRiwayatKeluargaIbu($userLoggedin->nip);
+		$riwayatKeluargaSuamiIstri = $this->Simpeg_model->getRiwayatKeluargaSuamiIstri($userLoggedin->nip);
+		$riwayatKeluargaAnak = $this->Simpeg_model->getRiwayatKeluargaAnak($userLoggedin->nip);
+
 		//log_message('debug',print_r($cpnspnsSimpeg,TRUE));
 		//log_message('debug',print_r($userLoggedin,TRUE));
 		$agama =$this->Simpeg_model->getAgama();
@@ -396,11 +403,16 @@ class Dashboard extends Auth_Controller
 		$jenisNaikPangkat = $this->Simpeg_model->getJenisNaikPangkat();
 		log_message('debug','Isi Riwayat Jasa : '.count($riwayatJasa));
 
+
 		$this->data['identitas']=$identitasSimpeg;
 		$this->data['riwayatPangkat']=$riwayatPangkat;
 		$this->data['riwayatJabatan']=$riwayatJabatan;
 		$this->data['riwayatJasa']=$riwayatJasa;
 		$this->data['riwayatDpp']=$riwayatDpp;
+		$this->data['riwayatKeluargaAyah']=$riwayatKeluargaAyah;
+		$this->data['riwayatKeluargaIbu']=$riwayatKeluargaIbu;
+		$this->data['riwayatKeluargaSuamiIstri']=$riwayatKeluargaSuamiIstri;
+		$this->data['riwayatKeluargaAnak']=$riwayatKeluargaAnak;
 
 		$this->data['cpnspns']=$cpnspnsSimpeg;
 		$this->data['pangkatTerakhir']=$pangkatTerakhir;
