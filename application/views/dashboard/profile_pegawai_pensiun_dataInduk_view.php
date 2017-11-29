@@ -143,7 +143,9 @@ $( document ).ready(function() {
         <div class="row">
           <div class="col-md-8">
             <p class="text-center">
-              <strong>Identitas</strong>
+              <strong>Identitas
+<php?>
+              </strong>
             </p>
             <form class="form-horizontal" id="formIdentitas">
               <div class="box-body">

@@ -3,7 +3,32 @@
   height:300px;
   overflow-y:scroll;
 }
+
 </style>
+<style>
+.intrinsic-container {
+  position: relative;
+  height: 0;
+  overflow: hidden;
+}
+
+/* 16x9 Aspect Ratio */
+.intrinsic-container-16x9 {
+  padding-bottom: 56.25%;
+}
+
+/* 4x3 Aspect Ratio */
+.intrinsic-container-4x3 {
+  padding-bottom: 75%;
+}
+
+.intrinsic-container iframe {
+  position: absolute;
+  top:0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}</style>
 <div class="tab-pane" id="riwayatKeluarga">
   <div class="nav-tabs-custom">
     <ul class="nav nav-tabs">
@@ -11,6 +36,8 @@
       <li><a href="#ibu" data-toggle="tab">Ibu</a></li>
       <li><a href="#suamiIstri" data-toggle="tab">Suami/Istri</a></li>
       <li><a href="#anak" data-toggle="tab">Anak</a></li>
+      <li><a href="#agamax" data-toggle="tab">Agama</a></li>
+      <li><a href="#agamax2" data-toggle="tab">Agama</a></li>
     </ul>
     <div class="tab-content">
       <div class="tab-pane" id="ayah">
@@ -321,6 +348,35 @@
             </div>
           </div>
         </div>
+      </div>
+      <div class="tab-pane" id="agamax">
+        <div class="box-body">
+          <div class="row">
+            <div class="col-md-12">
+              <p class="text-center">
+                <strong>Agama</strong>
+              </p>
+                    <!-- <IFRAME width="100%" SRC=<?php echo base_url('dashboard/referensiAgama');?>></IFRAME> -->
+                    <div class="intrinsic-container intrinsic-container-16x9">
+                    <IFRAME SRC=<?php echo base_url('dashboard/referensiAgama');?>></IFRAME>
+                    </div>
+            </div>
+          </div>
+        </div>
+        <div class="tab-pane" id="agamax2">
+          <div class="box-body">
+            <div class="row">
+              <div class="col-md-12">
+                <p class="text-center">
+                  <strong>Agama</strong>
+                </p>
+                      <!-- <IFRAME width="100%" SRC=<?php echo base_url('dashboard/referensiAgama');?>></IFRAME> -->
+                      <div class="intrinsic-container intrinsic-container-16x9">
+                      <IFRAME SRC=<?php echo base_url('dashboard/referensiAgama');?>></IFRAME>
+                      </div>
+              </div>
+            </div>
+          </div>
       </div>
     </div>
     <!-- /.tab-content -->
