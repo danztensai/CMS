@@ -657,6 +657,7 @@ class Dashboard extends Auth_Controller
 		->display_as('nunker','Nama Unit Kerja')
 		->display_as('keselon','Eselon')
 		->display_as('unkerjagrade','Grade');
+		$crud->set_relation('keselon','eselon','nama');
 		$crud->fields('kunker','nunker', 'keselon', 'unkerjagrade');
 		$crud->required_fields('kunker','nunker', 'keselon', 'unkerjagrade');
 		$output = $crud->render();
@@ -708,7 +709,7 @@ class Dashboard extends Auth_Controller
 		$this->db = $this->load->database('simpegRef',true);
 		log_message('debug','after Load new Db');
 		$crud = new grocery_CRUD();
-		$crud->set_table('statusPegawai')
+		$crud->set_table('statuspegawai')
 		->set_subject('Status Pegawai')
 		->columns('kStatusPegawai', 'nStatusPegawai')
 		->display_as('kStatusPegawai','Kode')
@@ -726,7 +727,7 @@ class Dashboard extends Auth_Controller
 		$this->db = $this->load->database('simpegRef',true);
 		log_message('debug','after Load new Db');
 		$crud = new grocery_CRUD();
-		$crud->set_table('kedudukanPegawai')
+		$crud->set_table('kedudukanpegawai')
 		->set_subject('Kedudukan Pegawai')
 		->columns('id', 'nama')
 		->display_as('id','Kode')
@@ -762,7 +763,7 @@ class Dashboard extends Auth_Controller
 		$this->db = $this->load->database('simpegRef',true);
 		log_message('debug','after Load new Db');
 		$crud = new grocery_CRUD();
-		$crud->set_table('daftarPekerjaan')
+		$crud->set_table('daftarpekerjaan')
 		->set_subject('Daftar Pekerjaan')
 		->columns('id', 'nama')
 		->display_as('id','Kode')
@@ -1053,7 +1054,7 @@ class Dashboard extends Auth_Controller
 		$this->db = $this->load->database('simpegRef',true);
 		log_message('debug','after Load new Db');
 		$crud = new grocery_CRUD();
-		$crud->set_table('kelompokJabatan')
+		$crud->set_table('kelompokjabatan')
 		->set_subject('Kelompok Jabatan')
 		->columns('KJAB', 'NJAB')
 		->display_as('KJAB','Kode')
