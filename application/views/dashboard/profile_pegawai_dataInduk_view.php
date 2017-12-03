@@ -28,45 +28,50 @@ $(':checkbox').each(function(){
     format: 'yyyy-mm-dd'
   });
 $('#submitIdentitas').click(function(){
+  if (confirm('Anda Yakin Akan Merubah Data Identitas')) {
 
+    var f = $("#formIdentitas").serialize()
+    console.log(f);
+    var myFile = $('#file').prop('files')[0];
+    console.log(myFile);
+    var file_data = $('#fotofile').prop('files');
+    console.log(file_data);
+    var form_data = new FormData();
+
+    var other_data =$('#formIdentitas').serializeArray() ;
+    var jsonData = JSON.stringify($('#formIdentitas').serializeArray(), null, "  ");
+
+      $.each(other_data,function(key,input){
+          form_data.append(input.name,input.value);
+      });
+
+    form_data.append('file', myFile);
+    form_data.append('json',jsonData);
+    console.log(form_data);
+
+    $.ajax({
+                          url: '<?php echo base_url()?>dashboard/editIdentitas', // point to server-side controller method
+                          dataType: 'text', // what to expect back from the server
+                          cache: false,
+                          contentType: false,
+                          processData: false,
+                          data: form_data,
+                          type: 'post',
+                          success: function (response) {
+                            console.log(response);
+                          },
+                          error: function (response) {
+                            console.log(response);
+                          }
+                      });
+  } else {
+      // Do nothing!
+  }
   // $.each($('input,select,textarea,checkbox', '#formIdentitas'),function(k){
   //       //  console.log(k+' '+$(this).attr('disabled'));
   //       console.log(k+' '+$(this).attr('id'));
   //     });
-  var f = $("#formIdentitas").serialize()
-  console.log(f);
-  var myFile = $('#file').prop('files')[0];
-  console.log(myFile);
-  var file_data = $('#fotofile').prop('files');
-  console.log(file_data);
-  var form_data = new FormData();
 
-  var other_data =$('#formIdentitas').serializeArray() ;
-  var jsonData = JSON.stringify($('#formIdentitas').serializeArray(), null, "  ");
-
-    $.each(other_data,function(key,input){
-        form_data.append(input.name,input.value);
-    });
-
-  form_data.append('file', myFile);
-  form_data.append('json',jsonData);
-  console.log(form_data);
-
-  $.ajax({
-                        url: '<?php echo base_url()?>dashboard/upload_foto', // point to server-side controller method
-                        dataType: 'text', // what to expect back from the server
-                        cache: false,
-                        contentType: false,
-                        processData: false,
-                        data: form_data,
-                        type: 'post',
-                        success: function (response) {
-                          console.log(response);
-                        },
-                        error: function (response) {
-                          console.log(response);
-                        }
-                    });
 
 
 });
@@ -75,26 +80,65 @@ $('#editIdentitas').click(function (){
 //console.log('Click Edit');
 
 $.each($('input,select,textarea', '#formIdentitas'),function(k){
-      //  console.log(k+' '+$(this).attr('disabled'));
+
+      //console.log(k+' '+$(this).attr('disabled'));
+      console.log($(this).attr('name'));
+      var fieldName = $(this).attr('name');
+      if(fieldName=='askesNomor'||fieldName=='agamaId'||fieldName=='alamat'||fieldName=='jenisKawin'||fieldName=='KGOLDAR'||fieldName=='ALRT'||fieldName=='ALRW'||fieldName=='statusCpnsPns'||fieldName=='npwpNomor'||fieldName=='noTelpon'||fieldName=='KPOS')
+      {
         var isDisabled = $(this).is(':disabled');
         if (isDisabled) {
             $(this).prop('disabled', false);
         }
+
+        var isDisabledFile = $('#file').is(':disabled');
+        if (isDisabledFile) {
+            $('#file').prop('disabled', false);
+        }
+
+        var isDisableButtonSubmit=$('#submitIdentitas').is(':disabled');
+        if (isDisabledFile) {
+            $('#submitIdentitas').prop('disabled', false);
+        }
+        var cancelIdentitas=$('#cancelIdentitas').is(':disabled');
+        if (cancelIdentitas) {
+            $('#cancelIdentitas').prop('disabled', false);
+        }
+      }
+
     });
+
 
 });
 
 
 $('#cancelIdentitas').click(function (){
+  if (confirm('Anda Yakin Tidak Jadi Merubah Data Identitas')) {
+    $.each($('input,select,textarea', '#formIdentitas'),function(k){
+        //  console.log(k+' '+$(this).attr('disabled'));
+          var isDisabled = $(this).is(':disabled');
+          if (!isDisabled) {
+              $(this).prop('disabled', true);
+          }
+          var isDisabledFile = $('#file').is(':disabled');
+          if (!isDisabledFile) {
+              $('#file').prop('disabled', true);
+          }
+          var isDisableButtonSubmit=$('#submitIdentitas').is(':disabled');
+          if (!isDisabledFile) {
+              $('#submitIdentitas').prop('disabled', true);
+          }
+          var cancelIdentitas=$('#cancelIdentitas').is(':disabled');
+          if (!cancelIdentitas) {
+              $('#cancelIdentitas').prop('disabled', true);
+          }
 
+      });
+    // Save it!
+  } else {
+      // Do nothing!
+  }
 
-$.each($('input,select,textarea', '#formIdentitas'),function(k){
-      //  console.log(k+' '+$(this).attr('disabled'));
-        var isDisabled = $(this).is(':disabled');
-        if (!isDisabled) {
-            $(this).prop('disabled', true);
-        }
-    });
 
 });
 
@@ -208,7 +252,7 @@ $.each($('input,select,textarea', '#formGaji'),function(k){
                                   </ul>
                                   <!-- /.tab-pane -->
                                   <div class="tab-content">
-                                        <div class="tab-pane" id="Identitas">
+                                        <div class="tab-pane active" id="Identitas">
                                           <div class="box-body">
                                             <div class="row">
                                               <div class="col-md-8">
@@ -262,7 +306,7 @@ $.each($('input,select,textarea', '#formGaji'),function(k){
                                                           <label for="tempatLahir" class="col-md-4 control-label">Tempat Lahir</label>
 
                                                         <div class="col-md-8">
-                                                            <input class="form-control" id="KTLAHIR" placeholder="Tempat Lahir" value="<?php echo $identitas['KTLAHIR']?>" disabled >
+                                                            <input class="form-control" name="KTLAHIR" id="KTLAHIR" placeholder="Tempat Lahir" value="<?php echo $identitas['KTLAHIR']?>" disabled >
                                                           </div>
                                                         </div>
 
@@ -283,7 +327,7 @@ $.each($('input,select,textarea', '#formGaji'),function(k){
                                                           <label for="jeniKelamin" class="col-md-4 control-label">Jenis Kelamin</label>
 
                                                           <div class="col-md-8">
-                                                            <select id="jenisKelamin" disabled="disabled" value="<?php echo $identitas['KJKEL']?>" name="KJKEL" class="form-control select2" style="width: 100%;">
+                                                            <select id="jenisKelamin"  disabled="disabled" value="<?php echo $identitas['KJKEL']?>" name="KJKEL" class="form-control select2" style="width: 100%;">
 
 
                                                                   <option value="1">Pria</option>
@@ -471,7 +515,7 @@ $.each($('input,select,textarea', '#formGaji'),function(k){
                                                                 <img class="img-responsive" src="<?php echo $identitas['FILE_BMP'];?>" alt="Foto" width="460" height="345">
                                                                 <div class="form-group">
                                                                   <label for="exampleInputFile">Upload Foto</label>
-                                                                  <input type="file" id="file" name="file" >
+                                                                  <input type="file" id="file" name="file" disabled >
 
                                                                   <p class="help-block">Upload Foto Anda Disini</p>
                                                                 </div>
@@ -480,9 +524,9 @@ $.each($('input,select,textarea', '#formGaji'),function(k){
                                             </div>
                                           </div>
                                           <div class="box-footer">
-                                            <button id="cancelIdentitas" type="submit" class="btn btn-danger">Cancel</button>
+                                            <button id="cancelIdentitas" type="submit" class="btn btn-danger" disabled>Cancel</button>
                                             <button id="editIdentitas" class="btn btn-warning">Edit</button>
-                                            <button id="submitIdentitas" type="submit" class="btn btn-primary">Save</button>
+                                            <button id="submitIdentitas" type="submit" class="btn btn-primary" disabled>Save</button>
                                           </div>
                                         </div>
                                         <!-- /.tab-pane -->

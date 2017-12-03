@@ -380,15 +380,24 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 
 	}
 
-	function upload_foto() {
+	function editIdentitas() {
 
-
+		$userLoggedin = $this->ion_auth->user()->row();
+		$user=$userLoggedin;
+		$nipBaru = $user->nip;
 		//upload file
 		$config['upload_path'] = 'assets/foto/';
 		$config['allowed_types'] = '*';
 		$config['max_filename'] = '255';
 		$config['encrypt_name'] = TRUE;
 		$config['max_size'] = '1024'; //1 MB
+		$new_name = time().$nipBaru;
+		$config['file_name'] = $new_name;
+
+
+
+
+
 		$this->load->library('upload', $config);
 
 		if ( ! $this->upload->do_upload('file'))
@@ -407,14 +416,27 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 
 		log_message('debug','Uploading Foto');
 
-		$nipBaru = $this->input->post('nipBaru');
+		$userLoggedin = $this->ion_auth->user()->row();
+		$user=$userLoggedin;
+		$nipBaru = $user->nip;
 		log_message('debug','From Post Form '.$nipBaru);
 
 		$json = $this->input->post('json');
 		$jsonDecode = json_decode($json);
+		$changedData = array();
 
-		$jsonDecode['FILE_BMP']=$data['upload_data']['raw_name'].$data['upload_data']['file_ext'];
-		log_message('debug',print_r($jsonDecode,TRUE));
+		foreach($jsonDecode as $i)
+		{
+			$changedData[$i->name]=$i->value;
+		}
+
+
+
+		$changedData['FILE_BMP']=$data['upload_data']['raw_name'].$data['upload_data']['file_ext'];
+		$changedData['nipBaru']=$nipBaru;
+		log_message('debug',print_r($changedData,TRUE));
+		$jsonchangeData = json_encode($changedData);
+
 		$currentDataSimpeg = $this->Simpeg_model->getIdentitasPegawai($nipBaru);
 
 		log_message('debug',print_r($currentDataSimpeg,TRUE));
@@ -422,7 +444,8 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 
 		$dataInsert['table']='datautama,cpnspns';
 		$dataInsert['currentData']=$jsonEncodeCurrentData;
-		$dataInsert['changedData']=$json;
+		$dataInsert['changedData']=$jsonchangeData;
+
 		$this->Simpeg_model->insertData('dataconfirmation',$dataInsert);
 		// if (isset($_FILES['file']['name'])) {
 		//     if (0 < $_FILES['file']['error']) {
