@@ -139,7 +139,7 @@
             </div>
           </div>
         </div>
-      </div>gajiPokok
+      </div>
       <div class="tab-pane" id="jenisPegawai">
         <div class="box-body">
           <div class="row">
@@ -149,20 +149,6 @@
               </p>
               <div class="intrinsic-container intrinsic-container-16x9">
                 <IFRAME SRC=<?php echo base_url('dashboard/referensiJenisPegawai');?>></IFRAME>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="tab-pane" id="gajiPokok">
-        <div class="box-body">
-          <div class="row">
-            <div class="col-md-12">
-              <p class="text-center">
-                <strong>Gaji Pokok Pegawai</strong>
-              </p>
-              <div class="intrinsic-container intrinsic-container-16x9">
-                <IFRAME SRC=<?php echo base_url('dashboard/referensiGajiPokokPegawai');?>></IFRAME>
               </div>
             </div>
           </div>

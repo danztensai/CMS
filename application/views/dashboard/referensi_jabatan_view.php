@@ -45,12 +45,15 @@
 <div class="tab-pane" id="jabatan">
   <div class="nav-tabs-custom">
     <ul class="nav nav-tabs">
-      <li class="active"><a href="#kelompokJabatan" data-toggle="tab">Kelompok Jabatan</a></li>
-      <li><a href="#jabatanFungsional" data-toggle="tab">Jabatan Fungsional</a></li>
-      <li><a href="#eselonJabatan" data-toggle="tab">Eselon Jabatan</a></li>
+      <li class="active"><a href="#kelompokJabatan" data-toggle="tab">Kelompok</a></li>
+      <li><a href="#jabatanStruktural" data-toggle="tab">Struktural</a></li>
+      <li><a href="#jabatanFungsional" data-toggle="tab">Fungsional Khusus</a></li>
+      <li><a href="#jabatanNegara" data-toggle="tab">Negara</a></li>
+      <li><a href="#jabatanFungsionalUmum" data-toggle="tab">Fungsional Umum</a></li>
+      <li><a href="#jabatanKorpri" data-toggle="tab">KORPRI</a></li>
+      <li><a href="#eselonJabatan" data-toggle="tab">Eselon</a></li>
       <li><a href="#pejabatTetap" data-toggle="tab">Pejabat Tetap</a></li>
       <li><a href="#pejabatNegara" data-toggle="tab">Pejabat Negara</a></li>
-      <li><a href="#rJabatan" data-toggle="tab">rJabatan</a></li>
     </ul>
     <div class="tab-content">
       <div class="tab-pane active" id="kelompokJabatan">
@@ -67,15 +70,71 @@
           </div>
         </div>
       </div>
+      <div class="tab-pane" id="jabatanStruktural">
+        <div class="box-body">
+          <div class="row">
+            <div class="col-md-12">
+              <p class="text-center">
+                <strong>Jabatan Struktural</strong>
+              </p>
+              <div class="intrinsic-container intrinsic-container-16x9">
+                <IFRAME SRC=<?php echo base_url('dashboard/referensiJabatanStruktural');?>></IFRAME>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="tab-pane" id="jabatanFungsional">
         <div class="box-body">
           <div class="row">
             <div class="col-md-12">
               <p class="text-center">
-                <strong>Jabatan Fungsional</strong>
+                <strong>Jabatan Fungsional Khusus</strong>
               </p>
               <div class="intrinsic-container intrinsic-container-16x9">
-                <IFRAME SRC=<?php echo base_url('dashboard/referensiJabatanFungsional');?>></IFRAME>
+                <IFRAME SRC=<?php echo base_url('dashboard/referensiJabatanFungsionalKhusus');?>></IFRAME>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tab-pane" id="jabatanNegara">
+        <div class="box-body">
+          <div class="row">
+            <div class="col-md-12">
+              <p class="text-center">
+                <strong>Jabatan Negara</strong>
+              </p>
+              <div class="intrinsic-container intrinsic-container-16x9">
+                <IFRAME SRC=<?php echo base_url('dashboard/referensiJabatanNegara');?>></IFRAME>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tab-pane" id="jabatanFungsionalUmum">
+        <div class="box-body">
+          <div class="row">
+            <div class="col-md-12">
+              <p class="text-center">
+                <strong>Jabatan Fungsional Umum</strong>
+              </p>
+              <div class="intrinsic-container intrinsic-container-16x9">
+                <IFRAME SRC=<?php echo base_url('dashboard/referensiJabatanFungsionalUmum');?>></IFRAME>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tab-pane" id="jabatanKorpri">
+        <div class="box-body">
+          <div class="row">
+            <div class="col-md-12">
+              <p class="text-center">
+                <strong>Jabatan KORPRI</strong>
+              </p>
+              <div class="intrinsic-container intrinsic-container-16x9">
+                <IFRAME SRC=<?php echo base_url('dashboard/referensiJabatanKorpri');?>></IFRAME>
               </div>
             </div>
           </div>
@@ -118,20 +177,6 @@
               </p>
               <div class="intrinsic-container intrinsic-container-16x9">
                 <IFRAME SRC=<?php echo base_url('dashboard/referensiPejabatNegara');?>></IFRAME>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="tab-pane" id="rJabatan">
-        <div class="box-body">
-          <div class="row">
-            <div class="col-md-12">
-              <p class="text-center">
-                <strong>rJabatan</strong>
-              </p>
-              <div class="intrinsic-container intrinsic-container-16x9">
-                <IFRAME SRC=<?php echo base_url('dashboard/refJabatan');?>></IFRAME>
               </div>
             </div>
           </div>

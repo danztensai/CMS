@@ -672,6 +672,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 		$crud->set_relation('keselon','eselon','nama');
 		$crud->fields('kunker','nunker', 'keselon', 'unkerjagrade');
 		$crud->required_fields('kunker','nunker', 'keselon', 'unkerjagrade');
+		$crud->set_relation('keselon','eselon','nama');
 		$output = $crud->render();
 		$this->load->view('dashboard/grid',$output);
 	}
@@ -708,6 +709,8 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 		->display_as('kurusan','Kode')
 		->display_as('nurusan','Bidang Urusan Pemerintahan')
 		->display_as('wajib','Status');
+		$crud->field_type('wajib','dropdown',
+		array('0' => 'Tidak Wajib', '1' => 'Wajib'));
 		$crud->fields('kurusan', 'nurusan', 'wajib');
 		$crud->required_fields('kurusan', 'nurusan', 'wajib');
 		$output = $crud->render();
@@ -757,7 +760,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 		$this->db = $this->load->database('simpegRef',true);
 		log_message('debug','after Load new Db');
 		$crud = new grocery_CRUD();
-		$crud->set_table('naikPangkat')
+		$crud->set_table('naikpangkat')
 		->set_subject('Naik Pangkat')
 		->columns('knpang', 'nnpang')
 		->display_as('knpang','Kode')
@@ -811,7 +814,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 		$this->db = $this->load->database('simpegRef',true);
 		log_message('debug','after Load new Db');
 		$crud = new grocery_CRUD();
-		$crud->set_table('jenisPegawai')
+		$crud->set_table('jenispegawai')
 		->set_subject('Jenis Pegawai')
 		->columns('kode', 'nama')
 		->display_as('kode','Kode')
@@ -836,6 +839,8 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 		->display_as('MKG','Masa Kerja (Thn)')
 		->display_as('GPOK','Gaji Pokok');
 		$crud->fields('KGOLRU', 'MKG', 'GPOK');
+		$this->db->order_by('KGOLRU', 'asc');
+		$this->db->order_by('MKG', 'asc');
 		$crud->required_fields('KGOLRU', 'MKG', 'GPOK');
 		$output = $crud->render();
 		$this->load->view('dashboard/grid',$output);
@@ -1030,7 +1035,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 		$this->db = $this->load->database('simpegRef',true);
 		log_message('debug','after Load new Db');
 		$crud = new grocery_CRUD();
-		$crud->set_table('tingkatPendidikan')
+		$crud->set_table('tingkatpendidikan')
 		->set_subject('Tingkat Pendidikan')
 		->columns('ktp', 'ntp')
 		->display_as('ktp','Kode')
@@ -1054,7 +1059,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 		->columns('KOJAB','NAJAB')
 		->display_as('KOJAB','kode')
 		->display_as('NAJAB','Nama');
-		$crud->fields('KOJAB','NAJAB');
+		$crud->fields('KOJAB','NAJAB2');
 		$output = $crud->render();
 		$this->load->view('dashboard/grid',$output);
 	}
@@ -1077,16 +1082,112 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 		$this->load->view('dashboard/grid',$output);
 	}
 
-
-	public function referensiJabatanFungsional()
+	public function referensiJabatanStruktural()
 	{
-		log_message('debug','Trying to load Grocer Kelompok Jabatan');
+		log_message('debug','Trying to load Grocer Jabatan Struktural');
 		$adminSts = $this->ion_auth->is_admin()===FALSE;
 		$this->db = $this->load->database('simpegRef',true);
 		log_message('debug','after Load new Db');
 		$crud = new grocery_CRUD();
+		$crud->where('JNSJAB','1');
 		$crud->set_table('jenisjabatan')
-		->set_subject('Kelompok Jabatan')
+		->set_subject('Jabatan Struktural')
+		->columns('KJAB', 'NJAB', 'KGOLRU', 'TUNJJAB', 'TPP', 'USIA', 'PAK')
+		->display_as('KJAB','Kode')
+		->display_as('NJAB','Nama Jabatan')
+		->display_as('KGOLRU','Golongan Ruang')
+		->display_as('TUNJJAB','Tunjangan Pusat')
+		->display_as('TPP','TPP')
+		->display_as('USIA','Usia Pensiun')
+		->display_as('PAK','PAK Minimum');
+		$crud->fields('KJAB', 'NJAB', 'KGOLRU', 'TUNJJAB', 'TPP', 'USIA', 'PAK');
+		$crud->required_fields('KJAB', 'NJAB', 'KGOLRU', 'TUNJJAB', 'TPP', 'USIA', 'PAK');
+		$output = $crud->render();
+		$this->load->view('dashboard/grid',$output);
+	}
+
+	public function referensiJabatanFungsionalKhusus()
+	{
+		log_message('debug','Trying to load Grocer Jabatan Fungsional Khusus');
+		$adminSts = $this->ion_auth->is_admin()===FALSE;
+		$this->db = $this->load->database('simpegRef',true);
+		log_message('debug','after Load new Db');
+		$crud = new grocery_CRUD();
+		$crud->where('JNSJAB','2');
+		$crud->set_table('jenisjabatan')
+		->set_subject('Jabatan Fungsional Khusus')
+		->columns('KJAB', 'NJAB', 'KGOLRU', 'TUNJJAB', 'TPP', 'USIA', 'PAK')
+		->display_as('KJAB','Kode')
+		->display_as('NJAB','Nama Jabatan')
+		->display_as('KGOLRU','Golongan Ruang')
+		->display_as('TUNJJAB','Tunjangan Pusat')
+		->display_as('TPP','TPP')
+		->display_as('USIA','Usia Pensiun')
+		->display_as('PAK','PAK Minimum');
+		$crud->fields('KJAB', 'NJAB', 'KGOLRU', 'TUNJJAB', 'TPP', 'USIA', 'PAK');
+		$crud->required_fields('KJAB', 'NJAB', 'KGOLRU', 'TUNJJAB', 'TPP', 'USIA', 'PAK');
+		$output = $crud->render();
+		$this->load->view('dashboard/grid',$output);
+	}
+
+	public function referensiJabatanNegara()
+	{
+		log_message('debug','Trying to load Grocer Jabatan Negara');
+		$adminSts = $this->ion_auth->is_admin()===FALSE;
+		$this->db = $this->load->database('simpegRef',true);
+		log_message('debug','after Load new Db');
+		$crud = new grocery_CRUD();
+		$crud->where('JNSJAB','3');
+		$crud->set_table('jenisjabatan')
+		->set_subject('Jabatan Negara')
+		->columns('KJAB', 'NJAB', 'KGOLRU', 'TUNJJAB', 'TPP', 'USIA', 'PAK')
+		->display_as('KJAB','Kode')
+		->display_as('NJAB','Nama Jabatan')
+		->display_as('KGOLRU','Golongan Ruang')
+		->display_as('TUNJJAB','Tunjangan Pusat')
+		->display_as('TPP','TPP')
+		->display_as('USIA','Usia Pensiun')
+		->display_as('PAK','PAK Minimum');
+		$crud->fields('KJAB', 'NJAB', 'KGOLRU', 'TUNJJAB', 'TPP', 'USIA', 'PAK');
+		$crud->required_fields('KJAB', 'NJAB', 'KGOLRU', 'TUNJJAB', 'TPP', 'USIA', 'PAK');
+		$output = $crud->render();
+		$this->load->view('dashboard/grid',$output);
+	}
+
+	public function referensiJabatanFungsionalUmum()
+	{
+		log_message('debug','Trying to load Grocer Jabatan Fungsional Umum');
+		$adminSts = $this->ion_auth->is_admin()===FALSE;
+		$this->db = $this->load->database('simpegRef',true);
+		log_message('debug','after Load new Db');
+		$crud = new grocery_CRUD();
+		$crud->where('JNSJAB','4');
+		$crud->set_table('jenisjabatan')
+		->set_subject('Jabatan Fungsional Umum')
+		->columns('KJAB', 'NJAB', 'KGOLRU', 'TUNJJAB', 'TPP', 'USIA', 'PAK')
+		->display_as('KJAB','Kode')
+		->display_as('NJAB','Nama Jabatan')
+		->display_as('KGOLRU','Golongan Ruang')
+		->display_as('TUNJJAB','Tunjangan Pusat')
+		->display_as('TPP','TPP')
+		->display_as('USIA','Usia Pensiun')
+		->display_as('PAK','PAK Minimum');
+		$crud->fields('KJAB', 'NJAB', 'KGOLRU', 'TUNJJAB', 'TPP', 'USIA', 'PAK');
+		$crud->required_fields('KJAB', 'NJAB', 'KGOLRU', 'TUNJJAB', 'TPP', 'USIA', 'PAK');
+		$output = $crud->render();
+		$this->load->view('dashboard/grid',$output);
+	}
+
+	public function referensiJabatanKorpri()
+	{
+		log_message('debug','Trying to load Grocer Jabatan KORPRI');
+		$adminSts = $this->ion_auth->is_admin()===FALSE;
+		$this->db = $this->load->database('simpegRef',true);
+		log_message('debug','after Load new Db');
+		$crud = new grocery_CRUD();
+		$crud->where('JNSJAB','5');
+		$crud->set_table('jenisjabatan')
+		->set_subject('Jabatan KORPRI')
 		->columns('KJAB', 'NJAB', 'KGOLRU', 'TUNJJAB', 'TPP', 'USIA', 'PAK')
 		->display_as('KJAB','Kode')
 		->display_as('NJAB','Nama Jabatan')
@@ -1127,7 +1228,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 		$this->db = $this->load->database('simpegRef',true);
 		log_message('debug','after Load new Db');
 		$crud = new grocery_CRUD();
-		$crud->set_table('pejabatMenetapkan')
+		$crud->set_table('pejabatmenetapkan')
 		->set_subject('Pejabat Tetap')
 		->columns('kpej', 'npej')
 		->display_as('kpej','Kode')
