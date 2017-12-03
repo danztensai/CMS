@@ -31,7 +31,8 @@ class Dashboard extends Auth_Controller
 
 		$this->data['users_instansi']=$this->Users_model->getUsersinstansi($userId );
 
-		$this->data['menu']=$this->Menu_model->menuMaster();
+		$groupid = $this->data['user_group'][0]->id;
+$this->data['menu']=$this->Menu_model->menuMaster($groupid);
 
 		log_message('INFO','User Id : '.$userId);
 
@@ -49,7 +50,8 @@ class Dashboard extends Auth_Controller
 
 		$this->data['users_instansi']=$this->Users_model->getUsersinstansi($userId );
 
-		$this->data['menu']=$this->Menu_model->menuMaster();
+		$groupid = $this->data['user_group'][0]->id;
+		$this->data['menu']=$this->Menu_model->menuMaster($groupid);
 
 		log_message('INFO','User Id : '.$userId);
 
@@ -67,7 +69,8 @@ class Dashboard extends Auth_Controller
 
 		$this->data['users_instansi']=$this->Users_model->getUsersinstansi($userId );
 
-		$this->data['menu']=$this->Menu_model->menuMaster();
+		$groupid = $this->data['user_group'][0]->id;
+		$this->data['menu']=$this->Menu_model->menuMaster($groupid);
 
 		log_message('INFO','User Id : '.$userId);
 
@@ -119,7 +122,8 @@ class Dashboard extends Auth_Controller
 
 		$this->data['users_instansi']=$this->Users_model->getUsersinstansi($userId );
 
-		$this->data['menu']=$this->Menu_model->menuMaster();
+		$groupid = $this->data['user_group'][0]->id;
+		$this->data['menu']=$this->Menu_model->menuMaster($groupid);
 
 		//log_message('INFO','User Id : '.$userId);
 
@@ -189,7 +193,8 @@ class Dashboard extends Auth_Controller
 
 		$this->data['users_instansi']=$this->Users_model->getUsersinstansi($userId );
 
-		$this->data['menu']=$this->Menu_model->menuMaster();
+		$groupid = $this->data['user_group'][0]->id;
+		$this->data['menu']=$this->Menu_model->menuMaster($groupid);
 
 		//log_message('INFO','User Id : '.$userId);
 
@@ -259,7 +264,8 @@ class Dashboard extends Auth_Controller
 
 		$this->data['users_instansi']=$this->Users_model->getUsersinstansi($userId );
 
-		$this->data['menu']=$this->Menu_model->menuMaster();
+		$groupid = $this->data['user_group'][0]->id;
+		$this->data['menu']=$this->Menu_model->menuMaster($groupid);
 
 		//log_message('INFO','User Id : '.$userId);
 
@@ -312,7 +318,8 @@ class Dashboard extends Auth_Controller
 
 		$this->data['users_instansi']=$this->Users_model->getUsersinstansi($userId );
 
-		$this->data['menu']=$this->Menu_model->menuMaster();
+		$groupid = $this->data['user_group'][0]->id;
+$this->data['menu']=$this->Menu_model->menuMaster($groupid);
 
 		//log_message('INFO','User Id : '.$userId);
 
@@ -364,7 +371,8 @@ class Dashboard extends Auth_Controller
 
 		$this->data['users_instansi']=$this->Users_model->getUsersinstansi($userId );
 
-		$this->data['menu']=$this->Menu_model->menuMaster();
+		$groupid = $this->data['user_group'][0]->id;
+$this->data['menu']=$this->Menu_model->menuMaster($groupid);
 
 		//log_message('INFO','User Id : '.$userId);
 
@@ -507,7 +515,8 @@ class Dashboard extends Auth_Controller
 
 		$this->data['users_instansi']=$this->Users_model->getUsersinstansi($userId );
 
-		$this->data['menu']=$this->Menu_model->menuMaster();
+		$groupid = $this->data['user_group'][0]->id;
+$this->data['menu']=$this->Menu_model->menuMaster($groupid);
 
 		//log_message('INFO','User Id : '.$userId);
 
@@ -530,7 +539,8 @@ class Dashboard extends Auth_Controller
 
 		$this->data['users_instansi']=$this->Users_model->getUsersinstansi($userId );
 
-		$this->data['menu']=$this->Menu_model->menuMaster();
+		$groupid = $this->data['user_group'][0]->id;
+$this->data['menu']=$this->Menu_model->menuMaster($groupid);
 
 		//log_message('INFO','User Id : '.$userId);
 
@@ -604,7 +614,8 @@ class Dashboard extends Auth_Controller
 	{
 		$userId = $this->ion_auth->get_user_id();
 		$this->data['user']=$this->ion_auth->user()->row();
-		$this->data['menu']=$this->Menu_model->menuMaster();
+		$groupid = $this->data['user_group'][0]->id;
+$this->data['menu']=$this->Menu_model->menuMaster($groupid);
 		$this->render('dashboard/kepegawaian_view');
 	}
 
@@ -617,7 +628,8 @@ class Dashboard extends Auth_Controller
 		$this->data['user_group']= $this->ion_auth->get_users_groups($userId)->result();
 		log_message('debug','User Group : '.print_r($this->data['user_group'],TRUE));
 		$this->data['users_instansi']=$this->Users_model->getUsersinstansi($userId );
-		$this->data['menu']=$this->Menu_model->menuMaster();
+		$groupid = $this->data['user_group'][0]->id;
+$this->data['menu']=$this->Menu_model->menuMaster($groupid);
 		log_message('INFO','User Id : '.$userId);
 		log_message('DEBUG','inside Admin');
 		$this->render('dashboard/referensi_instansiInduk_view');
@@ -1171,7 +1183,8 @@ class Dashboard extends Auth_Controller
 
 		$this->data['users_instansi']=$this->Users_model->getUsersinstansi($userId );
 
-		$this->data['menu']=$this->Menu_model->menuMaster();
+		$groupid = $this->data['user_group'][0]->id;
+$this->data['menu']=$this->Menu_model->menuMaster($groupid);
 
 		log_message('INFO','User Id : '.$userId);
 
@@ -1264,12 +1277,13 @@ class Dashboard extends Auth_Controller
 		$crud = new grocery_CRUD();
 		$crud->set_table('menu')
 		->set_subject('Menu Modification')
-		->columns('menu_name','menu_link','menu_order','parent_id')
+		->columns('menu_name','menu_link','menu_order','parent_id','groups')
 		->display_as('menu_name','Nama Menu')
 		->display_as('menu_link','Menu URL')
 		->display_as('menu_order','Urutan Menu');
 
-		$crud->fields('menu_name','menu_link','parent_id','menu_order');
+		$crud->fields('menu_name','menu_link','parent_id','menu_order','groups');
+		$crud->set_relation_n_n('groups', 'group_menu', 'groups', 'menu_id', 'group_id', 'description');
 		$crud->set_relation('parent_id','menu','menu_name');
 		$output = $crud->render();
 		if($this->ion_auth->is_admin()===FALSE)
@@ -1406,10 +1420,11 @@ class Dashboard extends Auth_Controller
 			log_message('INFO','is admin? :'.$this->ion_auth->is_admin());
 			$this->data['user_group']= $this->ion_auth->get_users_groups($userId)->result();
 			log_message('debug','User Group : '.print_r($this->data['user_group'],TRUE));
-
+			$groupid = $this->data['user_group'][0]->id;
+			$this->data['menu']=$this->Menu_model->menuMaster($groupid);
 			$this->data['users_instansi']=$this->Users_model->getUsersinstansi($userId );
 
-			$this->data['menu']=$this->Menu_model->menuMaster();
+
 
 			log_message('INFO','User Id : '.$userId);
 
@@ -1434,7 +1449,8 @@ class Dashboard extends Auth_Controller
 
 			$this->data['users_instansi']=$this->Users_model->getUsersinstansi($userId );
 
-			$this->data['menu']=$this->Menu_model->menuMaster();
+			$groupid = $this->data['user_group'][0]->id;
+$this->data['menu']=$this->Menu_model->menuMaster($groupid);
 
 			log_message('INFO','User Id : '.$userId);
 

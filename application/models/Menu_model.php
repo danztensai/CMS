@@ -24,9 +24,9 @@ class Menu_model extends CI_Model {
           }
         }
       }
-      public function subMenu($parent_id)
+      public function subMenu($parent_id,$group_id)
   		{
-  			$querySQL = "SELECT menu_order,idMenu, menu_name, menu_link, parent_id FROM menu where parent_id=$parent_id ORDER BY menu_order ASC";
+  			$querySQL = "SELECT menu_order,idMenu, menu_name, menu_link, parent_id FROM menu m left join group_menu gm on m.idmenu = gm.menu_id where gm.group_id =$group_id  and parent_id=$parent_id ORDER BY menu_order ASC";
       //  log_message('debug','SubMenu Query'.$querySQL);
   			$data = array();
   			$stackData = array();
@@ -43,7 +43,7 @@ class Menu_model extends CI_Model {
 
               if($this->checkSubMenu($row->idMenu)){
               //  log_message('debug','Sub Menu Exist For : '.$row->idMenu.' '.$row->menu_name.' ');
-                $data['subMenu']=$this->subMenu($row->idMenu);
+                $data['subMenu']=$this->subMenu($row->idMenu,$group_id);
 
               }else{
 
@@ -61,9 +61,9 @@ class Menu_model extends CI_Model {
   					return $data;
   				}
   		}
-  		public function menuMaster()
+  		public function menuMaster($group_id)
   		{
-  			$querySQL = "SELECT menu_order, idMenu, menu_name, menu_link, parent_id FROM menu where parent_id = 0 or parent_id is null  ORDER BY menu_order ASC";
+  			$querySQL = "SELECT menu_order, idMenu, menu_name, menu_link, parent_id FROM menu m left join group_menu gm on m.idmenu = gm.menu_id where gm.group_id =$group_id  and m.parent_id = 0 or m.parent_id is null  ORDER BY menu_order ASC";
       //  log_message('debug','Query Menu Root :  '.$querySQL);
   			$data = array();
   			$stackData = array();
@@ -77,7 +77,7 @@ class Menu_model extends CI_Model {
   						$data['menu_name']=$row->menu_name;
   						$data['menu_link']=$row->menu_link;
   						$data['parent_id']=$row->parent_id;
-              $arraySubMenu = $this->subMenu($row->idMenu);
+              $arraySubMenu = $this->subMenu($row->idMenu,$group_id);
 
 							$data['subMenu']=$arraySubMenu;
 
