@@ -61,7 +61,7 @@
                   <!-- /.modal-content -->
                 </div>
                 <!-- /.modal-dialog -->
-              </div>
+      </div>
       <div class="col-md-12">
                 <div class="box">
                   <div class="box-header">

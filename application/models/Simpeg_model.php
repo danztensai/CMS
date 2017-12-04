@@ -369,11 +369,83 @@ WHERE rj.NIP = '$nip'";
 					}
 		}
 
+		public function checkUpdateIdentitasExist($nipBaru)
+		{
+			$DB2 =$this->load->database('simpegRef', TRUE);
+			$querySQL = "SELECT * FROM dataconfirmation WHERE JSON_EXTRACT(changedData, '$.nipBaru')='$nipBaru' and tables='datautama' and tabs='identitas' ;";
+			log_message('debug','checkUpdateIdentitasExist:  '.$querySQL);
+			$query = $DB2->query($querySQL);
+			$sts = False;
+			if($query->num_rows()>0)
+			{
+			//  log_message('debug','Exist '.$querySQL);
+				return TRUE;
+			}else {
+				{
+				//  log_message('debug','NotExist '.$querySQL);
+					return FALSE;
+				}
+			}
+		}
+
+		public function updateConfirmationData($data,$nipBaru)
+		{
+			$DB2 =$this->load->database('simpegRef', TRUE);
+			$querySQL = "update dataconfirmation set changedData = '$data'  WHERE JSON_EXTRACT(changedData, '$.nipBaru')='$nipBaru' and tables='datautama' and tabs='identitas'";
+			log_message('debug','updateConfirmationData:  '.$querySQL);
+			$query = $DB2->query($querySQL);
+		}
+
+
+		public function getBasicDataSimpegbyNip($nip)
+		{
+				$DB2 =$this->load->database('simpegRef', TRUE);
+		$querySQL = "select du.nipBaru,du.nama,k2.nunker as instansi,k1.nunker as subUnit ,ja.NJAB from datautama du
+									left join jakhir ja on du.nipBaru = ja.nip
+									left join unkerja k1 on k1.kunker = ja.kunkers
+									left join unkerja k2 on k2.kunker = ja.kunkersInduk
+									where du.kedudukanHukum=1 and nipBaru='$nip'";
+
+		$dataRet = array();
+		$stackData = array();
+
+		log_message('debug','getBasicDataSimpegbyNip	: '.$querySQL);
+		$query = $DB2->query($querySQL);
+
+		if($query->num_rows()>0)
+			{ $count = 1;
+				foreach($query->result() as $row)
+				{
+					$data = array();
+					$data['nipBaru']=$row->nipBaru;
+					$data['nama']=$row->nama;
+					$data['instansi']=$row->instansi;
+					$data['subUnit']=$row->subUnit;
+					$data['NJAB']=$row->NJAB;
+
+				//	array_push($stackData,$data);
+				}
+				$query->free_result();
+				return $data;
+			}else
+			{
+
+				$query->free_result();
+				return $dataRet;
+			}
+		}
+		public function updateIdentitasStatusUpdate($data,$nipBaru)
+		{
+			$DB2 =$this->load->database('simpegRef', TRUE);
+
+			$DB2->where('nipBaru', $nipBaru);
+			$DB2->update('datautama', $data);
+		}
 
 		public function getIdentitasPegawai($nip)
 		{
 			  $DB2 =$this->load->database('simpegRef', TRUE);
-		$querySQL = "SELECT d.nipBaru, d.nipLama, d.nama, d.gelarDepan, d.gelarBlk,a.nama as agama, d.KTLAHIR, d.TLAHIR, d.KJKEL, d.agamaId,
+		$querySQL = "SELECT d.stsUpdate, d.nipBaru, d.nipLama, d.nama, d.gelarDepan, d.gelarBlk,a.nama as agama, d.KTLAHIR, d.TLAHIR, d.KJKEL, d.agamaId,
 d.jenisPegawai, c.statusCpnsPns, s.nStatusPegawai, d.kedudukanHukum, d.jenisKawin, d.KGOLDAR, d.alamat, d.ALRT,
 d.ALRW, d.nomorTelpon, d.kwil, d.KPOS, d.kartuPegawai, d.taspen, d.askesNomor, d.NKARIS_SU, d.npwpNomor, d.NOPEN, d.FILE_BMP
 FROM revReferenceSimpeg.datautama d
@@ -418,6 +490,7 @@ INNER JOIN revReferenceSimpeg.agama a on a.kode = d.agamaId WHERE d.nipbaru = '$
 					$data['agamaId']=$row->agamaId;
 					$data['statusCpnsPns']=$row->statusCpnsPns;
 					$data['kedudukanHukum']=$row->kedudukanHukum;
+					$data['stsUpdate']=$row->stsUpdate;
 
 				//	array_push($stackData,$data);
 				}
@@ -544,6 +617,48 @@ INNER JOIN revReferenceSimpeg.agama a on a.kode = d.agamaId WHERE d.nipbaru = '$
 					$data = array();
 					$data['kode']=$row->kode;
 					$data['nama']=$row->nama;
+
+					array_push($stackData,$data);
+				}
+				$query->free_result();
+				return $stackData;
+			}else
+			{
+
+				$query->free_result();
+				return $dataRet;
+			}
+		}
+
+
+
+		public function getConfirmationByStatus($sts,$instansi)
+		{
+		$DB2 =$this->load->database('simpegRef', TRUE);
+		$querySQL = "SELECT tables,currentData,currentData,changedData,tabs,stsConfirmation,instansi as instansiUser,
+		du.nipBaru,du.nama,k2.nunker as instansi,k1.nunker as subUnit ,ja.NJAB
+		FROM dataconfirmation dc left join datautama du on JSON_EXTRACT(changedData, '$.nipBaru')=du.nipBaru
+									left join jakhir ja on du.nipBaru = ja.nip
+									left join unkerja k1 on k1.kunker = ja.kunkers
+									left join unkerja k2 on k2.kunker = ja.kunkersInduk
+ 								where stsConfirmation = $sts and dc.instansi like '$instansi'";
+
+		$dataRet = array();
+		$stackData = array();
+
+		log_message('debug','getConfirmationByStatus	: '.$querySQL);
+		$query = $DB2->query($querySQL);
+
+		if($query->num_rows()>0)
+			{ $count = 1;
+				foreach($query->result() as $row)
+				{
+					$data = array();
+					$data['tables']=$row->tables;
+					$data['currentData']=$row->currentData;
+					$data['changedData']=$row->changedData;
+					$data['instansi']=$row->instansi;
+					$data['stsConfirmation']=$row->stsConfirmation;
 
 					array_push($stackData,$data);
 				}

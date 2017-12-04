@@ -382,8 +382,9 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 
 	function editIdentitas() {
 
-		$userLoggedin = $this->ion_auth->user()->row();
-		$user=$userLoggedin;
+		$user = $this->ion_auth->user()->row();
+		$instansi=$this->Users_model->getUsersinstansi($user->id);
+
 		$nipBaru = $user->nip;
 		//upload file
 		$config['upload_path'] = 'assets/foto/';
@@ -442,11 +443,21 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 		log_message('debug',print_r($currentDataSimpeg,TRUE));
 		$jsonEncodeCurrentData = json_encode($currentDataSimpeg);
 
-		$dataInsert['table']='datautama,cpnspns';
+		if($this->Simpeg_model->checkUpdateIdentitasExist($nipBaru))
+		{
+			log_message('debug','Data Update Already Exist, Replacing ');
+			$this->Simpeg_model->updateConfirmationData($jsonchangeData,$nipBaru);
+
+		}else{
+		$dataInsert['tables']='datautama';
 		$dataInsert['currentData']=$jsonEncodeCurrentData;
 		$dataInsert['changedData']=$jsonchangeData;
+		$dataInsert['tabs']='identitas';
+		$dataInsert['instansi']=$instansi[0]['instansi_name'];
 
 		$this->Simpeg_model->insertData('dataconfirmation',$dataInsert);
+	}
+		$this->Simpeg_model->updateIdentitasStatusUpdate(array('stsUpdate'=>1),$nipBaru);
 		// if (isset($_FILES['file']['name'])) {
 		//     if (0 < $_FILES['file']['error']) {
 		//         echo 'Error during file upload' . $_FILES['file']['error'];
@@ -563,12 +574,24 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 		$this->data['users_instansi']=$this->Users_model->getUsersinstansi($userId );
 
 		$groupid = $this->data['user_group'][0]->id;
-$this->data['menu']=$this->Menu_model->menuMaster($groupid);
+		$this->data['menu']=$this->Menu_model->menuMaster($groupid);
+
+		$confirmationData = $this->Simpeg_model->getConfirmationByStatus(0,$this->data['users_instansi'][0]['instansi_name']);
+		$returnDataJson = array();
+
 
 		//log_message('INFO','User Id : '.$userId);
 
 		$this->render('dashboard/dataConfirmation_view');
 
+	}
+	public function getJsonConfirmationData()
+	{
+		$userId = $this->ion_auth->get_user_id();
+		$userLoggedin = $this->ion_auth->user()->row();
+		$instansi = $this->Users_model->getUsersinstansi($userId );
+
+		
 	}
 
 

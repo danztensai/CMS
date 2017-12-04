@@ -1,5 +1,19 @@
 <script>  //Date picker
 $( document ).ready(function() {
+  var $loading = $('.modal').hide();
+          $(document)
+            .ajaxStart(function () {
+              $loading.show();
+            })
+            .ajaxStop(function () {
+              $loading.hide();
+            });
+var stsUpdate = <?php echo $identitas['stsUpdate'] ?>;
+
+if(stsUpdate==0)
+{
+  $('#warningUpdate').hide();
+}
 
 $('.select2').select2();
 $('.selectAgama').select2();
@@ -59,11 +73,17 @@ $('#submitIdentitas').click(function(){
                           type: 'post',
                           success: function (response) {
                             console.log(response);
+
+                            alert('Perubahan Berhasil, Menunggu Untuk Dikonfirmasi');
+                              
                           },
                           error: function (response) {
                             console.log(response);
+                            alert('Ada Masalah Di server');
                           }
                       });
+
+
   } else {
       // Do nothing!
   }
@@ -239,6 +259,7 @@ $.each($('input,select,textarea', '#formGaji'),function(k){
 
 });
     </script>
+<div class="modal"></div>
 <div class="tab-pane active" id="dataInduk">
 
                                   <ul class="nav nav-tabs">
@@ -259,7 +280,11 @@ $.each($('input,select,textarea', '#formGaji'),function(k){
                                                                 <p class="text-center">
                                                                   <strong>Identitas</strong>
                                                                 </p>
+                                                      <div class="callout callout-warning" id="warningUpdate">
+                                                        <h4>Perhatian</h4>
 
+                                                        <p>Update Data Anda Masih di Verifikasi Oleh Operator OPD</p>
+                                                      </div>
                                                     <form class="form-horizontal" name="formIdentitas" id="formIdentitas" action="">
                                                       <div class="box-body">
                                                         <div class="col-md-4">
@@ -1397,3 +1422,39 @@ $.each($('input,select,textarea', '#formGaji'),function(k){
                                         </div>
                                       </div>
                                 </div>
+
+<style type="text/css">
+   /* Start by setting display:none to make this hidden.
+   Then we position it in relation to the viewport window
+   with position:fixed. Width, height, top and left speak
+   speak for themselves. Background we set to 80% white with
+   our animation centered, and no-repeating */
+.modal {
+    display:    none;
+    position:   fixed;
+    z-index:    1000;
+    top:        0;
+    left:       0;
+    height:     100%;
+    width:      100%;
+    background: rgba( 255, 255, 255, .8 )
+                url('<?php echo base_url()?>assets/loading_cricle.gif')
+                50% 50%
+                no-repeat;
+}
+
+/* When the body has the loading class, we turn
+   the scrollbar off with overflow:hidden */
+body.loading {
+    overflow: hidden;
+}
+
+/* Anytime the body has the loading class, our
+   modal element will be visible */
+body.loading .modal {
+    display: block;
+}
+
+}
+
+</style>
