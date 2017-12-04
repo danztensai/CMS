@@ -75,7 +75,7 @@ $('#submitIdentitas').click(function(){
                             console.log(response);
 
                             alert('Perubahan Berhasil, Menunggu Untuk Dikonfirmasi');
-                              
+
                           },
                           error: function (response) {
                             console.log(response);

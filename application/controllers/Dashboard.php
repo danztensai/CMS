@@ -557,6 +557,48 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 		$this->render('dashboard/profile_pegawai_view');
 
 	}
+	public function modalViewConfirmation()
+	{
+		$userId = $this->ion_auth->get_user_id();
+		$user=$this->ion_auth->user()->row();
+		$idConfirmation  = $this->input->get('id');
+		$data['test']="ini Loh";
+		log_message('debug','Id Confirmation From Get :'.$idConfirmation);
+		$dataConfirmation = $this->Simpeg_model->getConfirmationDataByid($idConfirmation);
+		$currentData = json_decode($dataConfirmation['currentData']);
+		$changedData = json_decode($dataConfirmation['changedData']);
+		log_message('debug',print_r($currentData,TRUE));
+		log_message('debug',print_r($changedData,TRUE));
+		$oData['ALRT'] = $currentData->ALRT;
+		$oData['ALRW'] = $currentData->ALRW;
+		$oData['KPOS'] = $currentData->KPOS;
+		$oData['alamat'] = $currentData->alamat;
+		$oData['KGOLDAR'] = $currentData->KGOLDAR;
+		$oData['agamaId'] = $currentData->agamaId;
+		$oData['nipBaru'] = $currentData->nipBaru;
+		$oData['noTelpon'] = $currentData->noTelpon;
+		$oData['npwpNomor'] = $currentData->npwpNomor;
+		$oData['askesNomor'] = $currentData->askesNomor;
+		$oData['jenisKawin'] = $currentData->jenisKawin;
+		$oData['statusCpnsPns'] = $currentData->statusCpnsPns;
+		$nData['ALRT'] = $changedData->ALRT;
+		$nData['ALRW'] = $changedData->ALRW;
+		$nData['KPOS'] = $changedData->KPOS;
+		$nData['alamat'] = $changedData->alamat;
+		$nData['KGOLDAR'] = $changedData->KGOLDAR;
+		$nData['agamaId'] = $changedData->agamaId;
+		$nData['nipBaru'] = $changedData->nipBaru;
+		$nData['noTelpon'] = $changedData->noTelpon;
+		$nData['npwpNomor'] = $changedData->npwpNomor;
+		$nData['askesNomor'] = $changedData->askesNomor;
+		$nData['jenisKawin'] = $changedData->jenisKawin;
+		$nData['statusCpnsPns'] = $changedData->statusCpnsPns;
+		$data['oData']=$oData;
+		$data['nData']=$nData;
+
+
+		$this->load->view('dashboard/modal_confirmation_view',$data);
+	}
 
 	public function dataConfirmation()
 	{
@@ -577,7 +619,9 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 		$this->data['menu']=$this->Menu_model->menuMaster($groupid);
 
 		$confirmationData = $this->Simpeg_model->getConfirmationByStatus(0,$this->data['users_instansi'][0]['instansi_name']);
+		$recordsTotal=$this->Simpeg_model->getCountTotalConfirmationByStatus(0,$this->data['users_instansi'][0]['instansi_name']);
 		$returnDataJson = array();
+
 
 
 		//log_message('INFO','User Id : '.$userId);
@@ -587,11 +631,19 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 	}
 	public function getJsonConfirmationData()
 	{
+		$draw=0;
 		$userId = $this->ion_auth->get_user_id();
 		$userLoggedin = $this->ion_auth->user()->row();
 		$instansi = $this->Users_model->getUsersinstansi($userId );
+		$confirmationData = $this->Simpeg_model->getConfirmationByStatus(0,$instansi[0]['instansi_name']);
+		$recordsTotal=$this->Simpeg_model->getCountTotalConfirmationByStatus(0,$instansi[0]['instansi_name']);
+		$returnDataJson = array();
+		$returnDataJson['draw']=$draw;
+		$returnDataJson['recordsTotal']=$recordsTotal;
+		$returnDataJson['recordsFiltered']=$recordsTotal;
+		$returnDataJson['data']=$confirmationData;
+		echo json_encode($returnDataJson);
 
-		
 	}
 
 
@@ -661,7 +713,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 		$userId = $this->ion_auth->get_user_id();
 		$this->data['user']=$this->ion_auth->user()->row();
 		$groupid = $this->data['user_group'][0]->id;
-$this->data['menu']=$this->Menu_model->menuMaster($groupid);
+		$this->data['menu']=$this->Menu_model->menuMaster($groupid);
 		$this->render('dashboard/kepegawaian_view');
 	}
 

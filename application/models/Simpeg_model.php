@@ -635,8 +635,7 @@ INNER JOIN revReferenceSimpeg.agama a on a.kode = d.agamaId WHERE d.nipbaru = '$
 		public function getConfirmationByStatus($sts,$instansi)
 		{
 		$DB2 =$this->load->database('simpegRef', TRUE);
-		$querySQL = "SELECT tables,currentData,currentData,changedData,tabs,stsConfirmation,instansi as instansiUser,
-		du.nipBaru,du.nama,k2.nunker as instansi,k1.nunker as subUnit ,ja.NJAB
+		$querySQL = "SELECT dc.id,du.nipBaru,du.nama,k2.nunker as instansi,k1.nunker as subUnit ,ja.NJAB
 		FROM dataconfirmation dc left join datautama du on JSON_EXTRACT(changedData, '$.nipBaru')=du.nipBaru
 									left join jakhir ja on du.nipBaru = ja.nip
 									left join unkerja k1 on k1.kunker = ja.kunkers
@@ -654,11 +653,12 @@ INNER JOIN revReferenceSimpeg.agama a on a.kode = d.agamaId WHERE d.nipbaru = '$
 				foreach($query->result() as $row)
 				{
 					$data = array();
-					$data['tables']=$row->tables;
-					$data['currentData']=$row->currentData;
-					$data['changedData']=$row->changedData;
+					$data['nip']=$row->nipBaru;
+					$data['nama']=$row->nama;
 					$data['instansi']=$row->instansi;
-					$data['stsConfirmation']=$row->stsConfirmation;
+					$data['subUnit']=$row->subUnit;
+					$data['NJAB']=$row->NJAB;
+					$data['action']=$row->id;
 
 					array_push($stackData,$data);
 				}
@@ -669,6 +669,70 @@ INNER JOIN revReferenceSimpeg.agama a on a.kode = d.agamaId WHERE d.nipbaru = '$
 
 				$query->free_result();
 				return $dataRet;
+			}
+		}
+
+		public function getConfirmationDataByid($id)
+		{
+		$DB2 =$this->load->database('simpegRef', TRUE);
+		$querySQL = "SELECT *	FROM dataconfirmation where id=$id";
+
+		$dataRet = array();
+		$stackData = array();
+
+		log_message('debug','getConfirmationByStatus	: '.$querySQL);
+		$query = $DB2->query($querySQL);
+
+		if($query->num_rows()>0)
+			{ $count = 1;
+				foreach($query->result() as $row)
+				{
+
+					$dataRet['id']=$row->id;
+					$dataRet['tables']=$row->tables;
+					$dataRet['currentData']=$row->currentData;
+					$dataRet['changedData']=$row->changedData;
+
+
+				}
+				$query->free_result();
+				return $dataRet;
+			}else
+			{
+
+				$query->free_result();
+				return $dataRet;
+			}
+		}
+
+		public function getCountTotalConfirmationByStatus($sts,$instansi)
+		{
+		$DB2 =$this->load->database('simpegRef', TRUE);
+		$querySQL = "SELECT count(*) as recordsTotal 	FROM dataconfirmation dc
+									left join datautama du on JSON_EXTRACT(changedData, '$.nipBaru')=du.nipBaru
+									left join jakhir ja on du.nipBaru = ja.nip
+									left join unkerja k1 on k1.kunker = ja.kunkers
+									left join unkerja k2 on k2.kunker = ja.kunkersInduk
+ 								where stsConfirmation = $sts and dc.instansi like '$instansi'";
+
+		$recordsTotal=0;
+
+		log_message('debug','getCountTotalConfirmationByStatus	: '.$querySQL);
+		$query = $DB2->query($querySQL);
+
+		if($query->num_rows()>0)
+			{ $count = 1;
+				foreach($query->result() as $row)
+				{
+					$recordsTotal=$row->recordsTotal;
+				}
+				$query->free_result();
+				return $recordsTotal;
+			}else
+			{
+
+				$query->free_result();
+				return $recordsTotal;
 			}
 		}
 
