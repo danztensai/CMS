@@ -855,12 +855,12 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 		$crud = new grocery_CRUD();
 		$crud->set_table('kelompokusia')
 		->set_subject('Gaji Pokok Pegawai')
-		->columns('kode', 'usia', 'grup')
+		->columns('usia', 'grup')
 		->display_as('kode','kode')
 		->display_as('usia','usia')
 		->display_as('grup','grup');
-		$crud->fields('kode', 'usia', 'grup');
-		$crud->required_fields('kode', 'usia', 'grup');
+		$crud->fields('usia', 'grup');
+		$crud->required_fields('usia', 'grup');
 		$output = $crud->render();
 		$this->load->view('dashboard/grid',$output);
 	}
@@ -914,8 +914,9 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 		->display_as('KJUR','Kode')
 		->display_as('NJUR','Nama')
 		->display_as('TP','Tingkat');
-		$crud->fields('KJUR', 'NJUR', 'TP');
-		$crud->required_fields('KJUR', 'NJUR', 'TP');
+		$crud->fields('KJUR', 'NJUR');
+		$crud->set_relation('TP','tpu2','NJUR2');
+		$crud->required_fields('KJUR', 'NJUR');
 		$output = $crud->render();
 		$this->load->view('dashboard/grid',$output);
 	}
