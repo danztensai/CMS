@@ -549,9 +549,9 @@ $.each($('input,select,textarea', '#formGaji'),function(k){
                                             </div>
                                           </div>
                                           <div class="box-footer">
-                                            <!-- <button id="cancelIdentitas" type="submit" class="btn btn-danger" disabled>Cancel</button>
+                                            <button id="cancelIdentitas" type="submit" class="btn btn-danger" disabled>Cancel</button>
                                             <button id="editIdentitas" class="btn btn-warning">Edit</button>
-                                            <button id="submitIdentitas" type="submit" class="btn btn-primary" disabled>Save</button> -->
+                                            <button id="submitIdentitas" type="submit" class="btn btn-primary" disabled>Save</button>
                                           </div>
                                         </div>
                                         <!-- /.tab-pane -->
