@@ -5,19 +5,10 @@
 <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript">
    $(document).ready(function(){
-     $('#confirmation').on('click','.openBtn',function(){
-    /*$('.modal-body').load('content.html',function(){
-        $('#myModal').modal({show:true});
-    })*/
-      	var id = $(this).attr('id');
-        console.log("ini Loh Id nya :"+id);
-          $('.modal-body').load('modalViewConfirmation?id='+id,function(){
-              $('#myModal').modal({show:true});
-          });
-      });
 
 
-     $('#confirmation').DataTable( {
+
+  var oTable =   $('#confirmation').DataTable( {
         "processing": true,
         "serverSide": true,
         "ajax": "getJsonConfirmationData",
@@ -44,6 +35,36 @@
             { "data": "action" }
         ]
     } );
+
+    $('#confirmation').on('click','.openBtn',function(){
+       var id = $(this).attr('id');
+       console.log("ini Loh Id nya :"+id);
+         $('.modal-body').load('modalViewConfirmation?id='+id,function(){
+             $('#myModal').modal({show:true});
+         });
+     });
+
+     $('#confirmation').on('click','.approve',function(){
+        var id = $(this).attr('id');
+        console.log("ini Loh Id nya :"+id);
+        $.ajax({
+              type: 'POST',
+              url: '<?php echo base_url()?>dashboard/updateStatusDataConfirmation',
+              data: {
+                  'id': id,
+                  'sts': 1 // <-- the $ sign in the parameter name seems unusual, I would avoid it
+              },
+              success: function(msg){
+                  alert('Update ' + msg);
+                  
+                  oTable.draw();
+              },
+              error: function (response) {
+                console.log(response);
+                alert('Ada Masalah Di server');
+              }
+          });
+      });
    });
 
 </script>

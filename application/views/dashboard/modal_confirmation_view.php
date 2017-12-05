@@ -33,10 +33,10 @@
         <div class="form-group">
           <label for="rtrw" class="col-md-4 control-label">RT/RW</label>
 
-          <div class="col-md-2">
+          <div class="col-md-4">
             <input class="form-control" id="rt" placeholder="RT" name="ALRT" value="<?php echo $oData['ALRT']?>" disabled>
           </div>
-          <div class="col-md-2">
+          <div class="col-md-4">
             <input class="form-control" id="rw" placeholder="RW" name="ALRW" value="<?php echo $oData['ALRW']?>" disabled>
           </div>
         </div>
@@ -110,10 +110,10 @@
       <div class="form-group">
         <label for="rtrw" class="col-md-4 control-label">RT/RW</label>
 
-        <div class="col-md-2">
+        <div class="col-md-4">
           <input class="form-control" id="rt" placeholder="RT" name="ALRT" value="<?php echo $nData['ALRT']?>" disabled>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-4">
           <input class="form-control" id="rw" placeholder="RW" name="ALRW" value="<?php echo $nData['ALRW']?>" disabled>
         </div>
       </div>

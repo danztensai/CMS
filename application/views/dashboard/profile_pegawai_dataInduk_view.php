@@ -75,7 +75,7 @@ $('#submitIdentitas').click(function(){
                             console.log(response);
 
                             alert('Perubahan Berhasil, Menunggu Untuk Dikonfirmasi');
-
+                             location.reload();
                           },
                           error: function (response) {
                             console.log(response);
@@ -417,10 +417,10 @@ $.each($('input,select,textarea', '#formGaji'),function(k){
                                                         <div class="form-group">
                                                           <label for="rtrw" class="col-md-4 control-label">RT/RW</label>
 
-                                                          <div class="col-md-2">
+                                                          <div class="col-md-4">
                                                             <input class="form-control" id="rt" placeholder="RT" name="ALRT" value="<?php echo $identitas['ALRT']?>" disabled>
                                                           </div>
-                                                          <div class="col-md-2">
+                                                          <div class="col-md-4">
                                                             <input class="form-control" id="rw" placeholder="RW" name="ALRW" value="<?php echo $identitas['ALRW']?>" disabled>
                                                           </div>
                                                         </div>
@@ -549,9 +549,9 @@ $.each($('input,select,textarea', '#formGaji'),function(k){
                                             </div>
                                           </div>
                                           <div class="box-footer">
-                                            <button id="cancelIdentitas" type="submit" class="btn btn-danger" disabled>Cancel</button>
+                                            <!-- <button id="cancelIdentitas" type="submit" class="btn btn-danger" disabled>Cancel</button>
                                             <button id="editIdentitas" class="btn btn-warning">Edit</button>
-                                            <button id="submitIdentitas" type="submit" class="btn btn-primary" disabled>Save</button>
+                                            <button id="submitIdentitas" type="submit" class="btn btn-primary" disabled>Save</button> -->
                                           </div>
                                         </div>
                                         <!-- /.tab-pane -->
@@ -684,9 +684,9 @@ $.each($('input,select,textarea', '#formGaji'),function(k){
 
                                                       <!-- /.box-body -->
                                                       <div class="box-footer">
-                                                        <button id="cancelCPNS" class="btn btn-danger">Cancel</button>
+                                                        <!-- <button id="cancelCPNS" class="btn btn-danger">Cancel</button>
                                                         <button id="editCPNS"  class="btn btn-warning">Edit</button>
-                                                        <button id="saveCPNS" type="submit" class="btn btn-info">Submit</button>
+                                                        <button id="saveCPNS" type="submit" class="btn btn-info">Submit</button> -->
                                                       </div>
                                                       <!-- /.box-footer -->
                                                     </form>
@@ -962,9 +962,9 @@ $.each($('input,select,textarea', '#formGaji'),function(k){
                                             </div>
                                           </div>
                                           <div class="box-footer">
-                                                      <button id="cancelPangkatTerakhir" class="btn btn-danger ">Cancel</button>
+                                                      <!-- <button id="cancelPangkatTerakhir" class="btn btn-danger ">Cancel</button>
                                                       <button id="editPangkatTerakhir" class="btn btn-warning">Edit</button>
-                                                      <button id="savePangkatTerakhir" class="btn btn-info">Save</button>
+                                                      <button id="savePangkatTerakhir" class="btn btn-info">Save</button> -->
                                          </div>
                                         </div>
                                         <div class="tab-pane" id="Gaji_berkala">
@@ -1048,9 +1048,9 @@ $.each($('input,select,textarea', '#formGaji'),function(k){
                                                 </div>
                                             </div>
                                             <div class="box-footer">
-                                              <button id="cancelGajiBerkala" class="btn btn-danger ">Cancel</button>
+                                              <!-- <button id="cancelGajiBerkala" class="btn btn-danger ">Cancel</button>
                                               <button id="editGajiBerkala" class="btn btn-warning">Edit</button>
-                                              <button id="saveGajiBerkala" class="btn btn-info">Save</button>
+                                              <button id="saveGajiBerkala" class="btn btn-info">Save</button> -->
 
                                             </div>
                                         </div>
@@ -1252,9 +1252,9 @@ $.each($('input,select,textarea', '#formGaji'),function(k){
                                                 </div>
                                             </div>
                                             <div class="box-footer">
-                                                        <button type="submit" class="btn btn-default">Cancel</button>
+                                                        <!-- <button type="submit" class="btn btn-default">Cancel</button>
                                                         <button type="submit" class="btn btn-default">Edit</button>
-                                                        <button type="submit" class="btn btn-info">Save</button>
+                                                        <button type="submit" class="btn btn-info">Save</button> -->
 
                                             </div>
                                         </div>
@@ -1412,9 +1412,10 @@ $.each($('input,select,textarea', '#formGaji'),function(k){
 
 
                                           <div class="box-footer">
-                                                      <button type="submit" class="btn btn-default ">Cancel</button>
+
+                                                      <!-- <button type="submit" class="btn btn-default ">Cancel</button>
                                                       <button type="submit" class="btn btn-default">Edit</button>
-                                                      <button type="submit" class="btn btn-info">Save</button>
+                                                      <button type="submit" class="btn btn-info">Save</button> -->
                                          </div>
 
 

@@ -372,7 +372,7 @@ WHERE rj.NIP = '$nip'";
 		public function checkUpdateIdentitasExist($nipBaru)
 		{
 			$DB2 =$this->load->database('simpegRef', TRUE);
-			$querySQL = "SELECT * FROM dataconfirmation WHERE JSON_EXTRACT(changedData, '$.nipBaru')='$nipBaru' and tables='datautama' and tabs='identitas' ;";
+			$querySQL = "SELECT * FROM dataconfirmation WHERE JSON_EXTRACT(changedData, '$.nipBaru')='$nipBaru' and tables='datautama' and tabs='identitas'";
 			log_message('debug','checkUpdateIdentitasExist:  '.$querySQL);
 			$query = $DB2->query($querySQL);
 			$sts = False;
@@ -391,7 +391,8 @@ WHERE rj.NIP = '$nip'";
 		public function updateConfirmationData($data,$nipBaru)
 		{
 			$DB2 =$this->load->database('simpegRef', TRUE);
-			$querySQL = "update dataconfirmation set changedData = '$data'  WHERE JSON_EXTRACT(changedData, '$.nipBaru')='$nipBaru' and tables='datautama' and tabs='identitas'";
+
+			$querySQL = "update dataconfirmation set changedData = '$data' ,stsConfirmation=0  WHERE JSON_EXTRACT(changedData, '$.nipBaru')='$nipBaru' and tables='datautama' and tabs='identitas'";
 			log_message('debug','updateConfirmationData:  '.$querySQL);
 			$query = $DB2->query($querySQL);
 		}
@@ -442,6 +443,14 @@ WHERE rj.NIP = '$nip'";
 			$DB2->update('datautama', $data);
 		}
 
+		public function updateStatusDataConfirmation($data,$id)
+		{
+			$DB2 =$this->load->database('simpegRef', TRUE);
+
+			$DB2->where('id', $id);
+			$DB2->update('dataConfirmation', $data);
+		}
+
 		public function getIdentitasPegawai($nip)
 		{
 			  $DB2 =$this->load->database('simpegRef', TRUE);
@@ -484,7 +493,7 @@ INNER JOIN revReferenceSimpeg.agama a on a.kode = d.agamaId WHERE d.nipbaru = '$
 					$data['taspen']=$row->taspen;
 					$data['askesNomor']=$row->askesNomor;
 					$data['NKARIS_SU']=$row->NKARIS_SU;
-					$data['npwpNomor']=$row->nama;
+					$data['npwpNomor']=$row->npwpNomor;
 					$data['NOPEN']=$row->NOPEN;
 					$data['FILE_BMP']=base_url().'assets/foto/'.$row->FILE_BMP;
 					$data['agamaId']=$row->agamaId;
@@ -675,12 +684,12 @@ INNER JOIN revReferenceSimpeg.agama a on a.kode = d.agamaId WHERE d.nipbaru = '$
 		public function getConfirmationDataByid($id)
 		{
 		$DB2 =$this->load->database('simpegRef', TRUE);
-		$querySQL = "SELECT *	FROM dataconfirmation where id=$id";
+		$querySQL = "SELECT id,tables,currentData,changedData	FROM dataconfirmation where id=$id";
 
 		$dataRet = array();
 		$stackData = array();
 
-		log_message('debug','getConfirmationByStatus	: '.$querySQL);
+		log_message('debug','getConfirmationDataByid	: '.$querySQL);
 		$query = $DB2->query($querySQL);
 
 		if($query->num_rows()>0)
