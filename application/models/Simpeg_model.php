@@ -532,7 +532,59 @@ WHERE NIP = '$nip'";
 		}
 	}
 
+	public function getRiwayatKesehatanPensiun($nip)
+	{
+		$DB2 =$this->load->database('simpegRef', TRUE);
+		$querySQL = "SELECT NIP, usia, berat, tinggi, tensiDarah, ciriFisik, penyakit, tahunAwal, tahunAkhir, noLab,
+		tanggalDiperiksa, namaRS, namaDokter, hematologi, urine, fungsiHati, lipidProfil, fungsiGinjal, glukosaDarah,
+		thoraxPA, ecg, kesimpulan, saran, dokumen
+FROM revreferencesimpeg.riwayatkesehatan
+WHERE NIP = '$nip'";
 
+		$data = array();
+		$stackData = array();
+		log_message('debug','riwayatJabatan: '.$querySQL);
+		$query = $DB2->query($querySQL);
+
+		if($query->num_rows()>0)
+		{ $count = 1;
+			foreach($query->result() as $row)
+			{
+				$data['NIP']=$row->NIP;
+				$data['usia']=$row->usia;
+				$data['berat']=$row->berat;
+				$data['tinggi']=$row->tinggi;
+				$data['tensiDarah']=$row->tensiDarah;
+				$data['ciriFisik']=$row->ciriFisik;
+				$data['penyakit']=$row->penyakit;
+				$data['tahunAwal']=$row->tahunAwal;
+				$data['tahunAkhir']=$row->tahunAkhir;
+				$data['noLab']=$row->noLab;
+				$data['tanggalDiperiksa']=$row->tanggalDiperiksa;
+				$data['namaRS']=$row->namaRS;
+				$data['namaDokter']=$row->namaDokter;
+				$data['hematologi']=$row->hematologi;
+				$data['urine']=$row->urine;
+				$data['fungsiHati']=$row->fungsiHati;
+				$data['lipidProfil']=$row->lipidProfil;
+				$data['fungsiGinjal']=$row->fungsiGinjal;
+				$data['glukosaDarah']=$row->glukosaDarah;
+				$data['thoraxPA']=$row->thoraxPA;
+				$data['ecg']=$row->ecg;
+				$data['kesimpulan']=$row->kesimpulan;
+				$data['saran']=$row->saran;
+				$data['dokumen']=$row->dokumen;
+				array_push($stackData,$data);
+			}
+			$query->free_result();
+			return $stackData;
+		}else
+		{
+
+			$query->free_result();
+			return $data;
+		}
+	}
 
 	public function getTempatPegawai($nip)
 	{
@@ -675,6 +727,87 @@ WHERE NIP = '$nip'";
 		}
 	}
 
+		public function checkUpdateIdentitasExist($nipBaru)
+		{
+			$DB2 =$this->load->database('simpegRef', TRUE);
+			$querySQL = "SELECT * FROM dataconfirmation WHERE JSON_EXTRACT(changedData, '$.nipBaru')='$nipBaru' and tables='datautama' and tabs='identitas'";
+			log_message('debug','checkUpdateIdentitasExist:  '.$querySQL);
+			$query = $DB2->query($querySQL);
+			$sts = False;
+			if($query->num_rows()>0)
+			{
+			//  log_message('debug','Exist '.$querySQL);
+				return TRUE;
+			}else {
+				{
+				//  log_message('debug','NotExist '.$querySQL);
+					return FALSE;
+				}
+			}
+		}
+
+		public function updateConfirmationData($data,$nipBaru)
+		{
+			$DB2 =$this->load->database('simpegRef', TRUE);
+
+			$querySQL = "update dataconfirmation set changedData = '$data' ,stsConfirmation=0  WHERE JSON_EXTRACT(changedData, '$.nipBaru')='$nipBaru' and tables='datautama' and tabs='identitas'";
+			log_message('debug','updateConfirmationData:  '.$querySQL);
+			$query = $DB2->query($querySQL);
+		}
+
+
+		public function getBasicDataSimpegbyNip($nip)
+		{
+				$DB2 =$this->load->database('simpegRef', TRUE);
+		$querySQL = "select du.nipBaru,du.nama,k2.nunker as instansi,k1.nunker as subUnit ,ja.NJAB from datautama du
+									left join jakhir ja on du.nipBaru = ja.nip
+									left join unkerja k1 on k1.kunker = ja.kunkers
+									left join unkerja k2 on k2.kunker = ja.kunkersInduk
+									where du.kedudukanHukum=1 and nipBaru='$nip'";
+
+		$dataRet = array();
+		$stackData = array();
+
+		log_message('debug','getBasicDataSimpegbyNip	: '.$querySQL);
+		$query = $DB2->query($querySQL);
+
+		if($query->num_rows()>0)
+			{ $count = 1;
+				foreach($query->result() as $row)
+				{
+					$data = array();
+					$data['nipBaru']=$row->nipBaru;
+					$data['nama']=$row->nama;
+					$data['instansi']=$row->instansi;
+					$data['subUnit']=$row->subUnit;
+					$data['NJAB']=$row->NJAB;
+
+				//	array_push($stackData,$data);
+				}
+				$query->free_result();
+				return $data;
+			}else
+			{
+
+				$query->free_result();
+				return $dataRet;
+			}
+		}
+		public function updateIdentitasStatusUpdate($data,$nipBaru)
+		{
+			$DB2 =$this->load->database('simpegRef', TRUE);
+
+			$DB2->where('nipBaru', $nipBaru);
+			$DB2->update('datautama', $data);
+		}
+
+		public function updateStatusDataConfirmation($data,$id)
+		{
+			$DB2 =$this->load->database('simpegRef', TRUE);
+
+			$DB2->where('id', $id);
+			$DB2->update('dataConfirmation', $data);
+		}
 
 	public function getIdentitasPegawai($nip)
 	{

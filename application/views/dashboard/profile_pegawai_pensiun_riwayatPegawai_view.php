@@ -49,13 +49,14 @@ overflow-y:scroll;
       <li><a href="#pangkat" data-toggle="tab">Pangkat</a></li>
       <li><a href="#jabatan" data-toggle="tab">Jabatan</a></li>
       <li><a href="#organisasi" data-toggle="tab">Organisasi</a></li>
-      <li><a href="#tandaJasa" data-toggle="tab">Tanda Jasa</a></li>
+      <li><a href="#tandaJasa" data-toggle="tab">Jasa</a></li>
       <li><a href="#DPPP" data-toggle="tab">DPPP</a></li>
-      <li><a href="#penilaianKerja" data-toggle="tab">Penilaian Kerja</a></li>
+      <li><a href="#penilaianKerja" data-toggle="tab">Penilaian</a></li>
       <li><a href="#hukuman" data-toggle="tab">Hukuman</a></li>
       <li><a href="#Cuti" data-toggle="tab">Cuti</a></li>
       <li><a href="#tln" data-toggle="tab">Tugas Luar Negeri</a></li>
       <li><a href="#bahasa" data-toggle="tab">Bahasa</a></li>
+      <li><a href="#kesehatan" data-toggle="tab">Kesehatan</a></li>
     </ul>
     <div class="tab-content">
       <div class="tab-pane" id="pangkat">
@@ -883,12 +884,12 @@ overflow-y:scroll;
         </div>
       </div>
       <!-- /.tab-pane -->
-      <div class="tab-pane" id="bahasa2">
+      <div class="tab-pane" id="bahasa">
         <div class="box-body">
           <div class="row">
             <div class="col-md-12">
                               <p class="text-center">
-                                <strong>Tugas Luar Negri</strong>
+                                <strong>Riwayat Bahasa</strong>
                               </p>
 
               <form class="form-horizontal" id="formRiwayatPangket">
@@ -938,6 +939,196 @@ overflow-y:scroll;
         </div>
       </div>
       <!-- /.tab-pane -->
+      <div class="tab-pane" id="kesehatan">
+        <div class="box-body">
+          <div class="row">
+            <div class="col-md-12">
+                              <p class="text-center">
+                                <strong>Riwayat Kesehatan</strong>
+                              </p>
+
+              <form class="form-horizontal" id="formRiwayatPangket">
+                    <div class="box-body scroll">
+                      <?php
+                      $counter = 1;
+                      foreach($riwayatKesehatanPensiun as $rp)
+                      {
+                      ?>
+                    <div class="row row-bordered">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label for="NIP" class="col-md-4 control-label">NIP</label>
+                          <div class="col-sm-4">
+                            <input class="form-control" id="NIP" placeholder="NIP" value="<?php echo $rp['NIP']?>" disabled>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="usia" class="col-md-4 control-label">Usia</label>
+                          <div class="col-sm-4">
+                            <input class="form-control" id="NNEG" placeholder="usia" value="<?php echo $rp['usia']?>" disabled>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="berat" class="col-md-4 control-label">Berat Badan</label>
+                          <div class="col-sm-4">
+                            <input class="form-control" id="berat" placeholder="No. SK" value="<?php echo $rp['berat']?>" disabled>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="tinggi" class="col-md-4 control-label">Tinggi Badan</label>
+                          <div class="col-sm-4">
+                            <input class="form-control" id="tinggi" placeholder="No. SK" value="<?php echo $rp['tinggi']?>" disabled>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="tensiDarah" class="col-md-4 control-label">Tensi Darah</label>
+                          <div class="col-sm-4">
+                            <input class="form-control" id="tensiDarah" placeholder="No. SK" value="<?php echo $rp['tensiDarah']?>" disabled>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="ciriFisik" class="col-md-4 control-label">Ciri Fisik</label>
+                          <div class="col-sm-4">
+                            <input class="form-control" id="ciriFisik" placeholder="No. SK" value="<?php echo $rp['ciriFisik']?>" disabled>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="penyakit" class="col-md-4 control-label">Penyakit yang Diderita</label>
+                          <div class="col-sm-4">
+                            <input class="form-control" id="penyakit" placeholder="No. SK" value="<?php echo $rp['penyakit']?>" disabled>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="tahunAwal<?php echo $counter;?>" class="col-md-4 control-label">Tahun Awal Diderita</label>
+                          <div class="col-md-4">
+                            <div class="input-group date">
+                                <div class="input-group-addon">
+                                  <i class="fa fa-calendar"></i>
+                                </div>
+                                <input type="text" class="form-control pull-right" id="tahunAwal<?php echo $counter;?>" value="<?php echo $rp['tahunAwal']?>" disabled>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="tahunAkhir<?php echo $counter;?>" class="col-md-4 control-label">Tahun Akhir Diderita</label>
+                          <div class="col-md-4">
+                            <div class="input-group date">
+                                <div class="input-group-addon">
+                                  <i class="fa fa-calendar"></i>
+                                </div>
+                                <input type="text" class="form-control pull-right" id="tahunAkhir<?php echo $counter;?>" value="<?php echo $rp['tahunAkhir']?>" disabled>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="noLab" class="col-md-4 control-label">No Laboratorium</label>
+                          <div class="col-sm-4">
+                            <input class="form-control" id="noLab" placeholder="No. SK" value="<?php echo $rp['noLab']?>" disabled>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="tanggalDiperiksa<?php echo $counter;?>" class="col-md-4 control-label">Tanggal Awal Diperiksa</label>
+                          <div class="col-md-4">
+                            <div class="input-group date">
+                                <div class="input-group-addon">
+                                  <i class="fa fa-calendar"></i>
+                                </div>
+                                <input type="text" class="form-control pull-right" id="tanggalDiperiksa<?php echo $counter;?>" value="<?php echo $rp['tanggalDiperiksa']?>" disabled>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="namaRS" class="col-md-4 control-label">Nama Rumah Sakit atau Klinik</label>
+                          <div class="col-sm-4">
+                            <input class="form-control" id="namaRS" placeholder="No. SK" value="<?php echo $rp['namaRS']?>" disabled>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="namaDokter" class="col-md-4 control-label">Nama Dokter</label>
+                          <div class="col-sm-4">
+                            <input class="form-control" id="namaDokter" placeholder="No. SK" value="<?php echo $rp['namaDokter']?>" disabled>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="hematologi" class="col-md-4 control-label">Hematologi</label>
+                          <div class="col-sm-4">
+                            <input class="form-control" id="hematologi" placeholder="No. SK" value="<?php echo $rp['hematologi']?>" disabled>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="urine" class="col-md-4 control-label">Urine</label>
+                          <div class="col-sm-4">
+                            <input class="form-control" id="urine" placeholder="No. SK" value="<?php echo $rp['urine']?>" disabled>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="fungsiHati" class="col-md-4 control-label">Fungsi Hati</label>
+                          <div class="col-sm-4">
+                            <input class="form-control" id="fungsiHati" placeholder="No. SK" value="<?php echo $rp['fungsiHati']?>" disabled>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="lipidProfil" class="col-md-4 control-label">Lipid Profil/Jumlah Lemak</label>
+                          <div class="col-sm-4">
+                            <input class="form-control" id="lipidProfil" placeholder="No. SK" value="<?php echo $rp['lipidProfil']?>" disabled>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="fungsiGinjal" class="col-md-4 control-label">Fungsi Ginjal</label>
+                          <div class="col-sm-4">
+                            <input class="form-control" id="fungsiGinjal" placeholder="No. SK" value="<?php echo $rp['fungsiGinjal']?>" disabled>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="glukosaDarah" class="col-md-4 control-label">Glukosa Darah</label>
+                          <div class="col-sm-4">
+                            <input class="form-control" id="glukosaDarah" placeholder="No. SK" value="<?php echo $rp['glukosaDarah']?>" disabled>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="thoraxPA" class="col-md-4 control-label">Thorax PA</label>
+                          <div class="col-sm-4">
+                            <input class="form-control" id="thoraxPA" placeholder="No. SK" value="<?php echo $rp['thoraxPA']?>" disabled>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="ecg" class="col-md-4 control-label">ECG</label>
+                          <div class="col-sm-4">
+                            <input class="form-control" id="ecg" placeholder="No. SK" value="<?php echo $rp['ecg']?>" disabled>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="kesimpulan" class="col-md-4 control-label">Kesimpulan</label>
+                          <div class="col-sm-4">
+                            <input class="form-control" id="kesimpulan" placeholder="No. SK" value="<?php echo $rp['kesimpulan']?>" disabled>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="saran" class="col-md-4 control-label">Saran</label>
+                          <div class="col-sm-4">
+                            <input class="form-control" id="saran" placeholder="No. SK" value="<?php echo $rp['saran']?>" disabled>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="dokumen" class="col-md-4 control-label">Dokumen</label>
+                          <div class="col-sm-4">
+                            <input class="form-control" id="dokumen" placeholder="No. SK" value="<?php echo $rp['dokumen']?>" disabled>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                      <?php
+                      $counter++;
+                      }
+                      ?>
+                    </div>
+                  </form>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
     <!-- /.tab-content -->
   </div>

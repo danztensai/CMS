@@ -170,6 +170,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 		$riwayatPenilaianKerjaPensiun = $this->Simpeg_model->getRiwayatPenilaianKerjaPensiun($userLoggedin->nip);
 		$riwayatBahasaPensiun = $this->Simpeg_model->getRiwayatBahasaPensiun($userLoggedin->nip);
 		$riwayatOrganisasiPensiun = $this->Simpeg_model->getRiwayatOrganisasiPensiun($userLoggedin->nip);
+		$riwayatKesehatanPensiun = $this->Simpeg_model->getRiwayatKesehatanPensiun($userLoggedin->nip);
 
 		$this->data['riwayatPensiunKeluargaIbu']=$riwayatPensiunKeluargaIbu;
 		$this->data['riwayatPensiunKeluargaAyah']=$riwayatPensiunKeluargaAyah;
@@ -186,6 +187,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 		$this->data['riwayatPenilaianKerjaPensiun']=$riwayatPenilaianKerjaPensiun;
 		$this->data['riwayatBahasaPensiun']=$riwayatBahasaPensiun;
 		$this->data['riwayatOrganisasiPensiun']=$riwayatOrganisasiPensiun;
+		$this->data['riwayatKesehatanPensiun']=$riwayatKesehatanPensiun;
 		$this->data['identitas']=$identitasSimpeg;
 		$this->data['riwayatPangkat']=$riwayatPangkat;
 
@@ -395,15 +397,25 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 
 	}
 
-	function upload_foto() {
+	function editIdentitas() {
 
+		$user = $this->ion_auth->user()->row();
+		$instansi=$this->Users_model->getUsersinstansi($user->id);
 
+		$nipBaru = $user->nip;
 		//upload file
 		$config['upload_path'] = 'assets/foto/';
 		$config['allowed_types'] = '*';
 		$config['max_filename'] = '255';
 		$config['encrypt_name'] = TRUE;
 		$config['max_size'] = '1024'; //1 MB
+		$new_name = time().$nipBaru;
+		$config['file_name'] = $new_name;
+
+
+
+
+
 		$this->load->library('upload', $config);
 
 		if ( ! $this->upload->do_upload('file'))
@@ -422,23 +434,47 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 
 		log_message('debug','Uploading Foto');
 
-		$nipBaru = $this->input->post('nipBaru');
+		$userLoggedin = $this->ion_auth->user()->row();
+		$user=$userLoggedin;
+		$nipBaru = $user->nip;
 		log_message('debug','From Post Form '.$nipBaru);
 
 		$json = $this->input->post('json');
 		$jsonDecode = json_decode($json);
+		$changedData = array();
 
-		$jsonDecode['FILE_BMP']=$data['upload_data']['raw_name'].$data['upload_data']['file_ext'];
-		log_message('debug',print_r($jsonDecode,TRUE));
+		foreach($jsonDecode as $i)
+		{
+			$changedData[$i->name]=$i->value;
+		}
+
+
+
+		$changedData['FILE_BMP']=$data['upload_data']['raw_name'].$data['upload_data']['file_ext'];
+		$changedData['nipBaru']=$nipBaru;
+		log_message('debug',print_r($changedData,TRUE));
+		$jsonchangeData = json_encode($changedData);
+
 		$currentDataSimpeg = $this->Simpeg_model->getIdentitasPegawai($nipBaru);
 
 		log_message('debug',print_r($currentDataSimpeg,TRUE));
 		$jsonEncodeCurrentData = json_encode($currentDataSimpeg);
 
-		$dataInsert['table']='datautama,cpnspns';
+		if($this->Simpeg_model->checkUpdateIdentitasExist($nipBaru))
+		{
+			log_message('debug','Data Update Already Exist, Replacing ');
+			$this->Simpeg_model->updateConfirmationData($jsonchangeData,$nipBaru);
+
+		}else{
+		$dataInsert['tables']='datautama';
 		$dataInsert['currentData']=$jsonEncodeCurrentData;
-		$dataInsert['changedData']=$json;
+		$dataInsert['changedData']=$jsonchangeData;
+		$dataInsert['tabs']='identitas';
+		$dataInsert['instansi']=$instansi[0]['instansi_name'];
+
 		$this->Simpeg_model->insertData('dataconfirmation',$dataInsert);
+	}
+		$this->Simpeg_model->updateIdentitasStatusUpdate(array('stsUpdate'=>1),$nipBaru);
 		// if (isset($_FILES['file']['name'])) {
 		//     if (0 < $_FILES['file']['error']) {
 		//         echo 'Error during file upload' . $_FILES['file']['error'];
@@ -459,6 +495,31 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 		// }
 	}
 
+	public function updateStatusDataConfirmation()
+	{
+		$id=$this->input->post('id');
+		$sts=$this->input->post('sts');
+		$this->Simpeg_model->updateStatusDataConfirmation(array('stsConfirmation'=>1),$id);
+		$dataConfirmation = $this->Simpeg_model->getConfirmationDataByid($id);
+		$changedData = json_decode($dataConfirmation['changedData']);
+		$nData['ALRT'] = $changedData->ALRT;
+		$nData['ALRW'] = $changedData->ALRW;
+		$nData['KPOS'] = $changedData->KPOS;
+		$nData['alamat'] = $changedData->alamat;
+		$nData['KGOLDAR'] = $changedData->KGOLDAR;
+		$nData['agamaId'] = $changedData->agamaId;
+		$nData['nipBaru'] = $changedData->nipBaru;
+		$nData['nomorTelpon'] = $changedData->noTelpon;
+		$nData['npwpNomor'] = $changedData->npwpNomor;
+		$nData['askesNomor'] = $changedData->askesNomor;
+		$nData['jenisKawin'] = $changedData->jenisKawin;
+		//$nData['statusCpnsPns'] = $changedData->statusCpnsPns;
+		$nData['stsUpdate']=0;
+
+		$this->Simpeg_model->updateIdentitasStatusUpdate($nData,$changedData->nipBaru);
+
+		echo 'Berhasil';
+	}
 	public function profilePegawai()
 	{
 
@@ -539,6 +600,51 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 
 	}
 
+
+
+	public function modalViewConfirmation()
+	{
+		$userId = $this->ion_auth->get_user_id();
+		$user=$this->ion_auth->user()->row();
+		$idConfirmation  = $this->input->get('id');
+		$data['test']="ini Loh";
+		log_message('debug','Id Confirmation From Get :'.$idConfirmation);
+		$dataConfirmation = $this->Simpeg_model->getConfirmationDataByid($idConfirmation);
+		$currentData = json_decode($dataConfirmation['currentData']);
+		$changedData = json_decode($dataConfirmation['changedData']);
+		log_message('debug',print_r($currentData,TRUE));
+		log_message('debug',print_r($changedData,TRUE));
+		$oData['ALRT'] = $currentData->ALRT;
+		$oData['ALRW'] = $currentData->ALRW;
+		$oData['KPOS'] = $currentData->KPOS;
+		$oData['alamat'] = $currentData->alamat;
+		$oData['KGOLDAR'] = $currentData->KGOLDAR;
+		$oData['agamaId'] = $currentData->agamaId;
+		$oData['nipBaru'] = $currentData->nipBaru;
+		$oData['noTelpon'] = $currentData->noTelpon;
+		$oData['npwpNomor'] = $currentData->npwpNomor;
+		$oData['askesNomor'] = $currentData->askesNomor;
+		$oData['jenisKawin'] = $currentData->jenisKawin;
+		$oData['statusCpnsPns'] = $currentData->statusCpnsPns;
+		$nData['ALRT'] = $changedData->ALRT;
+		$nData['ALRW'] = $changedData->ALRW;
+		$nData['KPOS'] = $changedData->KPOS;
+		$nData['alamat'] = $changedData->alamat;
+		$nData['KGOLDAR'] = $changedData->KGOLDAR;
+		$nData['agamaId'] = $changedData->agamaId;
+		$nData['nipBaru'] = $changedData->nipBaru;
+		$nData['noTelpon'] = $changedData->noTelpon;
+		$nData['npwpNomor'] = $changedData->npwpNomor;
+		$nData['askesNomor'] = $changedData->askesNomor;
+		$nData['jenisKawin'] = $changedData->jenisKawin;
+		$nData['statusCpnsPns'] = $changedData->statusCpnsPns;
+		$data['oData']=$oData;
+		$data['nData']=$nData;
+
+
+		$this->load->view('dashboard/modal_confirmation_view',$data);
+	}
+
 	public function dataConfirmation()
 	{
 
@@ -555,11 +661,33 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 		$this->data['users_instansi']=$this->Users_model->getUsersinstansi($userId );
 
 		$groupid = $this->data['user_group'][0]->id;
-$this->data['menu']=$this->Menu_model->menuMaster($groupid);
+		$this->data['menu']=$this->Menu_model->menuMaster($groupid);
+
+		$confirmationData = $this->Simpeg_model->getConfirmationByStatus(0,$this->data['users_instansi'][0]['instansi_name']);
+		$recordsTotal=$this->Simpeg_model->getCountTotalConfirmationByStatus(0,$this->data['users_instansi'][0]['instansi_name']);
+		$returnDataJson = array();
+
+
 
 		//log_message('INFO','User Id : '.$userId);
 
 		$this->render('dashboard/dataConfirmation_view');
+
+	}
+	public function getJsonConfirmationData()
+	{
+		$draw=0;
+		$userId = $this->ion_auth->get_user_id();
+		$userLoggedin = $this->ion_auth->user()->row();
+		$instansi = $this->Users_model->getUsersinstansi($userId );
+		$confirmationData = $this->Simpeg_model->getConfirmationByStatus(0,$instansi[0]['instansi_name']);
+		$recordsTotal=$this->Simpeg_model->getCountTotalConfirmationByStatus(0,$instansi[0]['instansi_name']);
+		$returnDataJson = array();
+		$returnDataJson['draw']=$draw;
+		$returnDataJson['recordsTotal']=$recordsTotal;
+		$returnDataJson['recordsFiltered']=$recordsTotal;
+		$returnDataJson['data']=$confirmationData;
+		echo json_encode($returnDataJson);
 
 	}
 
@@ -630,7 +758,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 		$userId = $this->ion_auth->get_user_id();
 		$this->data['user']=$this->ion_auth->user()->row();
 		$groupid = $this->data['user_group'][0]->id;
-$this->data['menu']=$this->Menu_model->menuMaster($groupid);
+		$this->data['menu']=$this->Menu_model->menuMaster($groupid);
 		$this->render('dashboard/kepegawaian_view');
 	}
 
