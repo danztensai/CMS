@@ -162,7 +162,14 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 		$riwayatPensiunKeluargaSuamiIstri = $this->Simpeg_model->getRiwayatPensiunKeluargaSuamiIstri($userLoggedin->nip);
 		$riwayatPensiunKeluargaAnak = $this->Simpeg_model->getRiwayatPensiunKeluargaAnak($userLoggedin->nip);
 		$riwayatJabatanPensiun = $this->Simpeg_model->getRiwayatJabatanPensiun($userLoggedin->nip);
-
+		$riwayatJasaPensiun = $this->Simpeg_model->getRiwayatJasaPensiun($userLoggedin->nip);
+		$riwayatDPPPPensiun = $this->Simpeg_model->getRiwayatDPPPPensiun($userLoggedin->nip);
+		$riwayatHukumanPensiun = $this->Simpeg_model->getRiwayatHukumanPensiun($userLoggedin->nip);
+		$riwayatCutiPensiun = $this->Simpeg_model->getRiwayatCutiPensiun($userLoggedin->nip);
+		$riwayatTLNPensiun = $this->Simpeg_model->getRiwayatTLNPensiun($userLoggedin->nip);
+		$riwayatPenilaianKerjaPensiun = $this->Simpeg_model->getRiwayatPenilaianKerjaPensiun($userLoggedin->nip);
+		$riwayatBahasaPensiun = $this->Simpeg_model->getRiwayatBahasaPensiun($userLoggedin->nip);
+		$riwayatOrganisasiPensiun = $this->Simpeg_model->getRiwayatOrganisasiPensiun($userLoggedin->nip);
 
 		$this->data['riwayatPensiunKeluargaIbu']=$riwayatPensiunKeluargaIbu;
 		$this->data['riwayatPensiunKeluargaAyah']=$riwayatPensiunKeluargaAyah;
@@ -171,6 +178,14 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 		$this->data['gajiBerkalaPegawaiPensiun']=$gajiBerkalaPegawaiPensiun;
 		$this->data['tempatPegawaiPensiun']=$tempatPegawaiPensiun;
 		$this->data['riwayatJabatanPensiun']=$riwayatJabatanPensiun;
+		$this->data['riwayatJasaPensiun']=$riwayatJasaPensiun;
+		$this->data['riwayatDPPPPensiun']=$riwayatDPPPPensiun;
+		$this->data['riwayatHukumanPensiun']=$riwayatHukumanPensiun;
+		$this->data['riwayatCutiPensiun']=$riwayatCutiPensiun;
+		$this->data['riwayatTLNPensiun']=$riwayatTLNPensiun;
+		$this->data['riwayatPenilaianKerjaPensiun']=$riwayatPenilaianKerjaPensiun;
+		$this->data['riwayatBahasaPensiun']=$riwayatBahasaPensiun;
+		$this->data['riwayatOrganisasiPensiun']=$riwayatOrganisasiPensiun;
 		$this->data['identitas']=$identitasSimpeg;
 		$this->data['riwayatPangkat']=$riwayatPangkat;
 

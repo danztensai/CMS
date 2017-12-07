@@ -28,25 +28,21 @@
   left: 0;
   width: 100%;
   height: 100%;
-  }</style>
-  <style>
-  .scroll{
-    height:800px;
-    overflow-y:scroll;
-  }
-  .row-bordered:after {
-    content: "";
-    display: block;
-    border-bottom: 2px solid #ccc;
-    margin:  15px;
-  }
-</style>
+}</style>
+
 <style>
 .scroll{
-  height:300px;
-  overflow-y:scroll;
+  height:800px;
+overflow-y:scroll;
+}
+.row-bordered:after {
+  content: "";
+  display: block;
+  border-bottom: 2px solid #ccc;
+  margin:  15px;
 }
 </style>
+
 <div class="tab-pane" id="riwayatPegawai">
   <div class="nav-tabs-custom">
     <ul class="nav nav-tabs">
@@ -55,7 +51,8 @@
       <li><a href="#organisasi" data-toggle="tab">Organisasi</a></li>
       <li><a href="#tandaJasa" data-toggle="tab">Tanda Jasa</a></li>
       <li><a href="#DPPP" data-toggle="tab">DPPP</a></li>
-      <li><a href="#Hukuman" data-toggle="tab">Hukuman</a></li>
+      <li><a href="#penilaianKerja" data-toggle="tab">Penilaian Kerja</a></li>
+      <li><a href="#hukuman" data-toggle="tab">Hukuman</a></li>
       <li><a href="#Cuti" data-toggle="tab">Cuti</a></li>
       <li><a href="#tln" data-toggle="tab">Tugas Luar Negeri</a></li>
       <li><a href="#bahasa" data-toggle="tab">Bahasa</a></li>
@@ -65,17 +62,17 @@
         <div class="box-body">
           <div class="row">
             <div class="col-md-12">
-              <p class="text-center">
-                <strong>Riwayat Pangkat</strong>
-              </p>
+                              <p class="text-center">
+                                <strong>Riwayat Pangkat</strong>
+                              </p>
 
               <form class="form-horizontal" id="formRiwayatPangket">
-                <div class="box-body scroll">
-                  <?php
-                  $counter = 1;
-                  foreach($riwayatPangkat as $rp)
-                  {
-                    ?>
+                    <div class="box-body scroll">
+                      <?php
+                      $counter = 1;
+                      foreach($riwayatPangkat as $rp)
+                      {
+                      ?>
                     <div class="row row-bordered">
                       <div class="col-md-12">
                         <div class="form-group">
@@ -102,10 +99,10 @@
                           <label for="tmtPangkatRiwayat<?php echo $counter;?>" class="col-md-4 control-label">TMT Pangkat</label>
                           <div class="col-md-4">
                             <div class="input-group date">
-                              <div class="input-group-addon">
-                                <i class="fa fa-calendar"></i>
-                              </div>
-                              <input type="text" class="form-control pull-right" id="tmtPangkatRiwayat<?php echo $counter;?>" value="<?php echo $rp['tmtGolongan']?>" disabled>
+                                <div class="input-group-addon">
+                                  <i class="fa fa-calendar"></i>
+                                </div>
+                                <input type="text" class="form-control pull-right" id="tmtPangkatRiwayat<?php echo $counter;?>" value="<?php echo $rp['tmtGolongan']?>" disabled>
                             </div>
                           </div>
                         </div>
@@ -122,10 +119,10 @@
                           <div class="col-md-4">
 
                             <div class="input-group date">
-                              <div class="input-group-addon">
-                                <i class="fa fa-calendar"></i>
-                              </div>
-                              <input type="text" class="form-control pull-right" id="tglSKNaikPangkat<?php echo $counter;?>" value="<?php echo $rp['tanggalSk']?>" disabled>
+                                <div class="input-group-addon">
+                                  <i class="fa fa-calendar"></i>
+                                </div>
+                                <input type="text" class="form-control pull-right" id="tglSKNaikPangkat<?php echo $counter;?>" value="<?php echo $rp['tanggalSk']?>" disabled>
                             </div>
                           </div>
                         </div>
@@ -140,465 +137,808 @@
 
                       </div>
                     </div>
-                    <?php
-                    $counter++;
-                  }
-                  ?>
-                </div>
-              </form>
+                      <?php
+                      $counter++;
+                      }
+                      ?>
+                    </div>
+                  </form>
 
             </div>
           </div>
         </div>
+
       </div>
       <!-- /.tab-pane -->
       <div class="tab-pane" id="jabatan">
         <div class="box-body">
           <div class="row">
             <div class="col-md-12">
-              <p class="text-center">
-                <strong>Riwayat Jabatan</strong>
-              </p>
-              <form class="form-horizontal">
-                <div class="box-body scroll">
-                  <?php
+                              <p class="text-center">
+                                <strong>Riwayat Jabatan</strong>
+                              </p>
+                              <form class="form-horizontal">
+                                <div class="box-body scroll">
+                                  <?php
 
-                  foreach($riwayatJabatanPensiun as $rj)
-                  {
-                    ?>
+                                  foreach($riwayatJabatanPensiun as $rj)
+                                  {
+                                    ?>
+                                <div class="row row-bordered">
+                                  <div class="col-md-12">
+                                    <div class="form-group">
+                                      <label for="nip" class="col-md-4 control-label">NIP</label>
+                                      <div class="col-sm-4">
+                                        <input class="form-control" id="nip" placeholder="NIP" value="<?php echo $rj['nip']?>" disabled>
+                                      </div>
+                                    </div>
+                                    <div class="form-group">
+                                      <label for="unitKerja" class="col-md-4 control-label">Unit Kerja</label>
+                                      <div class="col-md-4">
+                                        <input class="form-control" id="unitKerja" placeholder="Unit Kerja" value="<?php echo $rj['nunkerUnitOrganisasi']?>" disabled>
+                                      </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                      <label for="jenisJabatan" class="col-md-4 control-label">Jenis Jabatan</label>
+                                      <div class="col-md-4">
+                                        <input class="form-control" id="jenisJabatan" placeholder="Jenis Jabatan" value="<?php echo $rj['jnsjab'];?>" disabled>
+                                      </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                      <label for="eselonJabatan" class="col-md-4 control-label">Eselon Jabatan</label>
+                                      <div class="col-md-4">
+                                        <input class="form-control" id="eselonJabatan" placeholder="eselonJabatan" value="<?php echo $rj['KESELON'];?>" disabled>
+                                      </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                      <label for="jabatan" class="col-md-4 control-label">Jabatan</label>
+                                      <div class="col-md-4">
+                                        <textArea rows="5"class="form-control" id="jabatan" placeholder="jabatan" disabled><?php echo $rj['njab'];?></textarea>
+                                      </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                      <label for="tmtJabatanRiwayat" class="col-md-4 control-label">tmtJabatan</label>
+                                      <div class="col-md-4">
+
+                                        <div class="input-group date">
+                                            <div class="input-group-addon">
+                                              <i class="fa fa-calendar"></i>
+                                            </div>
+                                            <input type="text" class="form-control pull-right" id="tmtJabatanRiwayat" value="<?php echo $rj['tmtJabatan'];?>" disabled>
+                                        </div>
+                                      </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                      <label for="noSkNaikJabatan" class="col-md-4 control-label">noSkNaikJabatan</label>
+                                      <div class="col-md-4">
+                                        <input class="form-control" id="noSkNaikJabatan" placeholder="noSkNaikJabatan" value="<?php echo $rj['nomorSk'];?>" disabled>
+                                      </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                      <label for="tglSKnaikJabatan" class="col-md-4 control-label">Tanggal SK Naik Jabatan</label>
+                                      <div class="col-md-4">
+                                        <div class="input-group date">
+                                            <div class="input-group-addon">
+                                              <i class="fa fa-calendar"></i>
+                                            </div>
+                                            <input type="text" class="form-control pull-right" id="tglSKnaikJabatan" value="<?php echo $rj['tanggalSk'];?>" disabled>
+                                        </div>
+                                      </div>
+                                    </div>
+
+                                  </div>
+                                </div>
+                                <?php
+                              }
+                              ?>
+                                </div>
+                              </form>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <!-- /.tab-pane -->
+      <div class="tab-pane" id="organisasi">
+        <div class="box-body">
+          <div class="row">
+            <div class="col-md-12">
+                              <p class="text-center">
+                                <strong>Riwayat Organisasi</strong>
+                              </p>
+
+              <form class="form-horizontal" id="formRiwayatPangket">
+                    <div class="box-body scroll">
+                      <?php
+                      $counter = 1;
+                      foreach($riwayatOrganisasiPensiun as $rp)
+                      {
+                      ?>
+                    <div class="row row-bordered">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label for="NIP" class="col-md-4 control-label">NIP</label>
+                          <div class="col-sm-4">
+                            <input class="form-control" id="NIP" placeholder="NIP" value="<?php echo $rp['NIP']?>" disabled>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="JORG" class="col-md-4 control-label">Jenis Organisasi</label>
+                          <div class="col-sm-4">
+                            <input class="form-control" id="JORG" placeholder="NIP" value="<?php echo $rp['JORG']?>" disabled>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="NORG" class="col-md-4 control-label">Nama Organisasi</label>
+                          <div class="col-sm-4">
+                            <input class="form-control" id="NORG" placeholder="No. SK" value="<?php echo $rp['NORG']?>" disabled>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="JBORG" class="col-md-4 control-label">Jabatan</label>
+                          <div class="col-sm-4">
+                            <input class="form-control" id="JBORG" placeholder="No. SK" value="<?php echo $rp['JBORG']?>" disabled>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="TMULAI<?php echo $counter;?>" class="col-md-4 control-label">Tanggal Mulai</label>
+                          <div class="col-md-4">
+                            <div class="input-group date">
+                                <div class="input-group-addon">
+                                  <i class="fa fa-calendar"></i>
+                                </div>
+                                <input type="text" class="form-control pull-right" id="TMULAI<?php echo $counter;?>" value="<?php echo $rp['TMULAI']?>" disabled>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="TAKHIR<?php echo $counter;?>" class="col-md-4 control-label">Tanggal Akhir</label>
+                          <div class="col-md-4">
+                            <div class="input-group date">
+                                <div class="input-group-addon">
+                                  <i class="fa fa-calendar"></i>
+                                </div>
+                                <input type="text" class="form-control pull-right" id="TAKHIR<?php echo $counter;?>" value="<?php echo $rp['TAKHIR']?>" disabled>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="NPIMP" class="col-md-4 control-label">Nama Pimpinan</label>
+                          <div class="col-sm-4">
+                            <input class="form-control" id="npej" placeholder="NPIMP" value="<?php echo $rp['NPIMP']?>" disabled>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="TEMPAT" class="col-md-4 control-label">Tempat</label>
+                          <div class="col-sm-4">
+                            <input class="form-control" id="npej" placeholder="TEMPAT" value="<?php echo $rp['TEMPAT']?>" disabled>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                      <?php
+                      $counter++;
+                      }
+                      ?>
+                    </div>
+                  </form>
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /.tab-pane -->
+      <div class="tab-pane" id="tandaJasa">
+        <div class="box-body">
+          <div class="row">
+            <div class="col-md-12">
+                              <p class="text-center">
+                                <strong>Riwayat Jasa</strong>
+                              </p>
+
+              <form class="form-horizontal" id="formRiwayatPangket">
+                    <div class="box-body scroll">
+                      <?php
+                      $counter = 1;
+                      foreach($riwayatJasaPensiun as $rp)
+                      {
+                      ?>
                     <div class="row row-bordered">
                       <div class="col-md-12">
                         <div class="form-group">
                           <label for="nip" class="col-md-4 control-label">NIP</label>
                           <div class="col-sm-4">
-                            <input class="form-control" id="nip" placeholder="NIP" value="<?php echo $rj['nip']?>" disabled>
+                            <input class="form-control" id="nip" placeholder="NIP" value="<?php echo $rp['nip']?>" disabled>
                           </div>
                         </div>
                         <div class="form-group">
-                          <label for="unitKerja" class="col-md-4 control-label">Unit Kerja</label>
-                          <div class="col-md-4">
-                            <input class="form-control" id="unitKerja" placeholder="Unit Kerja" value="<?php echo $rj['nunkerUnitOrganisasi']?>" disabled>
+                          <label for="NBINTANG" class="col-md-4 control-label">Nama Bintang Jasa</label>
+                          <div class="col-sm-4">
+                            <input class="form-control" id="NBINTANG" placeholder="NIP" value="<?php echo $rp['NBINTANG']?>" disabled>
                           </div>
                         </div>
-
                         <div class="form-group">
-                          <label for="jenisJabatan" class="col-md-4 control-label">Jenis Jabatan</label>
-                          <div class="col-md-4">
-                            <input class="form-control" id="jenisJabatan" placeholder="Jenis Jabatan" value="<?php echo $rj['jnsjab'];?>" disabled>
+                          <label for="skNomor" class="col-md-4 control-label">No. SK</label>
+                          <div class="col-sm-4">
+                            <input class="form-control" id="skNomor" placeholder="NIP" value="<?php echo $rp['skNomor']?>" disabled>
                           </div>
                         </div>
-
                         <div class="form-group">
-                          <label for="eselonJabatan" class="col-md-4 control-label">Eselon Jabatan</label>
+                          <label for="skDate<?php echo $counter;?>" class="col-md-4 control-label">Tanggal SK</label>
                           <div class="col-md-4">
-                            <input class="form-control" id="eselonJabatan" placeholder="eselonJabatan" value="<?php echo $rj['KESELON'];?>" disabled>
-                          </div>
-                        </div>
-
-                        <div class="form-group">
-                          <label for="jabatan" class="col-md-4 control-label">Jabatan</label>
-                          <div class="col-md-4">
-                            <textArea rows="5"class="form-control" id="jabatan" placeholder="jabatan" disabled><?php echo $rj['njab'];?></textarea>
-                            </div>
-                          </div>
-
-                          <div class="form-group">
-                            <label for="tmtJabatanRiwayat" class="col-md-4 control-label">tmtJabatan</label>
-                            <div class="col-md-4">
-
-                              <div class="input-group date">
+                            <div class="input-group date">
                                 <div class="input-group-addon">
                                   <i class="fa fa-calendar"></i>
                                 </div>
-                                <input type="text" class="form-control pull-right" id="tmtJabatanRiwayat" value="<?php echo $rj['tmtJabatan'];?>" disabled>
-                              </div>
+                                <input type="text" class="form-control pull-right" id="skDate<?php echo $counter;?>" value="<?php echo $rp['skDate']?>" disabled>
                             </div>
                           </div>
-
-                          <div class="form-group">
-                            <label for="noSkNaikJabatan" class="col-md-4 control-label">noSkNaikJabatan</label>
-                            <div class="col-md-4">
-                              <input class="form-control" id="noSkNaikJabatan" placeholder="noSkNaikJabatan" value="<?php echo $rj['nomorSk'];?>" disabled>
-                            </div>
-                          </div>
-
-                          <div class="form-group">
-                            <label for="tglSKnaikJabatan" class="col-md-4 control-label">Tanggal SK Naik Jabatan</label>
-                            <div class="col-md-4">
-                              <div class="input-group date">
-                                <div class="input-group-addon">
-                                  <i class="fa fa-calendar"></i>
-                                </div>
-                                <input type="text" class="form-control pull-right" id="tglSKnaikJabatan" value="<?php echo $rj['tanggalSk'];?>" disabled>
-                              </div>
-                            </div>
-                          </div>
-
                         </div>
+                        <div class="form-group">
+                          <label for="tahun" class="col-md-4 control-label">Tahun Perolehan</label>
+                          <div class="col-sm-4">
+                            <input class="form-control" id="tahun" placeholder="NIP" value="<?php echo $rp['tahun']?>" disabled>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="AOLEH" class="col-md-4 control-label">Asal Perolehan</label>
+                          <div class="col-sm-4">
+                            <input class="form-control" id="AOLEH" placeholder="NIP" value="<?php echo $rp['AOLEH']?>" disabled>
+                          </div>
+                        </div>
+
                       </div>
+                    </div>
                       <?php
-                    }
-                    ?>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- /.tab-pane -->
-        <div class="tab-pane" id="organisasi">
-          Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-          Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-          when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-          It has survived not only five centuries, but also the leap into electronic typesetting,
-          remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset
-          sheets containing Lorem Ipsum passages, and more recently with desktop publishing software
-          like Aldus PageMaker including versions of Lorem Ipsum.
-        </div>
-        <!-- /.tab-pane -->
-        <div class="tab-pane" id="tandaJasa">
-          <div class="box-body">
-            <div class="row">
-              <div class="col-md-12">
-                <p class="text-center">
-                  <strong>Riwayat Tanda Jasa</strong>
-                </p>
-                <form class="form-horizontal">
-                  <div class="box-body scroll">
-                    <div class="col-md-12">
-                      <div class="form-group">
-                        <label for="nip" class="col-md-4 control-label">NIP</label>
-                        <div class="col-sm-4">
-                          <input class="form-control" id="nip" placeholder="NIP">
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label for="namaBintangJasa" class="col-md-4 control-label">Nama Bintang Jasa</label>
-                        <div class="col-md-4">
-                          <input class="form-control" id="namaBintangJasa" placeholder="Nama Bintang Jasa">
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label for="noSK" class="col-md-4 control-label">No. SK</label>
-                        <div class="col-md-4">
-                          <input class="form-control" id="noSK" placeholder="No. SK">
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label for="tanggalLahir" class="col-md-4 control-label">Tanggal SK</label>
-                        <div class="col-md-4">
-                          <div class="input-group date">
-                            <div class="input-group-addon">
-                              <i class="fa fa-calendar"></i>
-                            </div>
-                            <input type="text" class="form-control pull-right" id="tglSK" value="" disabled>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label for="thnPerolehan" class="col-md-4 control-label">Tahun Perolehan</label>
-                        <div class="col-md-4">
-                          <input class="form-control" id="thnPerolehan" placeholder="Tahun Perolehan">
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label for="asalPerolehan" class="col-md-4 control-label">Asal Perolehan</label>
-                        <div class="col-md-4">
-                          <input class="form-control" id="asalPerolehan" placeholder="Asal Perolehan">
-                        </div>
-                      </div>
+                      $counter++;
+                      }
+                      ?>
                     </div>
-                  </div>
-                </form>
-              </div>
+                  </form>
+
             </div>
           </div>
         </div>
 
-        <!-- /.tab-pane -->
-        <div class="tab-pane" id="DPPP">
-          <div class="box-body">
-            <div class="row">
-              <div class="col-md-12">
-                <p class="text-center">
-                  <strong>RIWAYAT DPPP</strong>
-                </p>
-                <form class="form-horizontal">
-                  <div class="box-body scroll">
-                    <div class="col-md-12">
-                      <div class="form-group">
-                        <label for="nip" class="col-md-4 control-label">NIP</label>
-                        <div class="col-sm-4">
-                          <input class="form-control" id="nip" placeholder="NIP">
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label for="THNILAI" class="col-md-4 control-label">Tahun Penilaian</label>
-                        <div class="col-md-4">
-                          <input class="form-control" id="THNILAI" placeholder="Tahun Penilaian">
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label for="NSETIA" class="col-md-4 control-label">Nilai Kesetiaan</label>
-                        <div class="col-md-4">
-                          <input class="form-control" id="NSETIA" placeholder="Nilai Kesetiaan">
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label for="NPRES" class="col-md-4 control-label">Nilai Prestasi</label>
-                        <div class="col-md-4">
-                          <input class="form-control" id="NPRES" placeholder="Nilai Prestasi">
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label for="NTJAWAB" class="col-md-4 control-label">Nilai Tanggung Jawab</label>
-                        <div class="col-md-4">
-                          <input class="form-control" id="NTJAWAB" placeholder="Nilai Tanggung Jawab">
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label for="NTAAT" class="col-md-4 control-label">Nilai Ketaatan</label>
-                        <div class="col-md-4">
-                          <input class="form-control" id="NTAAT" placeholder="Nilai Ketaatan">
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label for="NJUJUR" class="col-md-4 control-label">Nilai Kejujuran</label>
-                        <div class="col-md-4">
-                          <input class="form-control" id="NJUJUR" placeholder="Nilai Kejujuran">
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label for="NKSAMA" class="col-md-4 control-label">Nilai Kerja Sama</label>
-                        <div class="col-md-4">
-                          <input class="form-control" id="NKSAMA" placeholder="Nilai Kerja Sama">
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label for="NPKARSA" class="col-md-4 control-label">Nilai Prakarsa</label>
-                        <div class="col-md-4">
-                          <input class="form-control" id="NPKARSA" placeholder="Nilai Prakarsa">
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label for="NPIMPIN" class="col-md-4 control-label">Nilai Kepemimpinan</label>
-                        <div class="col-md-4">
-                          <input class="form-control" id="NPIMPIN" placeholder="Nilai Kepemimpinan">
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label for="NTOTAL" class="col-md-4 control-label">Nilai Total</label>
-                        <div class="col-md-4">
-                          <input class="form-control" id="NTOTAL" placeholder="Nilai Total">
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label for="NRATA" class="col-md-4 control-label">Nilai Rata-rata</label>
-                        <div class="col-md-4">
-                          <input class="form-control" id="NRATA" placeholder="Nilai Rata-rata">
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- /.tab-pane -->
-        <div class="tab-pane" id="Hukuman">
-          <div class="box-body">
-            <div class="row">
-              <div class="col-md-12">
-                <p class="text-center">
-                  <strong>RIWAYAT HUKUMAN</strong>
-                </p>
-                <form class="form-horizontal">
-                  <div class="box-body scroll">
-                    <div class="col-md-12">
-                      <div class="form-group">
-                        <label for="nip" class="col-md-4 control-label">NIP</label>
-                        <div class="col-sm-4">
-                          <input class="form-control" id="nip" placeholder="NIP">
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label for="jenisHukuman" class="col-md-4 control-label">Jenis Hukuman</label>
-                        <div class="col-md-4">
-                          <input class="form-control" id="jenisHukuman" placeholder="Jenis Hukuman">
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label for="DESHUKUM" class="col-md-4 control-label">Deskripsi Hukuman</label>
-                        <div class="col-md-4">
-                          <input class="form-control" id="DESHUKUM" placeholder="Deskripsi Hukuman">
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label for="skNomor" class="col-md-4 control-label">No. SK</label>
-                        <div class="col-md-4">
-                          <input class="form-control" id="skNomor" placeholder="No. SK">
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label for="tanggalLahir" class="col-md-4 control-label">Tanggal SK</label>
-                        <div class="col-md-4">
-                          <div class="input-group date">
-                            <div class="input-group-addon">
-                              <i class="fa fa-calendar"></i>
-                            </div>
-                            <input type="text" class="form-control pull-right" id="tglSK" value="" disabled>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label for="KPEJ" class="col-md-4 control-label">Pejabat yang Menetapkan</label>
-                        <div class="col-md-4">
-                          <input class="form-control" id="KPEJ" placeholder="Pejabat yang Menetapkan">
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label for="hukumanTanggal" class="col-md-4 control-label">TMT Hukuman</label>
-                        <div class="col-md-4">
-                          <input class="form-control" id="hukumanTanggal" placeholder="TMT Hukuman">
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- /.tab-pane -->
-        <div class="tab-pane" id="Cuti">
-          <div class="box-body">
-            <div class="row">
-              <div class="col-md-12">
-                <p class="text-center">
-                  <strong>RIWAYAT CUTI</strong>
-                </p>
-                <form class="form-horizontal">
-                  <div class="box-body scroll">
-                    <div class="col-md-12">
-                      <div class="form-group">
-                        <label for="nip" class="col-md-4 control-label">NIP</label>
-                        <div class="col-sm-4">
-                          <input class="form-control" id="nip" placeholder="NIP">
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label for="JCUTI" class="col-md-4 control-label">Jenis Cuti</label>
-                        <div class="col-md-4">
-                          <input class="form-control" id="JCUTI" placeholder="Jenis Cuti">
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label for="SkNomor" class="col-md-4 control-label">No. SK</label>
-                        <div class="col-md-4">
-                          <input class="form-control" id="SkNomor" placeholder="No. SK">
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label for="tanggalLahir" class="col-md-4 control-label">Tanggal SK</label>
-                        <div class="col-md-4">
-                          <div class="input-group date">
-                            <div class="input-group-addon">
-                              <i class="fa fa-calendar"></i>
-                            </div>
-                            <input type="text" class="form-control pull-right" id="tglSK" value="" disabled>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label for="tanggalLahir" class="col-md-4 control-label">Tanggal Mulai</label>
-                        <div class="col-md-4">
-                          <div class="input-group date">
-                            <div class="input-group-addon">
-                              <i class="fa fa-calendar"></i>
-                            </div>
-                            <input type="text" class="form-control pull-right" id="TanggalAwal" value="" disabled>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label for="tanggalLahir" class="col-md-4 control-label">Tanggal Akhir</label>
-                        <div class="col-md-4">
-                          <div class="input-group date">
-                            <div class="input-group-addon">
-                              <i class="fa fa-calendar"></i>
-                            </div>
-                            <input type="text" class="form-control pull-right" id="TanggalAkhir" value="" disabled>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label for="PTETAP" class="col-md-4 control-label">Pejabat yang Menetapkan</label>
-                        <div class="col-md-4">
-                          <input class="form-control" id="PTETAP" placeholder="Pejabat yang Menetapkan">
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- /.tab-pane -->
-        <div class="tab-pane" id="tln">
-          Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-          Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-          when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-          It has survived not only five centuries, but also the leap into electronic typesetting,
-          remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset
-          sheets containing Lorem Ipsum passages, and more recently with desktop publishing software
-          like Aldus PageMaker including versions of Lorem Ipsum.
-        </div>
-        <!-- /.tab-pane -->
-        <div class="tab-pane" id="bahasa">
-          <div class="box-body">
-            <div class="row">
-              <div class="col-md-12">
-                <p class="text-center">
-                  <strong>Bahasa</strong>
-                </p>
-                <form class="form-horizontal">
-                  <div class="box-body scroll">
-                    <div class="col-md-12">
-                      <div class="form-group">
-                        <label for="nip" class="col-md-4 control-label">NIP</label>
-                        <div class="col-sm-4">
-                          <input class="form-control" id="nip" placeholder="NIP">
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label for="bahasa" class="col-md-4 control-label">Bahasa</label>
-                        <div class="col-md-4">
-                          <input class="form-control" id="bahasa" placeholder="Bahasa">
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label for="kemampuan" class="col-md-4 control-label">Kemampuan</label>
-                        <div class="col-md-4">
-                          <input class="form-control" id="kemampuan" placeholder="Kemampuan">
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label for="jenisBahasa" class="col-md-4 control-label">Jenis Bahasa</label>
-                        <div class="col-md-4">
-                          <input class="form-control" id="jenisBahasa" placeholder="Jenis Bahasa">
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- /.tab-pane -->
       </div>
-      <!-- /.tab-content -->
+      <!-- /.tab-pane -->
+      <div class="tab-pane" id="DPPP">
+        <div class="box-body">
+          <div class="row">
+            <div class="col-md-12">
+                              <p class="text-center">
+                                <strong>RIWAYAT DPPP</strong>
+                              </p>
+
+              <form class="form-horizontal" id="formRiwayatPangket">
+                    <div class="box-body scroll">
+                      <?php
+                      $counter = 1;
+                      foreach($riwayatDPPPPensiun as $rp)
+                      {
+                      ?>
+                    <div class="row row-bordered">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label for="NIP" class="col-md-4 control-label">NIP</label>
+                          <div class="col-sm-4">
+                            <input class="form-control" id="NIP" placeholder="NIP" value="<?php echo $rp['NIP']?>" disabled>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="THNILAI" class="col-md-4 control-label">Tahun Penilaian</label>
+                          <div class="col-sm-4">
+                            <input class="form-control" id="THNILAI" placeholder="NIP" value="<?php echo $rp['THNILAI']?>" disabled>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="NSETIA" class="col-md-4 control-label">Nilai Kesetiaan</label>
+                          <div class="col-sm-4">
+                            <input class="form-control" id="NSETIA" placeholder="NIP" value="<?php echo $rp['NSETIA']?>" disabled>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="NPRES" class="col-md-4 control-label">Nilai Prestasi</label>
+                          <div class="col-sm-4">
+                            <input class="form-control" id="NPRES" placeholder="NIP" value="<?php echo $rp['NPRES']?>" disabled>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="NTJAWAB" class="col-md-4 control-label">Nilai Tanggung Jawab</label>
+                          <div class="col-sm-4">
+                            <input class="form-control" id="NTJAWAB" placeholder="NIP" value="<?php echo $rp['NTJAWAB']?>" disabled>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="NTAAT" class="col-md-4 control-label">Nilai Tanggung Jawab</label>
+                          <div class="col-sm-4">
+                            <input class="form-control" id="NTAAT" placeholder="NIP" value="<?php echo $rp['NTAAT']?>" disabled>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="NJUJUR" class="col-md-4 control-label">Nilai Tanggung Jawab</label>
+                          <div class="col-sm-4">
+                            <input class="form-control" id="NJUJUR" placeholder="NIP" value="<?php echo $rp['NJUJUR']?>" disabled>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="NKSAMA" class="col-md-4 control-label">Nilai Tanggung Jawab</label>
+                          <div class="col-sm-4">
+                            <input class="form-control" id="NKSAMA" placeholder="NIP" value="<?php echo $rp['NKSAMA']?>" disabled>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="NPKARSA" class="col-md-4 control-label">Nilai Tanggung Jawab</label>
+                          <div class="col-sm-4">
+                            <input class="form-control" id="NPKARSA" placeholder="NIP" value="<?php echo $rp['NPKARSA']?>" disabled>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="NPIMPIN" class="col-md-4 control-label">Nilai Tanggung Jawab</label>
+                          <div class="col-sm-4">
+                            <input class="form-control" id="NPIMPIN" placeholder="NIP" value="<?php echo $rp['NPIMPIN']?>" disabled>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="NTOTAL" class="col-md-4 control-label">Nilai Tanggung Jawab</label>
+                          <div class="col-sm-4">
+                            <input class="form-control" id="NTOTAL" placeholder="NIP" value="<?php echo $rp['NTOTAL']?>" disabled>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="NRATA" class="col-md-4 control-label">Nilai Tanggung Jawab</label>
+                          <div class="col-sm-4">
+                            <input class="form-control" id="NRATA" placeholder="NIP" value="<?php echo $rp['NRATA']?>" disabled>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                      <?php
+                      $counter++;
+                      }
+                      ?>
+                    </div>
+                  </form>
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /.tab-pane -->
+      <div class="tab-pane" id="penilaianKerja">
+        <div class="box-body">
+          <div class="row">
+            <div class="col-md-12">
+                              <p class="text-center">
+                                <strong>Penilaian Kerja</strong>
+                              </p>
+
+              <form class="form-horizontal" id="formRiwayatPangket">
+                    <div class="box-body scroll">
+                      <?php
+                      $counter = 1;
+                      foreach($riwayatPenilaianKerjaPensiun as $rp)
+                      {
+                      ?>
+                    <div class="row row-bordered">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label for="NIP" class="col-md-4 control-label">NIP</label>
+                          <div class="col-sm-4">
+                            <input class="form-control" id="NIP" placeholder="NIP" value="<?php echo $rp['NIP']?>" disabled>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="NSKP" class="col-md-4 control-label">Nilai SKP</label>
+                          <div class="col-sm-4">
+                            <input class="form-control" id="NSKP" placeholder="NIP" value="<?php echo $rp['NSKP']?>" disabled>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="NPelayanan" class="col-md-4 control-label">Nilai Pelayanan</label>
+                          <div class="col-sm-4">
+                            <input class="form-control" id="NPelayanan" placeholder="NIP" value="<?php echo $rp['NPelayanan']?>" disabled>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="NItegritas" class="col-md-4 control-label">Nilai Integritas</label>
+                          <div class="col-sm-4">
+                            <input class="form-control" id="NItegritas" placeholder="NIP" value="<?php echo $rp['NItegritas']?>" disabled>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="NKomitmen" class="col-md-4 control-label">Nilai Komitmen</label>
+                          <div class="col-sm-4">
+                            <input class="form-control" id="NKomitmen" placeholder="NIP" value="<?php echo $rp['NKomitmen']?>" disabled>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="NDisiplin" class="col-md-4 control-label">Nilai Disiplin</label>
+                          <div class="col-sm-4">
+                            <input class="form-control" id="NDisiplin" placeholder="NIP" value="<?php echo $rp['NDisiplin']?>" disabled>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="NKerjasama" class="col-md-4 control-label">Nilai Kerjasama</label>
+                          <div class="col-sm-4">
+                            <input class="form-control" id="NKerjasama" placeholder="NIP" value="<?php echo $rp['NKerjasama']?>" disabled>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="NKepemimpinan" class="col-md-4 control-label">Nilai Kepemimpinan</label>
+                          <div class="col-sm-4">
+                            <input class="form-control" id="NKepemimpinan" placeholder="NIP" value="<?php echo $rp['NKepemimpinan']?>" disabled>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="NJumlah" class="col-md-4 control-label">Total Prilaku Kerja</label>
+                          <div class="col-sm-4">
+                            <input class="form-control" id="NJumlah" placeholder="NIP" value="<?php echo $rp['NJumlah']?>" disabled>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="NRataRata" class="col-md-4 control-label">Nilai Rata-Rata Prilaku Kerja</label>
+                          <div class="col-sm-4">
+                            <input class="form-control" id="NRataRata" placeholder="NIP" value="<?php echo $rp['NRataRata']?>" disabled>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="NPrilaku" class="col-md-4 control-label">Nilai Akhir Perilaku Kerja</label>
+                          <div class="col-sm-4">
+                            <input class="form-control" id="NPrilaku" placeholder="NIP" value="<?php echo $rp['NPrilaku']?>" disabled>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="TotalPrestasi" class="col-md-4 control-label">Total Akhir Prestasi Kerja</label>
+                          <div class="col-sm-4">
+                            <input class="form-control" id="TotalPrestasi" placeholder="NIP" value="<?php echo $rp['TotalPrestasi']?>" disabled>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                      <?php
+                      $counter++;
+                      }
+                      ?>
+                    </div>
+                  </form>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-pane" id="hukuman">
+        <div class="box-body">
+          <div class="row">
+            <div class="col-md-12">
+                              <p class="text-center">
+                                <strong>Riwayat Jasa</strong>
+                              </p>
+
+              <form class="form-horizontal" id="formRiwayatPangket">
+                    <div class="box-body scroll">
+                      <?php
+                      $counter = 1;
+                      foreach($riwayatHukumanPensiun as $rp)
+                      {
+                      ?>
+                    <div class="row row-bordered">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label for="nipBaru" class="col-md-4 control-label">NIP</label>
+                          <div class="col-sm-4">
+                            <input class="form-control" id="nipBaru" placeholder="NIP" value="<?php echo $rp['nipBaru']?>" disabled>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="jenisHukuman" class="col-md-4 control-label">Jenis Hukuman</label>
+                          <div class="col-sm-4">
+                            <input class="form-control" id="jenisHukuman" placeholder="NIP" value="<?php echo $rp['jenisHukuman']?>" disabled>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="DESHUKUM" class="col-md-4 control-label">Deskripsi Hukuman</label>
+                          <div class="col-sm-4">
+                            <input class="form-control" id="DESHUKUM" placeholder="NIP" value="<?php echo $rp['DESHUKUM']?>" disabled>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="skNomor" class="col-md-4 control-label">No. SK</label>
+                          <div class="col-sm-4">
+                            <input class="form-control" id="skNomor" placeholder="No. SK" value="<?php echo $rp['skNomor']?>" disabled>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="skTanggal<?php echo $counter;?>" class="col-md-4 control-label">Tanggal SK</label>
+                          <div class="col-md-4">
+                            <div class="input-group date">
+                                <div class="input-group-addon">
+                                  <i class="fa fa-calendar"></i>
+                                </div>
+                                <input type="text" class="form-control pull-right" id="skTanggal<?php echo $counter;?>" value="<?php echo $rp['skTanggal']?>" disabled>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="npej" class="col-md-4 control-label">Pejabat yang Menetapkan</label>
+                          <div class="col-sm-4">
+                            <input class="form-control" id="npej" placeholder="NIP" value="<?php echo $rp['npej']?>" disabled>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="hukumanTanggal<?php echo $counter;?>" class="col-md-4 control-label">TMT Hukuman</label>
+                          <div class="col-md-4">
+                            <div class="input-group date">
+                                <div class="input-group-addon">
+                                  <i class="fa fa-calendar"></i>
+                                </div>
+                                <input type="text" class="form-control pull-right" id="hukumanTanggal<?php echo $counter;?>" value="<?php echo $rp['hukumanTanggal']?>" disabled>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                      <?php
+                      $counter++;
+                      }
+                      ?>
+                    </div>
+                  </form>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <!-- /.tab-pane -->
+      <div class="tab-pane" id="Cuti">
+        <div class="box-body">
+          <div class="row">
+            <div class="col-md-12">
+                              <p class="text-center">
+                                <strong>Riwayat Cuti</strong>
+                              </p>
+
+              <form class="form-horizontal" id="formRiwayatPangket">
+                    <div class="box-body scroll">
+                      <?php
+                      $counter = 1;
+                      foreach($riwayatCutiPensiun as $rp)
+                      {
+                      ?>
+                    <div class="row row-bordered">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label for="nip" class="col-md-4 control-label">NIP</label>
+                          <div class="col-sm-4">
+                            <input class="form-control" id="nip" placeholder="NIP" value="<?php echo $rp['nip']?>" disabled>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="JCUTI" class="col-md-4 control-label">Jenis Cuti</label>
+                          <div class="col-sm-4">
+                            <input class="form-control" id="JCUTI" placeholder="NIP" value="<?php echo $rp['JCUTI']?>" disabled>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="NSK" class="col-md-4 control-label">No. SK</label>
+                          <div class="col-sm-4">
+                            <input class="form-control" id="NSK" placeholder="No. SK" value="<?php echo $rp['NSK']?>" disabled>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="TSK<?php echo $counter;?>" class="col-md-4 control-label">Tanggal SK</label>
+                          <div class="col-md-4">
+                            <div class="input-group date">
+                                <div class="input-group-addon">
+                                  <i class="fa fa-calendar"></i>
+                                </div>
+                                <input type="text" class="form-control pull-right" id="TSK<?php echo $counter;?>" value="<?php echo $rp['TSK']?>" disabled>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="TMULAI<?php echo $counter;?>" class="col-md-4 control-label">Tanggal Mulai</label>
+                          <div class="col-md-4">
+                            <div class="input-group date">
+                                <div class="input-group-addon">
+                                  <i class="fa fa-calendar"></i>
+                                </div>
+                                <input type="text" class="form-control pull-right" id="TMULAI<?php echo $counter;?>" value="<?php echo $rp['TMULAI']?>" disabled>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="TAKHIR<?php echo $counter;?>" class="col-md-4 control-label">Tanggal Akhir</label>
+                          <div class="col-md-4">
+                            <div class="input-group date">
+                                <div class="input-group-addon">
+                                  <i class="fa fa-calendar"></i>
+                                </div>
+                                <input type="text" class="form-control pull-right" id="TAKHIR<?php echo $counter;?>" value="<?php echo $rp['TAKHIR']?>" disabled>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="npej" class="col-md-4 control-label">Pejabat yang Menetapkan</label>
+                          <div class="col-sm-4">
+                            <input class="form-control" id="npej" placeholder="NIP" value="<?php echo $rp['npej']?>" disabled>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                      <?php
+                      $counter++;
+                      }
+                      ?>
+                    </div>
+                  </form>
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /.tab-pane -->
+      <div class="tab-pane" id="tln">
+        <div class="box-body">
+          <div class="row">
+            <div class="col-md-12">
+                              <p class="text-center">
+                                <strong>Tugas Luar Negri</strong>
+                              </p>
+
+              <form class="form-horizontal" id="formRiwayatPangket">
+                    <div class="box-body scroll">
+                      <?php
+                      $counter = 1;
+                      foreach($riwayatTLNPensiun as $rp)
+                      {
+                      ?>
+                    <div class="row row-bordered">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label for="NIP" class="col-md-4 control-label">NIP</label>
+                          <div class="col-sm-4">
+                            <input class="form-control" id="NIP" placeholder="NIP" value="<?php echo $rp['NIP']?>" disabled>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="NNEG" class="col-md-4 control-label">Nama Negara</label>
+                          <div class="col-sm-4">
+                            <input class="form-control" id="NNEG" placeholder="NNEG" value="<?php echo $rp['NNEG']?>" disabled>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="TUJUAN" class="col-md-4 control-label">Tujuan Penugasan</label>
+                          <div class="col-sm-4">
+                            <input class="form-control" id="TUJUAN" placeholder="No. SK" value="<?php echo $rp['TUJUAN']?>" disabled>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="PTETAP" class="col-md-4 control-label">Pejabat Penetap</label>
+                          <div class="col-sm-4">
+                            <input class="form-control" id="PTETAP" placeholder="No. SK" value="<?php echo $rp['PTETAP']?>" disabled>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="NSK" class="col-md-4 control-label">No SK</label>
+                          <div class="col-sm-4">
+                            <input class="form-control" id="NSK" placeholder="No. SK" value="<?php echo $rp['NSK']?>" disabled>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="TSK<?php echo $counter;?>" class="col-md-4 control-label">Tanggal SK</label>
+                          <div class="col-md-4">
+                            <div class="input-group date">
+                                <div class="input-group-addon">
+                                  <i class="fa fa-calendar"></i>
+                                </div>
+                                <input type="text" class="form-control pull-right" id="TSK<?php echo $counter;?>" value="<?php echo $rp['TSK']?>" disabled>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="TMULAI<?php echo $counter;?>" class="col-md-4 control-label">Tanggal Mulai</label>
+                          <div class="col-md-4">
+                            <div class="input-group date">
+                                <div class="input-group-addon">
+                                  <i class="fa fa-calendar"></i>
+                                </div>
+                                <input type="text" class="form-control pull-right" id="TMULAI<?php echo $counter;?>" value="<?php echo $rp['TMULAI']?>" disabled>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="TAKHIR<?php echo $counter;?>" class="col-md-4 control-label">Tanggal Akhir</label>
+                          <div class="col-md-4">
+                            <div class="input-group date">
+                                <div class="input-group-addon">
+                                  <i class="fa fa-calendar"></i>
+                                </div>
+                                <input type="text" class="form-control pull-right" id="TAKHIR<?php echo $counter;?>" value="<?php echo $rp['TAKHIR']?>" disabled>
+                            </div>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                      <?php
+                      $counter++;
+                      }
+                      ?>
+                    </div>
+                  </form>
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /.tab-pane -->
+      <div class="tab-pane" id="bahasa2">
+        <div class="box-body">
+          <div class="row">
+            <div class="col-md-12">
+                              <p class="text-center">
+                                <strong>Tugas Luar Negri</strong>
+                              </p>
+
+              <form class="form-horizontal" id="formRiwayatPangket">
+                    <div class="box-body scroll">
+                      <?php
+                      $counter = 1;
+                      foreach($riwayatBahasaPensiun as $rp)
+                      {
+                      ?>
+                    <div class="row row-bordered">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label for="NIP" class="col-md-4 control-label">NIP</label>
+                          <div class="col-sm-4">
+                            <input class="form-control" id="NIP" placeholder="NIP" value="<?php echo $rp['NIP']?>" disabled>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="NBAHASA" class="col-md-4 control-label">Nama Bahasa</label>
+                          <div class="col-sm-4">
+                            <input class="form-control" id="NNEG" placeholder="NBAHASA" value="<?php echo $rp['NBAHASA']?>" disabled>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="KBAHASA" class="col-md-4 control-label">Kemampuan Bahasa</label>
+                          <div class="col-sm-4">
+                            <input class="form-control" id="KBAHASA" placeholder="No. SK" value="<?php echo $rp['KBAHASA']?>" disabled>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="JBAHASA" class="col-md-4 control-label">Jenis Bahasa</label>
+                          <div class="col-sm-4">
+                            <input class="form-control" id="JBAHASA" placeholder="No. SK" value="<?php echo $rp['JBAHASA']?>" disabled>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                      <?php
+                      $counter++;
+                      }
+                      ?>
+                    </div>
+                  </form>
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /.tab-pane -->
     </div>
+    <!-- /.tab-content -->
   </div>
+</div>
