@@ -11,3 +11,7 @@ foreach($css_files as $file): ?>
 	<?php echo $output; ?>
 
 </div>
+
+<style>.gc-container {
+   overflow: auto;
+}</style>

@@ -51,8 +51,8 @@
 	/* Added in version 1.2.1 */
 	$lang['set_relation_title']		= 'Select {field_display_as}';
 	$lang['list_record']			= 'Record';
-	$lang['form_inactive']			= 'Active';
-	$lang['form_active']			= 'Inactive';
+	$lang['form_inactive']			= 'Inactive';
+	$lang['form_active']			= 'Active';
 
 	/* Added in version 1.2.2 */
 	$lang['form_save_and_go_back']	= 'Save and go back to list';
@@ -77,7 +77,7 @@
 	$lang['list_export'] 	= "Export";
 	$lang['list_print'] 	= "Print";
 	$lang['minimize_maximize'] = 'Minimize/Maximize';
-	
+
 	/* Added in version 1.4 */
 	$lang['list_view'] = 'View';
 
@@ -95,4 +95,3 @@
 	/* Added in version 1.5.8 */
 	$lang['alert_delete_multiple'] = 'Are you sure that you want to delete those {items_amount} items?';
 	$lang['alert_delete_multiple_one'] = 'Are you sure that you want to delete this 1 item?';
-

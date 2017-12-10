@@ -32,7 +32,7 @@ class Dashboard extends Auth_Controller
 		$this->data['users_instansi']=$this->Users_model->getUsersinstansi($userId );
 
 		$groupid = $this->data['user_group'][0]->id;
-$this->data['menu']=$this->Menu_model->menuMaster($groupid);
+		$this->data['menu']=$this->Menu_model->menuMaster($groupid);
 
 		log_message('INFO','User Id : '.$userId);
 
@@ -811,6 +811,53 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 		$this->load->view('dashboard/grid',$output);
 
 	}
+
+	public function opbkdModifRiwayatDiklat()
+	{
+		log_message('debug','Trying to load Grocer opbkdModifRiwayatDiklat');
+		$adminSts = $this->ion_auth->is_admin()===FALSE;
+		$this->db = $this->load->database('simpegRef',true);
+		log_message('debug','after Load new Db');
+		$crud = new grocery_CRUD();
+		$crud->set_table('riwayatdiklat')
+		->set_subject('Riwayat Diklat')
+		->columns('NIP','NIP','kodeJenisDiklat','namaDiklat','kFungStrTek','TEMPAT','PAN','ANGKATAN','TMULAI','TAKHIR','JAM','NSTTPP','TSTTPP','ISAKHIR');
+		//$crud->set_relation('NIP','datautama','nipBaru')
+		$crud->set_relation('kodeJenisDiklat','jenisdiklat','nama');
+		$crud->set_relation('kFungStrTek','dikstr','NDIKSTR');
+		$crud->callback_edit_field('NIP',array($this,'editFieldNim'));
+		$crud->change_field_type('ISAKHIR', 'true_false');
+
+		$crud->fields('NIP','kodeJenisDiklat','namaDiklat','kFungStrTek','TEMPAT','PAN','ANGKATAN','TMULAI','TAKHIR','JAM','NSTPP','TSTPP','ISAKHIR');
+		$output = $crud->render();
+		$this->load->view('dashboard/grid',$output);
+	}
+	function editFieldNim($value,$primaryKey){
+			return '<input type="text" maxlength="50" value="'.$value.'" name="NIP" style="width:462px" disabled>';
+		}
+	public function editRiwayatDiklatPNS()
+	{
+		log_message('debug','Inside Page Dashboard editRiwayatDiklatPNS');
+		$userId = $this->ion_auth->get_user_id();
+		$this->data['user']=$this->ion_auth->user()->row();
+		log_message('INFO','is admin? :'.$this->ion_auth->is_admin());
+		$this->data['user_group']= $this->ion_auth->get_users_groups($userId)->result();
+		log_message('debug','User Group : '.print_r($this->data['user_group'],TRUE));
+
+		$this->data['users_instansi']=$this->Users_model->getUsersinstansi($userId );
+
+		$groupid = $this->data['user_group'][0]->id;
+		$this->data['menu']=$this->Menu_model->menuMaster($groupid);
+
+		log_message('INFO','User Id : '.$userId);
+
+
+		log_message('DEBUG','inside Admin');
+		$this->render('dashboard/edit_riwayat_diklat_view');
+
+
+	}
+
 
 	public function referensiUnitKerja()
 	{
