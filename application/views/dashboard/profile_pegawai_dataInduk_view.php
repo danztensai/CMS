@@ -1,5 +1,19 @@
 <script>  //Date picker
 $( document ).ready(function() {
+  var $loading = $('.modal').hide();
+          $(document)
+            .ajaxStart(function () {
+              $loading.show();
+            })
+            .ajaxStop(function () {
+              $loading.hide();
+            });
+var stsUpdate = <?php echo $identitas['stsUpdate'] ?>;
+
+if(stsUpdate==0)
+{
+  $('#warningUpdate').hide();
+}
 
 $('.select2').select2();
 $('.selectAgama').select2();
@@ -28,9 +42,6 @@ $(':checkbox').each(function(){
     format: 'yyyy-mm-dd'
   });
 $('#submitIdentitas').click(function(){
-<<<<<<< HEAD
-
-=======
   if (confirm('Anda Yakin Akan Merubah Data Identitas')) {
 
     var f = $("#formIdentitas").serialize()
@@ -64,7 +75,7 @@ $('#submitIdentitas').click(function(){
                             console.log(response);
 
                             alert('Perubahan Berhasil, Menunggu Untuk Dikonfirmasi');
-
+                             location.reload();
                           },
                           error: function (response) {
                             console.log(response);
@@ -76,45 +87,11 @@ $('#submitIdentitas').click(function(){
   } else {
       // Do nothing!
   }
->>>>>>> parent of cd832e2... Fix BUg data confirmation not updated datautama table
   // $.each($('input,select,textarea,checkbox', '#formIdentitas'),function(k){
   //       //  console.log(k+' '+$(this).attr('disabled'));
   //       console.log(k+' '+$(this).attr('id'));
   //     });
-  var f = $("#formIdentitas").serialize()
-  console.log(f);
-  var myFile = $('#file').prop('files')[0];
-  console.log(myFile);
-  var file_data = $('#fotofile').prop('files');
-  console.log(file_data);
-  var form_data = new FormData();
 
-  var other_data =$('#formIdentitas').serializeArray() ;
-  var jsonData = JSON.stringify($('#formIdentitas').serializeArray(), null, "  ");
-
-    $.each(other_data,function(key,input){
-        form_data.append(input.name,input.value);
-    });
-
-  form_data.append('file', myFile);
-  form_data.append('json',jsonData);
-  console.log(form_data);
-
-  $.ajax({
-                        url: '<?php echo base_url()?>dashboard/upload_foto', // point to server-side controller method
-                        dataType: 'text', // what to expect back from the server
-                        cache: false,
-                        contentType: false,
-                        processData: false,
-                        data: form_data,
-                        type: 'post',
-                        success: function (response) {
-                          console.log(response);
-                        },
-                        error: function (response) {
-                          console.log(response);
-                        }
-                    });
 
 
 });
@@ -123,26 +100,65 @@ $('#editIdentitas').click(function (){
 //console.log('Click Edit');
 
 $.each($('input,select,textarea', '#formIdentitas'),function(k){
-      //  console.log(k+' '+$(this).attr('disabled'));
+
+      //console.log(k+' '+$(this).attr('disabled'));
+      console.log($(this).attr('name'));
+      var fieldName = $(this).attr('name');
+      if(fieldName=='askesNomor'||fieldName=='agamaId'||fieldName=='alamat'||fieldName=='jenisKawin'||fieldName=='KGOLDAR'||fieldName=='ALRT'||fieldName=='ALRW'||fieldName=='statusCpnsPns'||fieldName=='npwpNomor'||fieldName=='noTelpon'||fieldName=='KPOS')
+      {
         var isDisabled = $(this).is(':disabled');
         if (isDisabled) {
             $(this).prop('disabled', false);
         }
+
+        var isDisabledFile = $('#file').is(':disabled');
+        if (isDisabledFile) {
+            $('#file').prop('disabled', false);
+        }
+
+        var isDisableButtonSubmit=$('#submitIdentitas').is(':disabled');
+        if (isDisabledFile) {
+            $('#submitIdentitas').prop('disabled', false);
+        }
+        var cancelIdentitas=$('#cancelIdentitas').is(':disabled');
+        if (cancelIdentitas) {
+            $('#cancelIdentitas').prop('disabled', false);
+        }
+      }
+
     });
+
 
 });
 
 
 $('#cancelIdentitas').click(function (){
+  if (confirm('Anda Yakin Tidak Jadi Merubah Data Identitas')) {
+    $.each($('input,select,textarea', '#formIdentitas'),function(k){
+        //  console.log(k+' '+$(this).attr('disabled'));
+          var isDisabled = $(this).is(':disabled');
+          if (!isDisabled) {
+              $(this).prop('disabled', true);
+          }
+          var isDisabledFile = $('#file').is(':disabled');
+          if (!isDisabledFile) {
+              $('#file').prop('disabled', true);
+          }
+          var isDisableButtonSubmit=$('#submitIdentitas').is(':disabled');
+          if (!isDisabledFile) {
+              $('#submitIdentitas').prop('disabled', true);
+          }
+          var cancelIdentitas=$('#cancelIdentitas').is(':disabled');
+          if (!cancelIdentitas) {
+              $('#cancelIdentitas').prop('disabled', true);
+          }
 
+      });
+    // Save it!
+  } else {
+      // Do nothing!
+  }
 
-$.each($('input,select,textarea', '#formIdentitas'),function(k){
-      //  console.log(k+' '+$(this).attr('disabled'));
-        var isDisabled = $(this).is(':disabled');
-        if (!isDisabled) {
-            $(this).prop('disabled', true);
-        }
-    });
 
 });
 
@@ -243,6 +259,7 @@ $.each($('input,select,textarea', '#formGaji'),function(k){
 
 });
     </script>
+<div class="modal"></div>
 <div class="tab-pane active" id="dataInduk">
 
                                   <ul class="nav nav-tabs">
@@ -256,14 +273,18 @@ $.each($('input,select,textarea', '#formGaji'),function(k){
                                   </ul>
                                   <!-- /.tab-pane -->
                                   <div class="tab-content">
-                                        <div class="tab-pane" id="Identitas">
+                                        <div class="tab-pane active" id="Identitas">
                                           <div class="box-body">
                                             <div class="row">
                                               <div class="col-md-8">
                                                                 <p class="text-center">
                                                                   <strong>Identitas</strong>
                                                                 </p>
+                                                      <div class="callout callout-warning" id="warningUpdate">
+                                                        <h4>Perhatian</h4>
 
+                                                        <p>Update Data Anda Masih di Verifikasi Oleh Operator OPD</p>
+                                                      </div>
                                                     <form class="form-horizontal" name="formIdentitas" id="formIdentitas" action="">
                                                       <div class="box-body">
                                                         <div class="col-md-4">
@@ -310,7 +331,7 @@ $.each($('input,select,textarea', '#formGaji'),function(k){
                                                           <label for="tempatLahir" class="col-md-4 control-label">Tempat Lahir</label>
 
                                                         <div class="col-md-8">
-                                                            <input class="form-control" id="KTLAHIR" placeholder="Tempat Lahir" value="<?php echo $identitas['KTLAHIR']?>" disabled >
+                                                            <input class="form-control" name="KTLAHIR" id="KTLAHIR" placeholder="Tempat Lahir" value="<?php echo $identitas['KTLAHIR']?>" disabled >
                                                           </div>
                                                         </div>
 
@@ -331,7 +352,7 @@ $.each($('input,select,textarea', '#formGaji'),function(k){
                                                           <label for="jeniKelamin" class="col-md-4 control-label">Jenis Kelamin</label>
 
                                                           <div class="col-md-8">
-                                                            <select id="jenisKelamin" disabled="disabled" value="<?php echo $identitas['KJKEL']?>" name="KJKEL" class="form-control select2" style="width: 100%;">
+                                                            <select id="jenisKelamin"  disabled="disabled" value="<?php echo $identitas['KJKEL']?>" name="KJKEL" class="form-control select2" style="width: 100%;">
 
 
                                                                   <option value="1">Pria</option>
@@ -396,10 +417,10 @@ $.each($('input,select,textarea', '#formGaji'),function(k){
                                                         <div class="form-group">
                                                           <label for="rtrw" class="col-md-4 control-label">RT/RW</label>
 
-                                                          <div class="col-md-2">
+                                                          <div class="col-md-4">
                                                             <input class="form-control" id="rt" placeholder="RT" name="ALRT" value="<?php echo $identitas['ALRT']?>" disabled>
                                                           </div>
-                                                          <div class="col-md-2">
+                                                          <div class="col-md-4">
                                                             <input class="form-control" id="rw" placeholder="RW" name="ALRW" value="<?php echo $identitas['ALRW']?>" disabled>
                                                           </div>
                                                         </div>
@@ -519,7 +540,7 @@ $.each($('input,select,textarea', '#formGaji'),function(k){
                                                                 <img class="img-responsive" src="<?php echo $identitas['FILE_BMP'];?>" alt="Foto" width="460" height="345">
                                                                 <div class="form-group">
                                                                   <label for="exampleInputFile">Upload Foto</label>
-                                                                  <input type="file" id="file" name="file" >
+                                                                  <input type="file" id="file" name="file" disabled >
 
                                                                   <p class="help-block">Upload Foto Anda Disini</p>
                                                                 </div>
@@ -528,27 +549,9 @@ $.each($('input,select,textarea', '#formGaji'),function(k){
                                             </div>
                                           </div>
                                           <div class="box-footer">
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                                            <button id="cancelIdentitas" type="submit" class="btn btn-danger">Cancel</button>
-                                            <button id="editIdentitas" class="btn btn-warning">Edit</button>
-                                            <button id="submitIdentitas" type="submit" class="btn btn-primary">Save</button>
-=======
                                             <button id="cancelIdentitas" type="submit" class="btn btn-danger" disabled>Cancel</button>
                                             <button id="editIdentitas" class="btn btn-warning">Edit</button>
                                             <button id="submitIdentitas" type="submit" class="btn btn-primary" disabled>Save</button>
->>>>>>> parent of cd832e2... Fix BUg data confirmation not updated datautama table
-=======
-                                            <button id="cancelIdentitas" type="submit" class="btn btn-danger" disabled>Cancel</button>
-                                            <button id="editIdentitas" class="btn btn-warning">Edit</button>
-                                            <button id="submitIdentitas" type="submit" class="btn btn-primary" disabled>Save</button>
->>>>>>> parent of cd832e2... Fix BUg data confirmation not updated datautama table
-=======
-                                            <button id="cancelIdentitas" type="submit" class="btn btn-danger" disabled>Cancel</button>
-                                            <button id="editIdentitas" class="btn btn-warning">Edit</button>
-                                            <button id="submitIdentitas" type="submit" class="btn btn-primary" disabled>Save</button>
->>>>>>> parent of cd832e2... Fix BUg data confirmation not updated datautama table
                                           </div>
                                         </div>
                                         <!-- /.tab-pane -->
@@ -681,9 +684,9 @@ $.each($('input,select,textarea', '#formGaji'),function(k){
 
                                                       <!-- /.box-body -->
                                                       <div class="box-footer">
-                                                        <button id="cancelCPNS" class="btn btn-danger">Cancel</button>
+                                                        <!-- <button id="cancelCPNS" class="btn btn-danger">Cancel</button>
                                                         <button id="editCPNS"  class="btn btn-warning">Edit</button>
-                                                        <button id="saveCPNS" type="submit" class="btn btn-info">Submit</button>
+                                                        <button id="saveCPNS" type="submit" class="btn btn-info">Submit</button> -->
                                                       </div>
                                                       <!-- /.box-footer -->
                                                     </form>
@@ -959,9 +962,9 @@ $.each($('input,select,textarea', '#formGaji'),function(k){
                                             </div>
                                           </div>
                                           <div class="box-footer">
-                                                      <button id="cancelPangkatTerakhir" class="btn btn-danger ">Cancel</button>
+                                                      <!-- <button id="cancelPangkatTerakhir" class="btn btn-danger ">Cancel</button>
                                                       <button id="editPangkatTerakhir" class="btn btn-warning">Edit</button>
-                                                      <button id="savePangkatTerakhir" class="btn btn-info">Save</button>
+                                                      <button id="savePangkatTerakhir" class="btn btn-info">Save</button> -->
                                          </div>
                                         </div>
                                         <div class="tab-pane" id="Gaji_berkala">
@@ -1045,9 +1048,9 @@ $.each($('input,select,textarea', '#formGaji'),function(k){
                                                 </div>
                                             </div>
                                             <div class="box-footer">
-                                              <button id="cancelGajiBerkala" class="btn btn-danger ">Cancel</button>
+                                              <!-- <button id="cancelGajiBerkala" class="btn btn-danger ">Cancel</button>
                                               <button id="editGajiBerkala" class="btn btn-warning">Edit</button>
-                                              <button id="saveGajiBerkala" class="btn btn-info">Save</button>
+                                              <button id="saveGajiBerkala" class="btn btn-info">Save</button> -->
 
                                             </div>
                                         </div>
@@ -1249,9 +1252,9 @@ $.each($('input,select,textarea', '#formGaji'),function(k){
                                                 </div>
                                             </div>
                                             <div class="box-footer">
-                                                        <button type="submit" class="btn btn-default">Cancel</button>
+                                                        <!-- <button type="submit" class="btn btn-default">Cancel</button>
                                                         <button type="submit" class="btn btn-default">Edit</button>
-                                                        <button type="submit" class="btn btn-info">Save</button>
+                                                        <button type="submit" class="btn btn-info">Save</button> -->
 
                                             </div>
                                         </div>
@@ -1409,9 +1412,10 @@ $.each($('input,select,textarea', '#formGaji'),function(k){
 
 
                                           <div class="box-footer">
-                                                      <button type="submit" class="btn btn-default ">Cancel</button>
+
+                                                      <!-- <button type="submit" class="btn btn-default ">Cancel</button>
                                                       <button type="submit" class="btn btn-default">Edit</button>
-                                                      <button type="submit" class="btn btn-info">Save</button>
+                                                      <button type="submit" class="btn btn-info">Save</button> -->
                                          </div>
 
 
@@ -1419,3 +1423,39 @@ $.each($('input,select,textarea', '#formGaji'),function(k){
                                         </div>
                                       </div>
                                 </div>
+
+<style type="text/css">
+   /* Start by setting display:none to make this hidden.
+   Then we position it in relation to the viewport window
+   with position:fixed. Width, height, top and left speak
+   speak for themselves. Background we set to 80% white with
+   our animation centered, and no-repeating */
+.modal {
+    display:    none;
+    position:   fixed;
+    z-index:    1000;
+    top:        0;
+    left:       0;
+    height:     100%;
+    width:      100%;
+    background: rgba( 255, 255, 255, .8 )
+                url('<?php echo base_url()?>assets/loading_cricle.gif')
+                50% 50%
+                no-repeat;
+}
+
+/* When the body has the loading class, we turn
+   the scrollbar off with overflow:hidden */
+body.loading {
+    overflow: hidden;
+}
+
+/* Anytime the body has the loading class, our
+   modal element will be visible */
+body.loading .modal {
+    display: block;
+}
+
+}
+
+</style>

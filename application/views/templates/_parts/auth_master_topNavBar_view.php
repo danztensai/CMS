@@ -34,7 +34,7 @@
                 <img src="<?php echo base_url()?>assets/uploads/files/<?php echo $user->profile_pic;?>" class="img-circle" alt="User Image">
 
                 <p>
-                  <?php echo $user->company;?> 
+                  <?php echo $user->company;?>
 
                 </p>
               </li>

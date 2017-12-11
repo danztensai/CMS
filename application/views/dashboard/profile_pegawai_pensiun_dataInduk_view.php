@@ -144,7 +144,7 @@ $( document ).ready(function() {
           <div class="col-md-8">
             <p class="text-center">
               <strong>Identitas
-                <php?>
+<php?>
               </strong>
             </p>
             <form class="form-horizontal" id="formIdentitas">

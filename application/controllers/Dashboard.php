@@ -32,7 +32,7 @@ class Dashboard extends Auth_Controller
 		$this->data['users_instansi']=$this->Users_model->getUsersinstansi($userId );
 
 		$groupid = $this->data['user_group'][0]->id;
-		$this->data['menu']=$this->Menu_model->menuMaster($groupid);
+$this->data['menu']=$this->Menu_model->menuMaster($groupid);
 
 		log_message('INFO','User Id : '.$userId);
 
@@ -162,22 +162,7 @@ class Dashboard extends Auth_Controller
 		$riwayatPensiunKeluargaSuamiIstri = $this->Simpeg_model->getRiwayatPensiunKeluargaSuamiIstri($userLoggedin->nip);
 		$riwayatPensiunKeluargaAnak = $this->Simpeg_model->getRiwayatPensiunKeluargaAnak($userLoggedin->nip);
 		$riwayatJabatanPensiun = $this->Simpeg_model->getRiwayatJabatanPensiun($userLoggedin->nip);
-		$riwayatJasaPensiun = $this->Simpeg_model->getRiwayatJasaPensiun($userLoggedin->nip);
-		$riwayatDPPPPensiun = $this->Simpeg_model->getRiwayatDPPPPensiun($userLoggedin->nip);
-		$riwayatHukumanPensiun = $this->Simpeg_model->getRiwayatHukumanPensiun($userLoggedin->nip);
-		$riwayatCutiPensiun = $this->Simpeg_model->getRiwayatCutiPensiun($userLoggedin->nip);
-		$riwayatTLNPensiun = $this->Simpeg_model->getRiwayatTLNPensiun($userLoggedin->nip);
-		$riwayatPenilaianKerjaPensiun = $this->Simpeg_model->getRiwayatPenilaianKerjaPensiun($userLoggedin->nip);
-		$riwayatBahasaPensiun = $this->Simpeg_model->getRiwayatBahasaPensiun($userLoggedin->nip);
-		$riwayatOrganisasiPensiun = $this->Simpeg_model->getRiwayatOrganisasiPensiun($userLoggedin->nip);
-		$riwayatKesehatanPensiun = $this->Simpeg_model->getRiwayatKesehatanPensiun($userLoggedin->nip);
-		$riwayatPendidikanUmumPensiun = $this->Simpeg_model->getRiwayatPendidikanUmumPensiun($userLoggedin->nip);
-		$riwayatPendidikanFungsionalPensiun = $this->Simpeg_model->getRiwayatPendidikanFungsionalPensiun($userLoggedin->nip);
-		$riwayatPendidikanStrukturalPensiun = $this->Simpeg_model->getRiwayatPendidikanStrukturalPensiun($userLoggedin->nip);
-		$riwayatPendidikanTeknisPensiun = $this->Simpeg_model->getRiwayatPendidikanTeknisPensiun($userLoggedin->nip);
-		$riwayatPendidikanPenataranPensiun = $this->Simpeg_model->getRiwayatPendidikanPenataranPensiun($userLoggedin->nip);
-		$riwayatPendidikanSeminarPensiun = $this->Simpeg_model->getRiwayatPendidikanSeminarPensiun($userLoggedin->nip);
-		$riwayatPendidikanKursusPensiun = $this->Simpeg_model->getRiwayatPendidikanKursusPensiun($userLoggedin->nip);
+
 
 		$this->data['riwayatPensiunKeluargaIbu']=$riwayatPensiunKeluargaIbu;
 		$this->data['riwayatPensiunKeluargaAyah']=$riwayatPensiunKeluargaAyah;
@@ -186,22 +171,6 @@ class Dashboard extends Auth_Controller
 		$this->data['gajiBerkalaPegawaiPensiun']=$gajiBerkalaPegawaiPensiun;
 		$this->data['tempatPegawaiPensiun']=$tempatPegawaiPensiun;
 		$this->data['riwayatJabatanPensiun']=$riwayatJabatanPensiun;
-		$this->data['riwayatJasaPensiun']=$riwayatJasaPensiun;
-		$this->data['riwayatDPPPPensiun']=$riwayatDPPPPensiun;
-		$this->data['riwayatHukumanPensiun']=$riwayatHukumanPensiun;
-		$this->data['riwayatCutiPensiun']=$riwayatCutiPensiun;
-		$this->data['riwayatTLNPensiun']=$riwayatTLNPensiun;
-		$this->data['riwayatPenilaianKerjaPensiun']=$riwayatPenilaianKerjaPensiun;
-		$this->data['riwayatBahasaPensiun']=$riwayatBahasaPensiun;
-		$this->data['riwayatOrganisasiPensiun']=$riwayatOrganisasiPensiun;
-		$this->data['riwayatKesehatanPensiun']=$riwayatKesehatanPensiun;
-		$this->data['riwayatPendidikanUmumPensiun']=$riwayatPendidikanUmumPensiun;
-		$this->data['riwayatPendidikanFungsionalPensiun']=$riwayatPendidikanFungsionalPensiun;
-		$this->data['riwayatPendidikanStrukturalPensiun']=$riwayatPendidikanStrukturalPensiun;
-		$this->data['riwayatPendidikanTeknisPensiun']=$riwayatPendidikanTeknisPensiun;
-		$this->data['riwayatPendidikanPenataranPensiun']=$riwayatPendidikanPenataranPensiun;
-		$this->data['riwayatPendidikanSeminarPensiun']=$riwayatPendidikanSeminarPensiun;
-		$this->data['riwayatPendidikanKursusPensiun']=$riwayatPendidikanKursusPensiun;
 		$this->data['identitas']=$identitasSimpeg;
 		$this->data['riwayatPangkat']=$riwayatPangkat;
 
@@ -509,6 +478,31 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 		// }
 	}
 
+	public function updateStatusDataConfirmation()
+	{
+		$id=$this->input->post('id');
+		$sts=$this->input->post('sts');
+		$this->Simpeg_model->updateStatusDataConfirmation(array('stsConfirmation'=>1),$id);
+		$dataConfirmation = $this->Simpeg_model->getConfirmationDataByid($id);
+		$changedData = json_decode($dataConfirmation['changedData']);
+		$nData['ALRT'] = $changedData->ALRT;
+		$nData['ALRW'] = $changedData->ALRW;
+		$nData['KPOS'] = $changedData->KPOS;
+		$nData['alamat'] = $changedData->alamat;
+		$nData['KGOLDAR'] = $changedData->KGOLDAR;
+		$nData['agamaId'] = $changedData->agamaId;
+		$nData['nipBaru'] = $changedData->nipBaru;
+		$nData['nomorTelpon'] = $changedData->noTelpon;
+		$nData['npwpNomor'] = $changedData->npwpNomor;
+		$nData['askesNomor'] = $changedData->askesNomor;
+		$nData['jenisKawin'] = $changedData->jenisKawin;
+		//$nData['statusCpnsPns'] = $changedData->statusCpnsPns;
+		$nData['stsUpdate']=0;
+
+		$this->Simpeg_model->updateIdentitasStatusUpdate($nData,$changedData->nipBaru);
+
+		echo 'Berhasil';
+	}
 	public function profilePegawai()
 	{
 
@@ -588,6 +582,9 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 		$this->render('dashboard/profile_pegawai_view');
 
 	}
+
+
+
 	public function modalViewConfirmation()
 	{
 		$userId = $this->ion_auth->get_user_id();
@@ -783,53 +780,6 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 		$this->load->view('dashboard/grid',$output);
 
 	}
-
-	public function opbkdModifRiwayatDiklat()
-	{
-		log_message('debug','Trying to load Grocer opbkdModifRiwayatDiklat');
-		$adminSts = $this->ion_auth->is_admin()===FALSE;
-		$this->db = $this->load->database('simpegRef',true);
-		log_message('debug','after Load new Db');
-		$crud = new grocery_CRUD();
-		$crud->set_table('riwayatdiklat')
-		->set_subject('Riwayat Diklat')
-		->columns('NIP','NIP','kodeJenisDiklat','namaDiklat','kFungStrTek','TEMPAT','PAN','ANGKATAN','TMULAI','TAKHIR','JAM','NSTTPP','TSTTPP','ISAKHIR');
-		//$crud->set_relation('NIP','datautama','nipBaru')
-		$crud->set_relation('kodeJenisDiklat','jenisdiklat','nama');
-		$crud->set_relation('kFungStrTek','dikstr','NDIKSTR');
-		$crud->callback_edit_field('NIP',array($this,'editFieldNim'));
-		$crud->change_field_type('ISAKHIR', 'true_false');
-
-		$crud->fields('NIP','kodeJenisDiklat','namaDiklat','kFungStrTek','TEMPAT','PAN','ANGKATAN','TMULAI','TAKHIR','JAM','NSTPP','TSTPP','ISAKHIR');
-		$output = $crud->render();
-		$this->load->view('dashboard/grid',$output);
-	}
-	function editFieldNim($value,$primaryKey){
-			return '<input type="text" maxlength="50" value="'.$value.'" name="NIP" style="width:462px" disabled>';
-		}
-	public function editRiwayatDiklatPNS()
-	{
-		log_message('debug','Inside Page Dashboard editRiwayatDiklatPNS');
-		$userId = $this->ion_auth->get_user_id();
-		$this->data['user']=$this->ion_auth->user()->row();
-		log_message('INFO','is admin? :'.$this->ion_auth->is_admin());
-		$this->data['user_group']= $this->ion_auth->get_users_groups($userId)->result();
-		log_message('debug','User Group : '.print_r($this->data['user_group'],TRUE));
-
-		$this->data['users_instansi']=$this->Users_model->getUsersinstansi($userId );
-
-		$groupid = $this->data['user_group'][0]->id;
-		$this->data['menu']=$this->Menu_model->menuMaster($groupid);
-
-		log_message('INFO','User Id : '.$userId);
-
-
-		log_message('DEBUG','inside Admin');
-		$this->render('dashboard/edit_riwayat_diklat_view');
-
-
-	}
-
 
 	public function referensiUnitKerja()
 	{
@@ -1031,12 +981,12 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 		$crud = new grocery_CRUD();
 		$crud->set_table('kelompokusia')
 		->set_subject('Gaji Pokok Pegawai')
-		->columns('usia', 'grup')
+		->columns('kode', 'usia', 'grup')
 		->display_as('kode','kode')
 		->display_as('usia','usia')
 		->display_as('grup','grup');
-		$crud->fields('usia', 'grup');
-		$crud->required_fields('usia', 'grup');
+		$crud->fields('kode', 'usia', 'grup');
+		$crud->required_fields('kode', 'usia', 'grup');
 		$output = $crud->render();
 		$this->load->view('dashboard/grid',$output);
 	}
@@ -1090,9 +1040,8 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 		->display_as('KJUR','Kode')
 		->display_as('NJUR','Nama')
 		->display_as('TP','Tingkat');
-		$crud->fields('KJUR', 'NJUR');
-		$crud->set_relation('TP','tpu2','NJUR2');
-		$crud->required_fields('KJUR', 'NJUR');
+		$crud->fields('KJUR', 'NJUR', 'TP');
+		$crud->required_fields('KJUR', 'NJUR', 'TP');
 		$output = $crud->render();
 		$this->load->view('dashboard/grid',$output);
 	}
