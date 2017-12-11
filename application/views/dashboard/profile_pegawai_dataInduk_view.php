@@ -28,7 +28,55 @@ $(':checkbox').each(function(){
     format: 'yyyy-mm-dd'
   });
 $('#submitIdentitas').click(function(){
+<<<<<<< HEAD
 
+=======
+  if (confirm('Anda Yakin Akan Merubah Data Identitas')) {
+
+    var f = $("#formIdentitas").serialize()
+    console.log(f);
+    var myFile = $('#file').prop('files')[0];
+    console.log(myFile);
+    var file_data = $('#fotofile').prop('files');
+    console.log(file_data);
+    var form_data = new FormData();
+
+    var other_data =$('#formIdentitas').serializeArray() ;
+    var jsonData = JSON.stringify($('#formIdentitas').serializeArray(), null, "  ");
+
+      $.each(other_data,function(key,input){
+          form_data.append(input.name,input.value);
+      });
+
+    form_data.append('file', myFile);
+    form_data.append('json',jsonData);
+    console.log(form_data);
+
+    $.ajax({
+                          url: '<?php echo base_url()?>dashboard/editIdentitas', // point to server-side controller method
+                          dataType: 'text', // what to expect back from the server
+                          cache: false,
+                          contentType: false,
+                          processData: false,
+                          data: form_data,
+                          type: 'post',
+                          success: function (response) {
+                            console.log(response);
+
+                            alert('Perubahan Berhasil, Menunggu Untuk Dikonfirmasi');
+
+                          },
+                          error: function (response) {
+                            console.log(response);
+                            alert('Ada Masalah Di server');
+                          }
+                      });
+
+
+  } else {
+      // Do nothing!
+  }
+>>>>>>> parent of cd832e2... Fix BUg data confirmation not updated datautama table
   // $.each($('input,select,textarea,checkbox', '#formIdentitas'),function(k){
   //       //  console.log(k+' '+$(this).attr('disabled'));
   //       console.log(k+' '+$(this).attr('id'));
@@ -480,9 +528,15 @@ $.each($('input,select,textarea', '#formGaji'),function(k){
                                             </div>
                                           </div>
                                           <div class="box-footer">
+<<<<<<< HEAD
                                             <button id="cancelIdentitas" type="submit" class="btn btn-danger">Cancel</button>
                                             <button id="editIdentitas" class="btn btn-warning">Edit</button>
                                             <button id="submitIdentitas" type="submit" class="btn btn-primary">Save</button>
+=======
+                                            <button id="cancelIdentitas" type="submit" class="btn btn-danger" disabled>Cancel</button>
+                                            <button id="editIdentitas" class="btn btn-warning">Edit</button>
+                                            <button id="submitIdentitas" type="submit" class="btn btn-primary" disabled>Save</button>
+>>>>>>> parent of cd832e2... Fix BUg data confirmation not updated datautama table
                                           </div>
                                         </div>
                                         <!-- /.tab-pane -->

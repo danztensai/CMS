@@ -509,31 +509,6 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 		// }
 	}
 
-	public function updateStatusDataConfirmation()
-	{
-		$id=$this->input->post('id');
-		$sts=$this->input->post('sts');
-		$this->Simpeg_model->updateStatusDataConfirmation(array('stsConfirmation'=>1),$id);
-		$dataConfirmation = $this->Simpeg_model->getConfirmationDataByid($id);
-		$changedData = json_decode($dataConfirmation['changedData']);
-		$nData['ALRT'] = $changedData->ALRT;
-		$nData['ALRW'] = $changedData->ALRW;
-		$nData['KPOS'] = $changedData->KPOS;
-		$nData['alamat'] = $changedData->alamat;
-		$nData['KGOLDAR'] = $changedData->KGOLDAR;
-		$nData['agamaId'] = $changedData->agamaId;
-		$nData['nipBaru'] = $changedData->nipBaru;
-		$nData['nomorTelpon'] = $changedData->noTelpon;
-		$nData['npwpNomor'] = $changedData->npwpNomor;
-		$nData['askesNomor'] = $changedData->askesNomor;
-		$nData['jenisKawin'] = $changedData->jenisKawin;
-		//$nData['statusCpnsPns'] = $changedData->statusCpnsPns;
-		$nData['stsUpdate']=0;
-
-		$this->Simpeg_model->updateIdentitasStatusUpdate($nData,$changedData->nipBaru);
-
-		echo 'Berhasil';
-	}
 	public function profilePegawai()
 	{
 
@@ -613,9 +588,6 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 		$this->render('dashboard/profile_pegawai_view');
 
 	}
-
-
-
 	public function modalViewConfirmation()
 	{
 		$userId = $this->ion_auth->get_user_id();

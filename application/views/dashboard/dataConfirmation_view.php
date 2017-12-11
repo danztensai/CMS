@@ -5,8 +5,50 @@
 <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript">
    $(document).ready(function(){
+<<<<<<< HEAD
      $('#confirmation').DataTable();
 
+=======
+     $('#confirmation').on('click','.openBtn',function(){
+    /*$('.modal-body').load('content.html',function(){
+        $('#myModal').modal({show:true});
+    })*/
+      	var id = $(this).attr('id');
+        console.log("ini Loh Id nya :"+id);
+          $('.modal-body').load('modalViewConfirmation?id='+id,function(){
+              $('#myModal').modal({show:true});
+          });
+      });
+
+
+     $('#confirmation').DataTable( {
+        "processing": true,
+        "serverSide": true,
+        "ajax": "getJsonConfirmationData",
+        "columnDefs": [
+               {
+                   "targets": 5,
+                   "render": function(data, type, row, meta){
+                     console.log(data+" "+type+" "+row+" "+meta);
+                      return '<div class="btn-group btn-group-md"><button type="button" class="btn btn-danger tolak" id="'+data+'">Tolak</button>'+
+                      '<button type="button" class="btn btn-info openBtn" id="'+data+'">Periksa</button>'+
+                      '<button type="button" class="btn btn-success approve" id="'+data+'">Approve</button> </div>';
+                   }
+               },
+                 { "width": "30%", "targets": 4 },
+                 { "width": "10%", "targets": 3 }
+
+           ]    ,
+        "columns": [
+            { "data": "nip" },
+            { "data": "nama" },
+            { "data": "instansi" },
+            { "data": "subUnit" },
+            { "data": "NJAB" },
+            { "data": "action" }
+        ]
+    } );
+>>>>>>> parent of cd832e2... Fix BUg data confirmation not updated datautama table
    });
 
 </script>
