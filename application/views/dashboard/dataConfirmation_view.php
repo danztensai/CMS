@@ -7,9 +7,12 @@
    $(document).ready(function(){
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
      $('#confirmation').DataTable();
 
 =======
+=======
+>>>>>>> parent of cd832e2... Fix BUg data confirmation not updated datautama table
 =======
 >>>>>>> parent of cd832e2... Fix BUg data confirmation not updated datautama table
      $('#confirmation').on('click','.openBtn',function(){
@@ -52,6 +55,9 @@
         ]
     } );
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> parent of cd832e2... Fix BUg data confirmation not updated datautama table
+=======
 >>>>>>> parent of cd832e2... Fix BUg data confirmation not updated datautama table
 =======
 >>>>>>> parent of cd832e2... Fix BUg data confirmation not updated datautama table
