@@ -1080,6 +1080,7 @@ ORDER BY tanggalAkhirKursus DESC";
 		}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		public function updateStatusDataConfirmation($data,$id)
 		{
 			$DB2 =$this->load->database('simpegRef', TRUE);
@@ -1099,6 +1100,8 @@ ORDER BY tanggalAkhirKursus DESC";
 		INNER JOIN revReferenceSimpeg.statusPegawai s on s.kStatusPegawai = c.statusCpnsPns
 		INNER JOIN revReferenceSimpeg.agama a on a.kode = d.agamaId WHERE d.nipbaru = '$nip'";
 =======
+=======
+>>>>>>> parent of cd832e2... Fix BUg data confirmation not updated datautama table
 		public function getIdentitasPegawai($nip)
 		{
 			  $DB2 =$this->load->database('simpegRef', TRUE);
@@ -1362,8 +1365,12 @@ INNER JOIN revReferenceSimpeg.agama a on a.kode = d.agamaId WHERE d.nipbaru = '$
 	{
 		$DB2 =$this->load->database('simpegRef', TRUE);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		$querySQL = "SELECT NIP, NSTAHU, TSTAHU, TMTNGAJ, GPOKKHIR, KKANTOR, MSKERJA, FLAG
 		FROM revReferenceSimpeg.gkkhir WHERE NIP = '$nip'";
+=======
+		$querySQL = "SELECT *	FROM dataconfirmation where id=$id";
+>>>>>>> parent of cd832e2... Fix BUg data confirmation not updated datautama table
 =======
 		$querySQL = "SELECT *	FROM dataconfirmation where id=$id";
 >>>>>>> parent of cd832e2... Fix BUg data confirmation not updated datautama table
@@ -1372,7 +1379,11 @@ INNER JOIN revReferenceSimpeg.agama a on a.kode = d.agamaId WHERE d.nipbaru = '$
 		$stackData = array();
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		log_message('debug','getGajiBerkalaPegawai: '.$querySQL);
+=======
+		log_message('debug','getConfirmationByStatus	: '.$querySQL);
+>>>>>>> parent of cd832e2... Fix BUg data confirmation not updated datautama table
 =======
 		log_message('debug','getConfirmationByStatus	: '.$querySQL);
 >>>>>>> parent of cd832e2... Fix BUg data confirmation not updated datautama table

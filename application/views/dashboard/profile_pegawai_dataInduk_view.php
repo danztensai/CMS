@@ -529,9 +529,15 @@ $.each($('input,select,textarea', '#formGaji'),function(k){
                                           </div>
                                           <div class="box-footer">
 <<<<<<< HEAD
+<<<<<<< HEAD
                                             <button id="cancelIdentitas" type="submit" class="btn btn-danger">Cancel</button>
                                             <button id="editIdentitas" class="btn btn-warning">Edit</button>
                                             <button id="submitIdentitas" type="submit" class="btn btn-primary">Save</button>
+=======
+                                            <button id="cancelIdentitas" type="submit" class="btn btn-danger" disabled>Cancel</button>
+                                            <button id="editIdentitas" class="btn btn-warning">Edit</button>
+                                            <button id="submitIdentitas" type="submit" class="btn btn-primary" disabled>Save</button>
+>>>>>>> parent of cd832e2... Fix BUg data confirmation not updated datautama table
 =======
                                             <button id="cancelIdentitas" type="submit" class="btn btn-danger" disabled>Cancel</button>
                                             <button id="editIdentitas" class="btn btn-warning">Edit</button>
