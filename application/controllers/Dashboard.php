@@ -809,7 +809,6 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 		$crud->required_fields('KINSIND','NINSIND');
 		$output = $crud->render();
 		$this->load->view('dashboard/grid',$output);
-
 	}
 
 	public function opbkdModifRiwayatDiklat()
@@ -845,19 +844,129 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 		log_message('debug','User Group : '.print_r($this->data['user_group'],TRUE));
 
 		$this->data['users_instansi']=$this->Users_model->getUsersinstansi($userId );
+		$groupid = $this->data['user_group'][0]->id;
+		$this->data['menu']=$this->Menu_model->menuMaster($groupid);
+
+		log_message('INFO','User Id : '.$userId);
+		log_message('DEBUG','inside Admin');
+		$this->render('dashboard/edit_riwayat_diklat_view');
+	}
+
+	public function adminKesdis()
+	{
+		log_message('debug','Inside Page Dashboard editRiwayatDiklatPNS');
+		$userId = $this->ion_auth->get_user_id();
+		$this->data['user']=$this->ion_auth->user()->row();
+		log_message('INFO','is admin? :'.$this->ion_auth->is_admin());
+		$this->data['user_group']= $this->ion_auth->get_users_groups($userId)->result();
+		log_message('debug','User Group : '.print_r($this->data['user_group'],TRUE));
+
+		$this->data['users_instansi']=$this->Users_model->getUsersinstansi($userId );
 
 		$groupid = $this->data['user_group'][0]->id;
 		$this->data['menu']=$this->Menu_model->menuMaster($groupid);
 
 		log_message('INFO','User Id : '.$userId);
-
-
 		log_message('DEBUG','inside Admin');
-		$this->render('dashboard/edit_riwayat_diklat_view');
-
-
+		$this->render('dashboard/admin_kesdis_view');
 	}
 
+	public function adminKesdisPenghargaan()
+	{
+		log_message('debug','Trying to load Grocer adminKesdisPenghargaan');
+		$adminSts = $this->ion_auth->is_admin()===FALSE;
+		$this->db = $this->load->database('simpegRef',true);
+		log_message('debug','after Load new Db');
+		$crud = new grocery_CRUD();
+		$crud->set_table('penghargaan')
+		->set_subject('Penghargaan')
+		->columns('nip','skNomor','skDate','tahun','NBINTANG','AOLEH','TEMPAT')
+		->display_as('nip', 'Nip')
+		->display_as('skNomor', 'Nomor Sk')
+		->display_as('skDate', 'Tanggal SK')
+		->display_as('tahun', 'Tahun')
+		->display_as('NBINTANG', 'Nama Penghargaan')
+		->display_as('AOLEH', 'Asal Perolehan')
+		->display_as('TEMPAT', 'Tempat');
+
+		$crud->fields('nip','skNomor','skDate','tahun','NBINTANG','AOLEH','TEMPAT');
+		$crud->required_fields('nip','skNomor','skDate','tahun','NBINTANG','AOLEH','TEMPAT');
+		$output = $crud->render();
+		$this->load->view('dashboard/grid',$output);
+	}
+
+	public function adminKesdisCuti()
+	{
+		log_message('debug','Trying to load Grocer adminKesdisCuti');
+		$adminSts = $this->ion_auth->is_admin()===FALSE;
+		$this->db = $this->load->database('simpegRef',true);
+		log_message('debug','after Load new Db');
+		$crud = new grocery_CRUD();
+		$crud->set_table('riwayatcuti')
+		->set_subject('Cuti Pegawai')
+		->columns('NIP','JCUTI','NSK','TSK','TMULAI','TAKHIR','PTETAP')
+		->display_as('NIP', 'Nip')
+		->display_as('JCUTI', 'Jenis Cuti')
+		->display_as('NSK', 'Nomor SK')
+		->display_as('TSK', 'Tanggal Sk')
+		->display_as('TMULAI', 'Tanggal Mulai')
+		->display_as('TAKHIR', 'Tanggal Berakhir')
+		->display_as('PTETAP', 'Asal Perolehan');
+
+		$crud->fields('NIP','JCUTI','NSK','TSK','TMULAI','TAKHIR','PTETAP');
+		$crud->required_fields('NIP','JCUTI','NSK','TSK','TMULAI','TAKHIR','PTETAP');
+		$crud->set_relation('PTETAP','pejabatmenetapkan','npej');
+
+		$output = $crud->render();
+		$this->load->view('dashboard/grid',$output);
+	}
+
+	public function adminKesdisStatusPerkawinan()
+	{
+		log_message('debug','Trying to load Grocer adminKesdisStatusPerkawinan');
+		$adminSts = $this->ion_auth->is_admin()===FALSE;
+		$this->db = $this->load->database('simpegRef',true);
+		log_message('debug','after Load new Db');
+		$crud = new grocery_CRUD();
+		$crud->set_table('datautama')
+		->set_subject('Status Perkawinan')
+		->columns('nipBaru','nama','jenisKawin')
+		->display_as('nipBaru', 'Nip')
+		->display_as('jenisKawin', 'Status Perkawinan');
+
+		$crud->fields('nipBaru','nama','jenisKawin');
+		$crud->required_fields('nipBaru','nama','jenisKawin');
+		$crud->set_relation('jenisKawin','statusperkawinan','nama');
+
+		$output = $crud->render();
+		$this->load->view('dashboard/grid',$output);
+	}
+
+	public function adminKesdisHukuman()
+	{
+		log_message('debug','Trying to load Grocer adminKesdisStatusPerkawinan');
+		$adminSts = $this->ion_auth->is_admin()===FALSE;
+		$this->db = $this->load->database('simpegRef',true);
+		log_message('debug','after Load new Db');
+		$crud = new grocery_CRUD();
+		$crud->set_table('riwayathukuman')
+		->set_subject('Hukuman Pegawai')
+		->columns('NIP','JHUKUM','DESHUKUM', 'NSK', 'TSK','TMT', 'KPEJ')
+		->display_as('NIP', 'NIP')
+		->display_as('JHUKUM', 'Jenis Hukuman')
+		->display_as('DESHUKUM', 'Deskripsi Hukuman')
+		->display_as('NSK', 'No. SK')
+		->display_as('TSK', 'Tanggal SK')
+		->display_as('KPEJ', 'Pejabat yang Menetapkan')
+		->display_as('TMT', 'TMT Hukuman');
+
+		$crud->fields('NIP','JHUKUM','DESHUKUM', 'NSK', 'TSK','TMT', 'KPEJ');
+		$crud->required_fields('NIP','JHUKUM','DESHUKUM', 'NSK', 'TSK','TMT', 'KPEJ');
+		$crud->set_relation('KPEJ','pejabatmenetapkan','npej');
+
+		$output = $crud->render();
+		$this->load->view('dashboard/grid',$output);
+	}
 
 	public function referensiUnitKerja()
 	{
