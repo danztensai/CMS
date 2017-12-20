@@ -37,6 +37,7 @@
       <li><a href="#suamiIstri" data-toggle="tab">Suami/Istri</a></li>
       <li><a href="#anak" data-toggle="tab">Anak</a></li>
       <li><a href="#agamax" data-toggle="tab">Agama</a></li>
+      <li><a href="#agamax2" data-toggle="tab">Agama</a></li>
     </ul>
     <div class="tab-content">
       <div class="tab-pane" id="ayah">
@@ -362,6 +363,20 @@
             </div>
           </div>
         </div>
+        <div class="tab-pane" id="agamax2">
+          <div class="box-body">
+            <div class="row">
+              <div class="col-md-12">
+                <p class="text-center">
+                  <strong>Agama</strong>
+                </p>
+                      <!-- <IFRAME width="100%" SRC=<?php echo base_url('dashboard/referensiAgama');?>></IFRAME> -->
+                      <div class="intrinsic-container intrinsic-container-16x9">
+                      <IFRAME SRC=<?php echo base_url('dashboard/referensiAgama');?>></IFRAME>
+                      </div>
+              </div>
+            </div>
+          </div>
       </div>
     </div>
     <!-- /.tab-content -->
