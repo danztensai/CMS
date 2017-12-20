@@ -430,7 +430,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 
 		$user = $this->ion_auth->user()->row();
 		$instansi=$this->Users_model->getUsersinstansi($user->id);
-
+		$changedData = array();
 		$nipBaru = $user->nip;
 		//upload file
 		$config['upload_path'] = 'assets/foto/';
@@ -457,7 +457,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 		{
 			$data = array('upload_data' => $this->upload->data());
 			log_message('debug',print_r($data,TRUE));
-
+			$changedData['FILE_BMP']=$data['upload_data']['raw_name'].$data['upload_data']['file_ext'];
 			// $this->load->view('upload_success', $data);
 		}
 
@@ -470,7 +470,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 
 		$json = $this->input->post('json');
 		$jsonDecode = json_decode($json);
-		$changedData = array();
+
 
 		foreach($jsonDecode as $i)
 		{
@@ -479,7 +479,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 
 
 
-		$changedData['FILE_BMP']=$data['upload_data']['raw_name'].$data['upload_data']['file_ext'];
+
 		$changedData['nipBaru']=$nipBaru;
 		log_message('debug',print_r($changedData,TRUE));
 		$jsonchangeData = json_encode($changedData);
@@ -542,6 +542,10 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 		$nData['npwpNomor'] = $changedData->npwpNomor;
 		$nData['askesNomor'] = $changedData->askesNomor;
 		$nData['jenisKawin'] = $changedData->jenisKawin;
+		if (property_exists($changedData, 'FILE_BMP'))
+		{
+			$nData['FILE_BMP'] = $changedData->FILE_BMP;
+		}
 		//$nData['statusCpnsPns'] = $changedData->statusCpnsPns;
 		$nData['stsUpdate']=0;
 
@@ -621,7 +625,10 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 		$this->data['users_instansi']=$this->Users_model->getUsersinstansi($userId );
 
 		$groupid = $this->data['user_group'][0]->id;
-$this->data['menu']=$this->Menu_model->menuMaster($groupid);
+		$this->data['menu']=$this->Menu_model->menuMaster($groupid);
+
+
+		$this->db = $this->load->database('simpegRef',true);
 
 		//log_message('INFO','User Id : '.$userId);
 
@@ -655,6 +662,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 		$oData['askesNomor'] = $currentData->askesNomor;
 		$oData['jenisKawin'] = $currentData->jenisKawin;
 		$oData['statusCpnsPns'] = $currentData->statusCpnsPns;
+		$oData['FILE_BMP'] = $currentData->FILE_BMP;
 		$nData['ALRT'] = $changedData->ALRT;
 		$nData['ALRW'] = $changedData->ALRW;
 		$nData['KPOS'] = $changedData->KPOS;
@@ -667,6 +675,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 		$nData['askesNomor'] = $changedData->askesNomor;
 		$nData['jenisKawin'] = $changedData->jenisKawin;
 		$nData['statusCpnsPns'] = $changedData->statusCpnsPns;
+		$nData['FILE_BMP'] = base_url().'assets/foto/'.$changedData->FILE_BMP;
 		$data['oData']=$oData;
 		$data['nData']=$nData;
 
@@ -782,6 +791,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 			$this->load->view('dashboard/grid',$output);
 		}
 	}
+
 	public function dataKepegawaian()
 	{
 		$userId = $this->ion_auth->get_user_id();
@@ -1486,6 +1496,45 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 		$this->load->view('dashboard/grid',$output);
 	}
 
+
+	public function arsipDokumenPegawai()
+	{
+		log_message('debug','Trying to load Grocer Ref Agama');
+		$adminSts = $this->ion_auth->is_admin()===FALSE;
+		$userLoggedin = $this->ion_auth->user()->row();
+		$pathFolder = "assets/upload/files/".$userLoggedin->nip;
+		if (!is_dir($pathFolder)) {
+    		mkdir($pathFolder , 0777, TRUE);
+				}
+		$this->db = $this->load->database('simpegRef',true);
+		$nip = $userLoggedin->nip;
+		log_message('debug','Nip From Get'.$nip);
+		$crud = new grocery_CRUD();
+		$crud->where('nip',$nip);
+		$crud->set_theme('flexigrid');
+		$crud->set_table('archive_pns');
+		$crud->fields('nip','name','path','documentType');
+		$crud->columns('nip','name','path','documentType');
+		$crud->set_relation('documentType','document_type','name');
+		$crud->display_as('officeCode','Office City');
+		$crud->set_subject('Dokumen');
+		$crud->required_fields('name','path','documentType');
+
+		$crud->set_field_upload('path',$pathFolder);
+		$crud->callback_add_field('nip',function(){
+			$this->db = $this->load->database('default',true);
+			$userLoggedin = $this->ion_auth->user()->row();
+			$nip = $userLoggedin->nip;
+			$this->input->get('documentType');
+			$this->input->post('documentType');
+			$this->db = $this->load->database('simpegRef',true);
+			return '<input type="text" value="'.$nip.'" name="nip"> ';
+		});
+
+		$output = $crud->render();
+
+		$this->load->view('dashboard/grid',$output);
+	}
 	public function instansiManagement()
 	{
 		$crud = new grocery_CRUD();

@@ -30,6 +30,7 @@
                                   <li class=""><a href="#riwayatPegawai" data-toggle="tab" aria-expanded="false">Riwayat Pegawai</a></li>
                                   <li class=""><a href="#riwayatPendidikan" data-toggle="tab" aria-expanded="false">Riwayat Pendidikan</a></li>
                                   <li class=""><a href="#riwayatKeluarga" data-toggle="tab" aria-expanded="false">Riwayat Keluarga</a></li>
+                                  <li class=""><a href="#documentOnline" data-toggle="tab" aria-expanded="false">Arsip/Dokumen</a></li>
                                 </ul>
                                 <div class="tab-content">
                                 <?php
@@ -37,10 +38,12 @@
                                   $dataIndukRiwayatPegawai=$this->load->view('dashboard/profile_pegawai_riwayatPegawai_view','',TRUE);
                                   $dataIndukRiwayatPendidikan = $this->load->view('dashboard/profile_pegawai_riwayatPendidikan_view','',TRUE);
                                   $dataIndukRiwayatKeluarga = $this->load->view('dashboard/profile_pegawai_riwayatKeluarga_view','',TRUE);
+                                  $documentOnline = $this->load->view('dashboard/profile_pegawai_documentArchive_view','',TRUE);
                                   echo $dataIndukView;
                                   echo $dataIndukRiwayatPegawai;
                                   echo $dataIndukRiwayatPendidikan;
                                   echo $dataIndukRiwayatKeluarga;
+                                  echo $documentOnline;
 
                                 ?>
                               </div>
@@ -50,7 +53,7 @@
                   <!-- /.box-body -->
                 </div>
                 <!-- /.box -->
-                
+
       </div>
      </div>
     </div>

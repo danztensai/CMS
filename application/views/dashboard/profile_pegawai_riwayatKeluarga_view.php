@@ -260,6 +260,14 @@ overflow-y:scroll;
               <p class="text-center">
                 <strong>Anak</strong>
               </p>
+              <?php if($riwayatKeluargaAnak==null)
+              {
+                  log_message('debug','Empty Bro');
+              ?>
+              <h1>Belum Ada Data</h1>
+              <?php
+
+            }else{ ?>
               <form class="form-horizontal">
                 <div class="box-body scroll">
                   <div class="col-md-12">
@@ -319,6 +327,9 @@ overflow-y:scroll;
                   </div>
                 </div>
               </form>
+              <?php
+                }
+                ?>
             </div>
           </div>
         </div>
