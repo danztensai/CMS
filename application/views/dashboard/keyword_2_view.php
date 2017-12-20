@@ -1,5 +1,5 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');?>
-<?php 
+<?php
 foreach($output->css_files as $file): ?>
   <link type="text/css" rel="stylesheet" href="<?php echo $file; ?>" />
 <?php endforeach; ?>
@@ -34,18 +34,16 @@ foreach($output->css_files as $file): ?>
             <div class="box-body">
               <div class="row">
                 <div class="col-md-8">
-                 <?php 
+                 <?php
                   echo $output->output;
                  ?>
                 </div>
                 <!-- /.col -->
-
-
               </div>
               <!-- /.row -->
             </div>
             <!-- ./box-body -->
-         
+
           </div>
           <!-- /.box -->
         </div>
@@ -53,7 +51,7 @@ foreach($output->css_files as $file): ?>
       </div>
       <!-- /.row -->
 
-     
+
     </section>
     <!-- /.content -->
   </div>
