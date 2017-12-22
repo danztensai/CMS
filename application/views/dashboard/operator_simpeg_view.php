@@ -10,7 +10,7 @@
     <ol class="breadcrumb">
       <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
       <li>Dashboard</li>
-      <li class="active">Admin Simpeg</li>
+      <li class="active">Operator Simpeg</li>
     </ol>
   </section>
 
@@ -20,7 +20,7 @@
       <div class="col-md-12">
         <div class="box">
           <div class="box-header">
-            <h3 class="box-title">Admin Simpeg</h3>
+            <h3 class="box-title">Operator Simpeg</h3>
           </div>
           <!-- /.box-header -->
           <div class="box-body">
@@ -49,97 +49,97 @@
               <div class="tab-content">
                 <div class="tab-pane active" id="kepangkatan">
                   <div class="intrinsic-container intrinsic-container-16x9">
-                    <IFRAME SRC=<?php echo base_url('dashboard/adminSimpegKepangkatan');?>></IFRAME>
+                    <IFRAME SRC=<?php echo base_url('dashboard/operatorSimpegKepangkatan');?>></IFRAME>
                   </div>
                 </div>
                 <div class="tab-pane" id="jabatan">
                   <div class="intrinsic-container intrinsic-container-16x9">
-                    <IFRAME SRC=<?php echo base_url('dashboard/adminSimpegJabatan');?>></IFRAME>
+                    <IFRAME SRC=<?php echo base_url('dashboard/operatorSimpegJabatan');?>></IFRAME>
                   </div>
                 </div>
                 <div class="tab-pane" id="pendidikan">
                   <div class="intrinsic-container intrinsic-container-16x9">
-                    <IFRAME SRC=<?php echo base_url('dashboard/adminSimpegPendidikan');?>></IFRAME>
+                    <IFRAME SRC=<?php echo base_url('dashboard/operatorSimpegPendidikan');?>></IFRAME>
                   </div>
                 </div>
                 <div class="tab-pane" id="struktural">
                   <div class="intrinsic-container intrinsic-container-16x9">
-                    <IFRAME SRC=<?php echo base_url('dashboard/adminSimpegDiklatStruktural');?>></IFRAME>
+                    <IFRAME SRC=<?php echo base_url('dashboard/operatorSimpegDiklatStruktural');?>></IFRAME>
                   </div>
                 </div>
                 <div class="tab-pane" id="fungsional">
                   <div class="intrinsic-container intrinsic-container-16x9">
-                    <IFRAME SRC=<?php echo base_url('dashboard/adminSimpegDiklatFungsional');?>></IFRAME>
+                    <IFRAME SRC=<?php echo base_url('dashboard/operatorSimpegDiklatFungsional');?>></IFRAME>
                   </div>
                 </div>
                 <div class="tab-pane" id="teknik">
                   <div class="intrinsic-container intrinsic-container-16x9">
-                    <IFRAME SRC=<?php echo base_url('dashboard/adminSimpegDiklatTeknik');?>></IFRAME>
+                    <IFRAME SRC=<?php echo base_url('dashboard/operatorSimpegDiklatTeknik');?>></IFRAME>
                   </div>
                 </div>
                 <div class="tab-pane" id="penataran">
                   <div class="intrinsic-container intrinsic-container-16x9">
-                    <IFRAME SRC=<?php echo base_url('dashboard/adminSimpegPenataran');?>></IFRAME>
+                    <IFRAME SRC=<?php echo base_url('dashboard/operatorSimpegPenataran');?>></IFRAME>
                   </div>
                 </div>
                 <div class="tab-pane" id="seminar">
                   <div class="intrinsic-container intrinsic-container-16x9">
-                    <IFRAME SRC=<?php echo base_url('dashboard/adminSimpegSeminar');?>></IFRAME>
+                    <IFRAME SRC=<?php echo base_url('dashboard/operatorSimpegSeminar');?>></IFRAME>
                   </div>
                 </div>
                 <div class="tab-pane" id="kursus">
                   <div class="intrinsic-container intrinsic-container-16x9">
-                    <IFRAME SRC=<?php echo base_url('dashboard/adminSimpegKursus');?>></IFRAME>
+                    <IFRAME SRC=<?php echo base_url('dashboard/operatorSimpegKursus');?>></IFRAME>
                   </div>
                 </div>
                 <div class="tab-pane" id="penghargaan">
                   <div class="intrinsic-container intrinsic-container-16x9">
-                    <IFRAME SRC=<?php echo base_url('dashboard/adminSimpegPenghargaan');?>></IFRAME>
+                    <IFRAME SRC=<?php echo base_url('dashboard/operatorSimpegPenghargaan');?>></IFRAME>
                   </div>
                 </div>
                 <div class="tab-pane" id="organisasi">
                   <div class="intrinsic-container intrinsic-container-16x9">
-                    <IFRAME SRC=<?php echo base_url('dashboard/adminSimpegOrganisasi');?>></IFRAME>
+                    <IFRAME SRC=<?php echo base_url('dashboard/operatorSimpegOrganisasi');?>></IFRAME>
                   </div>
                 </div>
                 <div class="tab-pane" id="tugas">
                   <div class="intrinsic-container intrinsic-container-16x9">
-                    <IFRAME SRC=<?php echo base_url('dashboard/adminSimpegTugas');?>></IFRAME>
+                    <IFRAME SRC=<?php echo base_url('dashboard/operatorSimpegTugas');?>></IFRAME>
                   </div>
                 </div>
                 <div class="tab-pane" id="bahasa">
                   <div class="intrinsic-container intrinsic-container-16x9">
-                    <IFRAME SRC=<?php echo base_url('dashboard/adminSimpegBahasa');?>></IFRAME>
+                    <IFRAME SRC=<?php echo base_url('dashboard/operatorSimpegBahasa');?>></IFRAME>
                   </div>
                 </div>
                 <div class="tab-pane" id="dppp">
                   <div class="intrinsic-container intrinsic-container-16x9">
-                    <IFRAME SRC=<?php echo base_url('dashboard/adminSimpegDPPP');?>></IFRAME>
+                    <IFRAME SRC=<?php echo base_url('dashboard/operatorSimpegDPPP');?>></IFRAME>
                   </div>
                 </div>
                 <div class="tab-pane" id="hukuman">
                   <div class="intrinsic-container intrinsic-container-16x9">
-                    <IFRAME SRC=<?php echo base_url('dashboard/adminSimpegHukuman');?>></IFRAME>
+                    <IFRAME SRC=<?php echo base_url('dashboard/operatorSimpegHukuman');?>></IFRAME>
                   </div>
                 </div>
                 <div class="tab-pane" id="suamiIstri">
                   <div class="intrinsic-container intrinsic-container-16x9">
-                    <IFRAME SRC=<?php echo base_url('dashboard/adminSimpegSuamiIstri');?>></IFRAME>
+                    <IFRAME SRC=<?php echo base_url('dashboard/operatorSimpegSuamiIstri');?>></IFRAME>
                   </div>
                 </div>
                 <div class="tab-pane" id="anak">
                   <div class="intrinsic-container intrinsic-container-16x9">
-                    <IFRAME SRC=<?php echo base_url('dashboard/adminSimpegAnak');?>></IFRAME>
+                    <IFRAME SRC=<?php echo base_url('dashboard/operatorSimpegAnak');?>></IFRAME>
                   </div>
                 </div>
                 <div class="tab-pane" id="ayah">
                   <div class="intrinsic-container intrinsic-container-16x9">
-                    <IFRAME SRC=<?php echo base_url('dashboard/adminSimpegAyah');?>></IFRAME>
+                    <IFRAME SRC=<?php echo base_url('dashboard/operatorSimpegAyah');?>></IFRAME>
                   </div>
                 </div>
                 <div class="tab-pane" id="ibu">
                   <div class="intrinsic-container intrinsic-container-16x9">
-                    <IFRAME SRC=<?php echo base_url('dashboard/adminSimpegIbu');?>></IFRAME>
+                    <IFRAME SRC=<?php echo base_url('dashboard/operatorSimpegIbu');?>></IFRAME>
                   </div>
                 </div>
               </div>
