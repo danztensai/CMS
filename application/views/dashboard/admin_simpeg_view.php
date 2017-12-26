@@ -45,6 +45,7 @@
                 <li class=""><a href="#anak" data-toggle="tab" aria-expanded="true">Anak</a></li>
                 <li class=""><a href="#ayah" data-toggle="tab" aria-expanded="true">Ayah</a></li>
                 <li class=""><a href="#ibu" data-toggle="tab" aria-expanded="true">Ibu</a></li>
+                <li class=""><a href="#instansi" data-toggle="tab" aria-expanded="false">Instansi</a></li>
               </ul>
               <div class="tab-content">
                 <div class="tab-pane active" id="kepangkatan">
@@ -142,6 +143,10 @@
                     <IFRAME SRC=<?php echo base_url('dashboard/adminSimpegIbu');?>></IFRAME>
                   </div>
                 </div>
+                <?php
+                $instansi=$this->load->view('dashboard/referensi_instansi_view','',TRUE);
+                echo $instansi;
+                ?>
               </div>
               <!-- /.tab-content -->
             </div>
@@ -153,46 +158,3 @@
       </div>
     </div>
   </div>
-  <style>
-  .scroll{
-    height:300px;
-    overflow-y:scroll;
-  }
-
-  </style>
-  <style>
-  .intrinsic-container {
-    position: relative;
-    height: 0;
-    overflow: hidden;
-  }
-
-  /* 16x9 Aspect Ratio */
-  .intrinsic-container-16x9 {
-    padding-bottom: 56.25%;
-  }
-
-  /* 4x3 Aspect Ratio */
-  .intrinsic-container-4x3 {
-    padding-bottom: 75%;
-  }
-
-  .intrinsic-container iframe {
-    position: absolute;
-    top:0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    }</style>
-    <style>
-    .scroll{
-      height:800px;
-      overflow-y:scroll;
-    }
-    .row-bordered:after {
-      content: "";
-      display: block;
-      border-bottom: 2px solid #ccc;
-      margin:  15px;
-    }
-  </style>
