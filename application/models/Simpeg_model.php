@@ -6,35 +6,7 @@
 
 		}
 
-		public function getDocumentTypeById($id)
-		{
-			$DB2 =$this->load->database('simpegRef', TRUE);
-			$querySQL = "select * from document_type where id = '$id' ";
 
-			$data = array();
-			$stackData = array();
-
-			log_message('debug','document_type: '.$querySQL);
-			$query = $DB2->query($querySQL);
-
-			if($query->num_rows()>0)
-				{ $count = 1;
-					foreach($query->result() as $row)
-					{
-						$data['id']=$row->id;
-						$data['name']=$row->name;
-						$data['alias']=$row->alias;
-					  array_push($stackData,$data);
-					}
-					$query->free_result();
-					return $stackData;
-				}else
-				{
-
-					$query->free_result();
-					return $data;
-				}
-		}
 
 		public function getRiwayatPangkat($nip)
 		{

@@ -2170,7 +2170,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 		log_message('debug','Nip From Get'.$nip);
 		$crud = new grocery_CRUD();
 		$crud->where('nip',$nip);
-		$crud->set_theme('datatables');
+		$crud->set_theme('flexigrid');
 		$crud->set_table('archive_pns');
 		$crud->fields('nip','name','path','documentType');
 		$crud->columns('nip','name','path','documentType');
