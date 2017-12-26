@@ -1,4 +1,6 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed');?>
+<?php defined('BASEPATH') OR exit('No direct script access allowed');
+echo `whoami`;
+?>
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
@@ -78,7 +80,7 @@ $(document).ready(function() {
       "responsive": true,
         "processing": true,
         "serverSide": true,
-        "ajax": "http://pg.jabarprov.go.id/apiCI/index.php/api/simpeg/simpegsDatatable",
+        "ajax": "http://localhost/apiCI/index.php/api/simpeg/simpegs",
         "columnDefs": [ {
               "targets": 2,
               "searchable": false,
