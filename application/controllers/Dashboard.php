@@ -796,6 +796,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 	{
 		$userId = $this->ion_auth->get_user_id();
 		$this->data['user']=$this->ion_auth->user()->row();
+		$this->data['user_group']= $this->ion_auth->get_users_groups($userId)->result();
 		$groupid = $this->data['user_group'][0]->id;
 		$this->data['menu']=$this->Menu_model->menuMaster($groupid);
 		$this->render('dashboard/kepegawaian_view');
@@ -1494,7 +1495,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 		$output = $crud->render();
 		$this->load->view('dashboard/grid',$output);
 	}
-	
+
 	public function referensiUnitKerja()
 	{
 		log_message('debug','Trying to load Grocer Ref Unit Kerja');
@@ -2169,30 +2170,91 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 		log_message('debug','Nip From Get'.$nip);
 		$crud = new grocery_CRUD();
 		$crud->where('nip',$nip);
-		$crud->set_theme('flexigrid');
+		$crud->set_theme('datatables');
 		$crud->set_table('archive_pns');
 		$crud->fields('nip','name','path','documentType');
 		$crud->columns('nip','name','path','documentType');
 		$crud->set_relation('documentType','document_type','name');
 		$crud->display_as('officeCode','Office City');
 		$crud->set_subject('Dokumen');
+		$crud->unset_read();
 		$crud->required_fields('name','path','documentType');
-
 		$crud->set_field_upload('path',$pathFolder);
 		$crud->callback_add_field('nip',function(){
 			$this->db = $this->load->database('default',true);
 			$userLoggedin = $this->ion_auth->user()->row();
 			$nip = $userLoggedin->nip;
-			$this->input->get('documentType');
-			$this->input->post('documentType');
+
 			$this->db = $this->load->database('simpegRef',true);
-			return '<input type="text" value="'.$nip.'" name="nip"> ';
+			return '<input type="text" value="'.$nip.'" name="nipShow"disabled>
+			 				<input type="hidden" value="'.$nip.'" name="nip"/>';
+		});
+		$crud->callback_column('path',array($this,'_callback_webpage_url'));
+		$crud->callback_read_field('path', function ($value, $primary_key) {
+			$tagImg= '<a href="'.$value.'" class="image-thumbnail"><img src="'.$value.'" height="50px"></a>';
+							return $tagImg;
+							});
+		$crud->callback_before_update(function($post_array)
+							{
+								log_message('debug','iniloh Before update'.print_r($post_array,TRUE));
+								$this->db = $this->load->database('default',true);
+								$userLoggedin = $this->ion_auth->user()->row();
+								$nip = $userLoggedin->nip;
+
+
+								$this->db = $this->load->database('simpegRef',true);
+								$docType = $this->Simpeg_model->getDocumentTypeById($post_array['documentType']);
+								$pathFolderTemp = "assets/upload/files/".$nip;
+								$pathFolder="assets/upload/files/".$nip."/".$docType[0]['alias'];
+								if (!is_dir($pathFolder)) {
+										mkdir($pathFolder , 0777, TRUE);
+										}
+								$realPathFolder = base_url()."assets/upload/files/".$nip."/".$docType[0]['alias'].'/';
+								rename($pathFolderTemp.'/'.$post_array['path'],$pathFolder.'/'.$post_array['name'].'.jpg');
+
+
+								$post_array['path']=$realPathFolder.$post_array['name'].'.jpg';
+								return $post_array;
+
+
+							});
+		$crud->callback_before_insert(function($post_array)
+		{
+			log_message('debug','iniloh Before Insert'.print_r($post_array,TRUE));
+			$this->db = $this->load->database('default',true);
+			$userLoggedin = $this->ion_auth->user()->row();
+			$nip = $userLoggedin->nip;
+
+
+			$this->db = $this->load->database('simpegRef',true);
+			$docType = $this->Simpeg_model->getDocumentTypeById($post_array['documentType']);
+			$pathFolderTemp = "assets/upload/files/".$nip;
+			$pathFolder="assets/upload/files/".$nip."/".$docType[0]['alias'];
+			if (!is_dir($pathFolder)) {
+	    		mkdir($pathFolder , 0777, TRUE);
+					}
+			$realPathFolder = base_url()."assets/upload/files/".$nip."/".$docType[0]['alias'].'/';
+			rename($pathFolderTemp.'/'.$post_array['path'],$pathFolder.'/'.$post_array['name'].'.jpg');
+
+
+			$post_array['path']=$realPathFolder.$post_array['name'].'.jpg';
+			return $post_array;
+
+
 		});
 
 		$output = $crud->render();
 
 		$this->load->view('dashboard/grid',$output);
 	}
+	public function _callback_webpage_url($value, $row)
+{
+	//log_message('debug',print_r($row,TRUE).' Value : '.print_r($value,TRUE));
+	//log_message('debug',$value);
+	$tagImg= '<a href="'.$value.'" class="image-thumbnail"><img src="'.$value.'" height="50px"></a>';
+return $tagImg;
+}
+
 	public function instansiManagement()
 	{
 		$crud = new grocery_CRUD();
