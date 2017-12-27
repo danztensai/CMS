@@ -1496,6 +1496,813 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 		$this->load->view('dashboard/grid',$output);
 	}
 
+
+		public function operatorSimpeg()
+		{
+			log_message('debug','Inside Page Dashboard editAdminSimpeg');
+			$userId = $this->ion_auth->get_user_id();
+			$this->data['user']=$this->ion_auth->user()->row();
+			log_message('INFO','is admin? :'.$this->ion_auth->is_admin());
+			$this->data['user_group']= $this->ion_auth->get_users_groups($userId)->result();
+			log_message('debug','User Group : '.print_r($this->data['user_group'],TRUE));
+
+			$this->data['users_instansi']=$this->Users_model->getUsersinstansi($userId );
+
+			$groupid = $this->data['user_group'][0]->id;
+			$this->data['menu']=$this->Menu_model->menuMaster($groupid);
+
+			log_message('INFO','User Id : '.$userId);
+			log_message('DEBUG','inside Admin');
+			$this->render('dashboard/operator_simpeg_view');
+		}
+
+		public function operatorSimpegKepangkatan()
+		{
+			log_message('debug','Trying to load Grocer operatorSimpegKepangkatan');
+			$adminSts = $this->ion_auth->is_admin()===FALSE;
+			$this->db = $this->load->database('simpegRef',true);
+			log_message('debug','after Load new Db');
+			$crud = new grocery_CRUD();
+			$crud->set_table('golonganhistory')
+			->set_subject('Kepangkatan')
+			->columns('nip','nomorSk','tanggalSk','tmtGolongan','nomorLetterBkn','tanggalLetterBkn','mkGolonganTahun', 'mkGolonganBulan','jenisKP','AsalNama','kpej','Golongan_idGolongan','AKREDIT','TMTPANG2')
+			->fields('nip','nomorSk','tanggalSk','tmtGolongan','nomorLetterBkn','tanggalLetterBkn','mkGolonganTahun', 'mkGolonganBulan','jenisKP','AsalNama','kpej','Golongan_idGolongan','AKREDIT','TMTPANG2')
+			->display_as('nip', 'Nip')
+			->display_as('nomorSk', 'Nomor Sk')
+			->display_as('tanggalSk', 'Tanggal SK')
+			->display_as('tmtGolongan', 'TMT Kepangkatan')
+			->display_as('nomorLetterBkn', 'Nomor Surat Bkn')
+			->display_as('tanggalLetterBkn', 'Tanggal Surat BKN')
+			->display_as('mkGolonganTahun', 'Masa Kerja Kepangkatan')
+			->display_as('mkGolonganBulan', 'Masa Kerja Bulan')
+			->display_as('jenisKP', 'Jenis Kepegawaian')
+			->display_as('AsalNama', 'Asal Nama')
+			->display_as('kpej', 'Pejabat Yang Menetapkan')
+			->display_as('Golongan_idGolongan', 'Golongan')
+			->display_as('AKREDIT', 'Angka Kredit')
+			->display_as('TMTPANG2', 'TMT Pangkat');
+			$crud->set_relation('jenisKP','naikPangkat','nnpang');
+			$crud->set_relation('kpej','pejabatMenetapkan','npej');
+			$crud->set_relation('Golongan_idGolongan','jenisgolongan','golNama');
+
+			$crud->required_fields('nip','nomorSk','tanggalSk','tmtGolongan','nomorLetterBkn','tanggalLetterBkn','mkGolonganTahun', 'mkGolonganBulan','jenisKP','AsalNama','kpej','Golongan_idGolongan','AKREDIT','TMTPANG2');
+			$output = $crud->render();
+			$this->load->view('dashboard/grid',$output);
+		}
+
+		public function operatorSimpegJabatan()
+		{
+			log_message('debug','Trying to load Grocer operatorSimpegJabatan');
+			$adminSts = $this->ion_auth->is_admin()===FALSE;
+			$this->db = $this->load->database('simpegRef',true);
+			log_message('debug','after Load new Db');
+			$crud = new grocery_CRUD();
+			$crud->set_table('jabatan')
+			->set_subject('Kepangkatan')
+			->columns('nip','kunkers','kunkersInduk','KINSIND','nunkerUnitOrganisasi','namaJenisJabatan','tmtJabatan', 'nomorSk','tanggalSk', 'jnsjab','kjab','kpej','tmtPelantikan', 'njab', 'kwil', 'nunkerUnitOrganisasi', 'JSUSPIM', 'KESELON')
+			->display_as('nip', 'Nip')
+			->display_as('kunkers', 'Instansi')
+			->display_as('kunkersInduk', 'Instansi')
+			->display_as('KINSIND', 'Instansi Induk')
+			->display_as('nunkerUnitOrganisasi', 'Nama Unit Organisasi')
+			->display_as('namaJenisJabatan', 'Nama Jenis Jabatan')
+			->display_as('tmtJabatan', 'TMT Jabatan')
+			->display_as('nomorSk', 'Nomor SK')
+			->display_as('tanggalSk', 'Tanggal Sk')
+			->display_as('jnsjab', 'Jenis Jabatan')
+			->display_as('kjab', 'Jabatan')
+			->display_as('kpej', 'Pejabat Menetapkan')
+			->display_as('tmtPelantikan', 'TMT Pelantikan')
+			->display_as('njab', 'Nama Jabatan')
+			->display_as('kwil', 'Wilayah')
+			->display_as('nunkerUnitOrganisasi', 'Nama Unit Organisasi')
+			->display_as('JSUSPIM', 'JSUSPIM')
+			->display_as('KESELON', 'Eselon');
+			$crud->set_relation('KINSIND','insinduk','NINSIND');
+			$crud->set_relation('jnsjab','jenisjabatan','namaJenisJabatan');
+			$crud->set_relation('kpej','pejabatmenetapkan','npej');
+			$crud->set_relation('kwil','wilayah','nwil');
+			$crud->fields('nip','kunkers','kunkersInduk','KINSIND','nunkerUnitOrganisasi','namaJenisJabatan','tmtJabatan', 'nomorSk','tanggalSk', 'jnsjab','kjab','kpej','tmtPelantikan', 'njab', 'kwil', 'nunkerUnitOrganisasi', 'JSUSPIM', 'KESELON');
+			$crud->required_fields('nip','kunkers','kunkersInduk','KINSIND','nunkerUnitOrganisasi','namaJenisJabatan','tmtJabatan', 'nomorSk','tanggalSk', 'jnsjab','kjab','kpej','tmtPelantikan', 'njab', 'kwil', 'nunkerUnitOrganisasi', 'JSUSPIM', 'KESELON');
+			$output = $crud->render();
+			$this->load->view('dashboard/grid',$output);
+		}
+
+		public function operatorSimpegPendidikan()
+		{
+		  log_message('debug','Trying to load Grocer operatorSimpegPendidikan');
+		  $adminSts = $this->ion_auth->is_admin()===FALSE;
+		  $this->db = $this->load->database('simpegRef',true);
+		  log_message('debug','after Load new Db');
+		  $crud = new grocery_CRUD();
+		  $crud->set_table('pendidikan')
+		  ->set_subject('pendidikan')
+		  ->columns('nip','tahunLulus','tglTahunLulus','nomorIjazah','namaSekolah','tempat','glrDepan', 'glrBelakang','ktpu', 'KJUR','nkepsek','npdum')
+		  ->display_as('nip', 'Nip')
+		  ->display_as('tahunLulus', 'Tahun Kelulusan')
+		  ->display_as('tglTahunLulus', 'Tanggal Kelulusan')
+		  ->display_as('nomorIjazah', 'Nomor Ijazah')
+		  ->display_as('namaSekolah', 'Nama Sekolah')
+		  ->display_as('tempat', 'Tempat')
+		  ->display_as('glrDepan', 'Gelar Depan')
+		  ->display_as('glrBelakang', 'Gelar Belakang')
+		  ->display_as('ktpu', 'Tingkat Pendidikan')
+		  ->display_as('KJUR', 'Jurusan')
+		  ->display_as('nkepsek', 'Nama Kepala Sekolah')
+		  ->display_as('npdum', 'Nama Pendidikan Umum');
+		  $crud->set_relation('ktpu','tpu','NJUR');
+		  $crud->fields('nip','tahunLulus','tglTahunLulus','nomorIjazah','namaSekolah','tempat','glrDepan', 'glrBelakang','ktpu', 'KJUR','nkepsek','npdum');
+		  $crud->required_fields('nip','tahunLulus','tglTahunLulus','nomorIjazah','namaSekolah','tempat','glrDepan', 'glrBelakang','ktpu', 'KJUR','nkepsek','npdum');
+		  $output = $crud->render();
+		  $this->load->view('dashboard/grid',$output);
+		}
+
+		public function operatorSimpegDiklatStruktural()
+		{
+		  log_message('debug','Trying to load Grocer operatorSimpegDiklatStruktural');
+		  $adminSts = $this->ion_auth->is_admin()===FALSE;
+		  $this->db = $this->load->database('simpegRef',true);
+		  log_message('debug','after Load new Db');
+		  $crud = new grocery_CRUD();
+		  $crud->where('kodeJenisDiklat',2);
+		  $crud->set_table('riwayatdiklat')
+		  ->set_subject('Diklat Kepemimpinan')
+		  ->columns('NIP','kodeJenisDiklat','kFungStrTek','TEMPAT','PAN','ANGKATAN','TMULAI', 'TAKHIR','tahun', 'JAM','NSTTPP','TSTTPP','namaDiklat', 'ISAKHIR')
+		  ->display_as('NIP', 'Nip')
+		  ->display_as('kodeJenisDiklat', 'Jenis Diklat')
+		  ->display_as('kFungStrTek', 'Nama Diklat')
+		  ->display_as('TEMPAT', 'Tempat')
+		  ->display_as('PAN', 'Penyelenggara')
+		  ->display_as('ANGKATAN', 'Angkatan')
+		  ->display_as('TMULAI', 'Tanggal Mulai')
+		  ->display_as('TAKHIR', 'Tanggal Berakhir')
+		  ->display_as('tahun', 'Tahun')
+		  ->display_as('JAM', 'Jam')
+		  ->display_as('NSTTPP', 'NSTTPP')
+		  ->display_as('TSTTPP', 'TSTTPP')
+		  ->display_as('namaDiklat', 'Nama Diklat');
+		  $crud->set_relation('kodeJenisDiklat','jenisdiklat','nama');
+		  $crud->fields('nip','kodeJenisDiklat','kFungStrTek','TEMPAT','PAN','ANGKATAN','TMULAI', 'TAKHIR','tahun', 'JAM','NSTTPP','TSTTPP','namaDiklat', 'ISAKHIR');
+		  $crud->required_fields('nip','kodeJenisDiklat','kFungStrTek','TEMPAT','PAN','ANGKATAN','TMULAI', 'TAKHIR','tahun', 'JAM','NSTTPP','TSTTPP','namaDiklat', 'ISAKHIR');
+		  $output = $crud->render();
+		  $this->load->view('dashboard/grid',$output);
+		}
+
+		public function operatorSimpegDiklatFungsional()
+		{
+		  log_message('debug','Trying to load Grocer operatorSimpegDiklatFungsional');
+		  $adminSts = $this->ion_auth->is_admin()===FALSE;
+		  $this->db = $this->load->database('simpegRef',true);
+		  log_message('debug','after Load new Db');
+		  $crud = new grocery_CRUD();
+		  $crud->where('kodeJenisDiklat',1);
+		  $crud->set_table('riwayatdiklat')
+		  ->set_subject('Diklat Fungsional')
+		  ->columns('NIP','kodeJenisDiklat','kFungStrTek','TEMPAT','PAN','ANGKATAN','TMULAI', 'TAKHIR','tahun', 'JAM','NSTTPP','TSTTPP','namaDiklat', 'ISAKHIR')
+		  ->display_as('NIP', 'Nip')
+		  ->display_as('kodeJenisDiklat', 'Jenis Diklat')
+		  ->display_as('kFungStrTek', 'Nama Diklat')
+		  ->display_as('TEMPAT', 'Tempat')
+		  ->display_as('PAN', 'Penyelenggara')
+		  ->display_as('ANGKATAN', 'Angkatan')
+		  ->display_as('TMULAI', 'Tanggal Mulai')
+		  ->display_as('TAKHIR', 'Tanggal Berakhir')
+		  ->display_as('tahun', 'Tahun')
+		  ->display_as('JAM', 'Jam')
+		  ->display_as('NSTTPP', 'NSTTPP')
+		  ->display_as('TSTTPP', 'TSTTPP')
+		  ->display_as('namaDiklat', 'Nama Diklat');
+		  $crud->set_relation('kodeJenisDiklat','jenisdiklat','nama');
+		  $crud->fields('nip','kodeJenisDiklat','kFungStrTek','TEMPAT','PAN','ANGKATAN','TMULAI', 'TAKHIR','tahun', 'JAM','NSTTPP','TSTTPP','namaDiklat', 'ISAKHIR');
+		  $crud->required_fields('nip','kodeJenisDiklat','kFungStrTek','TEMPAT','PAN','ANGKATAN','TMULAI', 'TAKHIR','tahun', 'JAM','NSTTPP','TSTTPP','namaDiklat', 'ISAKHIR');
+		  $output = $crud->render();
+		  $this->load->view('dashboard/grid',$output);
+		}
+
+		public function operatorSimpegDiklatTeknik()
+		{
+		  log_message('debug','Trying to load Grocer operatorSimpegDiklatTeknik');
+		  $adminSts = $this->ion_auth->is_admin()===FALSE;
+		  $this->db = $this->load->database('simpegRef',true);
+		  log_message('debug','after Load new Db');
+		  $crud = new grocery_CRUD();
+		  $crud->where('kodeJenisDiklat',3);
+		  $crud->set_table('riwayatdiklat')
+		  ->set_subject('Diklat Teknik')
+		  ->columns('NIP','kodeJenisDiklat','kFungStrTek','TEMPAT','PAN','ANGKATAN','TMULAI', 'TAKHIR','tahun', 'JAM','NSTTPP','TSTTPP','namaDiklat', 'ISAKHIR')
+		  ->display_as('NIP', 'Nip')
+		  ->display_as('kodeJenisDiklat', 'Jenis Diklat')
+		  ->display_as('kFungStrTek', 'Nama Diklat')
+		  ->display_as('TEMPAT', 'Tempat')
+		  ->display_as('PAN', 'Penyelenggara')
+		  ->display_as('ANGKATAN', 'Angkatan')
+		  ->display_as('TMULAI', 'Tanggal Mulai')
+		  ->display_as('TAKHIR', 'Tanggal Berakhir')
+		  ->display_as('tahun', 'Tahun')
+		  ->display_as('JAM', 'Jam')
+		  ->display_as('NSTTPP', 'NSTTPP')
+		  ->display_as('TSTTPP', 'TSTTPP')
+		  ->display_as('namaDiklat', 'Nama Diklat');
+		  $crud->set_relation('kodeJenisDiklat','jenisdiklat','nama');
+		  $crud->fields('nip','kodeJenisDiklat','kFungStrTek','TEMPAT','PAN','ANGKATAN','TMULAI', 'TAKHIR','tahun', 'JAM','NSTTPP','TSTTPP','namaDiklat', 'ISAKHIR');
+		  $crud->required_fields('nip','kodeJenisDiklat','kFungStrTek','TEMPAT','PAN','ANGKATAN','TMULAI', 'TAKHIR','tahun', 'JAM','NSTTPP','TSTTPP','namaDiklat', 'ISAKHIR');
+		  $output = $crud->render();
+		  $this->load->view('dashboard/grid',$output);
+		}
+
+		public function operatorSimpegPenataran()
+		{
+		  log_message('debug','Trying to load Grocer operatorSimpegPenataran');
+		  $adminSts = $this->ion_auth->is_admin()===FALSE;
+		  $this->db = $this->load->database('simpegRef',true);
+		  log_message('debug','after Load new Db');
+		  $crud = new grocery_CRUD();
+		  $crud->set_table('riwayatpenataran')
+		  ->set_subject('Penataran')
+		  ->columns('NIP','TEMPAT','PAN','TMULAI','TAKHIR', 'JAM','NPIAGAM','TPIAGAM','NTATAR','ANGKATAN')
+		  ->display_as('NIP', 'Nip')
+		  ->display_as('TEMPAT', 'Tempat')
+		  ->display_as('PAN', 'Penyelenggara')
+		  ->display_as('TMULAI', 'Tanggal Mulai')
+		  ->display_as('TAKHIR', 'Tanggak Akhir')
+		  ->display_as('JAM', 'Jam')
+		  ->display_as('NPIAGAM', 'Nama Piagam')
+		  ->display_as('TPIAGAM', 'Tanggal Piagam')
+		  ->display_as('NTATAR', 'Nama Penataran')
+		  ->display_as('ANGKATAN', 'Angkatan');
+		  $crud->fields('NIP','TEMPAT','PAN','TMULAI','TAKHIR', 'JAM','NPIAGAM','TPIAGAM','NTATAR','ANGKATAN');
+		  $crud->required_fields('NIP','TEMPAT','PAN','TMULAI','TAKHIR', 'JAM','NPIAGAM','TPIAGAM','NTATAR','ANGKATAN');
+		  $output = $crud->render();
+		  $this->load->view('dashboard/grid',$output);
+		}
+
+		public function operatorSimpegSeminar()
+		{
+		  log_message('debug','Trying to load Grocer operatorSimpegSeminar');
+		  $adminSts = $this->ion_auth->is_admin()===FALSE;
+		  $this->db = $this->load->database('simpegRef',true);
+		  log_message('debug','after Load new Db');
+		  $crud = new grocery_CRUD();
+		  $crud->set_table('riwayatseminar')
+		  ->set_subject('Seminar')
+		  ->columns('NIP','TEMPAT','PAN','TMULAI','TAKHIR', 'JAM','NPIAGAM','TPIAGAM','NSEMINAR','ANGKATAN')
+		  ->display_as('NIP', 'Nip')
+		  ->display_as('TEMPAT', 'Tempat')
+		  ->display_as('PAN', 'Penyelenggara')
+		  ->display_as('TMULAI', 'Tanggal Mulai')
+		  ->display_as('TAKHIR', 'Tanggak Akhir')
+		  ->display_as('JAM', 'Jam')
+		  ->display_as('NPIAGAM', 'Nama Piagam')
+		  ->display_as('TPIAGAM', 'Tanggal Piagam')
+		  ->display_as('NSEMINAR', 'Nama Penataran')
+		  ->display_as('ANGKATAN', 'Angkatan');
+		  $crud->fields('NIP','TEMPAT','PAN','TMULAI','TAKHIR', 'JAM','NPIAGAM','TPIAGAM','NSEMINAR','ANGKATAN');
+		  $crud->required_fields('NIP','TEMPAT','PAN','TMULAI','TAKHIR', 'JAM','NPIAGAM','TPIAGAM','NSEMINAR','ANGKATAN');
+		  $output = $crud->render();
+		  $this->load->view('dashboard/grid',$output);
+		}
+
+		public function operatorSimpegKursus()
+		{
+		  log_message('debug','Trying to load Grocer operatorSimpegKursus');
+		  $adminSts = $this->ion_auth->is_admin()===FALSE;
+		  $this->db = $this->load->database('simpegRef',true);
+		  log_message('debug','after Load new Db');
+		  $crud = new grocery_CRUD();
+		  $crud->set_table('riwayatkursus')
+		  ->set_subject('Kursus')
+		  ->columns('nip', 'namaKursus', 'jumlahJam', 'npiagam', 'tpiagam', 'tanggalKursus', 'tanggalAkhirKursus', 'tahun', 'tempat', 'kkurs', 'nomorSertipikat', 'institusiPenyelenggara')
+		  ->display_as('nip', 'Nip')
+		  ->display_as('namaKursus', 'Nama Kursus')
+		  ->display_as('jumlahJam', 'Jumlah Jam')
+		  ->display_as('npiagam', 'Nama Piagam')
+		  ->display_as('tpiagam', 'Tanggak Piagam')
+		  ->display_as('tanggalKursus', 'Tanggal Kursus')
+		  ->display_as('tanggalAkhirKursus', 'Tanggal Akhir Kursus')
+		  ->display_as('tahun', 'Tahun')
+		  ->display_as('tempat', 'Tempat')
+		  ->display_as('kkurs', 'Jenis Kursus')
+		  ->display_as('nomorSertipikat', 'Nomor Sertifikat')
+		  ->display_as('institusiPenyelenggara', 'Institusi Penyelenggara');
+		  $crud->set_relation('kkurs','kursus','nama');
+		  $crud->fields('nip', 'namaKursus', 'jumlahJam', 'npiagam', 'tpiagam', 'tanggalKursus', 'tanggalAkhirKursus', 'tahun', 'tempat', 'kkurs', 'nomorSertipikat', 'institusiPenyelenggara');
+		  $crud->required_fields('nip', 'namaKursus', 'jumlahJam', 'npiagam', 'tpiagam', 'tanggalKursus', 'tanggalAkhirKursus', 'tahun', 'tempat', 'kkurs', 'nomorSertipikat', 'institusiPenyelenggara');
+		  $output = $crud->render();
+		  $this->load->view('dashboard/grid',$output);
+		}
+
+		public function operatorSimpegPenghargaan()
+		{
+		  log_message('debug','Trying to load Grocer operatorSimpegPenghargaan');
+		  $adminSts = $this->ion_auth->is_admin()===FALSE;
+		  $this->db = $this->load->database('simpegRef',true);
+		  log_message('debug','after Load new Db');
+		  $crud = new grocery_CRUD();
+		  $crud->set_table('penghargaan')
+		  ->set_subject('Penghargaan')
+		  ->columns('nip', 'skNomor', 'skDate', 'tahun', 'NBINTANG', 'AOLEH', 'NOMOR', 'TEMPAT')
+		  ->display_as('nip', 'Nip')
+		  ->display_as('skNomor', 'Nomor SK')
+		  ->display_as('skDate', 'Tanggal SK')
+		  ->display_as('tahun', 'Tahun')
+		  ->display_as('NBINTANG', 'Nama Penghargaan')
+		  ->display_as('AOLEH', 'Diperoleh Dari')
+		  ->display_as('NOMOR', 'Nomor')
+		  ->display_as('TEMPAT', 'Tempat');
+		  $crud->fields('nip', 'skNomor', 'skDate', 'tahun', 'NBINTANG', 'AOLEH', 'NOMOR', 'TEMPAT');
+		  $crud->required_fields('nip', 'skNomor', 'skDate', 'tahun', 'NBINTANG', 'AOLEH', 'NOMOR', 'TEMPAT');
+		  $output = $crud->render();
+		  $this->load->view('dashboard/grid',$output);
+		}
+
+		public function operatorSimpegOrganisasi()
+		{
+		  log_message('debug','Trying to load Grocer operatorSimpegOrganisasi');
+		  $adminSts = $this->ion_auth->is_admin()===FALSE;
+		  $this->db = $this->load->database('simpegRef',true);
+		  log_message('debug','after Load new Db');
+		  $crud = new grocery_CRUD();
+		  $crud->set_table('riwayatorganisasi')
+		  ->set_subject('Organisasi')
+		  ->columns('NIP', 'JORG', 'NORG', 'JBORG', 'TMULAI', 'TAKHIR', 'NPIMP', 'TEMPAT')
+		  ->display_as('NIP', 'Nip')
+		  ->display_as('JORG', 'Jenis Organisasi')
+		  ->display_as('NORG', 'Nama Organisasi')
+		  ->display_as('JBORG', 'Jabatan Organisasi')
+		  ->display_as('TMULAI', 'Tanggal Mulai')
+		  ->display_as('TAKHIR', 'Tanggal Akhir')
+		  ->display_as('NPIMP', 'Nama Pemimpin')
+		  ->display_as('TEMPAT', 'Tempat');
+		  $crud->fields('NIP', 'JORG', 'NORG', 'JBORG', 'TMULAI', 'TAKHIR', 'NPIMP', 'TEMPAT');
+		  $crud->required_fields('NIP', 'JORG', 'NORG', 'JBORG', 'TMULAI', 'TAKHIR', 'NPIMP', 'TEMPAT');
+		  $output = $crud->render();
+		  $this->load->view('dashboard/grid',$output);
+		}
+
+		public function operatorSimpegTugas()
+		{
+		  log_message('debug','Trying to load Grocer operatorSimpegTugas');
+		  $adminSts = $this->ion_auth->is_admin()===FALSE;
+		  $this->db = $this->load->database('simpegRef',true);
+		  log_message('debug','after Load new Db');
+		  $crud = new grocery_CRUD();
+		  $crud->set_table('riwayattugas')
+		  ->set_subject('Tugas Luar Negri')
+		  ->columns('NIP', 'NNEG', 'TUJUAN', 'PTETAP', 'NSK', 'TSK', 'TMULAI', 'TAKHIR')
+		  ->display_as('NIP', 'Nip')
+		  ->display_as('NNEG', 'Nama Negara')
+		  ->display_as('TUJUAN', 'Tujuan Negara')
+		  ->display_as('PTETAP', 'Pejabat Yang Menetapkan')
+		  ->display_as('NSK', 'Nomor SK')
+		  ->display_as('TSK', 'Tanggal SK')
+		  ->display_as('TMULAI', 'Tanggal Mulai')
+		  ->display_as('TAKHIR', 'Tanggal Akhir');
+		  $crud->fields('NIP', 'NNEG', 'TUJUAN', 'PTETAP', 'NSK', 'TSK', 'TMULAI', 'TAKHIR');
+		  $crud->required_fields('NIP', 'NNEG', 'TUJUAN', 'PTETAP', 'NSK', 'TSK', 'TMULAI', 'TAKHIR');
+		  $output = $crud->render();
+		  $this->load->view('dashboard/grid',$output);
+		}
+
+		public function operatorSimpegBahasa()
+		{
+		  log_message('debug','Trying to load Grocer operatorSimpegRiwayatTugas');
+		  $adminSts = $this->ion_auth->is_admin()===FALSE;
+		  $this->db = $this->load->database('simpegRef',true);
+		  log_message('debug','after Load new Db');
+		  $crud = new grocery_CRUD();
+		  $crud->set_table('riwayatbahasa')
+		  ->set_subject('Bahasa')
+		  ->columns('NIP', 'NBAHASA', 'KBAHASA', 'JBAHASA')
+		  ->display_as('NIP', 'Nip')
+		  ->display_as('NBAHASA', 'Nama Bahasa')
+		  ->display_as('KBAHASA', 'Kemampuan Bahasa')
+		  ->display_as('JBAHASA', 'Jenis Bahasa');
+		  $crud->fields('NIP', 'NBAHASA', 'KBAHASA', 'JBAHASA');
+		  $crud->required_fields('NIP', 'NBAHASA', 'KBAHASA', 'JBAHASA');
+		  $output = $crud->render();
+		  $this->load->view('dashboard/grid',$output);
+		}
+
+		public function operatorSimpegDPPP()
+		{
+		  log_message('debug','Trying to load Grocer operatorSimpegDPPP');
+		  $adminSts = $this->ion_auth->is_admin()===FALSE;
+		  $this->db = $this->load->database('simpegRef',true);
+		  log_message('debug','after Load new Db');
+		  $crud = new grocery_CRUD();
+		  $crud->set_table('rdppp')
+		  ->set_subject('DPPP')
+		  ->columns('NIP', 'THNILAI', 'NSETIA', 'NPRES', 'NTJAWAB', 'NTAAT', 'NJUJUR', 'NKSAMA', 'NPKARSA', 'NPIMPIN', 'NTOTAL', 'NRATA')
+		  ->display_as('NIP', 'Nip')
+		  ->display_as('THNILAI', 'Tahun Penilaian')
+		  ->display_as('NSETIA', 'Kemampuan Kesetian')
+		  ->display_as('NPRES', 'Nilai Prestasi')
+		  ->display_as('NTAAT', 'Nilai Ketaatan')
+		  ->display_as('NJUJUR', 'Nilai kejujuran')
+		  ->display_as('NKSAMA', 'Nilai Kerja Sama')
+		  ->display_as('NPKARSA', 'Nilai Prakarsa')
+		  ->display_as('NPIMPIN', 'Nilai Kepemimpinan')
+		  ->display_as('NTOTAL', 'Nilai Total')
+		  ->display_as('NRATA', 'Nilai Rata Rata');
+		  $crud->fields('NIP', 'THNILAI', 'NSETIA', 'NPRES', 'NTJAWAB', 'NTAAT', 'NJUJUR', 'NKSAMA', 'NPKARSA', 'NPIMPIN', 'NTOTAL', 'NRATA');
+		  $crud->required_fields('NIP', 'THNILAI', 'NSETIA', 'NPRES', 'NTJAWAB', 'NTAAT', 'NJUJUR', 'NKSAMA', 'NPKARSA', 'NPIMPIN', 'NTOTAL', 'NRATA');
+		  $output = $crud->render();
+		  $this->load->view('dashboard/grid',$output);
+		}
+
+		public function operatorSimpegHukuman()
+		{
+		  log_message('debug','Trying to load Grocer operatorSimpegHukuman');
+		  $adminSts = $this->ion_auth->is_admin()===FALSE;
+		  $this->db = $this->load->database('simpegRef',true);
+		  log_message('debug','after Load new Db');
+		  $crud = new grocery_CRUD();
+		  $crud->set_table('hukumandisiplin')
+		  ->set_subject('Hukuman Disiplin')
+		  ->columns('nipBaru', 'nipLama', 'jenisHukuman', 'DESHUKUM', 'skNomor', 'skTanggal', 'KPEJ', 'hukumanTanggal', 'akhirHukumTanggal', 'masaTahun', 'masaBulan', 'nomorPp', 'alasanHukumanDisiplin')
+		  ->display_as('nipBaru', 'Nip')
+		  ->display_as('nipLama', 'Nip Lama')
+		  ->display_as('jenisHukuman', 'Jenis Hukuman')
+		  ->display_as('DESHUKUM', 'Deskripsi Hukuman')
+		  ->display_as('skNomor', 'Nomor SK')
+		  ->display_as('skTanggal', 'Tanggal SK')
+		  ->display_as('KPEJ', 'Pejabat Yang Menetapkan')
+		  ->display_as('hukumanTanggal', 'Tanggal Hukuman')
+		  ->display_as('akhirHukumTanggal', 'Akhir Tanggal Hukuman')
+		  ->display_as('masaTahun', 'Tahun')
+		  ->display_as('masaBulan', 'Bulan')
+		  ->display_as('nomorPp', 'Nomor PP')
+		  ->display_as('alasanHukumanDisiplin', 'Alasan Hukuman');
+		  $crud->set_relation('KPEJ','pejabatmenetapkan','npej');
+		  $crud->fields('nipBaru', 'nipLama', 'jenisHukuman', 'DESHUKUM', 'skNomor', 'skTanggal', 'KPEJ', 'hukumanTanggal', 'akhirHukumTanggal', 'masaTahun', 'masaBulan', 'nomorPp', 'alasanHukumanDisiplin');
+		  $crud->required_fields('nipBaru', 'jenisHukuman', 'DESHUKUM', 'skNomor', 'skTanggal', 'KPEJ', 'hukumanTanggal', 'akhirHukumTanggal', 'masaTahun', 'masaBulan', 'nomorPp', 'alasanHukumanDisiplin');
+		  $output = $crud->render();
+		  $this->load->view('dashboard/grid',$output);
+		}
+
+		public function operatorSimpegSuamiIstri()
+		{
+		  log_message('debug','Trying to load Grocer operatorSimpegSuamiIstri');
+		  $adminSts = $this->ion_auth->is_admin()===FALSE;
+		  $this->db = $this->load->database('simpegRef',true);
+		  log_message('debug','after Load new Db');
+		  $crud = new grocery_CRUD();
+		  $crud->set_table('riwayatsuamiistri')
+		  ->set_subject('Suami / Istri')
+		  ->columns('NIP', 'NISUA', 'KTLAHIR', 'TLAHIR', 'TIJASAH', 'TKAWIN', 'STUNJ', 'KKERJA', 'ISAKHIR', 'ALJALAN', 'ALRT', 'ALRW', 'NOTELP', 'WIL', 'KPOS', 'ALHP')
+		  ->display_as('NIP', 'Nip')
+		  ->display_as('NISUA', 'Nama Pasangan')
+		  ->display_as('KTLAHIR', 'Kota Lahir')
+		  ->display_as('TLAHIR', 'Tanggal Lahir')
+		  ->display_as('TIJASAH', 'Tingkat Ijasah')
+		  ->display_as('TKAWIN', 'Tanggal Kawin')
+		  ->display_as('STUNJ', 'Status Tunjangan')
+		  ->display_as('KKERJA', 'Pekerjaan')
+		  ->display_as('ALJALAN', 'Alamat')
+		  ->display_as('ALRT', 'RT')
+		  ->display_as('ALRW', 'RW')
+		  ->display_as('NOTELP', 'Nomor Telepon')
+		  ->display_as('WIL', 'Wilayah')
+		  ->display_as('KPOS', 'Kode Pos')
+		  ->display_as('ALHP', 'Nomor HP')
+		  ->display_as('ISAKHIR', 'Akhir');
+		  $crud->set_relation('KKERJA','daftarPekerjaan','nama');
+		  $crud->fields('NIP', 'NISUA', 'KTLAHIR', 'TLAHIR', 'TIJASAH', 'TKAWIN', 'STUNJ', 'KKERJA', 'ISAKHIR', 'ALJALAN', 'ALRT', 'ALRW', 'NOTELP', 'WIL', 'KPOS', 'ALHP');
+		  $crud->required_fields('NIP', 'NISUA', 'KTLAHIR', 'TLAHIR', 'TIJASAH', 'TKAWIN', 'STUNJ', 'KKERJA', 'ISAKHIR', 'ALJALAN', 'ALRT', 'ALRW', 'NOTELP', 'WIL', 'KPOS', 'ALHP');
+		  $output = $crud->render();
+		  $this->load->view('dashboard/grid',$output);
+		}
+
+		public function operatorSimpegAnak()
+		{
+		  log_message('debug','Trying to load Grocer operatorSimpegAnak');
+		  $adminSts = $this->ion_auth->is_admin()===FALSE;
+		  $this->db = $this->load->database('simpegRef',true);
+		  log_message('debug','after Load new Db');
+		  $crud = new grocery_CRUD();
+		  $crud->set_table('riwayatanak')
+		  ->set_subject('Anak')
+		  ->columns('NIP', 'NANAK', 'TLAHIR', 'TGLLAHIR', 'KJKEL', 'KELUARGA', 'TUNJ', 'TIJASAH', 'KKERJA')
+		  ->display_as('NIP', 'Nip')
+		  ->display_as('NANAK', 'Nama Anak')
+		  ->display_as('TLAHIR', 'Tempat Lahir')
+		  ->display_as('TGLLAHIR', 'Tanggal Lahir')
+		  ->display_as('KJKEL', 'Jenis Kelamin')
+		  ->display_as('KELUARGA', 'Hubungan Keluarga')
+		  ->display_as('TUNJ', 'Tunjangan')
+		  ->display_as('TIJASAH', 'Tingkat Pendidikan Umum')
+		  ->display_as('KKERJA', 'Pekerjaan');
+		  $crud->fields('NIP', 'NANAK', 'TLAHIR', 'TGLLAHIR', 'KJKEL', 'KELUARGA', 'TUNJ', 'TIJASAH', 'KKERJA');
+		  $crud->required_fields('NIP', 'NANAK', 'TLAHIR', 'TGLLAHIR', 'KJKEL', 'KELUARGA', 'TUNJ', 'TIJASAH', 'KKERJA');
+		  $output = $crud->render();
+		  $this->load->view('dashboard/grid',$output);
+		}
+
+		public function operatorSimpegAyah()
+		{
+		  log_message('debug','Trying to load Grocer operatorSimpegAyah');
+		  $adminSts = $this->ion_auth->is_admin()===FALSE;
+		  $this->db = $this->load->database('simpegRef',true);
+		  log_message('debug','after Load new Db');
+		  $crud = new grocery_CRUD();
+		  $crud->set_table('riwayatayah')
+		  ->set_subject('Ayah')
+		  ->columns('NIP', 'NAYAH', 'TLAHIR', 'TGLLAHIR', 'KKERJA', 'ALJALAN', 'ALRT', 'ALRW', 'NOTELP', 'WIL', 'KPOS', 'ALHP')
+		  ->display_as('NIP', 'Nip')
+		  ->display_as('NAYAH', 'Nama Ayah')
+		  ->display_as('TLAHIR', 'Tempat Lahir')
+		  ->display_as('TGLLAHIR', 'Tanggal Lahir')
+		  ->display_as('KKERJA', 'Pekerjaan')
+		  ->display_as('ALJALAN', 'Alamat')
+		  ->display_as('ALRT', 'RT')
+		  ->display_as('ALRW', 'RW')
+		  ->display_as('NOTELP', 'Nomor Telepon')
+		  ->display_as('WIL', 'Wilayah')
+		  ->display_as('KPOS', 'Kode Pos')
+		  ->display_as('ALHP', 'Nomor HP');
+		  $crud->fields('NIP', 'NAYAH', 'TLAHIR', 'TGLLAHIR', 'KKERJA', 'ALJALAN', 'ALRT', 'ALRW', 'NOTELP', 'WIL', 'KPOS', 'ALHP');
+		  $crud->required_fields('NIP', 'NAYAH', 'TLAHIR', 'TGLLAHIR', 'KKERJA', 'ALJALAN', 'ALRT', 'ALRW', 'NOTELP', 'WIL', 'KPOS', 'ALHP');
+		  $output = $crud->render();
+		  $this->load->view('dashboard/grid',$output);
+		}
+
+		public function operatorSimpegIbu()
+		{
+		  log_message('debug','Trying to load Grocer operatorSimpegAyah');
+		  $adminSts = $this->ion_auth->is_admin()===FALSE;
+		  $this->db = $this->load->database('simpegRef',true);
+		  log_message('debug','after Load new Db');
+		  $crud = new grocery_CRUD();
+		  $crud->set_table('riwayatibu')
+		  ->set_subject('Ibu')
+		  ->columns('NIP', 'NIBU', 'TLAHIR', 'TGLLAHIR', 'KKERJA', 'ALJALAN', 'ALRT', 'ALRW', 'NOTELP', 'WIL', 'KPOS', 'ALHP')
+		  ->display_as('NIP', 'Nip')
+		  ->display_as('NIBU', 'Nama Ibu')
+		  ->display_as('TLAHIR', 'Tempat Lahir')
+		  ->display_as('TGLLAHIR', 'Tanggal Lahir')
+		  ->display_as('KKERJA', 'Pekerjaan')
+		  ->display_as('ALJALAN', 'Alamat')
+		  ->display_as('ALRT', 'RT')
+		  ->display_as('ALRW', 'RW')
+		  ->display_as('NOTELP', 'Nomor Telepon')
+		  ->display_as('WIL', 'Wilayah')
+		  ->display_as('KPOS', 'Kode Pos')
+		  ->display_as('ALHP', 'Nomor HP');
+		  $crud->set_relation('KKERJA','daftarPekerjaan','nama');
+		  $crud->set_relation('WIL','wilayah','nwil');
+		  $crud->fields('NIP', 'NIBU', 'TLAHIR', 'TGLLAHIR', 'KKERJA', 'ALJALAN', 'ALRT', 'ALRW', 'NOTELP', 'WIL', 'KPOS', 'ALHP');
+		  $crud->required_fields('NIP', 'NIBU', 'TLAHIR', 'TGLLAHIR', 'KKERJA', 'ALJALAN', 'ALRT', 'ALRW', 'NOTELP', 'WIL', 'KPOS', 'ALHP');
+		  $output = $crud->render();
+		  $this->load->view('dashboard/grid',$output);
+		}
+
+		public function bangrirSimpeg()
+		{
+		  log_message('debug','Inside Page Dashboard editAdminSimpeg');
+		  $userId = $this->ion_auth->get_user_id();
+		  $this->data['user']=$this->ion_auth->user()->row();
+		  log_message('INFO','is admin? :'.$this->ion_auth->is_admin());
+		  $this->data['user_group']= $this->ion_auth->get_users_groups($userId)->result();
+		  log_message('debug','User Group : '.print_r($this->data['user_group'],TRUE));
+
+		  $this->data['users_instansi']=$this->Users_model->getUsersinstansi($userId );
+
+		  $groupid = $this->data['user_group'][0]->id;
+		  $this->data['menu']=$this->Menu_model->menuMaster($groupid);
+
+		  log_message('INFO','User Id : '.$userId);
+		  log_message('DEBUG','inside Admin');
+		  $this->render('dashboard/bangrir_simpeg_view');
+		}
+
+
+		public function bangrirSimpegJabatan()
+		{
+		  log_message('debug','Trying to load Grocer bangrirSimpegJabatan');
+		  $adminSts = $this->ion_auth->is_admin()===FALSE;
+		  $this->db = $this->load->database('simpegRef',true);
+		  log_message('debug','after Load new Db');
+		  $crud = new grocery_CRUD();
+		  $crud->set_table('jabatan')
+		  ->set_subject('Kepangkatan')
+		  ->columns('nip','kunkers','kunkersInduk','KINSIND','nunkerUnitOrganisasi','namaJenisJabatan','tmtJabatan', 'nomorSk','tanggalSk', 'jnsjab','kjab','kpej','tmtPelantikan', 'njab', 'kwil', 'nunkerUnitOrganisasi', 'JSUSPIM', 'KESELON')
+		  ->display_as('nip', 'Nip')
+		  ->display_as('kunkers', 'Instansi')
+		  ->display_as('kunkersInduk', 'Instansi')
+		  ->display_as('KINSIND', 'Instansi Induk')
+		  ->display_as('nunkerUnitOrganisasi', 'Nama Unit Organisasi')
+		  ->display_as('namaJenisJabatan', 'Nama Jenis Jabatan')
+		  ->display_as('tmtJabatan', 'TMT Jabatan')
+		  ->display_as('nomorSk', 'Nomor SK')
+		  ->display_as('tanggalSk', 'Tanggal Sk')
+		  ->display_as('jnsjab', 'Jenis Jabatan')
+		  ->display_as('kjab', 'Jabatan')
+		  ->display_as('kpej', 'Pejabat Menetapkan')
+		  ->display_as('tmtPelantikan', 'TMT Pelantikan')
+		  ->display_as('njab', 'Nama Jabatan')
+		  ->display_as('kwil', 'Wilayah')
+		  ->display_as('nunkerUnitOrganisasi', 'Nama Unit Organisasi')
+		  ->display_as('JSUSPIM', 'JSUSPIM')
+		  ->display_as('KESELON', 'Eselon');
+		  $crud->set_relation('KINSIND','insinduk','NINSIND');
+		  $crud->set_relation('jnsjab','jenisjabatan','namaJenisJabatan');
+		  $crud->set_relation('kpej','pejabatmenetapkan','npej');
+		  $crud->set_relation('kwil','wilayah','nwil');
+		  $crud->fields('nip','kunkers','kunkersInduk','KINSIND','nunkerUnitOrganisasi','namaJenisJabatan','tmtJabatan', 'nomorSk','tanggalSk', 'jnsjab','kjab','kpej','tmtPelantikan', 'njab', 'kwil', 'nunkerUnitOrganisasi', 'JSUSPIM', 'KESELON');
+		  $crud->required_fields('nip','kunkers','kunkersInduk','KINSIND','nunkerUnitOrganisasi','namaJenisJabatan','tmtJabatan', 'nomorSk','tanggalSk', 'jnsjab','kjab','kpej','tmtPelantikan', 'njab', 'kwil', 'nunkerUnitOrganisasi', 'JSUSPIM', 'KESELON');
+		  $output = $crud->render();
+		  $this->load->view('dashboard/grid',$output);
+		}
+
+		public function bangrirSimpegPendidikan()
+		{
+		  log_message('debug','Trying to load Grocer bangrirSimpegPendidikan');
+		  $adminSts = $this->ion_auth->is_admin()===FALSE;
+		  $this->db = $this->load->database('simpegRef',true);
+		  log_message('debug','after Load new Db');
+		  $crud = new grocery_CRUD();
+		  $crud->set_table('pendidikan')
+		  ->set_subject('pendidikan')
+		  ->columns('nip','tahunLulus','tglTahunLulus','nomorIjazah','namaSekolah','tempat','glrDepan', 'glrBelakang','ktpu', 'KJUR','nkepsek','npdum')
+		  ->display_as('nip', 'Nip')
+		  ->display_as('tahunLulus', 'Tahun Kelulusan')
+		  ->display_as('tglTahunLulus', 'Tanggal Kelulusan')
+		  ->display_as('nomorIjazah', 'Nomor Ijazah')
+		  ->display_as('namaSekolah', 'Nama Sekolah')
+		  ->display_as('tempat', 'Tempat')
+		  ->display_as('glrDepan', 'Gelar Depan')
+		  ->display_as('glrBelakang', 'Gelar Belakang')
+		  ->display_as('ktpu', 'Tingkat Pendidikan')
+		  ->display_as('KJUR', 'Jurusan')
+		  ->display_as('nkepsek', 'Nama Kepala Sekolah')
+		  ->display_as('npdum', 'Nama Pendidikan Umum');
+		  $crud->set_relation('ktpu','tpu','NJUR');
+		  $crud->fields('nip','tahunLulus','tglTahunLulus','nomorIjazah','namaSekolah','tempat','glrDepan', 'glrBelakang','ktpu', 'KJUR','nkepsek','npdum');
+		  $crud->required_fields('nip','tahunLulus','tglTahunLulus','nomorIjazah','namaSekolah','tempat','glrDepan', 'glrBelakang','ktpu', 'KJUR','nkepsek','npdum');
+		  $output = $crud->render();
+		  $this->load->view('dashboard/grid',$output);
+		}
+
+		public function bangrirSimpegDiklatStruktural()
+		{
+		  log_message('debug','Trying to load Grocer bangrirSimpegDiklatStruktural');
+		  $adminSts = $this->ion_auth->is_admin()===FALSE;
+		  $this->db = $this->load->database('simpegRef',true);
+		  log_message('debug','after Load new Db');
+		  $crud = new grocery_CRUD();
+		  $crud->where('kodeJenisDiklat',2);
+		  $crud->set_table('riwayatdiklat')
+		  ->set_subject('Diklat Kepemimpinan')
+		  ->columns('NIP','kodeJenisDiklat','kFungStrTek','TEMPAT','PAN','ANGKATAN','TMULAI', 'TAKHIR','tahun', 'JAM','NSTTPP','TSTTPP','namaDiklat', 'ISAKHIR')
+		  ->display_as('NIP', 'Nip')
+		  ->display_as('kodeJenisDiklat', 'Jenis Diklat')
+		  ->display_as('kFungStrTek', 'Nama Diklat')
+		  ->display_as('TEMPAT', 'Tempat')
+		  ->display_as('PAN', 'Penyelenggara')
+		  ->display_as('ANGKATAN', 'Angkatan')
+		  ->display_as('TMULAI', 'Tanggal Mulai')
+		  ->display_as('TAKHIR', 'Tanggal Berakhir')
+		  ->display_as('tahun', 'Tahun')
+		  ->display_as('JAM', 'Jam')
+		  ->display_as('NSTTPP', 'NSTTPP')
+		  ->display_as('TSTTPP', 'TSTTPP')
+		  ->display_as('namaDiklat', 'Nama Diklat');
+		  $crud->set_relation('kodeJenisDiklat','jenisdiklat','nama');
+		  $crud->fields('nip','kodeJenisDiklat','kFungStrTek','TEMPAT','PAN','ANGKATAN','TMULAI', 'TAKHIR','tahun', 'JAM','NSTTPP','TSTTPP','namaDiklat', 'ISAKHIR');
+		  $crud->required_fields('nip','kodeJenisDiklat','kFungStrTek','TEMPAT','PAN','ANGKATAN','TMULAI', 'TAKHIR','tahun', 'JAM','NSTTPP','TSTTPP','namaDiklat', 'ISAKHIR');
+		  $output = $crud->render();
+		  $this->load->view('dashboard/grid',$output);
+		}
+
+		public function bangrirSimpegDiklatFungsional()
+		{
+		  log_message('debug','Trying to load Grocer bangrirSimpegDiklatFungsional');
+		  $adminSts = $this->ion_auth->is_admin()===FALSE;
+		  $this->db = $this->load->database('simpegRef',true);
+		  log_message('debug','after Load new Db');
+		  $crud = new grocery_CRUD();
+		  $crud->where('kodeJenisDiklat',1);
+		  $crud->set_table('riwayatdiklat')
+		  ->set_subject('Diklat Fungsional')
+		  ->columns('NIP','kodeJenisDiklat','kFungStrTek','TEMPAT','PAN','ANGKATAN','TMULAI', 'TAKHIR','tahun', 'JAM','NSTTPP','TSTTPP','namaDiklat', 'ISAKHIR')
+		  ->display_as('NIP', 'Nip')
+		  ->display_as('kodeJenisDiklat', 'Jenis Diklat')
+		  ->display_as('kFungStrTek', 'Nama Diklat')
+		  ->display_as('TEMPAT', 'Tempat')
+		  ->display_as('PAN', 'Penyelenggara')
+		  ->display_as('ANGKATAN', 'Angkatan')
+		  ->display_as('TMULAI', 'Tanggal Mulai')
+		  ->display_as('TAKHIR', 'Tanggal Berakhir')
+		  ->display_as('tahun', 'Tahun')
+		  ->display_as('JAM', 'Jam')
+		  ->display_as('NSTTPP', 'NSTTPP')
+		  ->display_as('TSTTPP', 'TSTTPP')
+		  ->display_as('namaDiklat', 'Nama Diklat');
+		  $crud->set_relation('kodeJenisDiklat','jenisdiklat','nama');
+		  $crud->fields('nip','kodeJenisDiklat','kFungStrTek','TEMPAT','PAN','ANGKATAN','TMULAI', 'TAKHIR','tahun', 'JAM','NSTTPP','TSTTPP','namaDiklat', 'ISAKHIR');
+		  $crud->required_fields('nip','kodeJenisDiklat','kFungStrTek','TEMPAT','PAN','ANGKATAN','TMULAI', 'TAKHIR','tahun', 'JAM','NSTTPP','TSTTPP','namaDiklat', 'ISAKHIR');
+		  $output = $crud->render();
+		  $this->load->view('dashboard/grid',$output);
+		}
+
+		public function bangrirSimpegTugas()
+		{
+		  log_message('debug','Trying to load Grocer bangrirSimpegTugas');
+		  $adminSts = $this->ion_auth->is_admin()===FALSE;
+		  $this->db = $this->load->database('simpegRef',true);
+		  log_message('debug','after Load new Db');
+		  $crud = new grocery_CRUD();
+		  $crud->set_table('riwayattugas')
+		  ->set_subject('Tugas Luar Negri')
+		  ->columns('NIP', 'NNEG', 'TUJUAN', 'PTETAP', 'NSK', 'TSK', 'TMULAI', 'TAKHIR')
+		  ->display_as('NIP', 'Nip')
+		  ->display_as('NNEG', 'Nama Negara')
+		  ->display_as('TUJUAN', 'Tujuan Negara')
+		  ->display_as('PTETAP', 'Pejabat Yang Menetapkan')
+		  ->display_as('NSK', 'Nomor SK')
+		  ->display_as('TSK', 'Tanggal SK')
+		  ->display_as('TMULAI', 'Tanggal Mulai')
+		  ->display_as('TAKHIR', 'Tanggal Akhir');
+		  $crud->fields('NIP', 'NNEG', 'TUJUAN', 'PTETAP', 'NSK', 'TSK', 'TMULAI', 'TAKHIR');
+		  $crud->required_fields('NIP', 'NNEG', 'TUJUAN', 'PTETAP', 'NSK', 'TSK', 'TMULAI', 'TAKHIR');
+		  $output = $crud->render();
+		  $this->load->view('dashboard/grid',$output);
+		}
+
+		public function kesdisSimpeg()
+		{
+			log_message('debug','Inside Page Dashboard kesdisSimpeg');
+			$userId = $this->ion_auth->get_user_id();
+			$this->data['user']=$this->ion_auth->user()->row();
+			log_message('INFO','is admin? :'.$this->ion_auth->is_admin());
+			$this->data['user_group']= $this->ion_auth->get_users_groups($userId)->result();
+			log_message('debug','User Group : '.print_r($this->data['user_group'],TRUE));
+
+			$this->data['users_instansi']=$this->Users_model->getUsersinstansi($userId );
+
+			$groupid = $this->data['user_group'][0]->id;
+			$this->data['menu']=$this->Menu_model->menuMaster($groupid);
+
+			log_message('INFO','User Id : '.$userId);
+			log_message('DEBUG','inside Admin');
+			$this->render('dashboard/kesdis_simpeg_view');
+		}
+
+
+		public function kesdisSimpegPenghargaan()
+		{
+		  log_message('debug','Trying to load Grocer kesdisSimpegPenghargaan');
+		  $adminSts = $this->ion_auth->is_admin()===FALSE;
+		  $this->db = $this->load->database('simpegRef',true);
+		  log_message('debug','after Load new Db');
+		  $crud = new grocery_CRUD();
+		  $crud->set_table('penghargaan')
+		  ->set_subject('Penghargaan')
+		  ->columns('nip', 'skNomor', 'skDate', 'tahun', 'NBINTANG', 'AOLEH', 'NOMOR', 'TEMPAT')
+		  ->display_as('nip', 'Nip')
+		  ->display_as('skNomor', 'Nomor SK')
+		  ->display_as('skDate', 'Tanggal SK')
+		  ->display_as('tahun', 'Tahun')
+		  ->display_as('NBINTANG', 'Nama Penghargaan')
+		  ->display_as('AOLEH', 'Diperoleh Dari')
+		  ->display_as('NOMOR', 'Nomor')
+		  ->display_as('TEMPAT', 'Tempat');
+		  $crud->fields('nip', 'skNomor', 'skDate', 'tahun', 'NBINTANG', 'AOLEH', 'NOMOR', 'TEMPAT');
+		  $crud->required_fields('nip', 'skNomor', 'skDate', 'tahun', 'NBINTANG', 'AOLEH', 'NOMOR', 'TEMPAT');
+		  $output = $crud->render();
+		  $this->load->view('dashboard/grid',$output);
+		}
+
+		public function kesdisSimpegHukuman()
+		{
+		  log_message('debug','Trying to load Grocer kesdisSimpegHukuman');
+		  $adminSts = $this->ion_auth->is_admin()===FALSE;
+		  $this->db = $this->load->database('simpegRef',true);
+		  log_message('debug','after Load new Db');
+		  $crud = new grocery_CRUD();
+		  $crud->set_table('hukumandisiplin')
+		  ->set_subject('Hukuman Disiplin')
+		  ->columns('nipBaru', 'nipLama', 'jenisHukuman', 'DESHUKUM', 'skNomor', 'skTanggal', 'KPEJ', 'hukumanTanggal', 'akhirHukumTanggal', 'masaTahun', 'masaBulan', 'nomorPp', 'alasanHukumanDisiplin')
+		  ->display_as('nipBaru', 'Nip')
+		  ->display_as('nipLama', 'Nip Lama')
+		  ->display_as('jenisHukuman', 'Jenis Hukuman')
+		  ->display_as('DESHUKUM', 'Deskripsi Hukuman')
+		  ->display_as('skNomor', 'Nomor SK')
+		  ->display_as('skTanggal', 'Tanggal SK')
+		  ->display_as('KPEJ', 'Pejabat Yang Menetapkan')
+		  ->display_as('hukumanTanggal', 'Tanggal Hukuman')
+		  ->display_as('akhirHukumTanggal', 'Akhir Tanggal Hukuman')
+		  ->display_as('masaTahun', 'Tahun')
+		  ->display_as('masaBulan', 'Bulan')
+		  ->display_as('nomorPp', 'Nomor PP')
+		  ->display_as('alasanHukumanDisiplin', 'Alasan Hukuman');
+		  $crud->set_relation('KPEJ','pejabatmenetapkan','npej');
+		  $crud->fields('nipBaru', 'nipLama', 'jenisHukuman', 'DESHUKUM', 'skNomor', 'skTanggal', 'KPEJ', 'hukumanTanggal', 'akhirHukumTanggal', 'masaTahun', 'masaBulan', 'nomorPp', 'alasanHukumanDisiplin');
+		  $crud->required_fields('nipBaru', 'jenisHukuman', 'DESHUKUM', 'skNomor', 'skTanggal', 'KPEJ', 'hukumanTanggal', 'akhirHukumTanggal', 'masaTahun', 'masaBulan', 'nomorPp', 'alasanHukumanDisiplin');
+		  $output = $crud->render();
+		  $this->load->view('dashboard/grid',$output);
+		}
+
 	public function referensiUnitKerja()
 	{
 		log_message('debug','Trying to load Grocer Ref Unit Kerja');
