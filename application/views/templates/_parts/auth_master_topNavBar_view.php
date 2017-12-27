@@ -1,3 +1,26 @@
+<?php
+$userGrp = $this->ion_auth->get_users_groups($this->ion_auth->get_user_id())->result();
+$stsNotif =FALSE;
+log_message('debug','Groupnya : '.print_r($userGrp,TRUE));
+if (strpos($userGrp[0]->name, 'admin') !== false||strpos($userGrp[0]->name, 'opd') !== false) {
+    $stsNotif = TRUE;
+}
+?>
+<?php
+  if($stsNotif)
+  {
+?>
+<script type="text/javascript">
+var auto_refresh = setInterval(
+function ()
+{
+$('#notification').load('<?php echo base_url()?>dashboard/getTotalNotificationUpdatePNS').fadeIn("slow");
+}, 5000); // refresh every 10000 milliseconds
+
+</script>
+<?php
+}
+?>
 <header class="main-header">
     <!-- Logo -->
     <a href="<?php echo base_url()?>dashboard" class="logo">
@@ -19,47 +42,20 @@
           <!-- Messages: style can be found in dropdown.less-->
 
           <!-- Notifications: style can be found in dropdown.less -->
-          <li class="dropdown notifications-menu open">
-                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+          <?php
+          if($stsNotif)
+          {?>
+
+          <li class="dropdown notifications-menu">
+                      <a href="<?php echo base_url().'dashboard/dataconfirmation' ?>">
                         <i class="fa fa-bell-o"></i>
-                        <span class="label label-warning">10</span>
+                        <span id="notification" class="label label-danger">0</span>
                       </a>
-                      <ul class="dropdown-menu">
-                        <li class="header">You have 10 notifications</li>
-                        <li>
-                          <!-- inner menu: contains the actual data -->
-                          <ul class="menu">
-                            <li>
-                              <a href="#">
-                                <i class="fa fa-users text-aqua"></i> 5 new members joined today
-                              </a>
-                            </li>
-                            <li>
-                              <a href="#">
-                                <i class="fa fa-warning text-yellow"></i> Very long description here that may not fit into the
-                                page and may cause design problems
-                              </a>
-                            </li>
-                            <li>
-                              <a href="#">
-                                <i class="fa fa-users text-red"></i> 5 new members joined
-                              </a>
-                            </li>
-                            <li>
-                              <a href="#">
-                                <i class="fa fa-shopping-cart text-green"></i> 25 sales made
-                              </a>
-                            </li>
-                            <li>
-                              <a href="#">
-                                <i class="fa fa-user text-red"></i> You changed your username
-                              </a>
-                            </li>
-                          </ul>
-                        </li>
-                        <li class="footer"><a href="#">View all</a></li>
-                      </ul>
-                    </li>
+
+        </li>
+        <?php
+        }
+        ?>
           <!-- Tasks: style can be found in dropdown.less -->
 
           <!-- User Account: style can be found in dropdown.less -->

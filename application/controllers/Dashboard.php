@@ -2154,6 +2154,22 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 		//$this->render('dashboard/index_view');
 		$this->load->view('dashboard/grid',$output);
 	}
+	public function getTotalNotificationUpdatePNS()
+	{
+		$userId = $this->ion_auth->get_user_id();
+		$userLoggedin = $this->ion_auth->user()->row();
+		$this->data['user']=$userLoggedin;
+		//log_message('debug',print_r($userLoggedin,TRUE));
+
+		//log_message('INFO','is admin? :'.$this->ion_auth->is_admin());
+		$this->data['user_group']= $this->ion_auth->get_users_groups($userId)->result();
+		//log_message('debug','User Group : '.print_r($this->data['user_group'],TRUE));
+
+		$this->data['users_instansi']=$this->Users_model->getUsersinstansi($userId );
+		$totalNotif =$this->Simpeg_model->getCountTotalConfirmationByStatus(0,$this->data['users_instansi'][0]['instansi_name']);
+		log_message('debug','Total Notification '.$totalNotif);
+		echo $totalNotif;
+	}
 
 
 	public function arsipDokumenPegawai()

@@ -736,6 +736,7 @@ INNER JOIN revReferenceSimpeg.agama a on a.kode = d.agamaId WHERE d.nipbaru = '$
 					$recordsTotal=$row->recordsTotal;
 				}
 				$query->free_result();
+				
 				return $recordsTotal;
 			}else
 			{
