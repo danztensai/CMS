@@ -384,7 +384,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 	 	{
 	 		log_message('debug','Trying to load Grocer opbkdModifRiwayatDiklat');
 	 		$adminSts = $this->ion_auth->is_admin()===FALSE;
-	 		$this->db = $this->load->database('simpegRef',true);
+	 		
 	 		log_message('debug','after Load new Db');
 	 		$crud = new grocery_CRUD();
 	 		$crud->set_table('riwayatdiklat')
@@ -628,7 +628,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 		$this->data['menu']=$this->Menu_model->menuMaster($groupid);
 
 
-		$this->db = $this->load->database('simpegRef',true);
+
 
 		//log_message('INFO','User Id : '.$userId);
 
@@ -823,7 +823,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 	{
 		log_message('debug','Trying to load Grocer Ref Instansi Induk');
 		$adminSts = $this->ion_auth->is_admin()===FALSE;
-		$this->db = $this->load->database('simpegRef',true);
+
 		log_message('debug','after Load new Db');
 		$crud = new grocery_CRUD();
 		$crud->set_table('insinduk')
@@ -862,7 +862,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 	{
 		log_message('debug','Trying to load Grocer adminKesdisPenghargaan');
 		$adminSts = $this->ion_auth->is_admin()===FALSE;
-		$this->db = $this->load->database('simpegRef',true);
+
 		log_message('debug','after Load new Db');
 		$crud = new grocery_CRUD();
 		$crud->set_table('penghargaan')
@@ -886,7 +886,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 	{
 		log_message('debug','Trying to load Grocer adminKesdisCuti');
 		$adminSts = $this->ion_auth->is_admin()===FALSE;
-		$this->db = $this->load->database('simpegRef',true);
+
 		log_message('debug','after Load new Db');
 		$crud = new grocery_CRUD();
 		$crud->set_table('riwayatcuti')
@@ -912,7 +912,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 	{
 		log_message('debug','Trying to load Grocer adminKesdisStatusPerkawinan');
 		$adminSts = $this->ion_auth->is_admin()===FALSE;
-		$this->db = $this->load->database('simpegRef',true);
+
 		log_message('debug','after Load new Db');
 		$crud = new grocery_CRUD();
 		$crud->set_table('datautama')
@@ -933,7 +933,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 	{
 		log_message('debug','Trying to load Grocer adminKesdisStatusPerkawinan');
 		$adminSts = $this->ion_auth->is_admin()===FALSE;
-		$this->db = $this->load->database('simpegRef',true);
+
 		log_message('debug','after Load new Db');
 		$crud = new grocery_CRUD();
 		$crud->set_table('riwayathukuman')
@@ -978,7 +978,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 	{
 		log_message('debug','Trying to load Grocer adminSimpegKepangkatan');
 		$adminSts = $this->ion_auth->is_admin()===FALSE;
-		$this->db = $this->load->database('simpegRef',true);
+
 		log_message('debug','after Load new Db');
 		$crud = new grocery_CRUD();
 		$crud->set_table('golonganhistory')
@@ -1007,7 +1007,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 	{
 		log_message('debug','Trying to load Grocer adminSimpegJabatan');
 		$adminSts = $this->ion_auth->is_admin()===FALSE;
-		$this->db = $this->load->database('simpegRef',true);
+
 		log_message('debug','after Load new Db');
 		$crud = new grocery_CRUD();
 		$crud->set_table('jabatan')
@@ -1041,7 +1041,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 	{
 		log_message('debug','Trying to load Grocer adminSimpegPendidikan');
 		$adminSts = $this->ion_auth->is_admin()===FALSE;
-		$this->db = $this->load->database('simpegRef',true);
+
 		log_message('debug','after Load new Db');
 		$crud = new grocery_CRUD();
 		$crud->set_table('pendidikan')
@@ -1069,7 +1069,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 	{
 		log_message('debug','Trying to load Grocer adminSimpegDiklatStruktural');
 		$adminSts = $this->ion_auth->is_admin()===FALSE;
-		$this->db = $this->load->database('simpegRef',true);
+
 		log_message('debug','after Load new Db');
 		$crud = new grocery_CRUD();
 		$crud->where('kodeJenisDiklat',2);
@@ -1099,7 +1099,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 	{
 		log_message('debug','Trying to load Grocer adminSimpegDiklatFungsional');
 		$adminSts = $this->ion_auth->is_admin()===FALSE;
-		$this->db = $this->load->database('simpegRef',true);
+
 		log_message('debug','after Load new Db');
 		$crud = new grocery_CRUD();
 		$crud->where('kodeJenisDiklat',1);
@@ -1129,7 +1129,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 	{
 		log_message('debug','Trying to load Grocer adminSimpegDiklatTeknik');
 		$adminSts = $this->ion_auth->is_admin()===FALSE;
-		$this->db = $this->load->database('simpegRef',true);
+
 		log_message('debug','after Load new Db');
 		$crud = new grocery_CRUD();
 		$crud->where('kodeJenisDiklat',3);
@@ -1159,7 +1159,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 	{
 		log_message('debug','Trying to load Grocer adminSimpegPenataran');
 		$adminSts = $this->ion_auth->is_admin()===FALSE;
-		$this->db = $this->load->database('simpegRef',true);
+
 		log_message('debug','after Load new Db');
 		$crud = new grocery_CRUD();
 		$crud->set_table('riwayatpenataran')
@@ -1185,7 +1185,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 	{
 		log_message('debug','Trying to load Grocer adminSimpegSeminar');
 		$adminSts = $this->ion_auth->is_admin()===FALSE;
-		$this->db = $this->load->database('simpegRef',true);
+
 		log_message('debug','after Load new Db');
 		$crud = new grocery_CRUD();
 		$crud->set_table('riwayatseminar')
@@ -1211,7 +1211,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 	{
 		log_message('debug','Trying to load Grocer adminSimpegKursus');
 		$adminSts = $this->ion_auth->is_admin()===FALSE;
-		$this->db = $this->load->database('simpegRef',true);
+
 		log_message('debug','after Load new Db');
 		$crud = new grocery_CRUD();
 		$crud->set_table('riwayatkursus')
@@ -1239,7 +1239,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 	{
 		log_message('debug','Trying to load Grocer adminSimpegPenghargaan');
 		$adminSts = $this->ion_auth->is_admin()===FALSE;
-		$this->db = $this->load->database('simpegRef',true);
+
 		log_message('debug','after Load new Db');
 		$crud = new grocery_CRUD();
 		$crud->set_table('penghargaan')
@@ -1263,7 +1263,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 	{
 		log_message('debug','Trying to load Grocer adminSimpegOrganisasi');
 		$adminSts = $this->ion_auth->is_admin()===FALSE;
-		$this->db = $this->load->database('simpegRef',true);
+
 		log_message('debug','after Load new Db');
 		$crud = new grocery_CRUD();
 		$crud->set_table('riwayatorganisasi')
@@ -1287,7 +1287,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 	{
 		log_message('debug','Trying to load Grocer adminSimpegTugas');
 		$adminSts = $this->ion_auth->is_admin()===FALSE;
-		$this->db = $this->load->database('simpegRef',true);
+
 		log_message('debug','after Load new Db');
 		$crud = new grocery_CRUD();
 		$crud->set_table('riwayattugas')
@@ -1311,7 +1311,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 	{
 		log_message('debug','Trying to load Grocer adminSimpegRiwayatTugas');
 		$adminSts = $this->ion_auth->is_admin()===FALSE;
-		$this->db = $this->load->database('simpegRef',true);
+
 		log_message('debug','after Load new Db');
 		$crud = new grocery_CRUD();
 		$crud->set_table('riwayatbahasa')
@@ -1331,7 +1331,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 	{
 		log_message('debug','Trying to load Grocer adminSimpegDPPP');
 		$adminSts = $this->ion_auth->is_admin()===FALSE;
-		$this->db = $this->load->database('simpegRef',true);
+
 		log_message('debug','after Load new Db');
 		$crud = new grocery_CRUD();
 		$crud->set_table('rdppp')
@@ -1358,7 +1358,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 	{
 		log_message('debug','Trying to load Grocer adminSimpegHukuman');
 		$adminSts = $this->ion_auth->is_admin()===FALSE;
-		$this->db = $this->load->database('simpegRef',true);
+
 		log_message('debug','after Load new Db');
 		$crud = new grocery_CRUD();
 		$crud->set_table('hukumandisiplin')
@@ -1387,7 +1387,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 	{
 		log_message('debug','Trying to load Grocer adminSimpegSuamiIstri');
 		$adminSts = $this->ion_auth->is_admin()===FALSE;
-		$this->db = $this->load->database('simpegRef',true);
+
 		log_message('debug','after Load new Db');
 		$crud = new grocery_CRUD();
 		$crud->set_table('riwayatsuamiistri')
@@ -1419,7 +1419,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 	{
 		log_message('debug','Trying to load Grocer adminSimpegAnak');
 		$adminSts = $this->ion_auth->is_admin()===FALSE;
-		$this->db = $this->load->database('simpegRef',true);
+
 		log_message('debug','after Load new Db');
 		$crud = new grocery_CRUD();
 		$crud->set_table('riwayatanak')
@@ -1444,7 +1444,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 	{
 		log_message('debug','Trying to load Grocer adminSimpegAyah');
 		$adminSts = $this->ion_auth->is_admin()===FALSE;
-		$this->db = $this->load->database('simpegRef',true);
+
 		log_message('debug','after Load new Db');
 		$crud = new grocery_CRUD();
 		$crud->set_table('riwayatayah')
@@ -1472,7 +1472,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 	{
 		log_message('debug','Trying to load Grocer adminSimpegAyah');
 		$adminSts = $this->ion_auth->is_admin()===FALSE;
-		$this->db = $this->load->database('simpegRef',true);
+
 		log_message('debug','after Load new Db');
 		$crud = new grocery_CRUD();
 		$crud->set_table('riwayatibu')
@@ -1520,7 +1520,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 		{
 			log_message('debug','Trying to load Grocer operatorSimpegKepangkatan');
 			$adminSts = $this->ion_auth->is_admin()===FALSE;
-			$this->db = $this->load->database('simpegRef',true);
+
 			log_message('debug','after Load new Db');
 			$crud = new grocery_CRUD();
 			$crud->set_table('golonganhistory')
@@ -1554,7 +1554,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 		{
 			log_message('debug','Trying to load Grocer operatorSimpegJabatan');
 			$adminSts = $this->ion_auth->is_admin()===FALSE;
-			$this->db = $this->load->database('simpegRef',true);
+
 			log_message('debug','after Load new Db');
 			$crud = new grocery_CRUD();
 			$crud->set_table('jabatan')
@@ -1592,7 +1592,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 		{
 		  log_message('debug','Trying to load Grocer operatorSimpegPendidikan');
 		  $adminSts = $this->ion_auth->is_admin()===FALSE;
-		  $this->db = $this->load->database('simpegRef',true);
+
 		  log_message('debug','after Load new Db');
 		  $crud = new grocery_CRUD();
 		  $crud->set_table('pendidikan')
@@ -1621,7 +1621,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 		{
 		  log_message('debug','Trying to load Grocer operatorSimpegDiklatStruktural');
 		  $adminSts = $this->ion_auth->is_admin()===FALSE;
-		  $this->db = $this->load->database('simpegRef',true);
+
 		  log_message('debug','after Load new Db');
 		  $crud = new grocery_CRUD();
 		  $crud->where('kodeJenisDiklat',2);
@@ -1652,7 +1652,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 		{
 		  log_message('debug','Trying to load Grocer operatorSimpegDiklatFungsional');
 		  $adminSts = $this->ion_auth->is_admin()===FALSE;
-		  $this->db = $this->load->database('simpegRef',true);
+
 		  log_message('debug','after Load new Db');
 		  $crud = new grocery_CRUD();
 		  $crud->where('kodeJenisDiklat',1);
@@ -1683,7 +1683,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 		{
 		  log_message('debug','Trying to load Grocer operatorSimpegDiklatTeknik');
 		  $adminSts = $this->ion_auth->is_admin()===FALSE;
-		  $this->db = $this->load->database('simpegRef',true);
+
 		  log_message('debug','after Load new Db');
 		  $crud = new grocery_CRUD();
 		  $crud->where('kodeJenisDiklat',3);
@@ -1714,7 +1714,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 		{
 		  log_message('debug','Trying to load Grocer operatorSimpegPenataran');
 		  $adminSts = $this->ion_auth->is_admin()===FALSE;
-		  $this->db = $this->load->database('simpegRef',true);
+
 		  log_message('debug','after Load new Db');
 		  $crud = new grocery_CRUD();
 		  $crud->set_table('riwayatpenataran')
@@ -1740,7 +1740,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 		{
 		  log_message('debug','Trying to load Grocer operatorSimpegSeminar');
 		  $adminSts = $this->ion_auth->is_admin()===FALSE;
-		  $this->db = $this->load->database('simpegRef',true);
+
 		  log_message('debug','after Load new Db');
 		  $crud = new grocery_CRUD();
 		  $crud->set_table('riwayatseminar')
@@ -1766,7 +1766,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 		{
 		  log_message('debug','Trying to load Grocer operatorSimpegKursus');
 		  $adminSts = $this->ion_auth->is_admin()===FALSE;
-		  $this->db = $this->load->database('simpegRef',true);
+
 		  log_message('debug','after Load new Db');
 		  $crud = new grocery_CRUD();
 		  $crud->set_table('riwayatkursus')
@@ -1795,7 +1795,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 		{
 		  log_message('debug','Trying to load Grocer operatorSimpegPenghargaan');
 		  $adminSts = $this->ion_auth->is_admin()===FALSE;
-		  $this->db = $this->load->database('simpegRef',true);
+
 		  log_message('debug','after Load new Db');
 		  $crud = new grocery_CRUD();
 		  $crud->set_table('penghargaan')
@@ -1819,7 +1819,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 		{
 		  log_message('debug','Trying to load Grocer operatorSimpegOrganisasi');
 		  $adminSts = $this->ion_auth->is_admin()===FALSE;
-		  $this->db = $this->load->database('simpegRef',true);
+
 		  log_message('debug','after Load new Db');
 		  $crud = new grocery_CRUD();
 		  $crud->set_table('riwayatorganisasi')
@@ -1843,7 +1843,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 		{
 		  log_message('debug','Trying to load Grocer operatorSimpegTugas');
 		  $adminSts = $this->ion_auth->is_admin()===FALSE;
-		  $this->db = $this->load->database('simpegRef',true);
+
 		  log_message('debug','after Load new Db');
 		  $crud = new grocery_CRUD();
 		  $crud->set_table('riwayattugas')
@@ -1867,7 +1867,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 		{
 		  log_message('debug','Trying to load Grocer operatorSimpegRiwayatTugas');
 		  $adminSts = $this->ion_auth->is_admin()===FALSE;
-		  $this->db = $this->load->database('simpegRef',true);
+
 		  log_message('debug','after Load new Db');
 		  $crud = new grocery_CRUD();
 		  $crud->set_table('riwayatbahasa')
@@ -1887,7 +1887,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 		{
 		  log_message('debug','Trying to load Grocer operatorSimpegDPPP');
 		  $adminSts = $this->ion_auth->is_admin()===FALSE;
-		  $this->db = $this->load->database('simpegRef',true);
+
 		  log_message('debug','after Load new Db');
 		  $crud = new grocery_CRUD();
 		  $crud->set_table('rdppp')
@@ -1914,7 +1914,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 		{
 		  log_message('debug','Trying to load Grocer operatorSimpegHukuman');
 		  $adminSts = $this->ion_auth->is_admin()===FALSE;
-		  $this->db = $this->load->database('simpegRef',true);
+
 		  log_message('debug','after Load new Db');
 		  $crud = new grocery_CRUD();
 		  $crud->set_table('hukumandisiplin')
@@ -1944,7 +1944,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 		{
 		  log_message('debug','Trying to load Grocer operatorSimpegSuamiIstri');
 		  $adminSts = $this->ion_auth->is_admin()===FALSE;
-		  $this->db = $this->load->database('simpegRef',true);
+
 		  log_message('debug','after Load new Db');
 		  $crud = new grocery_CRUD();
 		  $crud->set_table('riwayatsuamiistri')
@@ -1977,7 +1977,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 		{
 		  log_message('debug','Trying to load Grocer operatorSimpegAnak');
 		  $adminSts = $this->ion_auth->is_admin()===FALSE;
-		  $this->db = $this->load->database('simpegRef',true);
+
 		  log_message('debug','after Load new Db');
 		  $crud = new grocery_CRUD();
 		  $crud->set_table('riwayatanak')
@@ -2002,7 +2002,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 		{
 		  log_message('debug','Trying to load Grocer operatorSimpegAyah');
 		  $adminSts = $this->ion_auth->is_admin()===FALSE;
-		  $this->db = $this->load->database('simpegRef',true);
+
 		  log_message('debug','after Load new Db');
 		  $crud = new grocery_CRUD();
 		  $crud->set_table('riwayatayah')
@@ -2030,7 +2030,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 		{
 		  log_message('debug','Trying to load Grocer operatorSimpegAyah');
 		  $adminSts = $this->ion_auth->is_admin()===FALSE;
-		  $this->db = $this->load->database('simpegRef',true);
+
 		  log_message('debug','after Load new Db');
 		  $crud = new grocery_CRUD();
 		  $crud->set_table('riwayatibu')
@@ -2080,7 +2080,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 		{
 		  log_message('debug','Trying to load Grocer bangrirSimpegJabatan');
 		  $adminSts = $this->ion_auth->is_admin()===FALSE;
-		  $this->db = $this->load->database('simpegRef',true);
+
 		  log_message('debug','after Load new Db');
 		  $crud = new grocery_CRUD();
 		  $crud->set_table('jabatan')
@@ -2118,7 +2118,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 		{
 		  log_message('debug','Trying to load Grocer bangrirSimpegPendidikan');
 		  $adminSts = $this->ion_auth->is_admin()===FALSE;
-		  $this->db = $this->load->database('simpegRef',true);
+
 		  log_message('debug','after Load new Db');
 		  $crud = new grocery_CRUD();
 		  $crud->set_table('pendidikan')
@@ -2147,7 +2147,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 		{
 		  log_message('debug','Trying to load Grocer bangrirSimpegDiklatStruktural');
 		  $adminSts = $this->ion_auth->is_admin()===FALSE;
-		  $this->db = $this->load->database('simpegRef',true);
+
 		  log_message('debug','after Load new Db');
 		  $crud = new grocery_CRUD();
 		  $crud->where('kodeJenisDiklat',2);
@@ -2178,7 +2178,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 		{
 		  log_message('debug','Trying to load Grocer bangrirSimpegDiklatFungsional');
 		  $adminSts = $this->ion_auth->is_admin()===FALSE;
-		  $this->db = $this->load->database('simpegRef',true);
+
 		  log_message('debug','after Load new Db');
 		  $crud = new grocery_CRUD();
 		  $crud->where('kodeJenisDiklat',1);
@@ -2209,7 +2209,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 		{
 		  log_message('debug','Trying to load Grocer bangrirSimpegTugas');
 		  $adminSts = $this->ion_auth->is_admin()===FALSE;
-		  $this->db = $this->load->database('simpegRef',true);
+
 		  log_message('debug','after Load new Db');
 		  $crud = new grocery_CRUD();
 		  $crud->set_table('riwayattugas')
@@ -2253,7 +2253,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 		{
 		  log_message('debug','Trying to load Grocer kesdisSimpegPenghargaan');
 		  $adminSts = $this->ion_auth->is_admin()===FALSE;
-		  $this->db = $this->load->database('simpegRef',true);
+
 		  log_message('debug','after Load new Db');
 		  $crud = new grocery_CRUD();
 		  $crud->set_table('penghargaan')
@@ -2277,7 +2277,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 		{
 		  log_message('debug','Trying to load Grocer kesdisSimpegHukuman');
 		  $adminSts = $this->ion_auth->is_admin()===FALSE;
-		  $this->db = $this->load->database('simpegRef',true);
+
 		  log_message('debug','after Load new Db');
 		  $crud = new grocery_CRUD();
 		  $crud->set_table('hukumandisiplin')
@@ -2307,7 +2307,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 	{
 		log_message('debug','Trying to load Grocer Ref Unit Kerja');
 		$adminSts = $this->ion_auth->is_admin()===FALSE;
-		$this->db = $this->load->database('simpegRef',true);
+
 		log_message('debug','after Load new Db');
 		$crud = new grocery_CRUD();
 		$crud->set_table('unkerja')
@@ -2329,7 +2329,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 	{
 		log_message('debug','Trying to load Grocer Referensi Wilayah');
 		$adminSts = $this->ion_auth->is_admin()===FALSE;
-		$this->db = $this->load->database('simpegRef',true);
+
 		log_message('debug','after Load new Db');
 		$crud = new grocery_CRUD();
 		$crud->set_table('wilayah')
@@ -2348,7 +2348,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 	{
 		log_message('debug','Trying to load Grocer Referensi Bidang Urusan');
 		$adminSts = $this->ion_auth->is_admin()===FALSE;
-		$this->db = $this->load->database('simpegRef',true);
+
 		log_message('debug','after Load new Db');
 		$crud = new grocery_CRUD();
 		$crud->set_table('urusan')
@@ -2369,7 +2369,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 	{
 		log_message('debug','Trying to load Grocer Referensi Status Pegawai');
 		$adminSts = $this->ion_auth->is_admin()===FALSE;
-		$this->db = $this->load->database('simpegRef',true);
+
 		log_message('debug','after Load new Db');
 		$crud = new grocery_CRUD();
 		$crud->set_table('statuspegawai')
@@ -2387,7 +2387,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 	{
 		log_message('debug','Trying to load Grocer Referensi Status Pegawai');
 		$adminSts = $this->ion_auth->is_admin()===FALSE;
-		$this->db = $this->load->database('simpegRef',true);
+
 		log_message('debug','after Load new Db');
 		$crud = new grocery_CRUD();
 		$crud->set_table('kedudukanpegawai')
@@ -2405,7 +2405,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 	{
 		log_message('debug','Trying to load Grocer Referensi Status Pegawai');
 		$adminSts = $this->ion_auth->is_admin()===FALSE;
-		$this->db = $this->load->database('simpegRef',true);
+
 		log_message('debug','after Load new Db');
 		$crud = new grocery_CRUD();
 		$crud->set_table('naikpangkat')
@@ -2423,7 +2423,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 	{
 		log_message('debug','Trying to load Grocer Referensi Daftar Pekerjaan');
 		$adminSts = $this->ion_auth->is_admin()===FALSE;
-		$this->db = $this->load->database('simpegRef',true);
+
 		log_message('debug','after Load new Db');
 		$crud = new grocery_CRUD();
 		$crud->set_table('daftarpekerjaan')
@@ -2441,7 +2441,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 	{
 		log_message('debug','Trying to load Grocer Referensi Daftar Pekerjaan');
 		$adminSts = $this->ion_auth->is_admin()===FALSE;
-		$this->db = $this->load->database('simpegRef',true);
+
 		log_message('debug','after Load new Db');
 		$crud = new grocery_CRUD();
 		$crud->set_table('stlud')
@@ -2459,7 +2459,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 	{
 		log_message('debug','Trying to load Grocer Referensi Jenis Pegawai');
 		$adminSts = $this->ion_auth->is_admin()===FALSE;
-		$this->db = $this->load->database('simpegRef',true);
+
 		log_message('debug','after Load new Db');
 		$crud = new grocery_CRUD();
 		$crud->set_table('jenispegawai')
@@ -2477,7 +2477,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 	{
 		log_message('debug','Trying to load Grocer Referensi Jenis Pegawai');
 		$adminSts = $this->ion_auth->is_admin()===FALSE;
-		$this->db = $this->load->database('simpegRef',true);
+
 		log_message('debug','after Load new Db');
 		$crud = new grocery_CRUD();
 		$crud->set_table('gapok')
@@ -2498,7 +2498,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 	{
 		log_message('debug','Trying to load Grocer Referensi Jenis Pegawai');
 		$adminSts = $this->ion_auth->is_admin()===FALSE;
-		$this->db = $this->load->database('simpegRef',true);
+
 		log_message('debug','after Load new Db');
 		$crud = new grocery_CRUD();
 		$crud->set_table('kelompokusia')
@@ -2517,7 +2517,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 	{
 		log_message('debug','Trying to load Grocer Referensi Kantor Bayar');
 		$adminSts = $this->ion_auth->is_admin()===FALSE;
-		$this->db = $this->load->database('simpegRef',true);
+
 		log_message('debug','after Load new Db');
 		$crud = new grocery_CRUD();
 		$crud->set_table('kbayar')
@@ -2535,7 +2535,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 	{
 		log_message('debug','Trying to load Grocer Referensi KTUA');
 		$adminSts = $this->ion_auth->is_admin()===FALSE;
-		$this->db = $this->load->database('simpegRef',true);
+
 		log_message('debug','after Load new Db');
 		$crud = new grocery_CRUD();
 		$crud->set_table('ktua')
@@ -2553,7 +2553,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 	{
 		log_message('debug','Trying to load Grocer Referensi Jurusan Pendidikan');
 		$adminSts = $this->ion_auth->is_admin()===FALSE;
-		$this->db = $this->load->database('simpegRef',true);
+
 		log_message('debug','after Load new Db');
 		$crud = new grocery_CRUD();
 		$crud->set_table('jurpendidikan')
@@ -2572,7 +2572,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 	{
 		log_message('debug','Trying to load Grocer Referensi Diklat Struktural');
 		$adminSts = $this->ion_auth->is_admin()===FALSE;
-		$this->db = $this->load->database('simpegRef',true);
+
 		log_message('debug','after Load new Db');
 		$crud = new grocery_CRUD();
 		$crud->set_table('dikstr')
@@ -2590,7 +2590,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 	{
 		log_message('debug','Trying to load Grocer Referensi Diklat Fungsional');
 		$adminSts = $this->ion_auth->is_admin()===FALSE;
-		$this->db = $this->load->database('simpegRef',true);
+
 		log_message('debug','after Load new Db');
 		$crud = new grocery_CRUD();
 		$crud->set_table('dikfung')
@@ -2608,7 +2608,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 	{
 		log_message('debug','Trying to load Grocer Referensi Diklat Teknik');
 		$adminSts = $this->ion_auth->is_admin()===FALSE;
-		$this->db = $this->load->database('simpegRef',true);
+
 		log_message('debug','after Load new Db');
 		$crud = new grocery_CRUD();
 		$crud->set_table('diktek')
@@ -2626,7 +2626,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 	{
 		log_message('debug','Trying to load Grocer Referensi Seminar');
 		$adminSts = $this->ion_auth->is_admin()===FALSE;
-		$this->db = $this->load->database('simpegRef',true);
+
 		log_message('debug','after Load new Db');
 		$crud = new grocery_CRUD();
 		$crud->set_table('seminar')
@@ -2644,7 +2644,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 	{
 		log_message('debug','Trying to load Grocer Referensi Seminar');
 		$adminSts = $this->ion_auth->is_admin()===FALSE;
-		$this->db = $this->load->database('simpegRef',true);
+
 		log_message('debug','after Load new Db');
 		$crud = new grocery_CRUD();
 		$crud->set_table('tatar')
@@ -2662,7 +2662,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 	{
 		log_message('debug','Trying to load Grocer Referensi Kursus');
 		$adminSts = $this->ion_auth->is_admin()===FALSE;
-		$this->db = $this->load->database('simpegRef',true);
+
 		log_message('debug','after Load new Db');
 		$crud = new grocery_CRUD();
 		$crud->set_table('kursus')
@@ -2680,7 +2680,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 	{
 		log_message('debug','Trying to load Grocer Tingkat Pendidikan');
 		$adminSts = $this->ion_auth->is_admin()===FALSE;
-		$this->db = $this->load->database('simpegRef',true);
+
 		log_message('debug','after Load new Db');
 		$crud = new grocery_CRUD();
 		$crud->set_table('tingkatpendidikan')
@@ -2716,7 +2716,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 	{
 		log_message('debug','Trying to load Grocer Kelompok Jabatan');
 		$adminSts = $this->ion_auth->is_admin()===FALSE;
-		$this->db = $this->load->database('simpegRef',true);
+
 		log_message('debug','after Load new Db');
 		$crud = new grocery_CRUD();
 		$crud->set_table('kelompokjabatan')
@@ -2734,7 +2734,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 	{
 		log_message('debug','Trying to load Grocer Jabatan Struktural');
 		$adminSts = $this->ion_auth->is_admin()===FALSE;
-		$this->db = $this->load->database('simpegRef',true);
+
 		log_message('debug','after Load new Db');
 		$crud = new grocery_CRUD();
 		$crud->where('JNSJAB','1');
@@ -2758,7 +2758,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 	{
 		log_message('debug','Trying to load Grocer Jabatan Fungsional Khusus');
 		$adminSts = $this->ion_auth->is_admin()===FALSE;
-		$this->db = $this->load->database('simpegRef',true);
+
 		log_message('debug','after Load new Db');
 		$crud = new grocery_CRUD();
 		$crud->where('JNSJAB','2');
@@ -2782,7 +2782,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 	{
 		log_message('debug','Trying to load Grocer Jabatan Negara');
 		$adminSts = $this->ion_auth->is_admin()===FALSE;
-		$this->db = $this->load->database('simpegRef',true);
+
 		log_message('debug','after Load new Db');
 		$crud = new grocery_CRUD();
 		$crud->where('JNSJAB','3');
@@ -2806,7 +2806,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 	{
 		log_message('debug','Trying to load Grocer Jabatan Fungsional Umum');
 		$adminSts = $this->ion_auth->is_admin()===FALSE;
-		$this->db = $this->load->database('simpegRef',true);
+
 		log_message('debug','after Load new Db');
 		$crud = new grocery_CRUD();
 		$crud->where('JNSJAB','4');
@@ -2830,7 +2830,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 	{
 		log_message('debug','Trying to load Grocer Jabatan KORPRI');
 		$adminSts = $this->ion_auth->is_admin()===FALSE;
-		$this->db = $this->load->database('simpegRef',true);
+
 		log_message('debug','after Load new Db');
 		$crud = new grocery_CRUD();
 		$crud->where('JNSJAB','5');
@@ -2854,7 +2854,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 	{
 		log_message('debug','Trying to load Grocer Eselon Jabatan');
 		$adminSts = $this->ion_auth->is_admin()===FALSE;
-		$this->db = $this->load->database('simpegRef',true);
+
 		log_message('debug','after Load new Db');
 		$crud = new grocery_CRUD();
 		$crud->set_table('eselon')
@@ -2873,7 +2873,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 	{
 		log_message('debug','Trying to load Grocer Pejabat Tetap');
 		$adminSts = $this->ion_auth->is_admin()===FALSE;
-		$this->db = $this->load->database('simpegRef',true);
+
 		log_message('debug','after Load new Db');
 		$crud = new grocery_CRUD();
 		$crud->set_table('pejabatmenetapkan')
@@ -2891,7 +2891,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 	{
 		log_message('debug','Trying to load Grocer Pejabat Negara');
 		$adminSts = $this->ion_auth->is_admin()===FALSE;
-		$this->db = $this->load->database('simpegRef',true);
+
 		log_message('debug','after Load new Db');
 		$crud = new grocery_CRUD();
 		$crud->set_table('jabneg')
@@ -2910,7 +2910,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 	{
 		log_message('debug','Trying to load Grocer Referensi Status Pegawai');
 		$adminSts = $this->ion_auth->is_admin()===FALSE;
-		$this->db = $this->load->database('simpegRef',true);
+
 		log_message('debug','after Load new Db');
 		$crud = new grocery_CRUD();
 		$crud->set_table('golruang')
@@ -2948,7 +2948,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 	{
 		log_message('debug','Trying to load Grocer Ref Agama');
 		$adminSts = $this->ion_auth->is_admin()===FALSE;
-		$this->db = $this->load->database('simpegRef',true);
+
 		log_message('debug','after Load new Db');
 		$crud = new grocery_CRUD();
 		$crud->set_table('agama')
@@ -2988,7 +2988,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 		if (!is_dir($pathFolder)) {
     		mkdir($pathFolder , 0777, TRUE);
 				}
-		$this->db = $this->load->database('simpegRef',true);
+
 		$nip = $userLoggedin->nip;
 		log_message('debug','Nip From Get'.$nip);
 		$crud = new grocery_CRUD();
@@ -3008,7 +3008,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 			$userLoggedin = $this->ion_auth->user()->row();
 			$nip = $userLoggedin->nip;
 
-			$this->db = $this->load->database('simpegRef',true);
+
 			return '<input type="text" value="'.$nip.'" name="nipShow"disabled>
 			 				<input type="hidden" value="'.$nip.'" name="nip"/>';
 		});
@@ -3025,7 +3025,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 								$nip = $userLoggedin->nip;
 
 
-								$this->db = $this->load->database('simpegRef',true);
+
 								$docType = $this->Simpeg_model->getDocumentTypeById($post_array['documentType']);
 								$pathFolderTemp = "assets/upload/files/".$nip;
 								$pathFolder="assets/upload/files/".$nip."/".$docType[0]['alias'];
@@ -3049,7 +3049,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 			$nip = $userLoggedin->nip;
 
 
-			$this->db = $this->load->database('simpegRef',true);
+
 			$docType = $this->Simpeg_model->getDocumentTypeById($post_array['documentType']);
 			$pathFolderTemp = "assets/upload/files/".$nip;
 			$pathFolder="assets/upload/files/".$nip."/".$docType[0]['alias'];

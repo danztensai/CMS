@@ -10,7 +10,7 @@
 
 		public function getRiwayatPangkat($nip)
 		{
-			  $DB2 =$this->load->database('simpegRef', TRUE);
+
 				$querySQL = "SELECT rg.nip, rg.Golongan_idGolongan, rj.golNama, rg.jenisKP, rn.nnpang, rg.tmtGolongan, rg.nomorSk, rg.tanggalSk, rg.kpej, rp.npej
 								FROM revReferenceSimpeg.golonganhistory rg
 								INNER JOIN revReferenceSimpeg.jenisgolongan rj on rj.Golongan_id = rg.Golongan_idGolongan
@@ -23,7 +23,7 @@
 				$stackData = array();
 
 				log_message('debug','getRiwayatPangkat: '.$querySQL);
-				$query = $DB2->query($querySQL);
+				$query = $this->db->query($querySQL);
 
 				if($query->num_rows()>0)
 					{ $count = 1;
@@ -55,7 +55,7 @@
 
 		public function getRiwayatJasa($nip)
 		{
-			  $DB2 =$this->load->database('simpegRef', TRUE);
+
 				$querySQL = "SELECT nip, NBINTANG, skNomor, skDate, tahun, AOLEH
 											FROM revReferenceSimpeg.penghargaan
 											WHERE nip = '$nip'";
@@ -64,7 +64,7 @@
 				$stackData = array();
 
 				log_message('debug','riwayatJabatan: '.$querySQL);
-				$query = $DB2->query($querySQL);
+				$query = $this->db->query($querySQL);
 
 				if($query->num_rows()>0)
 					{ $count = 1;
@@ -90,13 +90,13 @@
 					}
 		}
 		public function insertData($table,$data){
-			$DB2 =$this->load->database('simpegRef', TRUE);
+
 			$DB2->insert($table, $data);
 		}
 
 		public function getRiwayatDPP($nip)
 		{
-				$DB2 =$this->load->database('simpegRef', TRUE);
+
 				$querySQL = "SELECT NIP, THNILAI, NSETIA, NPRES, NTJAWAB, NTAAT, NJUJUR, NKSAMA, NPKARSA, NPIMPIN, NTOTAL, NRATA
 											FROM revReferenceSimpeg.rdppp
 											WHERE nip = '$nip'";
@@ -105,7 +105,7 @@
 				$stackData = array();
 
 				log_message('debug','getRiwayatDPP: '.$querySQL);
-				$query = $DB2->query($querySQL);
+				$query = $this->db->query($querySQL);
 
 				if($query->num_rows()>0)
 					{ $count = 1;
@@ -138,7 +138,7 @@
 
 		public function getRiwayatJabatan($nip)
 		{
-			  $DB2 =$this->load->database('simpegRef', TRUE);
+
 				$querySQL = "SELECT rj.nip, rj.nunkerUnitOrganisasi, rj.KESELON, re.nama, rj.njab,
 				SUBSTRING(rj.kwil, 1,2) as 'kode_propinsi', SUBSTRING(rj.kwil, 3,2) as 'kode_kabupaten',
 										rj.tmtJabatan, rj.nomorSk, rj.tanggalSk, rj.jnsjab
@@ -151,7 +151,7 @@
 				$stackData = array();
 
 				log_message('debug','riwayatJabatan: '.$querySQL);
-				$query = $DB2->query($querySQL);
+				$query = $this->db->query($querySQL);
 
 				if($query->num_rows()>0)
 					{ $count = 1;
@@ -184,7 +184,7 @@
 
 		public function getRiwayatJabatanPensiun($nip)
 		{
-				$DB2 =$this->load->database('simpegRef', TRUE);
+
 				$querySQL = "SELECT rj.nip, rj.nunkerUnitOrganisasi, rj.KESELON, re.nama, rj.njab,
 				SUBSTRING(rj.kwil, 1,2) as 'kode_propinsi', SUBSTRING(rj.kwil, 3,2) as 'kode_kabupaten',
 										rj.tmtJabatan, rj.nomorSk, rj.tanggalSk, rj.jnsjab
@@ -197,7 +197,7 @@
 				$stackData = array();
 
 				log_message('debug','riwayatJabatan: '.$querySQL);
-				$query = $DB2->query($querySQL);
+				$query = $this->db->query($querySQL);
 
 				if($query->num_rows()>0)
 					{ $count = 1;
@@ -230,7 +230,7 @@
 
 		public function getTempatPegawai($nip)
 		{
-		$DB2 =$this->load->database('simpegRef', TRUE);
+
 		$querySQL = "		 SELECT rw1.kwil as kwi1, rw1.nwil as nwil1, rw2.kwil AS kwil2, rw2.nwil as nwil2, rw3.kwil as kwil3,
 		 rw3.nwil as nwil3, rw4.kwil as kwil4, rw4.nwil as nwil4, ru.kunker as kunker, ru.nunker as nunker, ru2.kunker as kunker2, ru2.nunker as nunker2
 		FROM revReferenceSimpeg.jakhir rj
@@ -246,7 +246,7 @@
 		$stackData = array();
 
 		log_message('debug','getTempatPegawai: '.$querySQL);
-		$query = $DB2->query($querySQL);
+		$query = $this->db->query($querySQL);
 
 		if($query->num_rows()>0)
 			{ $count = 1;
@@ -278,7 +278,7 @@
 
 		public function getJabatanTerakhir($nip)
 		{
-		$DB2 =$this->load->database('simpegRef', TRUE);
+
 		$querySQL = "SELECT rj.NIP as NIP, rj.KPEJ, rp.npej, rj.NSKJABAT, rj.TSKJABAT, rjn.namaJenisJabatan, rj.KESELON, rj.kunkers as kunker1,
 		ru.nunker, ru2.nunker as nunker2, ru3.nunker as nunker3,
 rj.KJAB, rjn.NJAB, rj.NJAB as njab2, rj.TLANTIK, rj.TMTJAB, rj.SJAB,rj.NLANTIK
@@ -294,7 +294,7 @@ WHERE rj.NIP = '$nip'";
 		$stackData = array();
 
 		log_message('debug','getJabatanTerakhir: '.$querySQL);
-		$query = $DB2->query($querySQL);
+		$query = $this->db->query($querySQL);
 
 		if($query->num_rows()>0)
 			{ $count = 1;
@@ -332,7 +332,7 @@ WHERE rj.NIP = '$nip'";
 
 		public function getGajiBerkala($nip)
 		{
-			  $DB2 =$this->load->database('simpegRef', TRUE);
+
 				$querySQL = "SELECT NIP, NSTAHU, TSTAHU, TMTNGAJ, GPOKKHIR, k.KKANTOR, MSKERJA, FLAG,k.NKANTOR
 				FROM gkkhir g left join kbayar k on g.KKANTOR=k.KKANTOR WHERE NIP = '$nip'";
 
@@ -340,7 +340,7 @@ WHERE rj.NIP = '$nip'";
 				$stackData = array();
 
 				log_message('debug','getGajiBerkala: '.$querySQL);
-				$query = $DB2->query($querySQL);
+				$query = $this->db->query($querySQL);
 
 				if($query->num_rows()>0)
 					{ $count = 1;
@@ -371,10 +371,10 @@ WHERE rj.NIP = '$nip'";
 
 		public function checkUpdateIdentitasExist($nipBaru)
 		{
-			$DB2 =$this->load->database('simpegRef', TRUE);
+
 			$querySQL = "SELECT * FROM dataconfirmation WHERE JSON_EXTRACT(changedData, '$.nipBaru')='$nipBaru' and tables='datautama' and tabs='identitas'";
 			log_message('debug','checkUpdateIdentitasExist:  '.$querySQL);
-			$query = $DB2->query($querySQL);
+			$query = $this->db->query($querySQL);
 			$sts = False;
 			if($query->num_rows()>0)
 			{
@@ -390,17 +390,17 @@ WHERE rj.NIP = '$nip'";
 
 		public function updateConfirmationData($data,$nipBaru)
 		{
-			$DB2 =$this->load->database('simpegRef', TRUE);
+
 
 			$querySQL = "update dataconfirmation set changedData = '$data' ,stsConfirmation=0  WHERE JSON_EXTRACT(changedData, '$.nipBaru')='$nipBaru' and tables='datautama' and tabs='identitas'";
 			log_message('debug','updateConfirmationData:  '.$querySQL);
-			$query = $DB2->query($querySQL);
+			$query = $this->db->query($querySQL);
 		}
 
 
 		public function getBasicDataSimpegbyNip($nip)
 		{
-				$DB2 =$this->load->database('simpegRef', TRUE);
+
 		$querySQL = "select du.nipBaru,du.nama,k2.nunker as instansi,k1.nunker as subUnit ,ja.NJAB from datautama du
 									left join jakhir ja on du.nipBaru = ja.nip
 									left join unkerja k1 on k1.kunker = ja.kunkers
@@ -411,7 +411,7 @@ WHERE rj.NIP = '$nip'";
 		$stackData = array();
 
 		log_message('debug','getBasicDataSimpegbyNip	: '.$querySQL);
-		$query = $DB2->query($querySQL);
+		$query = $this->db->query($querySQL);
 
 		if($query->num_rows()>0)
 			{ $count = 1;
@@ -437,7 +437,7 @@ WHERE rj.NIP = '$nip'";
 		}
 		public function updateIdentitasStatusUpdate($data,$nipBaru)
 		{
-			$DB2 =$this->load->database('simpegRef', TRUE);
+
 
 			$DB2->where('nipBaru', $nipBaru);
 			$DB2->update('datautama', $data);
@@ -445,7 +445,7 @@ WHERE rj.NIP = '$nip'";
 
 		public function updateStatusDataConfirmation($data,$id)
 		{
-			$DB2 =$this->load->database('simpegRef', TRUE);
+
 
 			$DB2->where('id', $id);
 			$DB2->update('dataConfirmation', $data);
@@ -453,7 +453,7 @@ WHERE rj.NIP = '$nip'";
 
 		public function getIdentitasPegawai($nip)
 		{
-			  $DB2 =$this->load->database('simpegRef', TRUE);
+
 		$querySQL = "SELECT d.stsUpdate, d.nipBaru, d.nipLama, d.nama, d.gelarDepan, d.gelarBlk,a.nama as agama, d.KTLAHIR, d.TLAHIR, d.KJKEL, d.agamaId,
 d.jenisPegawai, c.statusCpnsPns, s.nStatusPegawai, d.kedudukanHukum, d.jenisKawin, d.KGOLDAR, d.alamat, d.ALRT,
 d.ALRW, d.nomorTelpon, d.kwil, d.KPOS, d.kartuPegawai, d.taspen, d.askesNomor, d.NKARIS_SU, d.npwpNomor, d.NOPEN, d.FILE_BMP
@@ -466,7 +466,7 @@ INNER JOIN revReferenceSimpeg.agama a on a.kode = d.agamaId WHERE d.nipbaru = '$
 		$stackData = array();
 
 		log_message('debug','getIdentitasPegawai: '.$querySQL);
-		$query = $DB2->query($querySQL);
+		$query = $this->db->query($querySQL);
 
 		if($query->num_rows()>0)
 			{ $count = 1;
@@ -515,7 +515,7 @@ INNER JOIN revReferenceSimpeg.agama a on a.kode = d.agamaId WHERE d.nipbaru = '$
 
 		public function getCPNSPNSInfoByNip($nip)
 		{
-			  $DB2 =$this->load->database('simpegRef', TRUE);
+
 		$querySQL = "SELECT nipBaru, nipLama, statusCpnsPns, NTBAKN, TNTBAKN, KPEJ_CPNS, nomorSkCpns, tglSkCpns, tmtCpns,
 		 KGOLRU_CPNS, nomorSttpl, tglSttpl, tglSpmt, KPEJ_PNS,nomorSkPns, tglSkPns, tmtPns, KGOLRU_PNS, sumpahPNS
 								FROM cpnspns WHERE nipBaru = '$nip'";
@@ -524,7 +524,7 @@ INNER JOIN revReferenceSimpeg.agama a on a.kode = d.agamaId WHERE d.nipbaru = '$
 		$stackData = array();
 
 		log_message('debug','getCPNSByNip	: '.$querySQL);
-		$query = $DB2->query($querySQL);
+		$query = $this->db->query($querySQL);
 
 		if($query->num_rows()>0)
 			{ $count = 1;
@@ -565,14 +565,14 @@ INNER JOIN revReferenceSimpeg.agama a on a.kode = d.agamaId WHERE d.nipbaru = '$
 
 		public function getPangkatAkhirByNip($nip)
 		{
-				$DB2 =$this->load->database('simpegRef', TRUE);
+
 		$querySQL = "select * from golonganAkhir where nip='$nip';";
 
 		$data = array();
 		$stackData = array();
 
 		log_message('debug','getPangkatAkhirByNip: '.$querySQL);
-		$query = $DB2->query($querySQL);
+		$query = $this->db->query($querySQL);
 
 		if($query->num_rows()>0)
 			{ $count = 1;
@@ -610,14 +610,14 @@ INNER JOIN revReferenceSimpeg.agama a on a.kode = d.agamaId WHERE d.nipbaru = '$
 
 		public function getRelationStatus()
 		{
-			  $DB2 =$this->load->database('simpegRef', TRUE);
+
 		$querySQL = "SELECT * FROM statusperkawinan";
 
 		$dataRet = array();
 		$stackData = array();
 
 		log_message('debug','getRelationStatus	: '.$querySQL);
-		$query = $DB2->query($querySQL);
+		$query = $this->db->query($querySQL);
 
 		if($query->num_rows()>0)
 			{ $count = 1;
@@ -643,7 +643,7 @@ INNER JOIN revReferenceSimpeg.agama a on a.kode = d.agamaId WHERE d.nipbaru = '$
 
 		public function getConfirmationByStatus($sts,$instansi)
 		{
-		$DB2 =$this->load->database('simpegRef', TRUE);
+
 		$querySQL = "SELECT dc.id,du.nipBaru,du.nama,k2.nunker as instansi,k1.nunker as subUnit ,ja.NJAB
 		FROM dataconfirmation dc left join datautama du on JSON_EXTRACT(changedData, '$.nipBaru')=du.nipBaru
 									left join jakhir ja on du.nipBaru = ja.nip
@@ -655,7 +655,7 @@ INNER JOIN revReferenceSimpeg.agama a on a.kode = d.agamaId WHERE d.nipbaru = '$
 		$stackData = array();
 
 		log_message('debug','getConfirmationByStatus	: '.$querySQL);
-		$query = $DB2->query($querySQL);
+		$query = $this->db->query($querySQL);
 
 		if($query->num_rows()>0)
 			{ $count = 1;
@@ -683,14 +683,14 @@ INNER JOIN revReferenceSimpeg.agama a on a.kode = d.agamaId WHERE d.nipbaru = '$
 
 		public function getConfirmationDataByid($id)
 		{
-		$DB2 =$this->load->database('simpegRef', TRUE);
+
 		$querySQL = "SELECT id,tables,currentData,changedData	FROM dataconfirmation where id=$id";
 
 		$dataRet = array();
 		$stackData = array();
 
 		log_message('debug','getConfirmationDataByid	: '.$querySQL);
-		$query = $DB2->query($querySQL);
+		$query = $this->db->query($querySQL);
 
 		if($query->num_rows()>0)
 			{ $count = 1;
@@ -716,7 +716,7 @@ INNER JOIN revReferenceSimpeg.agama a on a.kode = d.agamaId WHERE d.nipbaru = '$
 
 		public function getCountTotalConfirmationByStatus($sts,$instansi)
 		{
-		$DB2 =$this->load->database('simpegRef', TRUE);
+
 		$querySQL = "SELECT count(*) as recordsTotal 	FROM dataconfirmation dc
 									left join datautama du on JSON_EXTRACT(changedData, '$.nipBaru')=du.nipBaru
 									left join jakhir ja on du.nipBaru = ja.nip
@@ -727,7 +727,7 @@ INNER JOIN revReferenceSimpeg.agama a on a.kode = d.agamaId WHERE d.nipbaru = '$
 		$recordsTotal=0;
 
 		log_message('debug','getCountTotalConfirmationByStatus	: '.$querySQL);
-		$query = $DB2->query($querySQL);
+		$query = $this->db->query($querySQL);
 
 		if($query->num_rows()>0)
 			{ $count = 1;
@@ -736,7 +736,7 @@ INNER JOIN revReferenceSimpeg.agama a on a.kode = d.agamaId WHERE d.nipbaru = '$
 					$recordsTotal=$row->recordsTotal;
 				}
 				$query->free_result();
-				
+
 				return $recordsTotal;
 			}else
 			{
@@ -748,14 +748,14 @@ INNER JOIN revReferenceSimpeg.agama a on a.kode = d.agamaId WHERE d.nipbaru = '$
 
 		public function getJenisNaikPangkat()
 		{
-			  $DB2 =$this->load->database('simpegRef', TRUE);
+
 		$querySQL = "SELECT * FROM naikPangkat";
 
 		$dataRet = array();
 		$stackData = array();
 
 		log_message('debug','getRelationStatus	: '.$querySQL);
-		$query = $DB2->query($querySQL);
+		$query = $this->db->query($querySQL);
 
 		if($query->num_rows()>0)
 			{ $count = 1;
@@ -779,7 +779,7 @@ INNER JOIN revReferenceSimpeg.agama a on a.kode = d.agamaId WHERE d.nipbaru = '$
 
 		public function getGajiBerkalaPegawaiPensiun($nip)
 		{
-			$DB2 =$this->load->database('simpegRef', TRUE);
+
 			$querySQL = "SELECT NIP, NSTAHU, TSTAHU, TMTNGAJ, GPOKKHIR, KKANTOR, MSKERJA, FLAG
 	FROM revReferenceSimpeg.gkkhir WHERE NIP = '$nip'";
 
@@ -787,7 +787,7 @@ INNER JOIN revReferenceSimpeg.agama a on a.kode = d.agamaId WHERE d.nipbaru = '$
 			$stackData = array();
 
 			log_message('debug','getGajiBerkalaPegawai: '.$querySQL);
-			$query = $DB2->query($querySQL);
+			$query = $this->db->query($querySQL);
 
 			if($query->num_rows()>0)
 			{ $count = 1;
@@ -814,7 +814,7 @@ INNER JOIN revReferenceSimpeg.agama a on a.kode = d.agamaId WHERE d.nipbaru = '$
 
 		public function getTempatPegawaiPensiun($nip)
 		{
-			$DB2 =$this->load->database('simpegRef', TRUE);
+
 			$querySQL = "SELECT rj.NIP, ri.NINSIND, rw1.nwil as provinsi, rw2.nwil as kabupaten, rw3.nwil as kecamatan, rw4.nwil as kelurahan, ru.nunker, ru2.nunker as subUnker
 	FROM revReferenceSimpeg.jakhir rj
 	LEFT JOIN revReferenceSimpeg.insinduk ri on ri.KINSIND = rj.KINSIND
@@ -830,7 +830,7 @@ INNER JOIN revReferenceSimpeg.agama a on a.kode = d.agamaId WHERE d.nipbaru = '$
 			$stackData = array();
 
 			log_message('debug','getTempatPegawaiPensiun: '.$querySQL);
-			$query = $DB2->query($querySQL);
+			$query = $this->db->query($querySQL);
 
 			if($query->num_rows()>0)
 			{ $count = 1;
@@ -857,7 +857,7 @@ INNER JOIN revReferenceSimpeg.agama a on a.kode = d.agamaId WHERE d.nipbaru = '$
 
 		public function getRiwayatKeluargaAyah($nip)
 		{
-			$DB2 =$this->load->database('simpegRef', TRUE);
+
 			$querySQL = "SELECT rr.NIP, rr.NAYAH, rr.TLAHIR, rr.TGLLAHIR, rr.KKERJA, rd.nama, rr.ALJALAN, rr.ALRT, rr.ALRW, rr.NOTELP, rr.WIL, rr.KPOS
 			FROM revReferenceSimpeg.riwayatAyah rr
 			INNER JOIN revReferenceSimpeg.daftarPekerjaan rd on rd.id = rr.KKERJA
@@ -867,7 +867,7 @@ INNER JOIN revReferenceSimpeg.agama a on a.kode = d.agamaId WHERE d.nipbaru = '$
 			$stackData = array();
 
 			log_message('debug','getRiwayatPensiunKeluargaAyah: '.$querySQL);
-			$query = $DB2->query($querySQL);
+			$query = $this->db->query($querySQL);
 
 			if($query->num_rows()>0)
 			{ $count = 1;
@@ -898,7 +898,7 @@ INNER JOIN revReferenceSimpeg.agama a on a.kode = d.agamaId WHERE d.nipbaru = '$
 
 			public function getRiwayatPensiunKeluargaAyah($nip)
 			{
-				$DB2 =$this->load->database('simpegRef', TRUE);
+
 				$querySQL = "SELECT rr.NIP, rr.NAYAH, rr.TLAHIR, rr.TGLLAHIR, rr.KKERJA, rd.nama, rr.ALJALAN, rr.ALRT, rr.ALRW, rr.NOTELP, rr.WIL, rr.KPOS
 				FROM revReferenceSimpeg.riwayatAyah rr
 				INNER JOIN revReferenceSimpeg.daftarPekerjaan rd on rd.id = rr.KKERJA
@@ -908,7 +908,7 @@ INNER JOIN revReferenceSimpeg.agama a on a.kode = d.agamaId WHERE d.nipbaru = '$
 				$stackData = array();
 
 				log_message('debug','getRiwayatPensiunKeluargaAyah: '.$querySQL);
-				$query = $DB2->query($querySQL);
+				$query = $this->db->query($querySQL);
 
 				if($query->num_rows()>0)
 				{ $count = 1;
@@ -938,7 +938,7 @@ INNER JOIN revReferenceSimpeg.agama a on a.kode = d.agamaId WHERE d.nipbaru = '$
 
 			public function getRiwayatKeluargaIbu($nip)
 			{
-				$DB2 =$this->load->database('simpegRef', TRUE);
+
 				$querySQL = "SELECT rr.NIP, rr.NIBU, rr.TLAHIR, rr.TGLLAHIR, rr.KKERJA, rd.nama, rr.ALJALAN, rr.ALRT, rr.ALRW, rr.NOTELP, rr.WIL, rr.KPOS, rr.FLAG, rr.ALHP
 				FROM revReferenceSimpeg.riwayatIbu rr
 				INNER JOIN revReferenceSimpeg.daftarPekerjaan rd on rd.id = rr.KKERJA
@@ -948,7 +948,7 @@ INNER JOIN revReferenceSimpeg.agama a on a.kode = d.agamaId WHERE d.nipbaru = '$
 				$stackData = array();
 
 				log_message('debug','getRiwayatPensiunKeluargaIbu: '.$querySQL);
-				$query = $DB2->query($querySQL);
+				$query = $this->db->query($querySQL);
 
 				if($query->num_rows()>0)
 				{ $count = 1;
@@ -978,7 +978,7 @@ INNER JOIN revReferenceSimpeg.agama a on a.kode = d.agamaId WHERE d.nipbaru = '$
 
 			public function getRiwayatPensiunKeluargaIbu($nip)
 			{
-				$DB2 =$this->load->database('simpegRef', TRUE);
+
 				$querySQL = "SELECT rr.NIP, rr.NIBU, rr.TLAHIR, rr.TGLLAHIR, rr.KKERJA, rd.nama, rr.ALJALAN, rr.ALRT, rr.ALRW, rr.NOTELP, rr.WIL, rr.KPOS, rr.FLAG, rr.ALHP
 				FROM revReferenceSimpeg.riwayatIbu rr
 				INNER JOIN revReferenceSimpeg.daftarPekerjaan rd on rd.id = rr.KKERJA
@@ -988,7 +988,7 @@ INNER JOIN revReferenceSimpeg.agama a on a.kode = d.agamaId WHERE d.nipbaru = '$
 				$stackData = array();
 
 				log_message('debug','getRiwayatPensiunKeluargaIbu: '.$querySQL);
-				$query = $DB2->query($querySQL);
+				$query = $this->db->query($querySQL);
 
 				if($query->num_rows()>0)
 				{ $count = 1;
@@ -1019,7 +1019,7 @@ INNER JOIN revReferenceSimpeg.agama a on a.kode = d.agamaId WHERE d.nipbaru = '$
 
 						public function getRiwayatKeluargaSuamiIstri($nip)
 						{
-							$DB2 =$this->load->database('simpegRef', TRUE);
+
 							$querySQL = "SELECT rr.NIP, rr.NISUA, rr.KTLAHIR, rr.TLAHIR, rr.TIJASAH, rr.TKAWIN, rr.STUNJ, rr.KKERJA, rd.nama, rr.ISAKHIR
 					FROM revReferenceSimpeg.riwayatSuamiIstri rr
 					INNER JOIN revReferenceSimpeg.daftarPekerjaan rd on rd.id = rr.KKERJA
@@ -1029,7 +1029,7 @@ INNER JOIN revReferenceSimpeg.agama a on a.kode = d.agamaId WHERE d.nipbaru = '$
 							$stackData = array();
 
 							log_message('debug','getRiwayatKeluargaSuamiIstri: '.$querySQL);
-							$query = $DB2->query($querySQL);
+							$query = $this->db->query($querySQL);
 
 							if($query->num_rows()>0)
 							{ $count = 1;
@@ -1057,7 +1057,7 @@ INNER JOIN revReferenceSimpeg.agama a on a.kode = d.agamaId WHERE d.nipbaru = '$
 
 			public function getRiwayatPensiunKeluargaSuamiIstri($nip)
 			{
-				$DB2 =$this->load->database('simpegRef', TRUE);
+
 				$querySQL = "SELECT rr.NIP, rr.NISUA, rr.KTLAHIR, rr.TLAHIR, rr.TIJASAH, rr.TKAWIN, rr.STUNJ, rr.KKERJA, rd.nama, rr.ISAKHIR
 		FROM revReferenceSimpeg.riwayatSuamiIstri rr
 		INNER JOIN revReferenceSimpeg.daftarPekerjaan rd on rd.id = rr.KKERJA
@@ -1067,7 +1067,7 @@ INNER JOIN revReferenceSimpeg.agama a on a.kode = d.agamaId WHERE d.nipbaru = '$
 				$stackData = array();
 
 				log_message('debug','getRiwayatPensiunKeluargaSuamiIstri: '.$querySQL);
-				$query = $DB2->query($querySQL);
+				$query = $this->db->query($querySQL);
 
 				if($query->num_rows()>0)
 				{ $count = 1;
@@ -1095,7 +1095,7 @@ INNER JOIN revReferenceSimpeg.agama a on a.kode = d.agamaId WHERE d.nipbaru = '$
 
 			public function getRiwayatKeluargaAnak($nip)
 			{
-				$DB2 =$this->load->database('simpegRef', TRUE);
+
 				$querySQL = "SELECT ra.NIP, ra.NANAK, ra.TLAHIR, ra.TGLLAHIR, rj.NKELAMIN, ra.KELUARGA, ra.TUNJ, ra.TIJASAH, rd.nama
 		FROM revReferenceSimpeg.riwayatAnak ra
 		INNER JOIN revReferenceSimpeg.jenisKelamin rj on rj.KJKEL = ra.KJKEL
@@ -1106,7 +1106,7 @@ INNER JOIN revReferenceSimpeg.agama a on a.kode = d.agamaId WHERE d.nipbaru = '$
 				$stackData = array();
 
 				log_message('debug','getRiwayatKeluargaAnak: '.$querySQL);
-				$query = $DB2->query($querySQL);
+				$query = $this->db->query($querySQL);
 
 				if($query->num_rows()>0)
 				{ $count = 1;
@@ -1133,7 +1133,7 @@ INNER JOIN revReferenceSimpeg.agama a on a.kode = d.agamaId WHERE d.nipbaru = '$
 
 			public function getRiwayatPensiunKeluargaAnak($nip)
 			{
-				$DB2 =$this->load->database('simpegRef', TRUE);
+
 				$querySQL = "SELECT ra.NIP, ra.NANAK, ra.TLAHIR, ra.TGLLAHIR, rj.NKELAMIN, ra.KELUARGA, ra.TUNJ, ra.TIJASAH, rd.nama
 		FROM revReferenceSimpeg.riwayatAnak ra
 		INNER JOIN revReferenceSimpeg.jenisKelamin rj on rj.KJKEL = ra.KJKEL
@@ -1144,7 +1144,7 @@ INNER JOIN revReferenceSimpeg.agama a on a.kode = d.agamaId WHERE d.nipbaru = '$
 				$stackData = array();
 
 				log_message('debug','getRiwayatPensiunKeluargaAnak: '.$querySQL);
-				$query = $DB2->query($querySQL);
+				$query = $this->db->query($querySQL);
 
 				if($query->num_rows()>0)
 				{ $count = 1;
@@ -1173,14 +1173,14 @@ INNER JOIN revReferenceSimpeg.agama a on a.kode = d.agamaId WHERE d.nipbaru = '$
 
 		public function getStlud()
 		{
-			  $DB2 =$this->load->database('simpegRef', TRUE);
+
 		$querySQL = "SELECT * FROM stlud";
 
 		$dataRet = array();
 		$stackData = array();
 
 		log_message('debug','getRelationStatus	: '.$querySQL);
-		$query = $DB2->query($querySQL);
+		$query = $this->db->query($querySQL);
 
 		if($query->num_rows()>0)
 			{ $count = 1;
@@ -1204,14 +1204,14 @@ INNER JOIN revReferenceSimpeg.agama a on a.kode = d.agamaId WHERE d.nipbaru = '$
 
 		public function getJenisGolongan()
 		{
-			  $DB2 =$this->load->database('simpegRef', TRUE);
+
 		$querySQL = "SELECT * FROM jenisgolongan";
 
 		$dataRet = array();
 		$stackData = array();
 
 		log_message('debug','getRelationStatus	: '.$querySQL);
-		$query = $DB2->query($querySQL);
+		$query = $this->db->query($querySQL);
 
 		if($query->num_rows()>0)
 			{ $count = 1;
@@ -1236,14 +1236,14 @@ INNER JOIN revReferenceSimpeg.agama a on a.kode = d.agamaId WHERE d.nipbaru = '$
 
 		public function getJenisPegawai()
 		{
-			  $DB2 =$this->load->database('simpegRef', TRUE);
+
 		$querySQL = "SELECT * FROM jenispegawai";
 
 		$dataRet = array();
 		$stackData = array();
 
 		log_message('debug','getJenisPegawai	: '.$querySQL);
-		$query = $DB2->query($querySQL);
+		$query = $this->db->query($querySQL);
 
 		if($query->num_rows()>0)
 			{ $count = 1;
@@ -1267,14 +1267,14 @@ INNER JOIN revReferenceSimpeg.agama a on a.kode = d.agamaId WHERE d.nipbaru = '$
 
 		public function getJenisPejabatMenetapkan()
 		{
-				$DB2 =$this->load->database('simpegRef', TRUE);
+
 		$querySQL = "SELECT * FROM pejabatmenetapkan";
 
 		$dataRet = array();
 		$stackData = array();
 
 		log_message('debug','getJenisPejabatMenetapkan	: '.$querySQL);
-		$query = $DB2->query($querySQL);
+		$query = $this->db->query($querySQL);
 
 		if($query->num_rows()>0)
 			{ $count = 1;
@@ -1298,14 +1298,14 @@ INNER JOIN revReferenceSimpeg.agama a on a.kode = d.agamaId WHERE d.nipbaru = '$
 
 		public function getStatusPegawai()
 		{
-			  $DB2 =$this->load->database('simpegRef', TRUE);
+
 		$querySQL = "SELECT * FROM statuspegawai";
 
 		$dataRet = array();
 		$stackData = array();
 
 		log_message('debug','getStatusPegawai	: '.$querySQL);
-		$query = $DB2->query($querySQL);
+		$query = $this->db->query($querySQL);
 
 		if($query->num_rows()>0)
 			{ $count = 1;
@@ -1329,14 +1329,14 @@ INNER JOIN revReferenceSimpeg.agama a on a.kode = d.agamaId WHERE d.nipbaru = '$
 
 		public function getKedudukanPegawai()
 		{
-			  $DB2 =$this->load->database('simpegRef', TRUE);
+
 		$querySQL = "SELECT * FROM kedudukanpegawai";
 
 		$dataRet = array();
 		$stackData = array();
 
 		log_message('debug','getKedudukanPegawai	: '.$querySQL);
-		$query = $DB2->query($querySQL);
+		$query = $this->db->query($querySQL);
 
 		if($query->num_rows()>0)
 			{ $count = 1;
@@ -1360,14 +1360,14 @@ INNER JOIN revReferenceSimpeg.agama a on a.kode = d.agamaId WHERE d.nipbaru = '$
 
 		public function getAgama()
 		{
-			  $DB2 =$this->load->database('simpegRef', TRUE);
+
 		$querySQL = "SELECT * FROM agama";
 
 		$dataRet = array();
 		$stackData = array();
 
 		log_message('debug','getAgama	: '.$querySQL);
-		$query = $DB2->query($querySQL);
+		$query = $this->db->query($querySQL);
 
 		if($query->num_rows()>0)
 			{ $count = 1;
@@ -1390,14 +1390,14 @@ INNER JOIN revReferenceSimpeg.agama a on a.kode = d.agamaId WHERE d.nipbaru = '$
 		}
 		public function getJenisKelamin()
 		{
-			  $DB2 =$this->load->database('simpegRef', TRUE);
+
 		$querySQL = "SELECT * FROM jeniskelamin";
 
 		$data = array();
 		$stackData = array();
 
 		log_message('debug','getJenisKelamin	: '.$querySQL);
-		$query = $DB2->query($querySQL);
+		$query = $this->db->query($querySQL);
 
 		if($query->num_rows()>0)
 			{ $count = 1;
@@ -1420,9 +1420,9 @@ INNER JOIN revReferenceSimpeg.agama a on a.kode = d.agamaId WHERE d.nipbaru = '$
 
     public function getCountTotalRowCurrentBirthday($key,$limitStart,$limitLength,$searchColumn,$draw,$orderByColumn,$orderByDir)
     {
-    $DB2 =$this->load->database('simpegRef', TRUE);
 
-    $querySqlCount = "select count(*) as total
+
+    $querySQL = "select count(*) as total
                   from datautama du
                   left join jakhir ja on du.nipBaru = ja.nip
                   left join unkerja k1 on k1.kunker = ja.kunkers
@@ -1431,8 +1431,8 @@ INNER JOIN revReferenceSimpeg.agama a on a.kode = d.agamaId WHERE d.nipbaru = '$
                   du.nama like '%$searchColumn%' ";
 
 
-      log_message('debug','Query TotalCountRow GetPegawaiUmum :'.$querySqlCount);
-      $query = $DB2->query($querySqlCount);
+      log_message('debug','Query TotalCountRow GetPegawaiUmum :'.$querySQL);
+      $query = $this->db->query($querySQL);
 
       $total=0;
       if($query->num_rows()>0)
@@ -1468,11 +1468,11 @@ INNER JOIN revReferenceSimpeg.agama a on a.kode = d.agamaId WHERE d.nipbaru = '$
                     left join unkerja k2 on k2.kunker = ja.kunkersInduk
                     where du.kedudukanHukum=1 and du.statusHidupPensiunPindah =1  and MONTH(STR_TO_DATE(DU.TLAHIR, '%Y-%m-%d')) = MONTH(NOW()) and day(STR_TO_DATE(DU.TLAHIR, '%Y-%m-%d')) = day(NOW()) and ja.jnsjab=1 and
                     du.nama like '%$searchColumn%' ".$orderQuery." limit $limitStart,$limitLength";
-      $DB2 =$this->load->database('simpegRef', TRUE);
+
       log_message('debug','Query getCurrentBirthday :  '.$querySQL);
 
       $stackData = array();
-      $query = $DB2->query($querySQL);
+      $query = $this->db->query($querySQL);
 
       if($query->num_rows()>0)
         { $count = 1;
