@@ -384,7 +384,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 	 	{
 	 		log_message('debug','Trying to load Grocer opbkdModifRiwayatDiklat');
 	 		$adminSts = $this->ion_auth->is_admin()===FALSE;
-	 		
+
 	 		log_message('debug','after Load new Db');
 	 		$crud = new grocery_CRUD();
 	 		$crud->set_table('riwayatdiklat')
@@ -562,6 +562,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 		$this->data['user']=$userLoggedin;
 		//log_message('debug',print_r($userLoggedin,TRUE));
 		$identitasSimpeg = $this->Simpeg_model->getIdentitasPegawai($userLoggedin->nip);
+		log_message('debug',print_r($identitasSimpeg,TRUE));
 		$cpnspnsSimpeg = $this->Simpeg_model->getCPNSPNSInfoByNip($userLoggedin->nip);
 		$pangkatTerakhir = $this->Simpeg_model->getPangkatAkhirByNip($userLoggedin->nip);
 		$gajiBerkala = $this->Simpeg_model->getGajiBerkala($userLoggedin->nip);

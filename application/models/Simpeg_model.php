@@ -12,10 +12,10 @@
 		{
 
 				$querySQL = "SELECT rg.nip, rg.Golongan_idGolongan, rj.golNama, rg.jenisKP, rn.nnpang, rg.tmtGolongan, rg.nomorSk, rg.tanggalSk, rg.kpej, rp.npej
-								FROM revReferenceSimpeg.golonganhistory rg
-								INNER JOIN revReferenceSimpeg.jenisgolongan rj on rj.Golongan_id = rg.Golongan_idGolongan
-								INNER JOIN revReferenceSimpeg.naikPangkat rn on rn.knpang = rg.jenisKP
-								INNER JOIN revReferenceSimpeg.pejabatMenetapkan rp on rp.kpej = rg.kpej
+								FROM golonganhistory rg
+								INNER JOIN jenisgolongan rj on rj.Golongan_id = rg.Golongan_idGolongan
+								INNER JOIN naikPangkat rn on rn.knpang = rg.jenisKP
+								INNER JOIN pejabatMenetapkan rp on rp.kpej = rg.kpej
 								WHERE rg.nip = '$nip'
 								ORDER BY rg.tmtGolongan ASC;";
 
@@ -57,7 +57,7 @@
 		{
 
 				$querySQL = "SELECT nip, NBINTANG, skNomor, skDate, tahun, AOLEH
-											FROM revReferenceSimpeg.penghargaan
+											FROM penghargaan
 											WHERE nip = '$nip'";
 
 				$data = array();
@@ -98,7 +98,7 @@
 		{
 
 				$querySQL = "SELECT NIP, THNILAI, NSETIA, NPRES, NTJAWAB, NTAAT, NJUJUR, NKSAMA, NPKARSA, NPIMPIN, NTOTAL, NRATA
-											FROM revReferenceSimpeg.rdppp
+											FROM rdppp
 											WHERE nip = '$nip'";
 
 				$data = array();
@@ -142,8 +142,8 @@
 				$querySQL = "SELECT rj.nip, rj.nunkerUnitOrganisasi, rj.KESELON, re.nama, rj.njab,
 				SUBSTRING(rj.kwil, 1,2) as 'kode_propinsi', SUBSTRING(rj.kwil, 3,2) as 'kode_kabupaten',
 										rj.tmtJabatan, rj.nomorSk, rj.tanggalSk, rj.jnsjab
-										FROM revReferenceSimpeg.jabatan rj
-										INNER JOIN revReferenceSimpeg.eselon re on rj.KESELON = re.ideselon
+										FROM jabatan rj
+										INNER JOIN eselon re on rj.KESELON = re.ideselon
 										WHERE rj.nip = '$nip'
 										ORDER BY rj.tmtJabatan asc ";
 
@@ -188,8 +188,8 @@
 				$querySQL = "SELECT rj.nip, rj.nunkerUnitOrganisasi, rj.KESELON, re.nama, rj.njab,
 				SUBSTRING(rj.kwil, 1,2) as 'kode_propinsi', SUBSTRING(rj.kwil, 3,2) as 'kode_kabupaten',
 										rj.tmtJabatan, rj.nomorSk, rj.tanggalSk, rj.jnsjab
-										FROM revReferenceSimpeg.jabatan rj
-										INNER JOIN revReferenceSimpeg.eselon re on rj.KESELON = re.ideselon
+										FROM jabatan rj
+										INNER JOIN eselon re on rj.KESELON = re.ideselon
 										WHERE rj.nip = '$nip'
 										ORDER BY rj.tmtJabatan asc ";
 
@@ -233,13 +233,13 @@
 
 		$querySQL = "		 SELECT rw1.kwil as kwi1, rw1.nwil as nwil1, rw2.kwil AS kwil2, rw2.nwil as nwil2, rw3.kwil as kwil3,
 		 rw3.nwil as nwil3, rw4.kwil as kwil4, rw4.nwil as nwil4, ru.kunker as kunker, ru.nunker as nunker, ru2.kunker as kunker2, ru2.nunker as nunker2
-		FROM revReferenceSimpeg.jakhir rj
-		LEFT JOIN revReferenceSimpeg.wilayah rw1 on rw1.kwil = CONCAT(SUBSTRING(rj.kwil, 1,2), '00000000')
-		LEFT JOIN revReferenceSimpeg.wilayah rw2 on rw2.kwil = CONCAT(SUBSTRING(rj.kwil, 1,4), '000000')
-		LEFT JOIN revReferenceSimpeg.wilayah rw3 on rw3.kwil = CONCAT(SUBSTRING(rj.kwil, 1,6), '0000')
-		LEFT JOIN revReferenceSimpeg.wilayah rw4 on rw4.kwil = rj.kwil
-		LEFT JOIN revReferenceSimpeg.unkerja2 ru on ru.kunker = CONCAT(SUBSTRING(rj.kunkers, 1,4), '00000000')
-		LEFT JOIN revReferenceSimpeg.unkerja2 ru2 on ru2.kunker = CONCAT(SUBSTRING(rj.kunkers, 1,6), '000000')
+		FROM jakhir rj
+		LEFT JOIN wilayah rw1 on rw1.kwil = CONCAT(SUBSTRING(rj.kwil, 1,2), '00000000')
+		LEFT JOIN wilayah rw2 on rw2.kwil = CONCAT(SUBSTRING(rj.kwil, 1,4), '000000')
+		LEFT JOIN wilayah rw3 on rw3.kwil = CONCAT(SUBSTRING(rj.kwil, 1,6), '0000')
+		LEFT JOIN wilayah rw4 on rw4.kwil = rj.kwil
+		LEFT JOIN unkerja2 ru on ru.kunker = CONCAT(SUBSTRING(rj.kunkers, 1,4), '00000000')
+		LEFT JOIN unkerja2 ru2 on ru2.kunker = CONCAT(SUBSTRING(rj.kunkers, 1,6), '000000')
 		WHERE rj.NIP = '$nip'";
 
 		$data = array();
@@ -282,12 +282,12 @@
 		$querySQL = "SELECT rj.NIP as NIP, rj.KPEJ, rp.npej, rj.NSKJABAT, rj.TSKJABAT, rjn.namaJenisJabatan, rj.KESELON, rj.kunkers as kunker1,
 		ru.nunker, ru2.nunker as nunker2, ru3.nunker as nunker3,
 rj.KJAB, rjn.NJAB, rj.NJAB as njab2, rj.TLANTIK, rj.TMTJAB, rj.SJAB,rj.NLANTIK
-FROM revReferenceSimpeg.jakhir rj
-INNER JOIN revReferenceSimpeg.pejabatMenetapkan rp on rp.kpej = rj.KPEJ
-INNER JOIN revReferenceSimpeg.jenisJabatan rjn on rjn.JNSJAB = rj.JNSJAB AND rjn.KJAB = rj.KJAB
-INNER JOIN revReferenceSimpeg.unkerja ru on ru.kunker LIKE CONCAT(SUBSTRING(rj.kunkers, 1,8), '0000')
-INNER JOIN revReferenceSimpeg.unkerja ru2 on ru2.kunker LIKE CONCAT(SUBSTRING(rj.kunkers, 1,10), '00')
-INNER JOIN revReferenceSimpeg.unkerja ru3 on ru3.kunker = rj.kunkers
+FROM jakhir rj
+INNER JOIN pejabatMenetapkan rp on rp.kpej = rj.KPEJ
+INNER JOIN jenisJabatan rjn on rjn.JNSJAB = rj.JNSJAB AND rjn.KJAB = rj.KJAB
+INNER JOIN unkerja ru on ru.kunker LIKE CONCAT(SUBSTRING(rj.kunkers, 1,8), '0000')
+INNER JOIN unkerja ru2 on ru2.kunker LIKE CONCAT(SUBSTRING(rj.kunkers, 1,10), '00')
+INNER JOIN unkerja ru3 on ru3.kunker = rj.kunkers
 WHERE rj.NIP = '$nip'";
 
 		$data = array();
@@ -439,28 +439,28 @@ WHERE rj.NIP = '$nip'";
 		{
 
 
-			$DB2->where('nipBaru', $nipBaru);
-			$DB2->update('datautama', $data);
+			$this->db->where('nipBaru', $nipBaru);
+			$this->db->update('datautama', $data);
 		}
 
 		public function updateStatusDataConfirmation($data,$id)
 		{
 
 
-			$DB2->where('id', $id);
-			$DB2->update('dataConfirmation', $data);
+			$this->db->where('id', $id);
+			$this->db->update('dataConfirmation', $data);
 		}
 
 		public function getIdentitasPegawai($nip)
 		{
 
-		$querySQL = "SELECT d.stsUpdate, d.nipBaru, d.nipLama, d.nama, d.gelarDepan, d.gelarBlk,a.nama as agama, d.KTLAHIR, d.TLAHIR, d.KJKEL, d.agamaId,
+		$querySQL = "SELECT  d.stsUpdate, d.nipBaru, d.nipLama, d.nama, d.gelarDepan, d.gelarBlk,a.nama as agama, d.KTLAHIR, d.TLAHIR, d.KJKEL, d.agamaId,
 d.jenisPegawai, c.statusCpnsPns, s.nStatusPegawai, d.kedudukanHukum, d.jenisKawin, d.KGOLDAR, d.alamat, d.ALRT,
 d.ALRW, d.nomorTelpon, d.kwil, d.KPOS, d.kartuPegawai, d.taspen, d.askesNomor, d.NKARIS_SU, d.npwpNomor, d.NOPEN, d.FILE_BMP
-FROM revReferenceSimpeg.datautama d
-INNER JOIN revReferenceSimpeg.cpnspns c ON c.nipbaru = d.nipbaru
-INNER JOIN revReferenceSimpeg.statusPegawai s on s.kStatusPegawai = c.statusCpnsPns
-INNER JOIN revReferenceSimpeg.agama a on a.kode = d.agamaId WHERE d.nipbaru = '$nip'";
+FROM datautama d
+INNER JOIN cpnspns c ON c.nipbaru = d.nipbaru
+INNER JOIN statusPegawai s on s.kStatusPegawai = c.statusCpnsPns
+INNER JOIN agama a on a.kode = d.agamaId WHERE d.nipbaru = '$nip'";
 
 		$data = array();
 		$stackData = array();
@@ -781,7 +781,7 @@ INNER JOIN revReferenceSimpeg.agama a on a.kode = d.agamaId WHERE d.nipbaru = '$
 		{
 
 			$querySQL = "SELECT NIP, NSTAHU, TSTAHU, TMTNGAJ, GPOKKHIR, KKANTOR, MSKERJA, FLAG
-	FROM revReferenceSimpeg.gkkhir WHERE NIP = '$nip'";
+	FROM gkkhir WHERE NIP = '$nip'";
 
 			$data = array();
 			$stackData = array();
@@ -816,14 +816,14 @@ INNER JOIN revReferenceSimpeg.agama a on a.kode = d.agamaId WHERE d.nipbaru = '$
 		{
 
 			$querySQL = "SELECT rj.NIP, ri.NINSIND, rw1.nwil as provinsi, rw2.nwil as kabupaten, rw3.nwil as kecamatan, rw4.nwil as kelurahan, ru.nunker, ru2.nunker as subUnker
-	FROM revReferenceSimpeg.jakhir rj
-	LEFT JOIN revReferenceSimpeg.insinduk ri on ri.KINSIND = rj.KINSIND
-	LEFT JOIN revReferenceSimpeg.wilayah rw1 on rw1.kwil = CONCAT(SUBSTRING(rj.kwil, 1,2), '00000000')
-	LEFT JOIN revReferenceSimpeg.wilayah rw2 on rw2.kwil = CONCAT(SUBSTRING(rj.kwil, 1,4), '000000')
-	LEFT JOIN revReferenceSimpeg.wilayah rw3 on rw3.kwil = CONCAT(SUBSTRING(rj.kwil, 1,6), '0000')
-	LEFT JOIN revReferenceSimpeg.wilayah rw4 on rw4.kwil = rj.kwil
-	LEFT JOIN revReferenceSimpeg.unkerja2 ru on ru.kunker = CONCAT(SUBSTRING(rj.kunkers, 1,4), '00000000')
-	LEFT JOIN revReferenceSimpeg.unkerja2 ru2 on ru2.kunker = CONCAT(SUBSTRING(rj.kunkers, 1,6), '000000')
+	FROM jakhir rj
+	LEFT JOIN insinduk ri on ri.KINSIND = rj.KINSIND
+	LEFT JOIN wilayah rw1 on rw1.kwil = CONCAT(SUBSTRING(rj.kwil, 1,2), '00000000')
+	LEFT JOIN wilayah rw2 on rw2.kwil = CONCAT(SUBSTRING(rj.kwil, 1,4), '000000')
+	LEFT JOIN wilayah rw3 on rw3.kwil = CONCAT(SUBSTRING(rj.kwil, 1,6), '0000')
+	LEFT JOIN wilayah rw4 on rw4.kwil = rj.kwil
+	LEFT JOIN unkerja2 ru on ru.kunker = CONCAT(SUBSTRING(rj.kunkers, 1,4), '00000000')
+	LEFT JOIN unkerja2 ru2 on ru2.kunker = CONCAT(SUBSTRING(rj.kunkers, 1,6), '000000')
 	WHERE rj.NIP = '$nip'";
 
 			$data = array();
@@ -859,8 +859,8 @@ INNER JOIN revReferenceSimpeg.agama a on a.kode = d.agamaId WHERE d.nipbaru = '$
 		{
 
 			$querySQL = "SELECT rr.NIP, rr.NAYAH, rr.TLAHIR, rr.TGLLAHIR, rr.KKERJA, rd.nama, rr.ALJALAN, rr.ALRT, rr.ALRW, rr.NOTELP, rr.WIL, rr.KPOS
-			FROM revReferenceSimpeg.riwayatAyah rr
-			INNER JOIN revReferenceSimpeg.daftarPekerjaan rd on rd.id = rr.KKERJA
+			FROM riwayatAyah rr
+			INNER JOIN daftarPekerjaan rd on rd.id = rr.KKERJA
 			WHERE rr.NIP = '$nip'";
 
 			$data = array();
@@ -900,8 +900,8 @@ INNER JOIN revReferenceSimpeg.agama a on a.kode = d.agamaId WHERE d.nipbaru = '$
 			{
 
 				$querySQL = "SELECT rr.NIP, rr.NAYAH, rr.TLAHIR, rr.TGLLAHIR, rr.KKERJA, rd.nama, rr.ALJALAN, rr.ALRT, rr.ALRW, rr.NOTELP, rr.WIL, rr.KPOS
-				FROM revReferenceSimpeg.riwayatAyah rr
-				INNER JOIN revReferenceSimpeg.daftarPekerjaan rd on rd.id = rr.KKERJA
+				FROM riwayatAyah rr
+				INNER JOIN daftarPekerjaan rd on rd.id = rr.KKERJA
 				WHERE rr.NIP = '$nip'";
 
 				$data = array();
@@ -940,8 +940,8 @@ INNER JOIN revReferenceSimpeg.agama a on a.kode = d.agamaId WHERE d.nipbaru = '$
 			{
 
 				$querySQL = "SELECT rr.NIP, rr.NIBU, rr.TLAHIR, rr.TGLLAHIR, rr.KKERJA, rd.nama, rr.ALJALAN, rr.ALRT, rr.ALRW, rr.NOTELP, rr.WIL, rr.KPOS, rr.FLAG, rr.ALHP
-				FROM revReferenceSimpeg.riwayatIbu rr
-				INNER JOIN revReferenceSimpeg.daftarPekerjaan rd on rd.id = rr.KKERJA
+				FROM riwayatIbu rr
+				INNER JOIN daftarPekerjaan rd on rd.id = rr.KKERJA
 				WHERE rr.NIP = '$nip'";
 
 				$data = array();
@@ -980,8 +980,8 @@ INNER JOIN revReferenceSimpeg.agama a on a.kode = d.agamaId WHERE d.nipbaru = '$
 			{
 
 				$querySQL = "SELECT rr.NIP, rr.NIBU, rr.TLAHIR, rr.TGLLAHIR, rr.KKERJA, rd.nama, rr.ALJALAN, rr.ALRT, rr.ALRW, rr.NOTELP, rr.WIL, rr.KPOS, rr.FLAG, rr.ALHP
-				FROM revReferenceSimpeg.riwayatIbu rr
-				INNER JOIN revReferenceSimpeg.daftarPekerjaan rd on rd.id = rr.KKERJA
+				FROM riwayatIbu rr
+				INNER JOIN daftarPekerjaan rd on rd.id = rr.KKERJA
 				WHERE rr.NIP = '$nip'";
 
 				$data = array();
@@ -1021,8 +1021,8 @@ INNER JOIN revReferenceSimpeg.agama a on a.kode = d.agamaId WHERE d.nipbaru = '$
 						{
 
 							$querySQL = "SELECT rr.NIP, rr.NISUA, rr.KTLAHIR, rr.TLAHIR, rr.TIJASAH, rr.TKAWIN, rr.STUNJ, rr.KKERJA, rd.nama, rr.ISAKHIR
-					FROM revReferenceSimpeg.riwayatSuamiIstri rr
-					INNER JOIN revReferenceSimpeg.daftarPekerjaan rd on rd.id = rr.KKERJA
+					FROM riwayatSuamiIstri rr
+					INNER JOIN daftarPekerjaan rd on rd.id = rr.KKERJA
 					WHERE rr.NIP = '$nip'";
 
 							$data = array();
@@ -1059,8 +1059,8 @@ INNER JOIN revReferenceSimpeg.agama a on a.kode = d.agamaId WHERE d.nipbaru = '$
 			{
 
 				$querySQL = "SELECT rr.NIP, rr.NISUA, rr.KTLAHIR, rr.TLAHIR, rr.TIJASAH, rr.TKAWIN, rr.STUNJ, rr.KKERJA, rd.nama, rr.ISAKHIR
-		FROM revReferenceSimpeg.riwayatSuamiIstri rr
-		INNER JOIN revReferenceSimpeg.daftarPekerjaan rd on rd.id = rr.KKERJA
+		FROM riwayatSuamiIstri rr
+		INNER JOIN daftarPekerjaan rd on rd.id = rr.KKERJA
 		WHERE rr.NIP = '$nip'";
 
 				$data = array();
@@ -1097,9 +1097,9 @@ INNER JOIN revReferenceSimpeg.agama a on a.kode = d.agamaId WHERE d.nipbaru = '$
 			{
 
 				$querySQL = "SELECT ra.NIP, ra.NANAK, ra.TLAHIR, ra.TGLLAHIR, rj.NKELAMIN, ra.KELUARGA, ra.TUNJ, ra.TIJASAH, rd.nama
-		FROM revReferenceSimpeg.riwayatAnak ra
-		INNER JOIN revReferenceSimpeg.jenisKelamin rj on rj.KJKEL = ra.KJKEL
-		INNER JOIN revReferenceSimpeg.daftarPekerjaan rd on rd.id = ra.KKERJA
+		FROM riwayatAnak ra
+		INNER JOIN jenisKelamin rj on rj.KJKEL = ra.KJKEL
+		INNER JOIN daftarPekerjaan rd on rd.id = ra.KKERJA
 		WHERE ra.NIP = '$nip'";
 
 				$data = array();
@@ -1135,9 +1135,9 @@ INNER JOIN revReferenceSimpeg.agama a on a.kode = d.agamaId WHERE d.nipbaru = '$
 			{
 
 				$querySQL = "SELECT ra.NIP, ra.NANAK, ra.TLAHIR, ra.TGLLAHIR, rj.NKELAMIN, ra.KELUARGA, ra.TUNJ, ra.TIJASAH, rd.nama
-		FROM revReferenceSimpeg.riwayatAnak ra
-		INNER JOIN revReferenceSimpeg.jenisKelamin rj on rj.KJKEL = ra.KJKEL
-		INNER JOIN revReferenceSimpeg.daftarPekerjaan rd on rd.id = ra.KKERJA
+		FROM riwayatAnak ra
+		INNER JOIN jenisKelamin rj on rj.KJKEL = ra.KJKEL
+		INNER JOIN daftarPekerjaan rd on rd.id = ra.KKERJA
 		WHERE ra.NIP = '$nip'";
 
 				$data = array();
@@ -1498,5 +1498,34 @@ INNER JOIN revReferenceSimpeg.agama a on a.kode = d.agamaId WHERE d.nipbaru = '$
           return null;
         }
     }
+		public function getDocumentTypeById($id)
+		{
+			$DB2 =$this->load->database('simpegRef', TRUE);
+			$querySQL = "select * from document_type where id = '$id' ";
+
+			$data = array();
+			$stackData = array();
+
+			log_message('debug','document_type: '.$querySQL);
+			$query = $DB2->query($querySQL);
+
+			if($query->num_rows()>0)
+				{ $count = 1;
+					foreach($query->result() as $row)
+					{
+						$data['id']=$row->id;
+						$data['name']=$row->name;
+						$data['alias']=$row->alias;
+					  array_push($stackData,$data);
+					}
+					$query->free_result();
+					return $stackData;
+				}else
+				{
+
+					$query->free_result();
+					return $data;
+				}
+		}
 
 }
