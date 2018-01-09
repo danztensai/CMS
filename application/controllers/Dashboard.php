@@ -31,8 +31,11 @@ class Dashboard extends Auth_Controller
 
 		$this->data['users_instansi']=$this->Users_model->getUsersinstansi($userId );
 
-		$groupid = $this->data['user_group'][0]->id;
-$this->data['menu']=$this->Menu_model->menuMaster($groupid);
+		$gid =array();
+foreach($this->data['user_group'] as $ug){
+  $gid[]=$ug->id;
+}
+$this->data['menu']=$this->Menu_model->menuMaster($gid);
 
 		log_message('INFO','User Id : '.$userId);
 
@@ -50,8 +53,11 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 
 		$this->data['users_instansi']=$this->Users_model->getUsersinstansi($userId );
 
-		$groupid = $this->data['user_group'][0]->id;
-		$this->data['menu']=$this->Menu_model->menuMaster($groupid);
+		$gid =array();
+foreach($this->data['user_group'] as $ug){
+  $gid[]=$ug->id;
+}
+		$this->data['menu']=$this->Menu_model->menuMaster($gid);
 
 		log_message('INFO','User Id : '.$userId);
 
@@ -69,8 +75,11 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 
 		$this->data['users_instansi']=$this->Users_model->getUsersinstansi($userId );
 
-		$groupid = $this->data['user_group'][0]->id;
-		$this->data['menu']=$this->Menu_model->menuMaster($groupid);
+		$gid =array();
+foreach($this->data['user_group'] as $ug){
+  $gid[]=$ug->id;
+}
+		$this->data['menu']=$this->Menu_model->menuMaster($gid);
 
 		log_message('INFO','User Id : '.$userId);
 
@@ -122,8 +131,11 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 
 		$this->data['users_instansi']=$this->Users_model->getUsersinstansi($userId );
 
-		$groupid = $this->data['user_group'][0]->id;
-		$this->data['menu']=$this->Menu_model->menuMaster($groupid);
+		$gid =array();
+foreach($this->data['user_group'] as $ug){
+  $gid[]=$ug->id;
+}
+		$this->data['menu']=$this->Menu_model->menuMaster($gid);
 
 		//log_message('INFO','User Id : '.$userId);
 
@@ -193,8 +205,11 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 
 		$this->data['users_instansi']=$this->Users_model->getUsersinstansi($userId );
 
-		$groupid = $this->data['user_group'][0]->id;
-		$this->data['menu']=$this->Menu_model->menuMaster($groupid);
+		$gid =array();
+foreach($this->data['user_group'] as $ug){
+  $gid[]=$ug->id;
+}
+		$this->data['menu']=$this->Menu_model->menuMaster($gid);
 
 		//log_message('INFO','User Id : '.$userId);
 
@@ -264,8 +279,11 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 
 		$this->data['users_instansi']=$this->Users_model->getUsersinstansi($userId );
 
-		$groupid = $this->data['user_group'][0]->id;
-		$this->data['menu']=$this->Menu_model->menuMaster($groupid);
+		$gid =array();
+foreach($this->data['user_group'] as $ug){
+  $gid[]=$ug->id;
+}
+		$this->data['menu']=$this->Menu_model->menuMaster($gid);
 
 		//log_message('INFO','User Id : '.$userId);
 
@@ -318,8 +336,11 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 
 		$this->data['users_instansi']=$this->Users_model->getUsersinstansi($userId );
 
-		$groupid = $this->data['user_group'][0]->id;
-$this->data['menu']=$this->Menu_model->menuMaster($groupid);
+		$gid =array();
+foreach($this->data['user_group'] as $ug){
+  $gid[]=$ug->id;
+}
+$this->data['menu']=$this->Menu_model->menuMaster($gid);
 
 		//log_message('INFO','User Id : '.$userId);
 
@@ -371,8 +392,11 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 
 		$this->data['users_instansi']=$this->Users_model->getUsersinstansi($userId );
 
-		$groupid = $this->data['user_group'][0]->id;
-$this->data['menu']=$this->Menu_model->menuMaster($groupid);
+		$gid =array();
+foreach($this->data['user_group'] as $ug){
+  $gid[]=$ug->id;
+}
+$this->data['menu']=$this->Menu_model->menuMaster($gid);
 
 		//log_message('INFO','User Id : '.$userId);
 
@@ -414,8 +438,11 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 
 	 		$this->data['users_instansi']=$this->Users_model->getUsersinstansi($userId );
 
-	 		$groupid = $this->data['user_group'][0]->id;
-	 		$this->data['menu']=$this->Menu_model->menuMaster($groupid);
+	 		$gid =array();
+foreach($this->data['user_group'] as $ug){
+  $gid[]=$ug->id;
+}
+	 		$this->data['menu']=$this->Menu_model->menuMaster($gid);
 
 	 		log_message('INFO','User Id : '.$userId);
 
@@ -625,8 +652,11 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 
 		$this->data['users_instansi']=$this->Users_model->getUsersinstansi($userId );
 
-		$groupid = $this->data['user_group'][0]->id;
-		$this->data['menu']=$this->Menu_model->menuMaster($groupid);
+		$gid =array();
+foreach($this->data['user_group'] as $ug){
+  $gid[]=$ug->id;
+}
+		$this->data['menu']=$this->Menu_model->menuMaster($gid);
 
 
 
@@ -676,7 +706,11 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 		$nData['askesNomor'] = $changedData->askesNomor;
 		$nData['jenisKawin'] = $changedData->jenisKawin;
 		$nData['statusCpnsPns'] = $changedData->statusCpnsPns;
-		$nData['FILE_BMP'] = base_url().'assets/foto/'.$changedData->FILE_BMP;
+		if(property_exists($changedData, 'FILE_BMP'))
+		{
+			$nData['FILE_BMP'] = base_url().'assets/foto/'.$changedData->FILE_BMP;
+		}
+
 		$data['oData']=$oData;
 		$data['nData']=$nData;
 
@@ -699,8 +733,11 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 
 		$this->data['users_instansi']=$this->Users_model->getUsersinstansi($userId );
 
-		$groupid = $this->data['user_group'][0]->id;
-		$this->data['menu']=$this->Menu_model->menuMaster($groupid);
+		$gid =array();
+foreach($this->data['user_group'] as $ug){
+  $gid[]=$ug->id;
+}
+		$this->data['menu']=$this->Menu_model->menuMaster($gid);
 
 		$confirmationData = $this->Simpeg_model->getConfirmationByStatus(0,$this->data['users_instansi'][0]['instansi_name']);
 		$recordsTotal=$this->Simpeg_model->getCountTotalConfirmationByStatus(0,$this->data['users_instansi'][0]['instansi_name']);
@@ -798,8 +835,11 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 		$userId = $this->ion_auth->get_user_id();
 		$this->data['user']=$this->ion_auth->user()->row();
 		$this->data['user_group']= $this->ion_auth->get_users_groups($userId)->result();
-		$groupid = $this->data['user_group'][0]->id;
-		$this->data['menu']=$this->Menu_model->menuMaster($groupid);
+		$gid =array();
+foreach($this->data['user_group'] as $ug){
+  $gid[]=$ug->id;
+}
+		$this->data['menu']=$this->Menu_model->menuMaster($gid);
 		$this->render('dashboard/kepegawaian_view');
 	}
 
@@ -812,8 +852,11 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 		$this->data['user_group']= $this->ion_auth->get_users_groups($userId)->result();
 		log_message('debug','User Group : '.print_r($this->data['user_group'],TRUE));
 		$this->data['users_instansi']=$this->Users_model->getUsersinstansi($userId );
-		$groupid = $this->data['user_group'][0]->id;
-$this->data['menu']=$this->Menu_model->menuMaster($groupid);
+		$gid =array();
+foreach($this->data['user_group'] as $ug){
+  $gid[]=$ug->id;
+}
+$this->data['menu']=$this->Menu_model->menuMaster($gid);
 		log_message('INFO','User Id : '.$userId);
 		log_message('DEBUG','inside Admin');
 		$this->render('dashboard/referensi_instansiInduk_view');
@@ -851,8 +894,11 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 
 		$this->data['users_instansi']=$this->Users_model->getUsersinstansi($userId );
 
-		$groupid = $this->data['user_group'][0]->id;
-		$this->data['menu']=$this->Menu_model->menuMaster($groupid);
+		$gid =array();
+foreach($this->data['user_group'] as $ug){
+  $gid[]=$ug->id;
+}
+		$this->data['menu']=$this->Menu_model->menuMaster($gid);
 
 		log_message('INFO','User Id : '.$userId);
 		log_message('DEBUG','inside Admin');
@@ -967,8 +1013,11 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 
 		$this->data['users_instansi']=$this->Users_model->getUsersinstansi($userId );
 
-		$groupid = $this->data['user_group'][0]->id;
-		$this->data['menu']=$this->Menu_model->menuMaster($groupid);
+		$gid =array();
+foreach($this->data['user_group'] as $ug){
+  $gid[]=$ug->id;
+}
+		$this->data['menu']=$this->Menu_model->menuMaster($gid);
 
 		log_message('INFO','User Id : '.$userId);
 		log_message('DEBUG','inside Admin');
@@ -1509,8 +1558,11 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 
 			$this->data['users_instansi']=$this->Users_model->getUsersinstansi($userId );
 
-			$groupid = $this->data['user_group'][0]->id;
-			$this->data['menu']=$this->Menu_model->menuMaster($groupid);
+			$gid =array();
+foreach($this->data['user_group'] as $ug){
+  $gid[]=$ug->id;
+}
+			$this->data['menu']=$this->Menu_model->menuMaster($gid);
 
 			log_message('INFO','User Id : '.$userId);
 			log_message('DEBUG','inside Admin');
@@ -2068,8 +2120,11 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 
 		  $this->data['users_instansi']=$this->Users_model->getUsersinstansi($userId );
 
-		  $groupid = $this->data['user_group'][0]->id;
-		  $this->data['menu']=$this->Menu_model->menuMaster($groupid);
+		  $gid =array();
+foreach($this->data['user_group'] as $ug){
+  $gid[]=$ug->id;
+}
+		  $this->data['menu']=$this->Menu_model->menuMaster($gid);
 
 		  log_message('INFO','User Id : '.$userId);
 		  log_message('DEBUG','inside Admin');
@@ -2241,8 +2296,11 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 
 			$this->data['users_instansi']=$this->Users_model->getUsersinstansi($userId );
 
-			$groupid = $this->data['user_group'][0]->id;
-			$this->data['menu']=$this->Menu_model->menuMaster($groupid);
+			$gid =array();
+foreach($this->data['user_group'] as $ug){
+  $gid[]=$ug->id;
+}
+			$this->data['menu']=$this->Menu_model->menuMaster($gid);
 
 			log_message('INFO','User Id : '.$userId);
 			log_message('DEBUG','inside Admin');
@@ -2933,8 +2991,11 @@ $this->data['menu']=$this->Menu_model->menuMaster($groupid);
 
 		$this->data['users_instansi']=$this->Users_model->getUsersinstansi($userId );
 
-		$groupid = $this->data['user_group'][0]->id;
-$this->data['menu']=$this->Menu_model->menuMaster($groupid);
+		$gid =array();
+foreach($this->data['user_group'] as $ug){
+  $gid[]=$ug->id;
+}
+$this->data['menu']=$this->Menu_model->menuMaster($gid);
 
 		log_message('INFO','User Id : '.$userId);
 
@@ -3286,8 +3347,16 @@ return $tagImg;
 			log_message('INFO','is admin? :'.$this->ion_auth->is_admin());
 			$this->data['user_group']= $this->ion_auth->get_users_groups($userId)->result();
 			log_message('debug','User Group : '.print_r($this->data['user_group'],TRUE));
-			$groupid = $this->data['user_group'][0]->id;
-			$this->data['menu']=$this->Menu_model->menuMaster($groupid);
+			$gid =array();
+foreach($this->data['user_group'] as $ug){
+  $gid[]=$ug->id;
+}
+			$gid =array();
+			foreach($this->data['user_group'] as $ug){
+				$gid[]=$ug->id;
+			}
+			log_message('debug','User Group Array : '.print_r($gid,TRUE));
+			$this->data['menu']=$this->Menu_model->menuMaster($gid);
 			$this->data['users_instansi']=$this->Users_model->getUsersinstansi($userId );
 
 
@@ -3315,8 +3384,11 @@ return $tagImg;
 
 			$this->data['users_instansi']=$this->Users_model->getUsersinstansi($userId );
 
-			$groupid = $this->data['user_group'][0]->id;
-$this->data['menu']=$this->Menu_model->menuMaster($groupid);
+			$gid =array();
+foreach($this->data['user_group'] as $ug){
+  $gid[]=$ug->id;
+}
+$this->data['menu']=$this->Menu_model->menuMaster($gid);
 
 			log_message('INFO','User Id : '.$userId);
 

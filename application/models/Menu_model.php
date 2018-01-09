@@ -26,7 +26,7 @@ class Menu_model extends CI_Model {
       }
       public function subMenu($parent_id,$group_id)
   		{
-  			$querySQL = "SELECT menu_order,idMenu, menu_name, menu_link, parent_id FROM menu m left join group_menu gm on m.idmenu = gm.menu_id where gm.group_id =$group_id  and parent_id=$parent_id ORDER BY menu_order ASC";
+  			$querySQL = "SELECT menu_order,idMenu, menu_name, menu_link, parent_id FROM menu m left join group_menu gm on m.idmenu = gm.menu_id where gm.group_id in ('" . implode("','", $group_id) . "')  and parent_id=$parent_id ORDER BY menu_order ASC";
       //  log_message('debug','SubMenu Query'.$querySQL);
   			$data = array();
   			$stackData = array();
@@ -63,8 +63,8 @@ class Menu_model extends CI_Model {
   		}
   		public function menuMaster($group_id)
   		{
-  			$querySQL = "SELECT menu_order, idMenu, menu_name, menu_link, parent_id FROM menu m left join group_menu gm on m.idmenu = gm.menu_id where gm.group_id =$group_id  and m.parent_id = 0 or m.parent_id is null  ORDER BY menu_order ASC";
-      //  log_message('debug','Query Menu Root :  '.$querySQL);
+  			$querySQL = "SELECT distinct menu_order, idMenu, menu_name, menu_link, parent_id FROM menu m left join group_menu gm on m.idmenu = gm.menu_id where gm.group_id in ('" . implode("','", $group_id) . "')  and m.parent_id = 0 or m.parent_id is null  ORDER BY menu_order ASC";
+        log_message('debug','Query Menu Root :  '.$querySQL);
   			$data = array();
   			$stackData = array();
   			$query = $this->db->query($querySQL);

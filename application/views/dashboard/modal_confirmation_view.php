@@ -7,12 +7,21 @@
       <div class="box-body">
 
 
-        <div class="form-group">
-          <label class="col-md-4 control-label">Foto</label>
-          <div class="col-md-8">
-          <img class="img-responsive" src="<?php echo $oData['FILE_BMP'];?>" alt="Foto" width="100" height="80">
-          </div>
-        </div>
+
+          <?php
+          if (array_key_exists('FILE_BMP', $nData)) {
+                  ?>
+                  <div class="form-group">
+                  <label class="col-md-4 control-label">Foto</label>
+                  <div class="col-md-8">
+
+                  <img class="img-responsive" src="<?php echo $oData['FILE_BMP'];?>" alt="Foto" width="100" height="80">
+                  </div>
+                  </div>
+        <?php
+            }
+          ?>
+
         <div class="form-group">
           <label for="NIP" class="col-md-4 control-label">NIP</label>
 
@@ -90,12 +99,19 @@
     </p>
     <form class="form-horizontal" id="formCPNS">
       <div class="box-body">
-        <div class="form-group">
-          <label class="col-md-4 control-label">Foto</label>
-          <div class="col-md-8">
-          <img class="img-responsive" src="<?php echo $nData['FILE_BMP'];?>" alt="Foto" width="100" height="80">
-          </div>
-        </div>
+        <?php
+        if (array_key_exists('FILE_BMP', $nData)) {
+                ?>
+                <div class="form-group">
+                <label class="col-md-4 control-label">Foto</label>
+                <div class="col-md-8">
+
+                <img class="img-responsive" src="<?php echo $nData['FILE_BMP'];?>" alt="Foto" width="100" height="80">
+                </div>
+                </div>
+      <?php
+          }
+        ?>
       <div class="form-group">
         <label for="NIP" class="col-md-4 control-label">NIP</label>
 

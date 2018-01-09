@@ -267,7 +267,7 @@ $.each($('input,select,textarea', '#formGaji'),function(k){
                                     <li class=""><a href="#CPNS" data-toggle="tab" aria-expanded="true">CPNS/PNS</a></li>
                                     <li class=""><a href="#Pangkat_terakhir" data-toggle="tab" aria-expanded="false">Pangkat Terakhir</a></li>
                                     <li class=""><a href="#Gaji_berkala" data-toggle="tab" aria-expanded="false">Gaji Berkala</a></li>
-                                    <li class=""><a href="#Pendidikan_terakhir" data-toggle="tab" aria-expanded="false">Pendidikan Terakhir</a></li>
+                                    <!-- <li class=""><a href="#Pendidikan_terakhir" data-toggle="tab" aria-expanded="false">Pendidikan Terakhir</a></li> -->
                                     <li class=""><a href="#Tempat" data-toggle="tab" aria-expanded="false">Tempat</a></li>
                                     <li class=""><a href="#Jabatan_terakhir" data-toggle="tab" aria-expanded="false">Jabatan Terakhir</a></li>
                                   </ul>
@@ -1200,12 +1200,12 @@ $.each($('input,select,textarea', '#formGaji'),function(k){
                                                             </div>
                                                           </div>
 
-                                                          <div class="form-group">
+                                                          <!-- <div class="form-group">
                                                             <label for="kecamatan" class="col-md-4 control-label">Kecamatan</label>
                                                             <div class="col-md-4">
                                                               <input class="form-control" id="kecamatan" placeholder="Kecamatan" disaled>
                                                             </div>
-                                                          </div>
+                                                          </div> -->
 
                                                           <div class="form-group">
                                                             <label for="kelurahan" class="col-md-4 control-label">Kelurahan</label>

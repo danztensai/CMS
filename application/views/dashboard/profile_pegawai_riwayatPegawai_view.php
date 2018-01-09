@@ -16,13 +16,13 @@ overflow-y:scroll;
     <ul class="nav nav-tabs">
       <li><a href="#pangkat" data-toggle="tab">Pangkat</a></li>
       <li><a href="#jabatan" data-toggle="tab">Jabatan</a></li>
-      <li><a href="#organisasi" data-toggle="tab">Organisasi</a></li>
-      <li><a href="#tandaJasa" data-toggle="tab">Tanda Jasa</a></li>
+      <!-- <li><a href="#organisasi" data-toggle="tab">Organisasi</a></li> -->
+      <!-- <li><a href="#tandaJasa" data-toggle="tab">Tanda Jasa</a></li>
       <li><a href="#DPPP" data-toggle="tab">DPPP</a></li>
       <li><a href="#Hukuman" data-toggle="tab">Hukuman</a></li>
       <li><a href="#Cuti" data-toggle="tab">Cuti</a></li>
       <li><a href="#tln" data-toggle="tab">Tugas Luar Negeri</a></li>
-      <li><a href="#bahasa" data-toggle="tab">Bahasa</a></li>
+      <li><a href="#bahasa" data-toggle="tab">Bahasa</a></li> -->
     </ul>
     <div class="tab-content">
       <div class="tab-pane" id="pangkat">
