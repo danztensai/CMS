@@ -975,7 +975,14 @@ $.each($('input,select,textarea', '#formGaji'),function(k){
                                                                 <p class="text-center">
                                                                   <strong>Gaji Berkala</strong>
                                                                 </p>
+                                                                <?php if($gaji==null)
+                                                                {
+                                                                    log_message('debug','Empty Bro');
+                                                                ?>
+                                                                <h1>Belum Ada Data</h1>
+                                                                <?php
 
+                                                              }else{ ?>
                                                     <form class="form-horizontal" id="formGaji">
                                                       <div class="box-body">
                                                         <div class="col-md-12">
@@ -1044,6 +1051,7 @@ $.each($('input,select,textarea', '#formGaji'),function(k){
                                                         </div>
                                                       </div>
                                                     </form>
+                                                  <?php }?>
                                                   </div>
                                                 </div>
                                             </div>

@@ -21,6 +21,7 @@ class Dashboard extends Auth_Controller
 		$this->load->library('grocery_CRUD');
 	}
 
+
 	public function testIs()
 	{
 		$userId = $this->ion_auth->get_user_id();
@@ -3224,6 +3225,28 @@ return $tagImg;
 			$this->load->view('dashboard/grid',$output);
 		}
 		// $this->load->view('dashboard/grid',$output);
+	}
+
+	public function createUser()
+	{
+		
+
+			$data = array(
+				'phone' => $p['nomorTelpon'],
+				'first_name' => $p['first_name'],
+				'last_name' => '',
+				'company' =>$p['instansi'],
+				'profile_pic' =>'placeholder.png',
+				'nip' =>$p['nipBaru']
+			);
+
+			$insertId=  $this->ion_auth_model->register($username, $password, $email, $data);
+			$instansiId = $this->Simpeg_model->getIdInstansiByName($p['instansi']);
+				$arrayInsertinstansi = array('users_id'=>$insertId,'instansi_id'=>$instansiId);
+				$arrayInsertGroup = array('user_id'=>$insertId,'group_id'=>4);
+				$this->Users_model->insertUser_instansiBatch($arrayInsertinstansi);
+					$this->Users_model->insertUser_groupsBatch($arrayInsertGroup);
+
 	}
 
 	public function gridUserManagement()

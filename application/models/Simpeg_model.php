@@ -563,6 +563,7 @@ INNER JOIN agama a on a.kode = d.agamaId WHERE d.nipbaru = '$nip'";
 			}
 		}
 
+
 		public function getPangkatAkhirByNip($nip)
 		{
 
@@ -1526,6 +1527,73 @@ INNER JOIN agama a on a.kode = d.agamaId WHERE d.nipbaru = '$nip'";
 					$query->free_result();
 					return $data;
 				}
+		}
+
+		public function getAllPNS()
+		{
+
+		$querySQL = "SELECT  d.nipBaru,d.Nama,k2.nunker as Instansi,REPLACE(d.TLAHIR, '-', '')as password,d.nomorTelpon FROM datautama d
+							  left join jakhir ja on d.nipBaru = ja.nip
+								left join unkerja k2 on k2.kunker = ja.kunkersInduk
+							 	where d.kedudukanHukum=1 and d.statusHidupPensiunPindah=1;";
+
+		$dataRet = array();
+		$stackData = array();
+
+		log_message('debug','getAllPNS	: '.$querySQL);
+		$query = $this->db->query($querySQL);
+
+		if($query->num_rows()>0)
+			{ $count = 1;
+				foreach($query->result() as $row)
+				{
+					$data = array();
+					$data['nipBaru']=$row->nipBaru;
+					$data['nama']=$row->nama;
+					$data['instansi']=$row->instansi;
+					$data['tlahir']=$row->tlahir;
+
+
+					array_push($stackData,$data);
+				}
+				$query->free_result();
+				return $stackData;
+			}else
+			{
+
+				$query->free_result();
+				return $dataRet;
+			}
+		}
+		public function getIdInstansiByName($name)
+		{
+
+		$querySQL = "SELECT * FROM simpegnew.instansi where instansi_name like '%$name%'";
+
+		$id=0;
+
+		log_message('debug','getIdInstansiByName	: '.$querySQL);
+		$query = $this->db->query($querySQL);
+
+		if($query->num_rows()>0)
+			{ $count = 1;
+				foreach($query->result() as $row)
+				{
+					$data = array();
+					$id=$row->instansi_id;
+
+
+
+
+				}
+				$query->free_result();
+				return $id;
+			}else
+			{
+
+				$query->free_result();
+				return $id;
+			}
 		}
 
 }

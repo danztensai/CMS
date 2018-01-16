@@ -21,6 +21,14 @@ overflow-y:scroll;
               <p class="text-center">
                 <strong>Ayah</strong>
               </p>
+              <?php if($riwayatKeluargaAyah==null)
+              {
+                  log_message('debug','Empty Bro');
+              ?>
+              <h1>Belum Ada Data</h1>
+              <?php
+
+            }else{ ?>
               <form class="form-horizontal">
                 <div class="box-body scroll">
                   <div class="col-md-12">
@@ -92,6 +100,7 @@ overflow-y:scroll;
                   </div>
                 </div>
               </form>
+            <?php }?>
             </div>
           </div>
         </div>
@@ -103,6 +112,14 @@ overflow-y:scroll;
               <p class="text-center">
                 <strong>Ibu</strong>
               </p>
+              <?php if($riwayatKeluargaIbu==null)
+              {
+                  log_message('debug','Empty Bro');
+              ?>
+              <h1>Belum Ada Data</h1>
+              <?php
+
+            }else{ ?>
               <form class="form-horizontal">
                 <div class="box-body scroll">
                   <div class="col-md-12">
@@ -174,6 +191,7 @@ overflow-y:scroll;
                   </div>
                 </div>
               </form>
+            <?php }?>
             </div>
           </div>
         </div>
@@ -185,6 +203,14 @@ overflow-y:scroll;
               <p class="text-center">
                 <strong>Suami/Istri</strong>
               </p>
+              <?php if($riwayatKeluargaSuamiIstri==null)
+              {
+                  log_message('debug','Empty Bro');
+              ?>
+              <h1>Belum Ada Data</h1>
+              <?php
+
+            }else{ ?>
               <form class="form-horizontal">
                 <div class="box-body scroll">
                   <div class="col-md-12">
@@ -249,6 +275,7 @@ overflow-y:scroll;
                   </div>
                 </div>
               </form>
+            <?php } ?>
             </div>
           </div>
         </div>
