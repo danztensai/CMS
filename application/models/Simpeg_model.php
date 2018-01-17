@@ -1170,6 +1170,275 @@ INNER JOIN agama a on a.kode = d.agamaId WHERE d.nipbaru = '$nip'";
 				}
 			}
 
+			public function getRiwayatPendidikanUmum($nip)
+			{
+				$DB2 =$this->load->database('simpegRef', TRUE);
+				$querySQL = "SELECT rp.nip, rp.ktpu, rp.KJUR, rp.npdum, rp.namaSekolah, rp.tempat, rp.nkepsek, rp.nomorIjazah, rp.tglTahunLulus, rp.isPendidikanTerakhir
+FROM revReferenceSimpeg.pendidikan rp
+WHERE rp.NIP = '$nip'
+ORDER BY rp.tglTahunLulus DESC";
+
+				$data = array();
+				$stackData = array();
+
+				log_message('debug','getRiwayatPendidikanUmum: '.$querySQL);
+				$query = $DB2->query($querySQL);
+
+				if($query->num_rows()>0)
+				{ $count = 1;
+					foreach($query->result() as $row)
+					{
+						$data['nip']=$row->nip;
+						$data['ktpu']=$row->ktpu;
+						$data['KJUR']=$row->KJUR;
+						$data['npdum']=$row->npdum;
+						$data['namaSekolah']=$row->namaSekolah;
+						$data['tempat']=$row->tempat;
+						$data['nkepsek']=$row->nkepsek;
+						$data['nomorIjazah']=$row->nomorIjazah;
+						$data['tglTahunLulus']=$row->tglTahunLulus;
+						$data['isPendidikanTerakhir']=$row->isPendidikanTerakhir;
+					}
+					$query->free_result();
+					return $data;
+				}else
+				{
+					$query->free_result();
+					return $data;
+				}
+			}
+
+			public function getRiwayatPendidikanStruktural($nip)
+			{
+				$DB2 =$this->load->database('simpegRef', TRUE);
+				$querySQL = "SELECT rj.nama, rr.NIP, rr.kFungStrTek, rr.namaDiklat, rr.TEMPAT, rr.PAN, rr.ANGKATAN, rr.TMULAI, rr.TAKHIR, rr.JAM, rr.NSTTPP, rr.TSTTPP, rr.ISAKHIR
+FROM revReferenceSimpeg.riwayatdiklat rr
+INNER JOIN revReferenceSimpeg.jenisDiklat rj on rj.kode = rr.kodeJenisDiklat
+WHERE rr.NIP = '$nip' AND rr.kodeJenisDiklat = 2
+ORDER BY rr.TAKHIR DESC";
+
+				$data = array();
+				$stackData = array();
+
+				log_message('debug','getRiwayatPendidikanStruktural: '.$querySQL);
+				$query = $DB2->query($querySQL);
+
+				if($query->num_rows()>0)
+				{ $count = 1;
+					foreach($query->result() as $row)
+					{
+						$data['nama']=$row->nama;
+						$data['NIP']=$row->NIP;
+						$data['namaDiklat']=$row->namaDiklat;
+						$data['TEMPAT']=$row->TEMPAT;
+						$data['PAN']=$row->PAN;
+						$data['ANGKATAN']=$row->ANGKATAN;
+						$data['TMULAI']=$row->TMULAI;
+						$data['TAKHIR']=$row->TAKHIR;
+						$data['JAM']=$row->JAM;
+						$data['NSTTPP']=$row->NSTTPP;
+						$data['TSTTPP']=$row->TSTTPP;
+						$data['ISAKHIR']=$row->ISAKHIR;
+					}
+					$query->free_result();
+					return $data;
+				}else
+				{
+					$query->free_result();
+					return $data;
+				}
+			}
+
+			public function getRiwayatPendidikanFungsional($nip)
+			{
+				$DB2 =$this->load->database('simpegRef', TRUE);
+				$querySQL = "SELECT rj.nama, rr.NIP, rr.kFungStrTek, rr.namaDiklat, rr.TEMPAT, rr.PAN, rr.ANGKATAN, rr.TMULAI, rr.TAKHIR, rr.JAM, rr.NSTTPP, rr.TSTTPP, rr.ISAKHIR
+FROM revReferenceSimpeg.riwayatdiklat rr
+INNER JOIN revReferenceSimpeg.jenisDiklat rj on rj.kode = rr.kodeJenisDiklat
+WHERE rr.NIP = '$nip' AND rr.kodeJenisDiklat = 1
+ORDER BY rr.TAKHIR DESC";
+
+				$data = array();
+				$stackData = array();
+
+				log_message('debug','getRiwayatPendidikanFungsional: '.$querySQL);
+				$query = $DB2->query($querySQL);
+
+				if($query->num_rows()>0)
+				{ $count = 1;
+					foreach($query->result() as $row)
+					{
+						$data['nama']=$row->nama;
+						$data['NIP']=$row->NIP;
+						$data['namaDiklat']=$row->namaDiklat;
+						$data['TEMPAT']=$row->TEMPAT;
+						$data['PAN']=$row->PAN;
+						$data['ANGKATAN']=$row->ANGKATAN;
+						$data['TMULAI']=$row->TMULAI;
+						$data['TAKHIR']=$row->TAKHIR;
+						$data['JAM']=$row->JAM;
+						$data['NSTTPP']=$row->NSTTPP;
+						$data['TSTTPP']=$row->TSTTPP;
+						$data['ISAKHIR']=$row->ISAKHIR;
+					}
+					$query->free_result();
+					return $data;
+				}else
+				{
+					$query->free_result();
+					return $data;
+				}
+			}
+
+			public function getRiwayatPendidikanTeknis($nip)
+			{
+				$DB2 =$this->load->database('simpegRef', TRUE);
+				$querySQL = "SELECT rj.nama, rr.NIP, rr.kFungStrTek, rr.namaDiklat, rr.TEMPAT, rr.PAN, rr.ANGKATAN, rr.TMULAI, rr.TAKHIR, rr.JAM, rr.NSTTPP, rr.TSTTPP, rr.ISAKHIR
+FROM revReferenceSimpeg.riwayatdiklat rr
+INNER JOIN revReferenceSimpeg.jenisDiklat rj on rj.kode = rr.kodeJenisDiklat
+WHERE rr.NIP = '$nip' AND rr.kodeJenisDiklat = 3
+ORDER BY rr.TAKHIR DESC";
+
+				$data = array();
+				$stackData = array();
+
+				log_message('debug','getRiwayatPendidikanTeknis: '.$querySQL);
+				$query = $DB2->query($querySQL);
+
+				if($query->num_rows()>0)
+				{ $count = 1;
+					foreach($query->result() as $row)
+					{
+						$data['nama']=$row->nama;
+						$data['NIP']=$row->NIP;
+						$data['namaDiklat']=$row->namaDiklat;
+						$data['TEMPAT']=$row->TEMPAT;
+						$data['PAN']=$row->PAN;
+						$data['ANGKATAN']=$row->ANGKATAN;
+						$data['TMULAI']=$row->TMULAI;
+						$data['TAKHIR']=$row->TAKHIR;
+						$data['JAM']=$row->JAM;
+						$data['NSTTPP']=$row->NSTTPP;
+						$data['TSTTPP']=$row->TSTTPP;
+						$data['ISAKHIR']=$row->ISAKHIR;
+					}
+					$query->free_result();
+					return $data;
+				}else
+				{
+					$query->free_result();
+					return $data;
+				}
+			}
+
+			public function getRiwayatPendidikanPenataran($nip)
+			{
+				$DB2 =$this->load->database('simpegRef', TRUE);
+				$querySQL = "SELECT NIP, NTATAR, TEMPAT, PAN, TMULAI, TAKHIR, JAM, NPIAGAM, TPIAGAM
+FROM revReferenceSimpeg.riwayatPenataran
+WHERE NIP = '$nip'";
+
+				$data = array();
+				$stackData = array();
+
+				log_message('debug','getRiwayatPendidikanPenataran: '.$querySQL);
+				$query = $DB2->query($querySQL);
+
+				if($query->num_rows()>0)
+				{ $count = 1;
+					foreach($query->result() as $row)
+					{
+						$data['NIP']=$row->NIP;
+						$data['NTATAR']=$row->NTATAR;
+						$data['TEMPAT']=$row->TEMPAT;
+						$data['PAN']=$row->PAN;
+						$data['TMULAI']=$row->TMULAI;
+						$data['TAKHIR']=$row->TAKHIR;
+						$data['JAM']=$row->JAM;
+						$data['NPIAGAM']=$row->NPIAGAM;
+						$data['TPIAGAM']=$row->TPIAGAM;
+					}
+					$query->free_result();
+					return $data;
+				}else
+				{
+					$query->free_result();
+					return $data;
+				}
+			}
+
+			public function getRiwayatPendidikanSeminar($nip)
+			{
+				$DB2 =$this->load->database('simpegRef', TRUE);
+				$querySQL = "SELECT NIP, NSEMINAR, TEMPAT, PAN, TMULAI, TAKHIR, JAM, NPIAGAM, TPIAGAM
+FROM revReferenceSimpeg.riwayatSeminar
+WHERE NIP = '$nip' ORDER BY TAKHIR DESC";
+
+				$data = array();
+				$stackData = array();
+
+				log_message('debug','getRiwayatPendidikanSeminar: '.$querySQL);
+				$query = $DB2->query($querySQL);
+
+				if($query->num_rows()>0)
+				{ $count = 1;
+					foreach($query->result() as $row)
+					{
+						$data['NIP']=$row->NIP;
+						$data['NSEMINAR']=$row->NSEMINAR;
+						$data['TEMPAT']=$row->TEMPAT;
+						$data['PAN']=$row->PAN;
+						$data['TMULAI']=$row->TMULAI;
+						$data['TAKHIR']=$row->TAKHIR;
+						$data['JAM']=$row->JAM;
+						$data['NPIAGAM']=$row->NPIAGAM;
+						$data['TPIAGAM']=$row->TPIAGAM;
+					}
+					$query->free_result();
+					return $data;
+				}else
+				{
+					$query->free_result();
+					return $data;
+				}
+			}
+
+			public function getRiwayatPendidikanKursus($nip)
+			{
+				$DB2 =$this->load->database('simpegRef', TRUE);
+				$querySQL = "SELECT nip, namaKursus, tempat, institusiPenyelenggara, tanggalKursus, tanggalAkhirKursus, jumlahJam, npiagam, tpiagam
+FROM revReferenceSimpeg.riwayatkursus
+WHERE nip = '$nip' ORDER BY tanggalAkhirKursus DESC";
+
+				$data = array();
+				$stackData = array();
+
+				log_message('debug','getRiwayatPendidikanKursus: '.$querySQL);
+				$query = $DB2->query($querySQL);
+
+				if($query->num_rows()>0)
+				{ $count = 1;
+					foreach($query->result() as $row)
+					{
+						$data['nip']=$row->nip;
+						$data['namaKursus']=$row->namaKursus;
+						$data['tempat']=$row->tempat;
+						$data['institusiPenyelenggara']=$row->institusiPenyelenggara;
+						$data['tanggalKursus']=$row->tanggalKursus;
+						$data['tanggalAkhirKursus']=$row->tanggalAkhirKursus;
+						$data['jumlahJam']=$row->jumlahJam;
+						$data['npiagam']=$row->npiagam;
+						$data['tpiagam']=$row->tpiagam;
+					}
+					$query->free_result();
+					return $data;
+				}else
+				{
+					$query->free_result();
+					return $data;
+				}
+			}
+
 
 
 		public function getStlud()

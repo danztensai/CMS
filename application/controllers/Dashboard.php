@@ -604,6 +604,13 @@ foreach($this->data['user_group'] as $ug){
 		$riwayatKeluargaIbu = $this->Simpeg_model->getRiwayatKeluargaIbu($userLoggedin->nip);
 		$riwayatKeluargaSuamiIstri = $this->Simpeg_model->getRiwayatKeluargaSuamiIstri($userLoggedin->nip);
 		$riwayatKeluargaAnak = $this->Simpeg_model->getRiwayatKeluargaAnak($userLoggedin->nip);
+		$riwayatPendidikanUmum = $this->Simpeg_model->getRiwayatPendidikanUmum($userLoggedin->nip);
+		$riwayatPendidikanStruktural = $this->Simpeg_model->getRiwayatPendidikanStruktural($userLoggedin->nip);
+		$riwayatPendidikanFungsional = $this->Simpeg_model->getRiwayatPendidikanFungsional($userLoggedin->nip);
+		$riwayatPendidikanTeknis = $this->Simpeg_model->getRiwayatPendidikanTeknis($userLoggedin->nip);
+		$riwayatPendidikanPenataran = $this->Simpeg_model->getRiwayatPendidikanPenataran($userLoggedin->nip);
+		$riwayatPendidikanSeminar = $this->Simpeg_model->getRiwayatPendidikanSeminar($userLoggedin->nip);
+		$riwayatPendidikanKursus = $this->Simpeg_model->getRiwayatPendidikanKursus($userLoggedin->nip);
 
 		//log_message('debug',print_r($cpnspnsSimpeg,TRUE));
 		//log_message('debug',print_r($userLoggedin,TRUE));
@@ -630,6 +637,13 @@ foreach($this->data['user_group'] as $ug){
 		$this->data['riwayatKeluargaIbu']=$riwayatKeluargaIbu;
 		$this->data['riwayatKeluargaSuamiIstri']=$riwayatKeluargaSuamiIstri;
 		$this->data['riwayatKeluargaAnak']=$riwayatKeluargaAnak;
+		$this->data['riwayatPendidikanUmum']=$riwayatPendidikanUmum;
+		$this->data['riwayatPendidikanStruktural']=$riwayatPendidikanStruktural;
+		$this->data['riwayatPendidikanFungsional']=$riwayatPendidikanFungsional;
+		$this->data['riwayatPendidikanTeknis']=$riwayatPendidikanTeknis;
+		$this->data['riwayatPendidikanPenataran']=$riwayatPendidikanPenataran;
+		$this->data['riwayatPendidikanSeminar']=$riwayatPendidikanSeminar;
+		$this->data['riwayatPendidikanKursus']=$riwayatPendidikanKursus;
 
 		$this->data['cpnspns']=$cpnspnsSimpeg;
 		$this->data['pangkatTerakhir']=$pangkatTerakhir;
@@ -3229,7 +3243,7 @@ return $tagImg;
 
 	public function createUser()
 	{
-		
+
 
 			$data = array(
 				'phone' => $p['nomorTelpon'],

@@ -62,7 +62,7 @@ $arr = explode(' ',trim($name));
 
 	$arrayInsertinstansi = array();
 	$arrayInsertGroup = array();
-			$insertId=  $this->Ion_auth_model->register($arr[0], $pass, $arr[0].'@gmail.com', $data);
+			$insertId=  $this->Ion_auth_model->register($nip, $pass, $nip.'@gmail.com', $data);
 			$instansiId = $this->Simpeg_model->getIdInstansiByName($instansi);
 				$arrayPush1 = array('users_id'=>$insertId,'instansi_id'=>$instansiId);
 				$arrayPush2 = array('user_id'=>$insertId,'group_id'=>4);

@@ -8,13 +8,13 @@ overflow-y:scroll;
 <div class="tab-pane" id="riwayatKeluarga">
   <div class="nav-tabs-custom">
     <ul class="nav nav-tabs">
-      <li><a href="#ayah" data-toggle="tab">Ayah</a></li>
+      <li  class="active"><a href="#ayah" data-toggle="tab">Ayah</a></li>
       <li><a href="#ibu" data-toggle="tab">Ibu</a></li>
       <li><a href="#suamiIstri" data-toggle="tab">Suami/Istri</a></li>
       <li><a href="#anak" data-toggle="tab">Anak</a></li>
     </ul>
     <div class="tab-content">
-      <div class="tab-pane" id="ayah">
+      <div class="tab-pane active" id="ayah">
         <div class="box-body">
           <div class="row">
             <div class="col-md-12">
