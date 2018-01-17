@@ -1172,17 +1172,18 @@ INNER JOIN agama a on a.kode = d.agamaId WHERE d.nipbaru = '$nip'";
 
 			public function getRiwayatPendidikanUmum($nip)
 			{
-				$DB2 =$this->load->database('simpegRef', TRUE);
+
 				$querySQL = "SELECT rp.nip, rp.ktpu, rp.KJUR, rp.npdum, rp.namaSekolah, rp.tempat, rp.nkepsek, rp.nomorIjazah, rp.tglTahunLulus, rp.isPendidikanTerakhir
-FROM revReferenceSimpeg.pendidikan rp
-WHERE rp.NIP = '$nip'
-ORDER BY rp.tglTahunLulus DESC";
+											FROM pendidikan rp
+											WHERE rp.NIP = '$nip'
+											ORDER BY rp.tglTahunLulus DESC";
 
 				$data = array();
 				$stackData = array();
 
 				log_message('debug','getRiwayatPendidikanUmum: '.$querySQL);
-				$query = $DB2->query($querySQL);
+				$query = $this->db->query($querySQL);
+
 
 				if($query->num_rows()>0)
 				{ $count = 1;
@@ -1210,10 +1211,10 @@ ORDER BY rp.tglTahunLulus DESC";
 
 			public function getRiwayatPendidikanStruktural($nip)
 			{
-				$DB2 =$this->load->database('simpegRef', TRUE);
+
 				$querySQL = "SELECT rj.nama, rr.NIP, rr.kFungStrTek, rr.namaDiklat, rr.TEMPAT, rr.PAN, rr.ANGKATAN, rr.TMULAI, rr.TAKHIR, rr.JAM, rr.NSTTPP, rr.TSTTPP, rr.ISAKHIR
-FROM revReferenceSimpeg.riwayatdiklat rr
-INNER JOIN revReferenceSimpeg.jenisDiklat rj on rj.kode = rr.kodeJenisDiklat
+FROM riwayatdiklat rr
+INNER JOIN jenisDiklat rj on rj.kode = rr.kodeJenisDiklat
 WHERE rr.NIP = '$nip' AND rr.kodeJenisDiklat = 2
 ORDER BY rr.TAKHIR DESC";
 
@@ -1221,7 +1222,8 @@ ORDER BY rr.TAKHIR DESC";
 				$stackData = array();
 
 				log_message('debug','getRiwayatPendidikanStruktural: '.$querySQL);
-				$query = $DB2->query($querySQL);
+				$query = $this->db->query($querySQL);
+
 
 				if($query->num_rows()>0)
 				{ $count = 1;
@@ -1251,10 +1253,10 @@ ORDER BY rr.TAKHIR DESC";
 
 			public function getRiwayatPendidikanFungsional($nip)
 			{
-				$DB2 =$this->load->database('simpegRef', TRUE);
+
 				$querySQL = "SELECT rj.nama, rr.NIP, rr.kFungStrTek, rr.namaDiklat, rr.TEMPAT, rr.PAN, rr.ANGKATAN, rr.TMULAI, rr.TAKHIR, rr.JAM, rr.NSTTPP, rr.TSTTPP, rr.ISAKHIR
-FROM revReferenceSimpeg.riwayatdiklat rr
-INNER JOIN revReferenceSimpeg.jenisDiklat rj on rj.kode = rr.kodeJenisDiklat
+FROM riwayatdiklat rr
+INNER JOIN jenisDiklat rj on rj.kode = rr.kodeJenisDiklat
 WHERE rr.NIP = '$nip' AND rr.kodeJenisDiklat = 1
 ORDER BY rr.TAKHIR DESC";
 
@@ -1262,7 +1264,8 @@ ORDER BY rr.TAKHIR DESC";
 				$stackData = array();
 
 				log_message('debug','getRiwayatPendidikanFungsional: '.$querySQL);
-				$query = $DB2->query($querySQL);
+				$query = $this->db->query($querySQL);
+
 
 				if($query->num_rows()>0)
 				{ $count = 1;
@@ -1292,10 +1295,10 @@ ORDER BY rr.TAKHIR DESC";
 
 			public function getRiwayatPendidikanTeknis($nip)
 			{
-				$DB2 =$this->load->database('simpegRef', TRUE);
+
 				$querySQL = "SELECT rj.nama, rr.NIP, rr.kFungStrTek, rr.namaDiklat, rr.TEMPAT, rr.PAN, rr.ANGKATAN, rr.TMULAI, rr.TAKHIR, rr.JAM, rr.NSTTPP, rr.TSTTPP, rr.ISAKHIR
-FROM revReferenceSimpeg.riwayatdiklat rr
-INNER JOIN revReferenceSimpeg.jenisDiklat rj on rj.kode = rr.kodeJenisDiklat
+FROM riwayatdiklat rr
+INNER JOIN jenisDiklat rj on rj.kode = rr.kodeJenisDiklat
 WHERE rr.NIP = '$nip' AND rr.kodeJenisDiklat = 3
 ORDER BY rr.TAKHIR DESC";
 
@@ -1303,7 +1306,8 @@ ORDER BY rr.TAKHIR DESC";
 				$stackData = array();
 
 				log_message('debug','getRiwayatPendidikanTeknis: '.$querySQL);
-				$query = $DB2->query($querySQL);
+				$query = $this->db->query($querySQL);
+
 
 				if($query->num_rows()>0)
 				{ $count = 1;
@@ -1333,16 +1337,16 @@ ORDER BY rr.TAKHIR DESC";
 
 			public function getRiwayatPendidikanPenataran($nip)
 			{
-				$DB2 =$this->load->database('simpegRef', TRUE);
+
 				$querySQL = "SELECT NIP, NTATAR, TEMPAT, PAN, TMULAI, TAKHIR, JAM, NPIAGAM, TPIAGAM
-FROM revReferenceSimpeg.riwayatPenataran
+FROM riwayatPenataran
 WHERE NIP = '$nip'";
 
 				$data = array();
 				$stackData = array();
 
 				log_message('debug','getRiwayatPendidikanPenataran: '.$querySQL);
-				$query = $DB2->query($querySQL);
+				$query = $this->db->query($querySQL);
 
 				if($query->num_rows()>0)
 				{ $count = 1;
@@ -1369,16 +1373,16 @@ WHERE NIP = '$nip'";
 
 			public function getRiwayatPendidikanSeminar($nip)
 			{
-				$DB2 =$this->load->database('simpegRef', TRUE);
+
 				$querySQL = "SELECT NIP, NSEMINAR, TEMPAT, PAN, TMULAI, TAKHIR, JAM, NPIAGAM, TPIAGAM
-FROM revReferenceSimpeg.riwayatSeminar
+FROM riwayatSeminar
 WHERE NIP = '$nip' ORDER BY TAKHIR DESC";
 
 				$data = array();
 				$stackData = array();
 
 				log_message('debug','getRiwayatPendidikanSeminar: '.$querySQL);
-				$query = $DB2->query($querySQL);
+				$query = $this->db->query($querySQL);
 
 				if($query->num_rows()>0)
 				{ $count = 1;
@@ -1405,16 +1409,17 @@ WHERE NIP = '$nip' ORDER BY TAKHIR DESC";
 
 			public function getRiwayatPendidikanKursus($nip)
 			{
-				$DB2 =$this->load->database('simpegRef', TRUE);
+
 				$querySQL = "SELECT nip, namaKursus, tempat, institusiPenyelenggara, tanggalKursus, tanggalAkhirKursus, jumlahJam, npiagam, tpiagam
-FROM revReferenceSimpeg.riwayatkursus
+FROM riwayatkursus
 WHERE nip = '$nip' ORDER BY tanggalAkhirKursus DESC";
 
 				$data = array();
 				$stackData = array();
 
 				log_message('debug','getRiwayatPendidikanKursus: '.$querySQL);
-				$query = $DB2->query($querySQL);
+				$query = $this->db->query($querySQL);
+
 
 				if($query->num_rows()>0)
 				{ $count = 1;
