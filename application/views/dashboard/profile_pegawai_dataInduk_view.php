@@ -263,7 +263,7 @@ $.each($('input,select,textarea', '#formGaji'),function(k){
 <div class="tab-pane active" id="dataInduk">
 
                                   <ul class="nav nav-tabs">
-                                    <li class=""><a href="#Identitas" data-toggle="tab" aria-expanded="true">Identitas</a></li>
+                                    <li class="active"><a href="#Identitas" data-toggle="tab" aria-expanded="true">Identitas</a></li>
                                     <li class=""><a href="#CPNS" data-toggle="tab" aria-expanded="true">CPNS/PNS</a></li>
                                     <li class=""><a href="#Pangkat_terakhir" data-toggle="tab" aria-expanded="false">Pangkat Terakhir</a></li>
                                     <li class=""><a href="#Gaji_berkala" data-toggle="tab" aria-expanded="false">Gaji Berkala</a></li>

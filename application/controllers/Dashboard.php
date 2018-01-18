@@ -583,8 +583,6 @@ foreach($this->data['user_group'] as $ug){
 	}
 	public function profilePegawai()
 	{
-
-
 		$userId = $this->ion_auth->get_user_id();
 		$userLoggedin = $this->ion_auth->user()->row();
 		$this->data['user']=$userLoggedin;
@@ -598,8 +596,13 @@ foreach($this->data['user_group'] as $ug){
 		$jabatanTerakhir = $this->Simpeg_model->getJabatanTerakhir($userLoggedin->nip);
 		$riwayatPangkat = $this->Simpeg_model->getRiwayatPangkat($userLoggedin->nip);
 		$riwayatJabatan = $this->Simpeg_model->getRiwayatJabatan($userLoggedin->nip);
+		$riwayatOrganisasi = $this->Simpeg_model->getRiwayatOrganisasi($userLoggedin->nip);
 		$riwayatJasa = $this->Simpeg_model->getRiwayatJasa($userLoggedin->nip);
 		$riwayatDpp = $this->Simpeg_model->getRiwayatDPP($userLoggedin->nip);
+		$riwayatHukuman = $this->Simpeg_model->getRiwayatHukuman($userLoggedin->nip);
+		$riwayatCuti = $this->Simpeg_model->getRiwayatCuti($userLoggedin->nip);
+		$riwayatTugasLuarNegri = $this->Simpeg_model->getRiwayatTugasLuarNegri($userLoggedin->nip);
+		$riwayatBahasa = $this->Simpeg_model->getRiwayatBahasa($userLoggedin->nip);
 		$riwayatKeluargaAyah = $this->Simpeg_model->getRiwayatKeluargaAyah($userLoggedin->nip);
 		$riwayatKeluargaIbu = $this->Simpeg_model->getRiwayatKeluargaIbu($userLoggedin->nip);
 		$riwayatKeluargaSuamiIstri = $this->Simpeg_model->getRiwayatKeluargaSuamiIstri($userLoggedin->nip);
@@ -631,8 +634,13 @@ foreach($this->data['user_group'] as $ug){
 		$this->data['identitas']=$identitasSimpeg;
 		$this->data['riwayatPangkat']=$riwayatPangkat;
 		$this->data['riwayatJabatan']=$riwayatJabatan;
+		$this->data['riwayatOrganisasi']=$riwayatOrganisasi;
 		$this->data['riwayatJasa']=$riwayatJasa;
 		$this->data['riwayatDpp']=$riwayatDpp;
+		$this->data['riwayatHukuman']=$riwayatHukuman;
+		$this->data['riwayatCuti']=$riwayatCuti;
+		$this->data['riwayatTugasLuarNegri']=$riwayatTugasLuarNegri;
+		$this->data['riwayatBahasa']=$riwayatBahasa;
 		$this->data['riwayatKeluargaAyah']=$riwayatKeluargaAyah;
 		$this->data['riwayatKeluargaIbu']=$riwayatKeluargaIbu;
 		$this->data['riwayatKeluargaSuamiIstri']=$riwayatKeluargaSuamiIstri;

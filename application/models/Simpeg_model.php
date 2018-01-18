@@ -6,8 +6,6 @@
 
 		}
 
-
-
 		public function getRiwayatPangkat($nip)
 		{
 
@@ -114,6 +112,7 @@
 							$data['NIP']=$row->NIP;
 							$data['THNILAI']=$row->THNILAI;
 							$data['NSETIA']=$row->NSETIA;
+							$data['NPRES']=$row->NPRES;
 							$data['NTJAWAB']=$row->NTJAWAB;
 							$data['NTAAT']=$row->NTAAT;
 							$data['NJUJUR']=$row->NJUJUR;
@@ -124,6 +123,148 @@
 							$data['NRATA']=$row->NRATA;
 
 
+						 array_push($stackData,$data);
+						}
+						$query->free_result();
+						return $stackData;
+					}else
+					{
+
+						$query->free_result();
+						return $data;
+					}
+		}
+
+		public function getRiwayatHukuman($nip)
+		{
+				$querySQL = "SELECT rh.nipBaru, rh.nipLama, rh.jenisHukuman, rh.DESHUKUM, rh.skNomor, rh.skTanggal, rh.KPEJ, rp.npej, rh.hukumanTanggal
+FROM revReferenceSimpeg.hukumandisiplin rh
+INNER JOIN revReferenceSimpeg.pejabatMenetapkan rp on rp.kpej = rh.KPEJ
+WHERE nipBaru = '$nip'";
+
+				$data = array();
+				$stackData = array();
+
+				log_message('debug','getRiwayatHukuman: '.$querySQL);
+				$query = $this->db->query($querySQL);
+
+				if($query->num_rows()>0)
+					{ $count = 1;
+						foreach($query->result() as $row)
+						{
+							$data['nipBaru']=$row->nipBaru;
+							$data['jenisHukuman']=$row->jenisHukuman;
+							$data['DESHUKUM']=$row->DESHUKUM;
+							$data['skNomor']=$row->skNomor;
+							$data['skTanggal']=$row->skTanggal;
+							$data['KPEJ']=$row->KPEJ;
+							$data['npej']=$row->npej;
+							$data['hukumanTanggal']=$row->hukumanTanggal;
+						 array_push($stackData,$data);
+						}
+						$query->free_result();
+						return $stackData;
+					}else
+					{
+
+						$query->free_result();
+						return $data;
+					}
+		}
+
+		public function getRiwayatCuti($nip)
+		{
+				$querySQL = "SELECT rr.nip, rr.JCUTI, rr.NSK, rr.TSK, rr.TMULAI, rr.TAKHIR, rr.PTETAP, rp.npej
+FROM revReferenceSimpeg.riwayatCuti rr
+INNER JOIN revReferenceSimpeg.pejabatMenetapkan rp on rp.kpej = rr.PTETAP
+WHERE nip = '$nip'";
+
+				$data = array();
+				$stackData = array();
+
+				log_message('debug','getRiwayatCuti: '.$querySQL);
+				$query = $this->db->query($querySQL);
+
+				if($query->num_rows()>0)
+					{ $count = 1;
+						foreach($query->result() as $row)
+						{
+							$data['nip']=$row->nip;
+							$data['JCUTI']=$row->JCUTI;
+							$data['NSK']=$row->NSK;
+							$data['TSK']=$row->TSK;
+							$data['TMULAI']=$row->TMULAI;
+							$data['TAKHIR']=$row->TAKHIR;
+							$data['PTETAP']=$row->PTETAP;
+							$data['npej']=$row->npej;
+						 array_push($stackData,$data);
+						}
+						$query->free_result();
+						return $stackData;
+					}else
+					{
+
+						$query->free_result();
+						return $data;
+					}
+		}
+
+		public function getRiwayatTugasLuarNegri($nip)
+		{
+				$querySQL = "SELECT NIP, NNEG, TUJUAN, PTETAP, NSK, TSK, TMULAI, TAKHIR
+FROM revReferenceSimpeg.riwayatTugas
+WHERE nip = '$nip'";
+
+				$data = array();
+				$stackData = array();
+
+				log_message('debug','getRiwayatTugasLuarNegri: '.$querySQL);
+				$query = $this->db->query($querySQL);
+
+				if($query->num_rows()>0)
+					{ $count = 1;
+						foreach($query->result() as $row)
+						{
+							$data['NIP']=$row->NIP;
+							$data['NNEG']=$row->NNEG;
+							$data['TUJUAN']=$row->TUJUAN;
+							$data['PTETAP']=$row->PTETAP;
+							$data['NSK']=$row->NSK;
+							$data['TSK']=$row->TSK;
+							$data['TMULAI']=$row->TMULAI;
+							$data['TAKHIR']=$row->TAKHIR;
+						 array_push($stackData,$data);
+						}
+						$query->free_result();
+						return $stackData;
+					}else
+					{
+
+						$query->free_result();
+						return $data;
+					}
+		}
+
+		public function getRiwayatBahasa($nip)
+		{
+				$querySQL = "SELECT NIP, NBAHASA, KBAHASA, JBAHASA
+FROM revReferenceSimpeg.riwayatBahasa
+WHERE NIP = '$nip'";
+
+				$data = array();
+				$stackData = array();
+
+				log_message('debug','getRiwayatTugasLuarNegri: '.$querySQL);
+				$query = $this->db->query($querySQL);
+
+				if($query->num_rows()>0)
+					{ $count = 1;
+						foreach($query->result() as $row)
+						{
+							$data['NIP']=$row->NIP;
+							$data['NBAHASA']=$row->NBAHASA;
+							$data['KBAHASA']=$row->KBAHASA;
+							$data['JBAHASA']=$row->JBAHASA;
 						 array_push($stackData,$data);
 						}
 						$query->free_result();
@@ -181,6 +322,43 @@
 						return $data;
 					}
 		}
+
+		public function getRiwayatOrganisasi($nip)
+		{
+				$querySQL = "SELECT NIP, JORG, NORG, JBORG, TMULAI, TAKHIR, NPIMP, TEMPAT
+FROM revreferencesimpeg.riwayatorganisasi
+WHERE NIP = '$nip'";
+
+				$data = array();
+				$stackData = array();
+
+				log_message('debug','getRiwayatOrganisasi: '.$querySQL);
+				$query = $this->db->query($querySQL);
+
+				if($query->num_rows()>0)
+					{ $count = 1;
+						foreach($query->result() as $row)
+						{
+							$data['NIP']=$row->NIP;
+							$data['JORG']=$row->JORG;
+							$data['NORG']=$row->NORG;
+							$data['JBORG']=$row->JBORG;
+							$data['TMULAI']=$row->TMULAI;
+							$data['TAKHIR']=$row->TAKHIR;
+							$data['NPIMP']=$row->NPIMP;
+							$data['TEMPAT']=$row->TEMPAT;
+						 array_push($stackData,$data);
+						}
+						$query->free_result();
+						return $stackData;
+					}else
+					{
+
+						$query->free_result();
+						return $data;
+					}
+		}
+
 
 		public function getRiwayatJabatanPensiun($nip)
 		{
