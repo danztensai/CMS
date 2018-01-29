@@ -3,6 +3,12 @@
   height:300px;
 overflow-y:scroll;
 }
+.row-bordered:after {
+  content: "";
+  display: block;
+  border-bottom: 2px solid #ccc;
+  margin:  15px;
+}
 </style>
 
 <div class="tab-pane" id="riwayatPendidikan">
@@ -36,7 +42,10 @@ overflow-y:scroll;
 
                   <form class="form-horizontal">
                     <div class="box-body scroll">
+                        <?php foreach($riwayatPendidikanUmum as $riwayatPendidikanUmum){ ?>
+  <div class="row row-bordered">
                       <div class="col-md-12">
+
                         <div class="form-group">
                           <label for="nip" class="col-md-4 control-label">NIP</label>
                           <div class="col-sm-4">
@@ -104,7 +113,10 @@ overflow-y:scroll;
 
                       </div>
                     </div>
+                      <?php } ?>
+                    </div>
                   </form>
+
                 <?php }
                 ?>
 
@@ -132,6 +144,7 @@ overflow-y:scroll;
 
                               <form class="form-horizontal">
                                 <div class="box-body scroll">
+                                  
                                   <div class="col-md-12">
                                     <div class="form-group">
                                       <label for="NIP" class="col-md-4 control-label">NIP</label>

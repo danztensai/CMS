@@ -105,7 +105,7 @@ overflow-y:scroll;
                         <div class="form-group">
                           <label for="pejabatMenetapkan<?php echo $counter;?>" class="col-md-4 control-label">Pejabat yang Menetapkan</label>
                           <div class="col-md-4">
-                            <input class="form-control" id="pejabatMenetapkan<?php echo $counter;?>" placeholder="Pejabat Yang Menetapkan" value="<?php echo $rp['tanggalSk']?>" disabled>
+                            <input class="form-control" id="pejabatMenetapkan<?php echo $counter;?>" placeholder="Pejabat Yang Menetapkan" value="<?php echo $rp['npej']?>" disabled>
                           </div>
                         </div>
 

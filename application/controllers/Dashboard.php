@@ -608,6 +608,7 @@ foreach($this->data['user_group'] as $ug){
 		$riwayatKeluargaSuamiIstri = $this->Simpeg_model->getRiwayatKeluargaSuamiIstri($userLoggedin->nip);
 		$riwayatKeluargaAnak = $this->Simpeg_model->getRiwayatKeluargaAnak($userLoggedin->nip);
 		$riwayatPendidikanUmum = $this->Simpeg_model->getRiwayatPendidikanUmum($userLoggedin->nip);
+		log_message('debug',print_r($riwayatPendidikanUmum,TRUE));
 		$riwayatPendidikanStruktural = $this->Simpeg_model->getRiwayatPendidikanStruktural($userLoggedin->nip);
 		$riwayatPendidikanFungsional = $this->Simpeg_model->getRiwayatPendidikanFungsional($userLoggedin->nip);
 		$riwayatPendidikanTeknis = $this->Simpeg_model->getRiwayatPendidikanTeknis($userLoggedin->nip);
@@ -628,6 +629,8 @@ foreach($this->data['user_group'] as $ug){
 		$jenisGolongan = $this->Simpeg_model->getJenisGolongan();
 		$jenisSTLUD = $this->Simpeg_model->getStlud();
 		$jenisNaikPangkat = $this->Simpeg_model->getJenisNaikPangkat();
+		$jenisGolDarah = $this->Simpeg_model->getJenisGolDarah();
+		log_message('debug',print_r($jenisGolDarah,TRUE));
 		log_message('debug','Isi Riwayat Jasa : '.count($riwayatJasa));
 
 
@@ -664,6 +667,7 @@ foreach($this->data['user_group'] as $ug){
 		$this->data['pejabat'] = $jenisPejabatMenetapkan;
 		$this->data['jenisGolongan']=$jenisGolongan;
 		$this->data['jenisNaikPangkat']=$jenisNaikPangkat;
+		$this->data['jenisGolDarah']=$jenisGolDarah;
 		$this->data['stlud']=$jenisSTLUD;
 
 
@@ -721,7 +725,7 @@ foreach($this->data['user_group'] as $ug){
 		$nData['ALRW'] = $changedData->ALRW;
 		$nData['KPOS'] = $changedData->KPOS;
 		$nData['alamat'] = $changedData->alamat;
-		$nData['KGOLDAR'] = $changedData->KGOLDAR;
+		$nData['KGOLDAR'] = $changedData->golonganDarah;
 		$nData['agamaId'] = $changedData->agamaId;
 		$nData['nipBaru'] = $changedData->nipBaru;
 		$nData['noTelpon'] = $changedData->noTelpon;
@@ -3087,7 +3091,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($gid);
 		$crud->set_subject('Dokumen');
 		$crud->unset_read();
 		$crud->required_fields('name','path','documentType');
-		$crud->set_field_upload('path',$pathFolder);
+		$crud->set_field_upload('path',$pathFolder,"pdf");
 		$crud->callback_add_field('nip',function(){
 			$this->db = $this->load->database('default',true);
 			$userLoggedin = $this->ion_auth->user()->row();
@@ -3097,7 +3101,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($gid);
 			return '<input type="text" value="'.$nip.'" name="nipShow"disabled>
 			 				<input type="hidden" value="'.$nip.'" name="nip"/>';
 		});
-		$crud->callback_column('path',array($this,'_callback_webpage_url'));
+		//$crud->callback_column('path',array($this,'_callback_webpage_url'));
 		$crud->callback_read_field('path', function ($value, $primary_key) {
 			$tagImg= '<a href="'.$value.'" class="image-thumbnail"><img src="'.$value.'" height="50px"></a>';
 							return $tagImg;
@@ -3118,10 +3122,10 @@ $this->data['menu']=$this->Menu_model->menuMaster($gid);
 										mkdir($pathFolder , 0777, TRUE);
 										}
 								$realPathFolder = base_url()."assets/upload/files/".$nip."/".$docType[0]['alias'].'/';
-								rename($pathFolderTemp.'/'.$post_array['path'],$pathFolder.'/'.$post_array['name'].'.jpg');
+								rename($pathFolderTemp.'/'.$post_array['path'],$pathFolder.'/'.$post_array['name'].'.pdf');
 
 
-								$post_array['path']=$realPathFolder.$post_array['name'].'.jpg';
+								$post_array['path']=$realPathFolder.$post_array['name'].'.pdf';
 								return $post_array;
 
 
@@ -3141,11 +3145,13 @@ $this->data['menu']=$this->Menu_model->menuMaster($gid);
 			if (!is_dir($pathFolder)) {
 	    		mkdir($pathFolder , 0777, TRUE);
 					}
-			$realPathFolder = base_url()."assets/upload/files/".$nip."/".$docType[0]['alias'].'/';
-			rename($pathFolderTemp.'/'.$post_array['path'],$pathFolder.'/'.$post_array['name'].'.jpg');
+			//$realPathFolder = base_url()."assets/upload/files/".$nip."/".$docType[0]['alias'].'/';
+			$realPathFolder = $docType[0]['alias'].'/';
+			rename($pathFolderTemp.'/'.$post_array['path'],$pathFolder.'/'.$post_array['name'].'.pdf');
 
 
-			$post_array['path']=$realPathFolder.$post_array['name'].'.jpg';
+			$post_array['path']=$realPathFolder.$post_array['name'].'.pdf';
+
 			return $post_array;
 
 

@@ -89,7 +89,7 @@
 		}
 		public function insertData($table,$data){
 
-			$DB2->insert($table, $data);
+			$this->db->insert($table, $data);
 		}
 
 		public function getRiwayatDPP($nip)
@@ -138,8 +138,8 @@
 		public function getRiwayatHukuman($nip)
 		{
 				$querySQL = "SELECT rh.nipBaru, rh.nipLama, rh.jenisHukuman, rh.DESHUKUM, rh.skNomor, rh.skTanggal, rh.KPEJ, rp.npej, rh.hukumanTanggal
-FROM revReferenceSimpeg.hukumandisiplin rh
-INNER JOIN revReferenceSimpeg.pejabatMenetapkan rp on rp.kpej = rh.KPEJ
+FROM hukumandisiplin rh
+INNER JOIN pejabatMenetapkan rp on rp.kpej = rh.KPEJ
 WHERE nipBaru = '$nip'";
 
 				$data = array();
@@ -175,8 +175,8 @@ WHERE nipBaru = '$nip'";
 		public function getRiwayatCuti($nip)
 		{
 				$querySQL = "SELECT rr.nip, rr.JCUTI, rr.NSK, rr.TSK, rr.TMULAI, rr.TAKHIR, rr.PTETAP, rp.npej
-FROM revReferenceSimpeg.riwayatCuti rr
-INNER JOIN revReferenceSimpeg.pejabatMenetapkan rp on rp.kpej = rr.PTETAP
+FROM riwayatCuti rr
+INNER JOIN pejabatMenetapkan rp on rp.kpej = rr.PTETAP
 WHERE nip = '$nip'";
 
 				$data = array();
@@ -212,7 +212,7 @@ WHERE nip = '$nip'";
 		public function getRiwayatTugasLuarNegri($nip)
 		{
 				$querySQL = "SELECT NIP, NNEG, TUJUAN, PTETAP, NSK, TSK, TMULAI, TAKHIR
-FROM revReferenceSimpeg.riwayatTugas
+FROM riwayatTugas
 WHERE nip = '$nip'";
 
 				$data = array();
@@ -248,7 +248,7 @@ WHERE nip = '$nip'";
 		public function getRiwayatBahasa($nip)
 		{
 				$querySQL = "SELECT NIP, NBAHASA, KBAHASA, JBAHASA
-FROM revReferenceSimpeg.riwayatBahasa
+FROM riwayatBahasa
 WHERE NIP = '$nip'";
 
 				$data = array();
@@ -326,7 +326,7 @@ WHERE NIP = '$nip'";
 		public function getRiwayatOrganisasi($nip)
 		{
 				$querySQL = "SELECT NIP, JORG, NORG, JBORG, TMULAI, TAKHIR, NPIMP, TEMPAT
-FROM revreferencesimpeg.riwayatorganisasi
+FROM riwayatorganisasi
 WHERE NIP = '$nip'";
 
 				$data = array();
@@ -643,7 +643,7 @@ INNER JOIN agama a on a.kode = d.agamaId WHERE d.nipbaru = '$nip'";
 		$data = array();
 		$stackData = array();
 
-		log_message('debug','getIdentitasPegawai: '.$querySQL);
+		log_message('debug','getIdentitasPegawai by NIP : '.$querySQL);
 		$query = $this->db->query($querySQL);
 
 		if($query->num_rows()>0)
@@ -682,6 +682,7 @@ INNER JOIN agama a on a.kode = d.agamaId WHERE d.nipbaru = '$nip'";
 				//	array_push($stackData,$data);
 				}
 				$query->free_result();
+				
 				return $data;
 			}else
 			{
@@ -1377,13 +1378,15 @@ INNER JOIN agama a on a.kode = d.agamaId WHERE d.nipbaru = '$nip'";
 						$data['nomorIjazah']=$row->nomorIjazah;
 						$data['tglTahunLulus']=$row->tglTahunLulus;
 						$data['isPendidikanTerakhir']=$row->isPendidikanTerakhir;
+						array_push($stackData,$data);
+
 					}
 					$query->free_result();
-					return $data;
+					return $stackData;
 				}else
 				{
 					$query->free_result();
-					return $data;
+					return $stackData;
 				}
 			}
 
@@ -1419,6 +1422,7 @@ ORDER BY rr.TAKHIR DESC";
 						$data['NSTTPP']=$row->NSTTPP;
 						$data['TSTTPP']=$row->TSTTPP;
 						$data['ISAKHIR']=$row->ISAKHIR;
+						array_push($stackData,$data);
 					}
 					$query->free_result();
 					return $data;
@@ -1663,7 +1667,7 @@ WHERE nip = '$nip' ORDER BY tanggalAkhirKursus DESC";
 		$dataRet = array();
 		$stackData = array();
 
-		log_message('debug','getRelationStatus	: '.$querySQL);
+		log_message('debug','getJenisGolongan	: '.$querySQL);
 		$query = $this->db->query($querySQL);
 
 		if($query->num_rows()>0)
@@ -1674,6 +1678,37 @@ WHERE nip = '$nip' ORDER BY tanggalAkhirKursus DESC";
 					$data['kode']=$row->Golongan_id;
 					$data['nama']=$row->golNama;
 					$data['pangkat']=$row->golPangkat;
+
+					array_push($stackData,$data);
+				}
+				$query->free_result();
+				return $stackData;
+			}else
+			{
+
+				$query->free_result();
+				return $dataRet;
+			}
+		}
+		public function getJenisGolDarah()
+		{
+
+		$querySQL = "SELECT * FROM golongandarah";
+
+		$dataRet = array();
+		$stackData = array();
+
+		log_message('debug','golongandarah	: '.$querySQL);
+		$query = $this->db->query($querySQL);
+
+		if($query->num_rows()>0)
+			{ $count = 1;
+				foreach($query->result() as $row)
+				{
+					$data = array();
+					$data['KGOLDAR']=$row->KGOLDAR;
+					$data['NGOLDAR']=$row->NGOLDAR;
+					$data['id']=$row->id;
 
 					array_push($stackData,$data);
 				}
@@ -1953,14 +1988,14 @@ WHERE nip = '$nip' ORDER BY tanggalAkhirKursus DESC";
     }
 		public function getDocumentTypeById($id)
 		{
-			$DB2 =$this->load->database('simpegRef', TRUE);
+
 			$querySQL = "select * from document_type where id = '$id' ";
 
 			$data = array();
 			$stackData = array();
 
 			log_message('debug','document_type: '.$querySQL);
-			$query = $DB2->query($querySQL);
+			$query = $this->db->query($querySQL);
 
 			if($query->num_rows()>0)
 				{ $count = 1;

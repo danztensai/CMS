@@ -15,11 +15,12 @@ if(stsUpdate==0)
   $('#warningUpdate').hide();
 }
 
-$('.select2').select2();
-$('.selectAgama').select2();
+// $('.select2').select2();
+// $('.selectAgama').select2();
 
 $("select[value]").each(function(){
-  //console.log(this.getAttribute("value"));
+  console.log($(this).val()+"|"+this.getAttribute("value"));
+
   $(this).val(this.getAttribute("value"));
 });
 
@@ -104,7 +105,7 @@ $.each($('input,select,textarea', '#formIdentitas'),function(k){
       //console.log(k+' '+$(this).attr('disabled'));
       console.log($(this).attr('name'));
       var fieldName = $(this).attr('name');
-      if(fieldName=='askesNomor'||fieldName=='agamaId'||fieldName=='alamat'||fieldName=='jenisKawin'||fieldName=='KGOLDAR'||fieldName=='ALRT'||fieldName=='ALRW'||fieldName=='statusCpnsPns'||fieldName=='npwpNomor'||fieldName=='noTelpon'||fieldName=='KPOS')
+      if(fieldName=='askesNomor'||fieldName=='agamaId'||fieldName=='alamat'||fieldName=='jenisKawin'||fieldName=='KGOLDAR'||fieldName=='ALRT'||fieldName=='ALRW'||fieldName=='statusCpnsPns'||fieldName=='npwpNomor'||fieldName=='noTelpon'||fieldName=='KPOS'||fieldName=='golonganDarah')
       {
         var isDisabled = $(this).is(':disabled');
         if (isDisabled) {
@@ -399,7 +400,16 @@ $.each($('input,select,textarea', '#formGaji'),function(k){
                                                           <label for="golonganDarah" class="col-md-4 control-label">Golongan Darah</label>
 
                                                           <div class="col-md-8">
-                                                            <input class="form-control" id="golonganDarah" placeholder="Golongan Darah" name="KGOLDAR" value="<?php echo $identitas['KGOLDAR']?>" disabled>
+
+                                                            <select id="golonganDarah" disabled="disabled" value="<?php echo $identitas['KGOLDAR']?>"  name="golonganDarah" class="form-control selectAgama" style="width: 100%;">
+                                                              <?php
+                                                                foreach ($jenisGolDarah as $value) {
+                                                                  ?>
+                                                                    <option value="<?php echo $value['KGOLDAR'];?>"><?php echo $value['NGOLDAR'];?></option>
+                                                              <?php
+                                                              }
+                                                              ?>
+                                                            </select>
                                                           </div>
                                                         </div>
 
@@ -465,7 +475,7 @@ $.each($('input,select,textarea', '#formGaji'),function(k){
 
 
                                                         <div class="form-group">
-                                                          <label for="npwp" class="col-md-4 control-label">npwp</label>
+                                                          <label for="npwp" class="col-md-4 control-label">NPWP</label>
                                                           <div class="col-md-8">
                                                             <input class="form-control" id="npwp" placeholder="NPWP" name="npwpNomor" value="<?php echo $identitas['npwpNomor']?>" disabled>
                                                           </div>

@@ -70,6 +70,7 @@ $arr = explode(' ',trim($name));
 				array_push($arrayInsertinstansi,$arrayPush1);
 				$this->Users_model->insertUser_instansiBatch($arrayInsertinstansi);
 					$this->Users_model->insertUser_groupsBatch($arrayInsertGroup);
+					echo  $insertId;
 
 	}
 }
