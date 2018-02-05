@@ -248,9 +248,9 @@ WHERE nip = '$nip'";
 		public function getRiwayatBahasa($nip)
 		{
 				$querySQL = "SELECT rr.NIP, rr.NBAHASA, rk.nama as 'KBAHASA', rj.nama as 'JBAHASA'
-FROM revReferenceSimpeg.riwayatBahasa rr
-INNER JOIN revreferencesimpeg.kemampuanbahasa rk on rk.KBAHASA = rr.KBAHASA
-INNER JOIN revreferencesimpeg.jenisbahasa rj on rj.JBAHASA = rr.JBAHASA
+FROM riwayatBahasa rr
+INNER JOIN kemampuanbahasa rk on rk.KBAHASA = rr.KBAHASA
+INNER JOIN jenisbahasa rj on rj.JBAHASA = rr.JBAHASA
 WHERE NIP = '$nip'";
 
 				$data = array();
@@ -329,9 +329,9 @@ WHERE NIP = '$nip'";
 		{
 
 				$querySQL = "SELECT rj.nip, rj.nunkerUnitOrganisasi, rjn.namaJenisJabatan, re.nama, rj.njab, SUBSTRING(rj.kwil, 1,2) as 'kode_propinsi', SUBSTRING(rj.kwil, 3,2) as 'kode_kabupaten', rj.tmtJabatan, rj.nomorSk, rj.tanggalSk
-FROM revReferenceSimpeg.jabatan rj
-INNER JOIN revreferencesimpeg.jnsjabatan rjn on rjn.JNSJAB = rj.jnsjab
-INNER JOIN revReferenceSimpeg.eselon re on rj.KESELON = re.ideselon
+FROM jabatan rj
+INNER JOIN jnsjabatan rjn on rjn.JNSJAB = rj.jnsjab
+INNER JOIN eselon re on rj.KESELON = re.ideselon
 WHERE rj.nip = '$nip'
 										ORDER BY rj.tmtJabatan asc ";
 
@@ -559,14 +559,14 @@ WHERE rj.NIP = '$nip'";
 
 		$querySQL = "SELECT rj.NIP, rp.npej, rj.NSKJABAT, rj.TSKJABAT, rjn.namaJenisJabatan, re.nama as 'eselon', rj.kunkers as kunker1,
 ru.nunker, ru2.nunker as nunker2, ru3.nunker as nunker3, rj.NLANTIK, rj.TLANTIK, rj.TMTJAB, rj.NJAB, rsjn.NJAB as 'NJAB2', rj.SJAB
-FROM revReferenceSimpeg.jakhir rj
-LEFT JOIN revReferenceSimpeg.pejabatMenetapkan rp on rp.kpej = rj.KPEJ
-LEFT JOIN revReferenceSimpeg.jnsjabatan rjn on rjn.JNSJAB = rj.JNSJAB
-LEFT JOIN revReferenceSimpeg.subjnsjabatan rsjn on rsjn.JNSJAB = rj.JNSJAB AND rsjn.KJAB = rj.KJAB
-LEFT JOIN revreferencesimpeg.eselon re on re.ideselon = rj.KESELON
-LEFT JOIN revReferenceSimpeg.unkerja ru on ru.kunker LIKE CONCAT(SUBSTRING(rj.kunkers, 1,8), '0000')
-LEFT JOIN revReferenceSimpeg.unkerja ru2 on ru2.kunker LIKE CONCAT(SUBSTRING(rj.kunkers, 1,10), '00')
-LEFT JOIN revReferenceSimpeg.unkerja ru3 on ru3.kunker = rj.kunkers
+FROM jakhir rj
+LEFT JOIN pejabatMenetapkan rp on rp.kpej = rj.KPEJ
+LEFT JOIN jnsjabatan rjn on rjn.JNSJAB = rj.JNSJAB
+LEFT JOIN subjnsjabatan rsjn on rsjn.JNSJAB = rj.JNSJAB AND rsjn.KJAB = rj.KJAB
+LEFT JOIN eselon re on re.ideselon = rj.KESELON
+LEFT JOIN unkerja ru on ru.kunker LIKE CONCAT(SUBSTRING(rj.kunkers, 1,8), '0000')
+LEFT JOIN unkerja ru2 on ru2.kunker LIKE CONCAT(SUBSTRING(rj.kunkers, 1,10), '00')
+LEFT JOIN unkerja ru3 on ru3.kunker = rj.kunkers
 WHERE rj.NIP = '$nip'";
 
 		$data = array();
@@ -1179,8 +1179,8 @@ INNER JOIN agama a on a.kode = d.agamaId WHERE d.nipbaru = '$nip'";
 								{
 
 									$querySQL = "SELECT rr.NIP, rr.NAYAH, rr.TLAHIR, rr.TGLLAHIR, rr.KKERJA, rd.nama, rr.ALJALAN, rr.ALRT, rr.ALRW, rr.NOTELP, rr.WIL, rr.KPOS
-FROM revReferenceSimpeg.riwayatAyah rr
-LEFT JOIN revReferenceSimpeg.daftarPekerjaan rd on rd.id = rr.KKERJA
+FROM riwayatAyah rr
+LEFT JOIN daftarPekerjaan rd on rd.id = rr.KKERJA
 WHERE rr.NIP = '$nip'";
 
 									$data = array();
@@ -1303,8 +1303,8 @@ WHERE rr.NIP = '$nip'";
 			{
 
 					$querySQL = "SELECT rr.NIP, rr.NIBU, rr.TLAHIR, rr.TGLLAHIR, rr.KKERJA, rd.nama, rr.ALJALAN, rr.ALRT, rr.ALRW, rr.NOTELP, rr.WIL, rr.KPOS
-FROM revReferenceSimpeg.riwayatIbu rr
-LEFT JOIN revReferenceSimpeg.daftarPekerjaan rd on rd.id = rr.KKERJA
+FROM riwayatIbu rr
+LEFT JOIN daftarPekerjaan rd on rd.id = rr.KKERJA
 WHERE rr.NIP = '$nip'";
 
 					$data = array();
@@ -1424,10 +1424,10 @@ WHERE rr.NIP = '$nip'";
 						public function getRiwayatKeluargaSuamiIstri2($nip)
 {
 		$querySQL = "SELECT rr.NIP, rr.NISUA, rr.KTLAHIR, rr.TLAHIR, rr.TIJASAH, rr.TKAWIN, rs.nama, rr.KKERJA, rd.nama as 'namapekerjaan', rt.statusAkhir
-FROM revReferenceSimpeg.riwayatSuamiIstri rr
-LEFT JOIN revReferenceSimpeg.daftarPekerjaan rd on rd.id = rr.KKERJA
-LEFT JOIN revreferencesimpeg.statustunjangan rs on rs.STUNJ = rr.STUNJ
-LEFT JOIN revreferencesimpeg.statusterakhir rt on rt.ISAKHIR = rr.ISAKHIR
+FROM riwayatSuamiIstri rr
+LEFT JOIN daftarPekerjaan rd on rd.id = rr.KKERJA
+LEFT JOIN statustunjangan rs on rs.STUNJ = rr.STUNJ
+LEFT JOIN statusterakhir rt on rt.ISAKHIR = rr.ISAKHIR
 WHERE rr.NIP = '$nip'";
 
 		$data = array();
@@ -1543,11 +1543,11 @@ WHERE rr.NIP = '$nip'";
 			{
 
 					$querySQL = "SELECT ra.NIP, ra.NANAK, ra.TLAHIR, ra.TGLLAHIR, rj.NKELAMIN, rh.ketkeluarga, rs.nama as 'tunjangan', ra.TIJASAH, rd.nama
-FROM revReferenceSimpeg.riwayatAnak ra
-INNER JOIN revReferenceSimpeg.jenisKelamin rj on rj.KJKEL = ra.KJKEL
-INNER JOIN revReferenceSimpeg.daftarPekerjaan rd on rd.id = ra.KKERJA
-LEFT JOIN revreferencesimpeg.statustunjangan rs on rs.STUNJ = ra.TUNJ
-LEFT JOIN revreferencesimpeg.hubungankeluarga rh on rh.KELUARGA = ra.KELUARGA
+FROM riwayatAnak ra
+INNER JOIN jenisKelamin rj on rj.KJKEL = ra.KJKEL
+INNER JOIN daftarPekerjaan rd on rd.id = ra.KKERJA
+LEFT JOIN statustunjangan rs on rs.STUNJ = ra.TUNJ
+LEFT JOIN hubungankeluarga rh on rh.KELUARGA = ra.KELUARGA
 WHERE ra.NIP =  '$nip'";
 
 					$data = array();
@@ -1708,8 +1708,8 @@ ORDER BY rr.TAKHIR DESC";
 						{
 
 							$querySQL = "SELECT rj.nama, rr.NIP, rr.kFungStrTek, rr.namaDiklat, rr.TEMPAT, rr.PAN, rr.ANGKATAN, rr.TMULAI, rr.TAKHIR, rr.JAM, rr.NSTTPP, rr.TSTTPP, rr.ISAKHIR
-			FROM revReferenceSimpeg.riwayatdiklat rr
-			INNER JOIN revReferenceSimpeg.jenisDiklat rj on rj.kode = rr.kodeJenisDiklat
+			FROM riwayatdiklat rr
+			INNER JOIN jenisDiklat rj on rj.kode = rr.kodeJenisDiklat
 			WHERE rr.NIP = '$nip' AND rr.kodeJenisDiklat = 2";
 
 							$data = array();
@@ -1795,8 +1795,8 @@ ORDER BY rr.TAKHIR DESC";
 			{
 
 				$querySQL = "SELECT rj.nama, rr.NIP, rr.kFungStrTek, rr.namaDiklat, rr.TEMPAT, rr.PAN, rr.ANGKATAN, rr.TMULAI, rr.TAKHIR, rr.JAM, rr.NSTTPP, rr.TSTTPP, rr.ISAKHIR
-FROM revReferenceSimpeg.riwayatdiklat rr
-INNER JOIN revReferenceSimpeg.jenisDiklat rj on rj.kode = rr.kodeJenisDiklat
+FROM riwayatdiklat rr
+INNER JOIN jenisDiklat rj on rj.kode = rr.kodeJenisDiklat
 WHERE rr.NIP = '$nip' AND rr.kodeJenisDiklat = 1";
 
 				$data = array();
@@ -1882,8 +1882,8 @@ ORDER BY rr.TAKHIR DESC";
 			{
 
 				$querySQL = "SELECT rj.nama, rr.NIP, rr.kFungStrTek, rr.namaDiklat, rr.TEMPAT, rr.PAN, rr.ANGKATAN, rr.TMULAI, rr.TAKHIR, rr.JAM, rr.NSTTPP, rr.TSTTPP, rr.ISAKHIR
-FROM revReferenceSimpeg.riwayatdiklat rr
-INNER JOIN revReferenceSimpeg.jenisDiklat rj on rj.kode = rr.kodeJenisDiklat
+FROM riwayatdiklat rr
+INNER JOIN jenisDiklat rj on rj.kode = rr.kodeJenisDiklat
 WHERE rr.NIP = '$nip' AND rr.kodeJenisDiklat = 3";
 
 				$data = array();
@@ -1962,7 +1962,7 @@ WHERE NIP = '$nip'";
 			{
 
 				$querySQL = "SELECT NIP, NTATAR, TEMPAT, PAN, TMULAI, TAKHIR, JAM, NPIAGAM, TPIAGAM
-FROM revReferenceSimpeg.riwayatPenataran
+FROM riwayatPenataran
 WHERE NIP = '$nip' ORDER BY TAKHIR DESC";
 
 				$data = array();
@@ -2038,7 +2038,7 @@ WHERE NIP = '$nip' ORDER BY TAKHIR DESC";
 {
 
 	$querySQL = "SELECT NIP, NSEMINAR, TEMPAT, PAN, TMULAI, TAKHIR, JAM, NPIAGAM, TPIAGAM
-FROM revReferenceSimpeg.riwayatSeminar
+FROM riwayatSeminar
 WHERE NIP = '$nip' ORDER BY TAKHIR DESC";
 
 	$data = array();
@@ -2115,7 +2115,7 @@ WHERE nip = '$nip' ORDER BY tanggalAkhirKursus DESC";
 			{
 
 				$querySQL = "SELECT nip, namaKursus, tempat, institusiPenyelenggara, tanggalKursus, tanggalAkhirKursus, jumlahJam, npiagam, tpiagam
-FROM revReferenceSimpeg.riwayatkursus
+FROM riwayatkursus
 WHERE nip = '$nip' ORDER BY tanggalAkhirKursus DESC";
 
 				$data = array();
