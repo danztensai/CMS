@@ -133,7 +133,7 @@ overflow-y:scroll;
                               <p class="text-center">
                                 <strong>Riwayat Jabatan</strong>
                               </p>
-                              <?php if($riwayatJabatan==null)
+                              <?php if($riwayatJabatan2==null)
                               {
                                   log_message('debug','Empty Bro');
                               ?>
@@ -147,7 +147,7 @@ overflow-y:scroll;
                                 <div class="box-body scroll">
                                   <?php
 
-                                  foreach($riwayatJabatan as $rj)
+                                  foreach($riwayatJabatan2 as $rj)
                                   {
                                     ?>
                                 <div class="row row-bordered">
@@ -166,16 +166,16 @@ overflow-y:scroll;
                                     </div>
 
                                     <div class="form-group">
-                                      <label for="jenisJabatan" class="col-md-4 control-label">Jenis Jabatan</label>
+                                      <label for="namaJenisJabatan" class="col-md-4 control-label">Jenis Jabatan</label>
                                       <div class="col-md-4">
-                                        <input class="form-control" id="jenisJabatan" placeholder="Jenis Jabatan" value="<?php echo $rj['jnsjab'];?>" disabled>
+                                        <input class="form-control" id="namaJenisJabatan" placeholder="Jenis Jabatan" value="<?php echo $rj['namaJenisJabatan'];?>" disabled>
                                       </div>
                                     </div>
 
                                     <div class="form-group">
-                                      <label for="eselonJabatan" class="col-md-4 control-label">Eselon Jabatan</label>
+                                      <label for="nama" class="col-md-4 control-label">Eselon Jabatan</label>
                                       <div class="col-md-4">
-                                        <input class="form-control" id="eselonJabatan" placeholder="eselonJabatan" value="<?php echo $rj['KESELON'];?>" disabled>
+                                        <input class="form-control" id="nama" placeholder="Eselon Jabatan" value="<?php echo $rj['nama'];?>" disabled>
                                       </div>
                                     </div>
 
@@ -407,14 +407,6 @@ overflow-y:scroll;
                                         </div>
                                       </div>
                                     </div>
-
-                                    <div class="form-group">
-                                      <label for="asalPerolehan" class="col-md-4 control-label">Asal Perolehan</label>
-                                      <div class="col-md-4">
-                                        <input class="form-control" id="asalPerolehan" placeholder="asalPerolehan" value="<?php echo $rjas['AOLEH'];?>" disabled>
-                                      </div>
-                                    </div>
-
                                   </div>
                                 </div>
                                 <?php
@@ -904,7 +896,6 @@ overflow-y:scroll;
           </div>
         </div>
       </div>
-      <!-- /.tab-pane -->
     </div>
     <!-- /.tab-content -->
   </div>

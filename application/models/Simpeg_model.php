@@ -247,14 +247,16 @@ WHERE nip = '$nip'";
 
 		public function getRiwayatBahasa($nip)
 		{
-				$querySQL = "SELECT NIP, NBAHASA, KBAHASA, JBAHASA
-FROM riwayatBahasa
+				$querySQL = "SELECT rr.NIP, rr.NBAHASA, rk.nama as 'KBAHASA', rj.nama as 'JBAHASA'
+FROM revReferenceSimpeg.riwayatBahasa rr
+INNER JOIN revreferencesimpeg.kemampuanbahasa rk on rk.KBAHASA = rr.KBAHASA
+INNER JOIN revreferencesimpeg.jenisbahasa rj on rj.JBAHASA = rr.JBAHASA
 WHERE NIP = '$nip'";
 
 				$data = array();
 				$stackData = array();
 
-				log_message('debug','getRiwayatTugasLuarNegri: '.$querySQL);
+				log_message('debug','getRiwayatBahasa: '.$querySQL);
 				$query = $this->db->query($querySQL);
 
 				if($query->num_rows()>0)
@@ -322,6 +324,50 @@ WHERE NIP = '$nip'";
 						return $data;
 					}
 		}
+
+		public function getRiwayatJabatan2($nip)
+		{
+
+				$querySQL = "SELECT rj.nip, rj.nunkerUnitOrganisasi, rjn.namaJenisJabatan, re.nama, rj.njab, SUBSTRING(rj.kwil, 1,2) as 'kode_propinsi', SUBSTRING(rj.kwil, 3,2) as 'kode_kabupaten', rj.tmtJabatan, rj.nomorSk, rj.tanggalSk
+FROM revReferenceSimpeg.jabatan rj
+INNER JOIN revreferencesimpeg.jnsjabatan rjn on rjn.JNSJAB = rj.jnsjab
+INNER JOIN revReferenceSimpeg.eselon re on rj.KESELON = re.ideselon
+WHERE rj.nip = '$nip'
+										ORDER BY rj.tmtJabatan asc ";
+
+				$data = array();
+				$stackData = array();
+
+				log_message('debug','getRiwayatJabatan2: '.$querySQL);
+				$query = $this->db->query($querySQL);
+
+				if($query->num_rows()>0)
+					{ $count = 1;
+						foreach($query->result() as $row)
+						{
+							$data['nip']=$row->nip;
+							$data['nunkerUnitOrganisasi']=$row->nunkerUnitOrganisasi;
+							$data['namaJenisJabatan']=$row->namaJenisJabatan;
+							$data['nama']=$row->nama;
+							$data['njab']=$row->njab;
+							$data['kode_propinsi']=$row->kode_propinsi;
+							$data['kode_kabupaten']=$row->kode_kabupaten;
+							$data['tmtJabatan']=$row->tmtJabatan;
+							$data['nomorSk']=$row->nomorSk;
+							$data['tanggalSk']=$row->tanggalSk;
+
+						 array_push($stackData,$data);
+						}
+						$query->free_result();
+						return $stackData;
+					}else
+					{
+
+						$query->free_result();
+						return $data;
+					}
+		}
+
 
 		public function getRiwayatOrganisasi($nip)
 		{
@@ -508,6 +554,59 @@ WHERE rj.NIP = '$nip'";
 			}
 		}
 
+		public function getJabatanTerakhir2($nip)
+		{
+
+		$querySQL = "SELECT rj.NIP, rp.npej, rj.NSKJABAT, rj.TSKJABAT, rjn.namaJenisJabatan, re.nama as 'eselon', rj.kunkers as kunker1,
+ru.nunker, ru2.nunker as nunker2, ru3.nunker as nunker3, rj.NLANTIK, rj.TLANTIK, rj.TMTJAB, rj.NJAB, rsjn.NJAB as 'NJAB2', rj.SJAB
+FROM revReferenceSimpeg.jakhir rj
+LEFT JOIN revReferenceSimpeg.pejabatMenetapkan rp on rp.kpej = rj.KPEJ
+LEFT JOIN revReferenceSimpeg.jnsjabatan rjn on rjn.JNSJAB = rj.JNSJAB
+LEFT JOIN revReferenceSimpeg.subjnsjabatan rsjn on rsjn.JNSJAB = rj.JNSJAB AND rsjn.KJAB = rj.KJAB
+LEFT JOIN revreferencesimpeg.eselon re on re.ideselon = rj.KESELON
+LEFT JOIN revReferenceSimpeg.unkerja ru on ru.kunker LIKE CONCAT(SUBSTRING(rj.kunkers, 1,8), '0000')
+LEFT JOIN revReferenceSimpeg.unkerja ru2 on ru2.kunker LIKE CONCAT(SUBSTRING(rj.kunkers, 1,10), '00')
+LEFT JOIN revReferenceSimpeg.unkerja ru3 on ru3.kunker = rj.kunkers
+WHERE rj.NIP = '$nip'";
+
+		$data = array();
+		$stackData = array();
+
+		log_message('debug','getJabatanTerakhir: '.$querySQL);
+		$query = $this->db->query($querySQL);
+
+		if($query->num_rows()>0)
+			{ $count = 1;
+				foreach($query->result() as $row)
+				{
+					$data['NIP']=$row->NIP;
+					$data['npej']=$row->npej;
+					$data['NSKJABAT']=$row->NSKJABAT;
+					$data['TSKJABAT']=$row->TSKJABAT;
+					$data['namaJenisJabatan']=$row->namaJenisJabatan;
+					$data['eselon']=$row->eselon;
+					$data['kunker1']=$row->kunker1;
+					$data['nunker']=$row->nunker;
+					$data['nunker2']=$row->nunker2;
+					$data['nunker3']=$row->nunker3;
+					$data['NLANTIK']=$row->NLANTIK;
+					$data['TLANTIK']=$row->TLANTIK;
+					$data['TMTJAB']=$row->TMTJAB;
+					$data['NJAB']=$row->NJAB;
+					$data['NJAB2']=$row->NJAB2;
+					$data['SJAB']=$row->SJAB;
+				}
+				$query->free_result();
+				return $data;
+			}else
+			{
+
+				$query->free_result();
+				return $data;
+			}
+		}
+
+
 		public function getGajiBerkala($nip)
 		{
 
@@ -682,7 +781,7 @@ INNER JOIN agama a on a.kode = d.agamaId WHERE d.nipbaru = '$nip'";
 				//	array_push($stackData,$data);
 				}
 				$query->free_result();
-				
+
 				return $data;
 			}else
 			{
@@ -1076,6 +1175,50 @@ INNER JOIN agama a on a.kode = d.agamaId WHERE d.nipbaru = '$nip'";
 		}
 
 
+								public function getRiwayatKeluargaAyah2($nip)
+								{
+
+									$querySQL = "SELECT rr.NIP, rr.NAYAH, rr.TLAHIR, rr.TGLLAHIR, rr.KKERJA, rd.nama, rr.ALJALAN, rr.ALRT, rr.ALRW, rr.NOTELP, rr.WIL, rr.KPOS
+FROM revReferenceSimpeg.riwayatAyah rr
+LEFT JOIN revReferenceSimpeg.daftarPekerjaan rd on rd.id = rr.KKERJA
+WHERE rr.NIP = '$nip'";
+
+									$data = array();
+									$stackData = array();
+
+									log_message('debug','getRiwayatKeluargaAyah: '.$querySQL);
+									$query = $this->db->query($querySQL);
+
+
+									if($query->num_rows()>0)
+									{ $count = 1;
+										foreach($query->result() as $row)
+										{
+											$data['NIP']=$row->NIP;
+											$data['NAYAH']=$row->NAYAH;
+											$data['TLAHIR']=$row->TLAHIR;
+											$data['TGLLAHIR']=$row->TGLLAHIR;
+											$data['KKERJA']=$row->KKERJA;
+											$data['nama']=$row->nama;
+											$data['ALJALAN']=$row->ALJALAN;
+											$data['ALRT']=$row->ALRT;
+											$data['ALRW']=$row->ALRW;
+											$data['NOTELP']=$row->NOTELP;
+											$data['WIL']=$row->WIL;
+											$data['KPOS']=$row->KPOS;
+											array_push($stackData,$data);
+										}
+										$query->free_result();
+										return $stackData;
+									}else
+									{
+										$query->free_result();
+										return $stackData;
+									}
+								}
+
+
+
 			public function getRiwayatPensiunKeluargaAyah($nip)
 			{
 
@@ -1156,6 +1299,49 @@ INNER JOIN agama a on a.kode = d.agamaId WHERE d.nipbaru = '$nip'";
 				}
 			}
 
+			public function getRiwayatKeluargaIbu2($nip)
+			{
+
+					$querySQL = "SELECT rr.NIP, rr.NIBU, rr.TLAHIR, rr.TGLLAHIR, rr.KKERJA, rd.nama, rr.ALJALAN, rr.ALRT, rr.ALRW, rr.NOTELP, rr.WIL, rr.KPOS
+FROM revReferenceSimpeg.riwayatIbu rr
+LEFT JOIN revReferenceSimpeg.daftarPekerjaan rd on rd.id = rr.KKERJA
+WHERE rr.NIP = '$nip'";
+
+					$data = array();
+					$stackData = array();
+
+					log_message('debug','getRiwayatKeluargaIbu: '.$querySQL);
+					$query = $this->db->query($querySQL);
+
+					if($query->num_rows()>0)
+						{ $count = 1;
+							foreach($query->result() as $row)
+							{
+								$data['NIP']=$row->NIP;
+								$data['NIBU']=$row->NIBU;
+								$data['TLAHIR']=$row->TLAHIR;
+								$data['TGLLAHIR']=$row->TGLLAHIR;
+								$data['nama']=$row->nama;
+								$data['KKERJA']=$row->KKERJA;
+								$data['ALJALAN']=$row->ALJALAN;
+								$data['ALRT']=$row->ALRT;
+								$data['ALRW']=$row->ALRW;
+								$data['NOTELP']=$row->NOTELP;
+								$data['WIL']=$row->WIL;
+								$data['KPOS']=$row->KPOS;
+							 array_push($stackData,$data);
+							}
+							$query->free_result();
+							return $stackData;
+						}else
+						{
+
+							$query->free_result();
+							return $data;
+						}
+			}
+
+
 			public function getRiwayatPensiunKeluargaIbu($nip)
 			{
 
@@ -1235,6 +1421,48 @@ INNER JOIN agama a on a.kode = d.agamaId WHERE d.nipbaru = '$nip'";
 							}
 						}
 
+						public function getRiwayatKeluargaSuamiIstri2($nip)
+{
+		$querySQL = "SELECT rr.NIP, rr.NISUA, rr.KTLAHIR, rr.TLAHIR, rr.TIJASAH, rr.TKAWIN, rs.nama, rr.KKERJA, rd.nama as 'namapekerjaan', rt.statusAkhir
+FROM revReferenceSimpeg.riwayatSuamiIstri rr
+LEFT JOIN revReferenceSimpeg.daftarPekerjaan rd on rd.id = rr.KKERJA
+LEFT JOIN revreferencesimpeg.statustunjangan rs on rs.STUNJ = rr.STUNJ
+LEFT JOIN revreferencesimpeg.statusterakhir rt on rt.ISAKHIR = rr.ISAKHIR
+WHERE rr.NIP = '$nip'";
+
+		$data = array();
+		$stackData = array();
+
+		log_message('debug','getRiwayatKeluargaSuamiIstri: '.$querySQL);
+		$query = $this->db->query($querySQL);
+
+		if($query->num_rows()>0)
+			{ $count = 1;
+				foreach($query->result() as $row)
+				{
+					$data['NIP']=$row->NIP;
+					$data['NISUA']=$row->NISUA;
+					$data['KTLAHIR']=$row->KTLAHIR;
+					$data['TLAHIR']=$row->TLAHIR;
+					$data['TIJASAH']=$row->TIJASAH;
+					$data['TKAWIN']=$row->TKAWIN;
+					$data['nama']=$row->nama;
+					$data['KKERJA']=$row->KKERJA;
+					$data['namapekerjaan']=$row->namapekerjaan;
+					$data['statusAkhir']=$row->statusAkhir;
+				 array_push($stackData,$data);
+				}
+				$query->free_result();
+				return $stackData;
+			}else
+			{
+
+				$query->free_result();
+				return $data;
+			}
+}
+
+
 			public function getRiwayatPensiunKeluargaSuamiIstri($nip)
 			{
 
@@ -1309,6 +1537,48 @@ INNER JOIN agama a on a.kode = d.agamaId WHERE d.nipbaru = '$nip'";
 					$query->free_result();
 					return $data;
 				}
+			}
+
+			public function getRiwayatKeluargaAnak2($nip)
+			{
+
+					$querySQL = "SELECT ra.NIP, ra.NANAK, ra.TLAHIR, ra.TGLLAHIR, rj.NKELAMIN, rh.ketkeluarga, rs.nama as 'tunjangan', ra.TIJASAH, rd.nama
+FROM revReferenceSimpeg.riwayatAnak ra
+INNER JOIN revReferenceSimpeg.jenisKelamin rj on rj.KJKEL = ra.KJKEL
+INNER JOIN revReferenceSimpeg.daftarPekerjaan rd on rd.id = ra.KKERJA
+LEFT JOIN revreferencesimpeg.statustunjangan rs on rs.STUNJ = ra.TUNJ
+LEFT JOIN revreferencesimpeg.hubungankeluarga rh on rh.KELUARGA = ra.KELUARGA
+WHERE ra.NIP =  '$nip'";
+
+					$data = array();
+					$stackData = array();
+
+					log_message('debug','getRiwayatKeluargaAnak: '.$querySQL);
+					$query = $this->db->query($querySQL);
+
+					if($query->num_rows()>0)
+						{ $count = 1;
+							foreach($query->result() as $row)
+							{
+								$data['NIP']=$row->NIP;
+								$data['NANAK']=$row->NANAK;
+								$data['TLAHIR']=$row->TLAHIR;
+								$data['TGLLAHIR']=$row->TGLLAHIR;
+								$data['NKELAMIN']=$row->NKELAMIN;
+								$data['ketkeluarga']=$row->ketkeluarga;
+								$data['tunjangan']=$row->tunjangan;
+								$data['TIJASAH']=$row->TIJASAH;
+								$data['nama']=$row->nama;
+							 array_push($stackData,$data);
+							}
+							$query->free_result();
+							return $stackData;
+						}else
+						{
+
+							$query->free_result();
+							return $data;
+						}
 			}
 
 			public function getRiwayatPensiunKeluargaAnak($nip)
@@ -1433,6 +1703,52 @@ ORDER BY rr.TAKHIR DESC";
 				}
 			}
 
+
+						public function getRiwayatPendidikanStruktural2($nip)
+						{
+
+							$querySQL = "SELECT rj.nama, rr.NIP, rr.kFungStrTek, rr.namaDiklat, rr.TEMPAT, rr.PAN, rr.ANGKATAN, rr.TMULAI, rr.TAKHIR, rr.JAM, rr.NSTTPP, rr.TSTTPP, rr.ISAKHIR
+			FROM revReferenceSimpeg.riwayatdiklat rr
+			INNER JOIN revReferenceSimpeg.jenisDiklat rj on rj.kode = rr.kodeJenisDiklat
+			WHERE rr.NIP = '$nip' AND rr.kodeJenisDiklat = 2";
+
+							$data = array();
+							$stackData = array();
+
+							log_message('debug','getRiwayatPendidikanStruktural2: '.$querySQL);
+							$query = $this->db->query($querySQL);
+
+
+							if($query->num_rows()>0)
+							{ $count = 1;
+								foreach($query->result() as $row)
+								{
+									$data['nama']=$row->nama;
+									$data['NIP']=$row->NIP;
+									$data['kFungStrTek']=$row->kFungStrTek;
+									$data['namaDiklat']=$row->namaDiklat;
+									$data['TEMPAT']=$row->TEMPAT;
+									$data['PAN']=$row->PAN;
+									$data['ANGKATAN']=$row->ANGKATAN;
+									$data['TMULAI']=$row->TMULAI;
+									$data['TAKHIR']=$row->TAKHIR;
+									$data['JAM']=$row->JAM;
+									$data['NSTTPP']=$row->NSTTPP;
+									$data['TSTTPP']=$row->TSTTPP;
+									$data['ISAKHIR']=$row->ISAKHIR;
+									array_push($stackData,$data);
+
+								}
+								$query->free_result();
+								return $stackData;
+							}else
+							{
+								$query->free_result();
+								return $stackData;
+							}
+						}
+
+
 			public function getRiwayatPendidikanFungsional($nip)
 			{
 
@@ -1474,6 +1790,51 @@ ORDER BY rr.TAKHIR DESC";
 					return $data;
 				}
 			}
+
+			public function getRiwayatPendidikanFungsional2($nip)
+			{
+
+				$querySQL = "SELECT rj.nama, rr.NIP, rr.kFungStrTek, rr.namaDiklat, rr.TEMPAT, rr.PAN, rr.ANGKATAN, rr.TMULAI, rr.TAKHIR, rr.JAM, rr.NSTTPP, rr.TSTTPP, rr.ISAKHIR
+FROM revReferenceSimpeg.riwayatdiklat rr
+INNER JOIN revReferenceSimpeg.jenisDiklat rj on rj.kode = rr.kodeJenisDiklat
+WHERE rr.NIP = '$nip' AND rr.kodeJenisDiklat = 1";
+
+				$data = array();
+				$stackData = array();
+
+				log_message('debug','getRiwayatPendidikanFungsional: '.$querySQL);
+				$query = $this->db->query($querySQL);
+
+
+				if($query->num_rows()>0)
+				{ $count = 1;
+					foreach($query->result() as $row)
+					{
+						$data['nama']=$row->nama;
+						$data['NIP']=$row->NIP;
+						$data['kFungStrTek']=$row->kFungStrTek;
+						$data['namaDiklat']=$row->namaDiklat;
+						$data['TEMPAT']=$row->TEMPAT;
+						$data['PAN']=$row->PAN;
+						$data['ANGKATAN']=$row->ANGKATAN;
+						$data['TMULAI']=$row->TMULAI;
+						$data['TAKHIR']=$row->TAKHIR;
+						$data['JAM']=$row->JAM;
+						$data['NSTTPP']=$row->NSTTPP;
+						$data['TSTTPP']=$row->TSTTPP;
+						$data['ISAKHIR']=$row->ISAKHIR;
+						array_push($stackData,$data);
+
+					}
+					$query->free_result();
+					return $stackData;
+				}else
+				{
+					$query->free_result();
+					return $stackData;
+				}
+			}
+
 
 			public function getRiwayatPendidikanTeknis($nip)
 			{
@@ -1517,6 +1878,50 @@ ORDER BY rr.TAKHIR DESC";
 				}
 			}
 
+			public function getRiwayatPendidikanTeknis2($nip)
+			{
+
+				$querySQL = "SELECT rj.nama, rr.NIP, rr.kFungStrTek, rr.namaDiklat, rr.TEMPAT, rr.PAN, rr.ANGKATAN, rr.TMULAI, rr.TAKHIR, rr.JAM, rr.NSTTPP, rr.TSTTPP, rr.ISAKHIR
+FROM revReferenceSimpeg.riwayatdiklat rr
+INNER JOIN revReferenceSimpeg.jenisDiklat rj on rj.kode = rr.kodeJenisDiklat
+WHERE rr.NIP = '$nip' AND rr.kodeJenisDiklat = 3";
+
+				$data = array();
+				$stackData = array();
+
+				log_message('debug','getRiwayatPendidikanTeknis: '.$querySQL);
+				$query = $this->db->query($querySQL);
+
+
+				if($query->num_rows()>0)
+				{ $count = 1;
+					foreach($query->result() as $row)
+					{
+						$data['nama']=$row->nama;
+						$data['NIP']=$row->NIP;
+						$data['kFungStrTek']=$row->kFungStrTek;
+						$data['namaDiklat']=$row->namaDiklat;
+						$data['TEMPAT']=$row->TEMPAT;
+						$data['PAN']=$row->PAN;
+						$data['ANGKATAN']=$row->ANGKATAN;
+						$data['TMULAI']=$row->TMULAI;
+						$data['TAKHIR']=$row->TAKHIR;
+						$data['JAM']=$row->JAM;
+						$data['NSTTPP']=$row->NSTTPP;
+						$data['TSTTPP']=$row->TSTTPP;
+						$data['ISAKHIR']=$row->ISAKHIR;
+						array_push($stackData,$data);
+
+					}
+					$query->free_result();
+					return $stackData;
+				}else
+				{
+					$query->free_result();
+					return $stackData;
+				}
+			}
+
 			public function getRiwayatPendidikanPenataran($nip)
 			{
 
@@ -1553,6 +1958,46 @@ WHERE NIP = '$nip'";
 				}
 			}
 
+			public function getRiwayatPendidikanPenataran2($nip)
+			{
+
+				$querySQL = "SELECT NIP, NTATAR, TEMPAT, PAN, TMULAI, TAKHIR, JAM, NPIAGAM, TPIAGAM
+FROM revReferenceSimpeg.riwayatPenataran
+WHERE NIP = '$nip' ORDER BY TAKHIR DESC";
+
+				$data = array();
+				$stackData = array();
+
+				log_message('debug','getRiwayatPendidikanPenataran: '.$querySQL);
+				$query = $this->db->query($querySQL);
+
+
+				if($query->num_rows()>0)
+				{ $count = 1;
+					foreach($query->result() as $row)
+					{
+						$data['NIP']=$row->NIP;
+						$data['NTATAR']=$row->NTATAR;
+						$data['TEMPAT']=$row->TEMPAT;
+						$data['PAN']=$row->PAN;
+						$data['TMULAI']=$row->TMULAI;
+						$data['TAKHIR']=$row->TAKHIR;
+						$data['JAM']=$row->JAM;
+						$data['NPIAGAM']=$row->NPIAGAM;
+						$data['TPIAGAM']=$row->TPIAGAM;
+						array_push($stackData,$data);
+
+					}
+					$query->free_result();
+					return $stackData;
+				}else
+				{
+					$query->free_result();
+					return $stackData;
+				}
+			}
+
+
 			public function getRiwayatPendidikanSeminar($nip)
 			{
 
@@ -1588,6 +2033,46 @@ WHERE NIP = '$nip' ORDER BY TAKHIR DESC";
 					return $data;
 				}
 			}
+
+			public function getRiwayatPendidikanSeminar2($nip)
+{
+
+	$querySQL = "SELECT NIP, NSEMINAR, TEMPAT, PAN, TMULAI, TAKHIR, JAM, NPIAGAM, TPIAGAM
+FROM revReferenceSimpeg.riwayatSeminar
+WHERE NIP = '$nip' ORDER BY TAKHIR DESC";
+
+	$data = array();
+	$stackData = array();
+
+	log_message('debug','getRiwayatPendidikanSeminar: '.$querySQL);
+	$query = $this->db->query($querySQL);
+
+
+	if($query->num_rows()>0)
+	{ $count = 1;
+		foreach($query->result() as $row)
+		{
+			$data['NIP']=$row->NIP;
+			$data['NSEMINAR']=$row->NSEMINAR;
+			$data['TEMPAT']=$row->TEMPAT;
+			$data['PAN']=$row->PAN;
+			$data['TMULAI']=$row->TMULAI;
+			$data['TAKHIR']=$row->TAKHIR;
+			$data['JAM']=$row->JAM;
+			$data['NPIAGAM']=$row->NPIAGAM;
+			$data['TPIAGAM']=$row->TPIAGAM;
+			array_push($stackData,$data);
+
+		}
+		$query->free_result();
+		return $stackData;
+	}else
+	{
+		$query->free_result();
+		return $stackData;
+	}
+}
+
 
 			public function getRiwayatPendidikanKursus($nip)
 			{
@@ -1626,6 +2111,44 @@ WHERE nip = '$nip' ORDER BY tanggalAkhirKursus DESC";
 				}
 			}
 
+			public function getRiwayatPendidikanKursus2($nip)
+			{
+
+				$querySQL = "SELECT nip, namaKursus, tempat, institusiPenyelenggara, tanggalKursus, tanggalAkhirKursus, jumlahJam, npiagam, tpiagam
+FROM revReferenceSimpeg.riwayatkursus
+WHERE nip = '$nip' ORDER BY tanggalAkhirKursus DESC";
+
+				$data = array();
+				$stackData = array();
+
+				log_message('debug','getRiwayatPendidikanKursus: '.$querySQL);
+				$query = $this->db->query($querySQL);
+
+
+				if($query->num_rows()>0)
+				{ $count = 1;
+					foreach($query->result() as $row)
+					{
+						$data['nip']=$row->nip;
+						$data['namaKursus']=$row->namaKursus;
+						$data['tempat']=$row->tempat;
+						$data['institusiPenyelenggara']=$row->institusiPenyelenggara;
+						$data['tanggalKursus']=$row->tanggalKursus;
+						$data['tanggalAkhirKursus']=$row->tanggalAkhirKursus;
+						$data['jumlahJam']=$row->jumlahJam;
+						$data['npiagam']=$row->npiagam;
+						$data['tpiagam']=$row->tpiagam;
+						array_push($stackData,$data);
+
+					}
+					$query->free_result();
+					return $stackData;
+				}else
+				{
+					$query->free_result();
+					return $stackData;
+				}
+			}
 
 
 		public function getStlud()

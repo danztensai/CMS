@@ -1292,14 +1292,14 @@ $.each($('input,select,textarea', '#formGaji'),function(k){
                                                           <div class="form-group">
                                                             <label for="nip" class="col-md-2 control-label">NIP</label>
                                                             <div class="col-md-8">
-                                                              <input class="form-control" id="nip" placeholder="NIP" value="<?php echo $jabatanTerakhir['NIP']?>" disabled>
+                                                              <input class="form-control" id="nip" placeholder="NIP" value="<?php echo $jabatanTerakhir2['NIP']?>" disabled>
                                                             </div>
                                                           </div>
 
                                                           <div class="form-group">
-                                                            <label for="pejabatMenetapkanJabatanTerakhir" class="col-md-2 control-label">Pejabat Menetapkan</label>
+                                                            <label for="npej" class="col-md-2 control-label">Pejabat Menetapkan</label>
                                                             <div class="col-md-8">
-                                                              <select id="pejabatMenetapkanJabatanTerakhir" disabled="disabled" value="<?php echo $jabatanTerakhir['KPEJ']?>" class="form-control" style="width: 100%;">
+                                                              <select id="npej" disabled="disabled" value="<?php echo $jabatanTerakhir2['npej']?>" class="form-control" style="width: 100%;">
                                                                 <?php
                                                                   foreach ($pejabat as $value) {
                                                                     ?>
@@ -1314,7 +1314,7 @@ $.each($('input,select,textarea', '#formGaji'),function(k){
                                                           <div class="form-group">
                                                             <label for="noSKJabatan" class="col-md-2 control-label">No SK Jabatan</label>
                                                             <div class="col-md-8">
-                                                              <input class="form-control" id="noSKJabatan" placeholder="No SK Jabatan" value="<?php $jabatanTerakhir['NSKJABAT']?>" disabled>
+                                                              <input class="form-control" id="noSKJabatan" placeholder="No SK Jabatan" value="<?php $jabatanTerakhir2['NSKJABAT']?>" disabled>
 
                                                             </div>
                                                           </div>
@@ -1327,7 +1327,7 @@ $.each($('input,select,textarea', '#formGaji'),function(k){
                                                                   <div class="input-group-addon">
                                                                     <i class="fa fa-calendar"></i>
                                                                   </div>
-                                                                  <input type="text" class="form-control pull-right" id="tglSKJabatan" value="<?php echo $jabatanTerakhir['TSKJABAT']?>" disabled>
+                                                                  <input type="text" class="form-control pull-right" id="tglSKJabatan" value="<?php echo $jabatanTerakhir2['TSKJABAT']?>" disabled>
                                                               </div>
                                                             </div>
                                                           </div>
@@ -1335,14 +1335,14 @@ $.each($('input,select,textarea', '#formGaji'),function(k){
                                                           <div class="form-group">
                                                             <label for="jenisJabatan" class="col-md-2 control-label">Jenis Jabatan</label>
                                                             <div class="col-md-8">
-                                                              <input class="form-control" id="jenisJabatan" placeholder="Jenis Jabatan" value="<?php echo $jabatanTerakhir['namaJenisJabatan']?>" disabled>
+                                                              <input class="form-control" id="jenisJabatan" placeholder="Jenis Jabatan" value="<?php echo $jabatanTerakhir2['namaJenisJabatan']?>" disabled>
                                                             </div>
                                                           </div>
 
                                                           <div class="form-group">
                                                             <label for="eselon" class="col-md-2 control-label">Eselon</label>
                                                             <div class="col-md-8">
-                                                              <input class="form-control" id="eselon" placeholder="Eselon" value="<?php echo $jabatanTerakhir['KESELON']?>" disabled>
+                                                              <input class="form-control" id="eselon" placeholder="Eselon" value="<?php echo $jabatanTerakhir2['eselon']?>" disabled>
                                                             </div>
                                                           </div>
                                                         </div>
@@ -1351,35 +1351,35 @@ $.each($('input,select,textarea', '#formGaji'),function(k){
                                                           <div class="form-group">
                                                             <label for="subUnitKerja" class="col-md-2 control-label">Sub Unit Kerja</label>
                                                             <div class="col-md-8">
-                                                              <input class="form-control" id="subUnitKerja" placeholder="Sub Unit Kerja" value="<?php echo $jabatanTerakhir['nunker']?>" disabled>
+                                                              <input class="form-control" id="subUnitKerja" placeholder="Sub Unit Kerja" value="<?php echo $jabatanTerakhir2['nunker']?>" disabled>
                                                             </div>
                                                           </div>
 
                                                           <div class="form-group">
                                                             <label for="subSubUnitKerja" class="col-md-2 control-label">Sub Sub Unit Kerja</label>
                                                             <div class="col-md-8">
-                                                              <input class="form-control" id="subSubUnitKerja" placeholder="Sub Unit Kerja" value="<?php echo $jabatanTerakhir['nunker2']?>" disabled>
+                                                              <input class="form-control" id="subSubUnitKerja" placeholder="Sub Unit Kerja" value="<?php echo $jabatanTerakhir2['nunker2']?>" disabled>
                                                             </div>
                                                           </div>
 
                                                           <div class="form-group">
                                                             <label for="subBagianUnitKerja" class="col-md-2 control-label">Sub Bagian Unit Kerja</label>
                                                             <div class="col-md-8">
-                                                              <input class="form-control" id="subBagianUnitKerja" placeholder="Sub Bagian Unit Kerja" value="<?php echo $jabatanTerakhir['nunker3']?>" disabled>
+                                                              <input class="form-control" id="subBagianUnitKerja" placeholder="Sub Bagian Unit Kerja" value="<?php echo $jabatanTerakhir2['nunker3']?>" disabled>
                                                             </div>
                                                           </div>
 
                                                           <div class="form-group">
-                                                            <label for="namaJabatan" class="col-md-2 control-label">Nama Jabatan</label>
+                                                            <label for="NJAB" class="col-md-2 control-label">Nama Jabatan</label>
                                                             <div class="col-md-8">
-                                                              <textarea class="form-control" id="namaJabatan"  rows="6" placeholder="Nama Jabatan" disabled><?php echo $jabatanTerakhir['njab2']?></textarea>
+                                                              <textarea class="form-control" id="NJAB"  rows="6" placeholder="Nama Jabatan" disabled><?php echo $jabatanTerakhir2['NJAB']?></textarea>
                                                             </div>
                                                           </div>
 
                                                           <div class="form-group">
                                                             <label for="noSKPelantikan" class="col-md-2 control-label">No SK Pelantikan</label>
                                                             <div class="col-md-8">
-                                                              <input class="form-control" id="masaKerjaGolRuang" placeholder="Masa Kerja Gol Ruang" value="<?php echo $jabatanTerakhir['NLANTIK']?>" disabled>
+                                                              <input class="form-control" id="masaKerjaGolRuang" placeholder="Masa Kerja Gol Ruang" value="<?php echo $jabatanTerakhir2['NLANTIK']?>" disabled>
                                                             </div>
                                                           </div>
                                                           <div class="form-group">
@@ -1390,7 +1390,7 @@ $.each($('input,select,textarea', '#formGaji'),function(k){
                                                                   <div class="input-group-addon">
                                                                     <i class="fa fa-calendar"></i>
                                                                   </div>
-                                                                  <input type="text" class="form-control pull-right" id="tglPelantikan" value="<?php echo $jabatanTerakhir['TLANTIK']?>" disabled>
+                                                                  <input type="text" class="form-control pull-right" id="tglPelantikan" value="<?php echo $jabatanTerakhir2['TLANTIK']?>" disabled>
                                                               </div>
                                                             </div>
                                                           </div>
@@ -1403,7 +1403,7 @@ $.each($('input,select,textarea', '#formGaji'),function(k){
                                                                   <div class="input-group-addon">
                                                                     <i class="fa fa-calendar"></i>
                                                                   </div>
-                                                                  <input type="text" class="form-control pull-right" id="tglPelantikan" value="<?php echo $jabatanTerakhir['TMTJAB']?>" disabled>
+                                                                  <input type="text" class="form-control pull-right" id="tglPelantikan" value="<?php echo $jabatanTerakhir2['TMTJAB']?>" disabled>
                                                               </div>
                                                             </div>
                                                           </div>
@@ -1412,7 +1412,7 @@ $.each($('input,select,textarea', '#formGaji'),function(k){
                                                             <div class="col-md-8">
 
                                                               <label>
-                                                                  <input id="sumpahJabatan" type="checkbox" value="<?php echo $jabatanTerakhir['SJAB']?>" disabled>
+                                                                  <input id="sumpahJabatan" type="checkbox" value="<?php echo $jabatanTerakhir2['SJAB']?>" disabled>
                                                                     Sudah
                                                                   </label>
                                                             </div>
