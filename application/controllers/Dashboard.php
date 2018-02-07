@@ -1232,7 +1232,8 @@ foreach($this->data['user_group'] as $ug){
 		->display_as('JAM', 'Jam')
 		->display_as('NSTTPP', 'NSTTPP')
 		->display_as('TSTTPP', 'TSTTPP')
-		->display_as('namaDiklat', 'Nama Diklat');
+		->display_as('namaDiklat', 'Nama Diklat')
+		->display_as('ISAKHIR', 'Diklat Terakhir');
 		$crud->fields('nip','kodeJenisDiklat','kFungStrTek','TEMPAT','PAN','ANGKATAN','TMULAI', 'TAKHIR','tahun', 'JAM','NSTTPP','TSTTPP','namaDiklat', 'ISAKHIR');
 		$crud->set_relation('kodeJenisDiklat','jenisdiklat','nama');
 		$crud->set_relation('kFungStrTek','dikfung','NDIKFUNG');
@@ -1265,7 +1266,8 @@ foreach($this->data['user_group'] as $ug){
 		->display_as('JAM', 'Jam')
 		->display_as('NSTTPP', 'NSTTPP')
 		->display_as('TSTTPP', 'TSTTPP')
-		->display_as('namaDiklat', 'Nama Diklat');
+		->display_as('namaDiklat', 'Nama Diklat')
+		->display_as('ISAKHIR', 'Diklat Terakhir');
 		$crud->fields('nip','kodeJenisDiklat','kFungStrTek','TEMPAT','PAN','ANGKATAN','TMULAI', 'TAKHIR','tahun', 'JAM','NSTTPP','TSTTPP','namaDiklat', 'ISAKHIR');
 		$crud->set_relation('kodeJenisDiklat','jenisdiklat','nama');
 		$crud->set_relation('kFungStrTek','diktek','NDIKTEK');
@@ -1718,6 +1720,7 @@ foreach($this->data['user_group'] as $ug){
 			$crud->set_relation('jnsjab','jenisjabatan','namaJenisJabatan');
 			$crud->set_relation('kpej','pejabatmenetapkan','npej');
 			$crud->set_relation('kwil','wilayah','nwil');
+			$crud->set_relation('KESELON','eselon','nama');
 			$crud->fields('nip','kunkers','kunkersInduk','KINSIND','nunkerUnitOrganisasi','namaJenisJabatan','tmtJabatan', 'nomorSk','tanggalSk', 'jnsjab','kjab','kpej','tmtPelantikan', 'njab', 'kwil', 'nunkerUnitOrganisasi', 'JSUSPIM', 'KESELON');
 			$crud->required_fields('nip','kunkers','kunkersInduk','KINSIND','nunkerUnitOrganisasi','namaJenisJabatan','tmtJabatan', 'nomorSk','tanggalSk', 'jnsjab','kjab','kpej','tmtPelantikan', 'njab', 'kwil', 'nunkerUnitOrganisasi', 'JSUSPIM', 'KESELON');
 			$output = $crud->render();
@@ -1776,8 +1779,11 @@ foreach($this->data['user_group'] as $ug){
 		  ->display_as('JAM', 'Jam')
 		  ->display_as('NSTTPP', 'NSTTPP')
 		  ->display_as('TSTTPP', 'TSTTPP')
-		  ->display_as('namaDiklat', 'Nama Diklat');
-		  $crud->set_relation('kodeJenisDiklat','jenisdiklat','nama');
+			->display_as('namaDiklat', 'Nama Diklat')
+			->display_as('ISAKHIR', 'Diklat Terakhir');
+			$crud->set_relation('kFungStrTek','dikstr','NDIKSTR');
+			$crud->set_relation('kodeJenisDiklat','jenisdiklat','nama');
+			$crud->set_relation('ISAKHIR','statusterakhir','statusAkhir');
 		  $crud->fields('nip','kodeJenisDiklat','kFungStrTek','TEMPAT','PAN','ANGKATAN','TMULAI', 'TAKHIR','tahun', 'JAM','NSTTPP','TSTTPP','namaDiklat', 'ISAKHIR');
 		  $crud->required_fields('nip','kodeJenisDiklat','kFungStrTek','TEMPAT','PAN','ANGKATAN','TMULAI', 'TAKHIR','tahun', 'JAM','NSTTPP','TSTTPP','namaDiklat', 'ISAKHIR');
 		  $output = $crud->render();
@@ -1807,8 +1813,11 @@ foreach($this->data['user_group'] as $ug){
 		  ->display_as('JAM', 'Jam')
 		  ->display_as('NSTTPP', 'NSTTPP')
 		  ->display_as('TSTTPP', 'TSTTPP')
-		  ->display_as('namaDiklat', 'Nama Diklat');
-		  $crud->set_relation('kodeJenisDiklat','jenisdiklat','nama');
+		  ->display_as('namaDiklat', 'Nama Diklat')
+			->display_as('ISAKHIR', 'Diklat Terakhir');
+			$crud->set_relation('kFungStrTek','dikfung','NDIKFUNG');
+			$crud->set_relation('kodeJenisDiklat','jenisdiklat','nama');
+			$crud->set_relation('ISAKHIR','statusterakhir','statusAkhir');
 		  $crud->fields('nip','kodeJenisDiklat','kFungStrTek','TEMPAT','PAN','ANGKATAN','TMULAI', 'TAKHIR','tahun', 'JAM','NSTTPP','TSTTPP','namaDiklat', 'ISAKHIR');
 		  $crud->required_fields('nip','kodeJenisDiklat','kFungStrTek','TEMPAT','PAN','ANGKATAN','TMULAI', 'TAKHIR','tahun', 'JAM','NSTTPP','TSTTPP','namaDiklat', 'ISAKHIR');
 		  $output = $crud->render();
@@ -1838,8 +1847,11 @@ foreach($this->data['user_group'] as $ug){
 		  ->display_as('JAM', 'Jam')
 		  ->display_as('NSTTPP', 'NSTTPP')
 		  ->display_as('TSTTPP', 'TSTTPP')
-		  ->display_as('namaDiklat', 'Nama Diklat');
-		  $crud->set_relation('kodeJenisDiklat','jenisdiklat','nama');
+		  ->display_as('namaDiklat', 'Nama Diklat')
+			->display_as('ISAKHIR', 'Diklat Terakhir');
+			$crud->set_relation('kFungStrTek','diktek','NDIKTEK');
+			$crud->set_relation('kodeJenisDiklat','jenisdiklat','nama');
+			$crud->set_relation('ISAKHIR','statusterakhir','statusAkhir');
 		  $crud->fields('nip','kodeJenisDiklat','kFungStrTek','TEMPAT','PAN','ANGKATAN','TMULAI', 'TAKHIR','tahun', 'JAM','NSTTPP','TSTTPP','namaDiklat', 'ISAKHIR');
 		  $crud->required_fields('nip','kodeJenisDiklat','kFungStrTek','TEMPAT','PAN','ANGKATAN','TMULAI', 'TAKHIR','tahun', 'JAM','NSTTPP','TSTTPP','namaDiklat', 'ISAKHIR');
 		  $output = $crud->render();
@@ -2014,6 +2026,8 @@ foreach($this->data['user_group'] as $ug){
 		  ->display_as('KBAHASA', 'Kemampuan Bahasa')
 		  ->display_as('JBAHASA', 'Jenis Bahasa');
 		  $crud->fields('NIP', 'NBAHASA', 'KBAHASA', 'JBAHASA');
+			$crud->set_relation('KBAHASA','kemampuanbahasa','nama');
+			$crud->set_relation('JBAHASA','jenisbahasa','nama');
 		  $crud->required_fields('NIP', 'NBAHASA', 'KBAHASA', 'JBAHASA');
 		  $output = $crud->render();
 		  $this->load->view('dashboard/grid',$output);
@@ -2102,7 +2116,9 @@ foreach($this->data['user_group'] as $ug){
 		  ->display_as('KPOS', 'Kode Pos')
 		  ->display_as('ALHP', 'Nomor HP')
 		  ->display_as('ISAKHIR', 'Akhir');
+			$crud->set_relation('STUNJ','statustunjangan','nama');
 		  $crud->set_relation('KKERJA','daftarPekerjaan','nama');
+			$crud->set_relation('ISAKHIR','statusterakhir','statusAkhir');
 		  $crud->fields('NIP', 'NISUA', 'KTLAHIR', 'TLAHIR', 'TIJASAH', 'TKAWIN', 'STUNJ', 'KKERJA', 'ISAKHIR', 'ALJALAN', 'ALRT', 'ALRW', 'NOTELP', 'WIL', 'KPOS', 'ALHP');
 		  $crud->required_fields('NIP', 'NISUA', 'KTLAHIR', 'TLAHIR', 'TIJASAH', 'TKAWIN', 'STUNJ', 'KKERJA', 'ISAKHIR', 'ALJALAN', 'ALRT', 'ALRW', 'NOTELP', 'WIL', 'KPOS', 'ALHP');
 		  $output = $crud->render();
@@ -2129,6 +2145,10 @@ foreach($this->data['user_group'] as $ug){
 		  ->display_as('TIJASAH', 'Tingkat Pendidikan Umum')
 		  ->display_as('KKERJA', 'Pekerjaan');
 		  $crud->fields('NIP', 'NANAK', 'TLAHIR', 'TGLLAHIR', 'KJKEL', 'KELUARGA', 'TUNJ', 'TIJASAH', 'KKERJA');
+			$crud->set_relation('KJKEL','jenisKelamin','NKELAMIN');
+			$crud->set_relation('KELUARGA','hubungankeluarga','ketkeluarga');
+			$crud->set_relation('TUNJ','statustunjangan','nama');
+			$crud->set_relation('KKERJA','daftarPekerjaan','nama');
 		  $crud->required_fields('NIP', 'NANAK', 'TLAHIR', 'TGLLAHIR', 'KJKEL', 'KELUARGA', 'TUNJ', 'TIJASAH', 'KKERJA');
 		  $output = $crud->render();
 		  $this->load->view('dashboard/grid',$output);
@@ -2157,6 +2177,7 @@ foreach($this->data['user_group'] as $ug){
 		  ->display_as('KPOS', 'Kode Pos')
 		  ->display_as('ALHP', 'Nomor HP');
 		  $crud->fields('NIP', 'NAYAH', 'TLAHIR', 'TGLLAHIR', 'KKERJA', 'ALJALAN', 'ALRT', 'ALRW', 'NOTELP', 'WIL', 'KPOS', 'ALHP');
+			$crud->set_relation('KKERJA','daftarPekerjaan','nama');
 		  $crud->required_fields('NIP', 'NAYAH', 'TLAHIR', 'TGLLAHIR', 'KKERJA', 'ALJALAN', 'ALRT', 'ALRW', 'NOTELP', 'WIL', 'KPOS', 'ALHP');
 		  $output = $crud->render();
 		  $this->load->view('dashboard/grid',$output);
@@ -2247,6 +2268,7 @@ foreach($this->data['user_group'] as $ug){
 		  $crud->set_relation('jnsjab','jenisjabatan','namaJenisJabatan');
 		  $crud->set_relation('kpej','pejabatmenetapkan','npej');
 		  $crud->set_relation('kwil','wilayah','nwil');
+			$crud->set_relation('KESELON','eselon','nama');
 		  $crud->fields('nip','kunkers','kunkersInduk','KINSIND','nunkerUnitOrganisasi','namaJenisJabatan','tmtJabatan', 'nomorSk','tanggalSk', 'jnsjab','kjab','kpej','tmtPelantikan', 'njab', 'kwil', 'nunkerUnitOrganisasi', 'JSUSPIM', 'KESELON');
 		  $crud->required_fields('nip','kunkers','kunkersInduk','KINSIND','nunkerUnitOrganisasi','namaJenisJabatan','tmtJabatan', 'nomorSk','tanggalSk', 'jnsjab','kjab','kpej','tmtPelantikan', 'njab', 'kwil', 'nunkerUnitOrganisasi', 'JSUSPIM', 'KESELON');
 		  $output = $crud->render();
@@ -2306,7 +2328,9 @@ foreach($this->data['user_group'] as $ug){
 		  ->display_as('NSTTPP', 'NSTTPP')
 		  ->display_as('TSTTPP', 'TSTTPP')
 		  ->display_as('namaDiklat', 'Nama Diklat');
+			$crud->set_relation('kFungStrTek','dikstr','NDIKSTR');
 		  $crud->set_relation('kodeJenisDiklat','jenisdiklat','nama');
+			$crud->set_relation('ISAKHIR','statusterakhir','statusAkhir');
 		  $crud->fields('nip','kodeJenisDiklat','kFungStrTek','TEMPAT','PAN','ANGKATAN','TMULAI', 'TAKHIR','tahun', 'JAM','NSTTPP','TSTTPP','namaDiklat', 'ISAKHIR');
 		  $crud->required_fields('nip','kodeJenisDiklat','kFungStrTek','TEMPAT','PAN','ANGKATAN','TMULAI', 'TAKHIR','tahun', 'JAM','NSTTPP','TSTTPP','namaDiklat', 'ISAKHIR');
 		  $output = $crud->render();
@@ -2336,8 +2360,11 @@ foreach($this->data['user_group'] as $ug){
 		  ->display_as('JAM', 'Jam')
 		  ->display_as('NSTTPP', 'NSTTPP')
 		  ->display_as('TSTTPP', 'TSTTPP')
-		  ->display_as('namaDiklat', 'Nama Diklat');
+		  ->display_as('namaDiklat', 'Nama Diklat')
+			->display_as('ISAKHIR', 'Diklat Terakhir');
+			$crud->set_relation('kFungStrTek','dikfung','NDIKFUNG');
 		  $crud->set_relation('kodeJenisDiklat','jenisdiklat','nama');
+			$crud->set_relation('ISAKHIR','statusterakhir','statusAkhir');
 		  $crud->fields('nip','kodeJenisDiklat','kFungStrTek','TEMPAT','PAN','ANGKATAN','TMULAI', 'TAKHIR','tahun', 'JAM','NSTTPP','TSTTPP','namaDiklat', 'ISAKHIR');
 		  $crud->required_fields('nip','kodeJenisDiklat','kFungStrTek','TEMPAT','PAN','ANGKATAN','TMULAI', 'TAKHIR','tahun', 'JAM','NSTTPP','TSTTPP','namaDiklat', 'ISAKHIR');
 		  $output = $crud->render();
