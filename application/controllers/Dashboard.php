@@ -556,14 +556,14 @@ foreach($this->data['user_group'] as $ug){
 	{
 		$id=$this->input->post('id');
 		$sts=$this->input->post('sts');
-		$this->Simpeg_model->updateStatusDataConfirmation(array('stsConfirmation'=>1),$id);
+		$this->Simpeg_model->updateStatusDataConfirmation(array('stsConfirmation'=>$sts),$id);
 		$dataConfirmation = $this->Simpeg_model->getConfirmationDataByid($id);
 		$changedData = json_decode($dataConfirmation['changedData']);
 		$nData['ALRT'] = $changedData->ALRT;
 		$nData['ALRW'] = $changedData->ALRW;
 		$nData['KPOS'] = $changedData->KPOS;
 		$nData['alamat'] = $changedData->alamat;
-		$nData['KGOLDAR'] = $changedData->KGOLDAR;
+		$nData['KGOLDAR'] = $changedData->golonganDarah;
 		$nData['agamaId'] = $changedData->agamaId;
 		$nData['nipBaru'] = $changedData->nipBaru;
 		$nData['nomorTelpon'] = $changedData->noTelpon;

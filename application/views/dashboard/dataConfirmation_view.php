@@ -36,6 +36,28 @@
         ]
     } );
 
+    $('#confirmation').on('click','.tolak',function(){
+       var id = $(this).attr('id');
+       console.log("ini Loh Id nya :"+id);
+       $.ajax({
+             type: 'POST',
+             url: '<?php echo base_url()?>dashboard/updateStatusDataConfirmation',
+             data: {
+                 'id': id,
+                 'sts': 2 // <-- the $ sign in the parameter name seems unusual, I would avoid it
+             },
+             success: function(msg){
+                 alert('Update ' + msg);
+
+                 oTable.draw();
+             },
+             error: function (response) {
+               console.log(response);
+               alert('Ada Masalah Di server');
+             }
+         });
+     });
+
     $('#confirmation').on('click','.openBtn',function(){
        var id = $(this).attr('id');
        console.log("ini Loh Id nya :"+id);
@@ -56,7 +78,7 @@
               },
               success: function(msg){
                   alert('Update ' + msg);
-                  
+
                   oTable.draw();
               },
               error: function (response) {
