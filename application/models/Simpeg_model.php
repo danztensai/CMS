@@ -1622,8 +1622,9 @@ WHERE ra.NIP =  '$nip'";
 			public function getRiwayatPendidikanUmum($nip)
 			{
 
-				$querySQL = "SELECT rp.nip, rp.ktpu, rp.KJUR, rp.npdum, rp.namaSekolah, rp.tempat, rp.nkepsek, rp.nomorIjazah, rp.tglTahunLulus, rp.isPendidikanTerakhir
+				$querySQL = "SELECT rp.nip, rp.ktpu, rp.KJUR, rp.npdum, rp.namaSekolah, rp.tempat, rp.nkepsek, rp.nomorIjazah, rp.tglTahunLulus, rs.statusAkhir
 											FROM pendidikan rp
+											INNER JOIN statusterakhir rs on rs.ISAKHIR = rp.isPendidikanTerakhir
 											WHERE rp.NIP = '$nip'
 											ORDER BY rp.tglTahunLulus DESC";
 
@@ -1647,7 +1648,7 @@ WHERE ra.NIP =  '$nip'";
 						$data['nkepsek']=$row->nkepsek;
 						$data['nomorIjazah']=$row->nomorIjazah;
 						$data['tglTahunLulus']=$row->tglTahunLulus;
-						$data['isPendidikanTerakhir']=$row->isPendidikanTerakhir;
+						$data['statusAkhir']=$row->statusAkhir;
 						array_push($stackData,$data);
 
 					}
@@ -1707,9 +1708,10 @@ ORDER BY rr.TAKHIR DESC";
 						public function getRiwayatPendidikanStruktural2($nip)
 						{
 
-							$querySQL = "SELECT rj.nama, rr.NIP, rr.kFungStrTek, rr.namaDiklat, rr.TEMPAT, rr.PAN, rr.ANGKATAN, rr.TMULAI, rr.TAKHIR, rr.JAM, rr.NSTTPP, rr.TSTTPP, rr.ISAKHIR
+							$querySQL = "SELECT rj.nama, rr.NIP, rr.kFungStrTek, rr.namaDiklat, rr.TEMPAT, rr.PAN, rr.ANGKATAN, rr.TMULAI, rr.TAKHIR, rr.JAM, rr.NSTTPP, rr.TSTTPP, rs.statusAkhir
 			FROM riwayatdiklat rr
 			INNER JOIN jenisDiklat rj on rj.kode = rr.kodeJenisDiklat
+			LEFT JOIN statusterakhir rs on rs.ISAKHIR = rr.ISAKHIR
 			WHERE rr.NIP = '$nip' AND rr.kodeJenisDiklat = 2";
 
 							$data = array();
@@ -1735,7 +1737,7 @@ ORDER BY rr.TAKHIR DESC";
 									$data['JAM']=$row->JAM;
 									$data['NSTTPP']=$row->NSTTPP;
 									$data['TSTTPP']=$row->TSTTPP;
-									$data['ISAKHIR']=$row->ISAKHIR;
+									$data['statusAkhir']=$row->statusAkhir;
 									array_push($stackData,$data);
 
 								}
@@ -1794,9 +1796,10 @@ ORDER BY rr.TAKHIR DESC";
 			public function getRiwayatPendidikanFungsional2($nip)
 			{
 
-				$querySQL = "SELECT rj.nama, rr.NIP, rr.kFungStrTek, rr.namaDiklat, rr.TEMPAT, rr.PAN, rr.ANGKATAN, rr.TMULAI, rr.TAKHIR, rr.JAM, rr.NSTTPP, rr.TSTTPP, rr.ISAKHIR
+				$querySQL = "SELECT rj.nama, rr.NIP, rr.kFungStrTek, rr.namaDiklat, rr.TEMPAT, rr.PAN, rr.ANGKATAN, rr.TMULAI, rr.TAKHIR, rr.JAM, rr.NSTTPP, rr.TSTTPP, rs.statusAkhir
 FROM riwayatdiklat rr
 INNER JOIN jenisDiklat rj on rj.kode = rr.kodeJenisDiklat
+LEFT JOIN statusterakhir rs on rs.ISAKHIR = rr.ISAKHIR
 WHERE rr.NIP = '$nip' AND rr.kodeJenisDiklat = 1";
 
 				$data = array();
@@ -1822,7 +1825,7 @@ WHERE rr.NIP = '$nip' AND rr.kodeJenisDiklat = 1";
 						$data['JAM']=$row->JAM;
 						$data['NSTTPP']=$row->NSTTPP;
 						$data['TSTTPP']=$row->TSTTPP;
-						$data['ISAKHIR']=$row->ISAKHIR;
+						$data['statusAkhir']=$row->statusAkhir;
 						array_push($stackData,$data);
 
 					}
@@ -1881,9 +1884,10 @@ ORDER BY rr.TAKHIR DESC";
 			public function getRiwayatPendidikanTeknis2($nip)
 			{
 
-				$querySQL = "SELECT rj.nama, rr.NIP, rr.kFungStrTek, rr.namaDiklat, rr.TEMPAT, rr.PAN, rr.ANGKATAN, rr.TMULAI, rr.TAKHIR, rr.JAM, rr.NSTTPP, rr.TSTTPP, rr.ISAKHIR
+				$querySQL = "SELECT rj.nama, rr.NIP, rr.kFungStrTek, rr.namaDiklat, rr.TEMPAT, rr.PAN, rr.ANGKATAN, rr.TMULAI, rr.TAKHIR, rr.JAM, rr.NSTTPP, rr.TSTTPP, rs.statusAkhir
 FROM riwayatdiklat rr
-INNER JOIN jenisDiklat rj on rj.kode = rr.kodeJenisDiklat
+LEFT JOIN jenisDiklat rj on rj.kode = rr.kodeJenisDiklat
+LEFT JOIN statusterakhir rs on rs.ISAKHIR = rr.ISAKHIR
 WHERE rr.NIP = '$nip' AND rr.kodeJenisDiklat = 3";
 
 				$data = array();
@@ -1909,7 +1913,7 @@ WHERE rr.NIP = '$nip' AND rr.kodeJenisDiklat = 3";
 						$data['JAM']=$row->JAM;
 						$data['NSTTPP']=$row->NSTTPP;
 						$data['TSTTPP']=$row->TSTTPP;
-						$data['ISAKHIR']=$row->ISAKHIR;
+						$data['statusAkhir']=$row->statusAkhir;
 						array_push($stackData,$data);
 
 					}

@@ -105,9 +105,9 @@ overflow-y:scroll;
                           </div>
                         </div>
                         <div class="form-group">
-                          <label for="dataTerakhir" class="col-md-4 control-label">dataTerakhir</label>
+                          <label for="statusAkhir" class="col-md-4 control-label">dataTerakhir</label>
                           <div class="col-md-4">
-                            <input class="form-control" id="isPendidikanTerakhir" placeholder="Pendidikan Terakhir" value="<?php echo $riwayatPendidikanUmum['isPendidikanTerakhir'];?>" disabled>
+                            <input class="form-control" id="statusAkhir" placeholder="Pendidikan Terakhir" value="<?php echo $riwayatPendidikanUmum['statusAkhir'];?>" disabled>
                           </div>
                         </div>
 
@@ -230,9 +230,9 @@ overflow-y:scroll;
                             </div>
                           </div>
                           <div class="form-group">
-                            <label for="ISAKHIR" class="col-md-4 control-label">Data Terakhir</label>
+                            <label for="statusAkhir" class="col-md-4 control-label">Data Terakhir</label>
                             <div class="col-md-4">
-                              <input type="text" class="form-control pull-right" id="ISAKHIR" name="Data Terakhir" value="<?php echo $ru['ISAKHIR']?>" disabled>
+                              <input type="text" class="form-control pull-right" id="statusAkhir" name="Data Terakhir" value="<?php echo $ru['statusAkhir']?>" disabled>
                             </div>
                           </div>
 
@@ -358,9 +358,9 @@ overflow-y:scroll;
                           </div>
 
                           <div class="form-group">
-                            <label for="ISAKHIR" class="col-md-4 control-label">Data Terakhir</label>
+                            <label for="statusAkhir" class="col-md-4 control-label">Data Terakhir</label>
                             <div class="col-md-4">
-                              <input class="form-control" id="ISAKHIR" placeholder="Data Terakhir" value="<?php echo $ru['ISAKHIR'];?>" disabled>
+                              <input class="form-control" id="statusAkhir" placeholder="Data Terakhir" value="<?php echo $ru['statusAkhir'];?>" disabled>
                             </div>
                           </div>
                         </div>
@@ -484,9 +484,9 @@ overflow-y:scroll;
                           </div>
 
                           <div class="form-group">
-                            <label for="ISAKHIR" class="col-md-4 control-label">Data Terakhir</label>
+                            <label for="statusAkhir" class="col-md-4 control-label">Data Terakhir</label>
                             <div class="col-md-4">
-                              <input class="form-control" id="ISAKHIR" placeholder="Data Terakhir" value="<?php echo $ru['ISAKHIR'];?>" disabled>
+                              <input class="form-control" id="statusAkhir" placeholder="Data Terakhir" value="<?php echo $ru['statusAkhir'];?>" disabled>
                             </div>
                           </div>
                         </div>
