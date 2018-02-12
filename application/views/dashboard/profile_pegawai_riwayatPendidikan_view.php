@@ -30,7 +30,7 @@ overflow-y:scroll;
                               <p class="text-center">
                                 <strong>Umum</strong>
                               </p>
-                              <?php if($riwayatPendidikanUmum==null)
+                              <?php if($riwayatPendidikanUmum2==null)
                               {
                                   log_message('debug','Empty Bro');
                               ?>
@@ -42,55 +42,55 @@ overflow-y:scroll;
 
                   <form class="form-horizontal">
                     <div class="box-body scroll">
-                        <?php foreach($riwayatPendidikanUmum as $riwayatPendidikanUmum){ ?>
+                        <?php foreach($riwayatPendidikanUmum2 as $riwayatPendidikanUmum2){ ?>
   <div class="row row-bordered">
                       <div class="col-md-12">
 
                         <div class="form-group">
                           <label for="nip" class="col-md-4 control-label">NIP</label>
                           <div class="col-sm-4">
-                            <input class="form-control" id="nip" placeholder="NIP" value="<?php echo $riwayatPendidikanUmum['nip'];?>" disabled>
+                            <input class="form-control" id="nip" placeholder="NIP" value="<?php echo $riwayatPendidikanUmum2['nip'];?>" disabled>
                           </div>
                         </div>
                         <div class="form-group">
-                          <label for="ktpu" class="col-md-4 control-label">Kode Pendidikan Umum</label>
+                          <label for="ntp" class="col-md-4 control-label">Tingkat Pendidikan Umum</label>
                           <div class="col-md-4">
-                            <input class="form-control" id="ktpu" placeholder="Kode Pendidikan Umum" value="<?php echo $riwayatPendidikanUmum['ktpu'];?>" disabled>
+                            <input class="form-control" id="ntp" placeholder="Tingkat Pendidikan Umum" value="<?php echo $riwayatPendidikanUmum2['ntp'];?>" disabled>
                           </div>
                         </div>
 
                         <div class="form-group">
                           <label for="npdum" class="col-md-4 control-label">Nama Pendidikan Umum</label>
                           <div class="col-md-4">
-                            <input class="form-control" id="npdum" placeholder="Nama Pendidikan Umum" value="<?php echo $riwayatPendidikanUmum['npdum'];?>" disabled>
+                            <input class="form-control" id="npdum" placeholder="Nama Pendidikan Umum" value="<?php echo $riwayatPendidikanUmum2['npdum'];?>" disabled>
                           </div>
                         </div>
 
                         <div class="form-group">
                           <label for="namaSekolah" class="col-md-4 control-label">Nama Sekolah</label>
                           <div class="col-md-4">
-                            <input class="form-control" id="namaSekolah" placeholder="Nama Sekolah" value="<?php echo $riwayatPendidikanUmum['namaSekolah'];?>" disabled>
+                            <input class="form-control" id="namaSekolah" placeholder="Nama Sekolah" value="<?php echo $riwayatPendidikanUmum2['namaSekolah'];?>" disabled>
                           </div>
                         </div>
 
                         <div class="form-group">
                           <label for="tempat" class="col-md-4 control-label">Tempat</label>
                           <div class="col-md-4">
-                            <input class="form-control" id="tempat" placeholder="Tempat" value="<?php echo $riwayatPendidikanUmum['tempat'];?>" disabled>
+                            <input class="form-control" id="tempat" placeholder="Tempat" value="<?php echo $riwayatPendidikanUmum2['tempat'];?>" disabled>
                           </div>
                         </div>
 
                         <div class="form-group">
                           <label for="nkepsek" class="col-md-4 control-label">Nama Kepala Sekolah/Dekan</label>
                           <div class="col-md-4">
-                            <input class="form-control" id="nkepsek" placeholder="Nama Kepala Sekolah" value="<?php echo $riwayatPendidikanUmum['nkepsek'];?>" disabled>
+                            <input class="form-control" id="nkepsek" placeholder="Nama Kepala Sekolah" value="<?php echo $riwayatPendidikanUmum2['nkepsek'];?>" disabled>
                           </div>
                         </div>
 
                         <div class="form-group">
                           <label for="nomorIjazah" class="col-md-4 control-label">No STTB</label>
                           <div class="col-md-4">
-                            <input class="form-control" id="nomorIjazah" placeholder="Nomor STTB" value="<?php echo $riwayatPendidikanUmum['nomorIjazah'];?>" disabled>
+                            <input class="form-control" id="nomorIjazah" placeholder="Nomor STTB" value="<?php echo $riwayatPendidikanUmum2['nomorIjazah'];?>" disabled>
                           </div>
                         </div>
                         <div class="form-group">
@@ -100,14 +100,14 @@ overflow-y:scroll;
                                 <div class="input-group-addon">
                                   <i class="fa fa-calendar"></i>
                                 </div>
-                                <input type="text" class="form-control pull-right" id="tglTahunLulus" name="Tanggal Lulus" value="<?php echo $riwayatPendidikanUmum['tglTahunLulus']?>" disabled>
+                                <input type="text" class="form-control pull-right" id="tglTahunLulus" name="Tanggal Lulus" value="<?php echo $riwayatPendidikanUmum2['tglTahunLulus']?>" disabled>
                             </div>
                           </div>
                         </div>
                         <div class="form-group">
                           <label for="statusAkhir" class="col-md-4 control-label">dataTerakhir</label>
                           <div class="col-md-4">
-                            <input class="form-control" id="statusAkhir" placeholder="Pendidikan Terakhir" value="<?php echo $riwayatPendidikanUmum['statusAkhir'];?>" disabled>
+                            <input class="form-control" id="statusAkhir" placeholder="Pendidikan Terakhir" value="<?php echo $riwayatPendidikanUmum2['statusAkhir'];?>" disabled>
                           </div>
                         </div>
 

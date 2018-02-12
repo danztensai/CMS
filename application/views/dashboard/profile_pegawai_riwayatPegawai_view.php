@@ -240,7 +240,7 @@ overflow-y:scroll;
                               <p class="text-center">
                                 <strong>Riwayat Jabatan</strong>
                               </p>
-                              <?php if($riwayatOrganisasi==null)
+                              <?php if($riwayatOrganisasi2==null)
                               {
                                   log_message('debug','Empty Bro');
                               ?>
@@ -254,7 +254,7 @@ overflow-y:scroll;
                                 <div class="box-body scroll">
                                   <?php
 
-                                  foreach($riwayatOrganisasi as $rj)
+                                  foreach($riwayatOrganisasi2 as $rj)
                                   {
                                     ?>
                                 <div class="row row-bordered">

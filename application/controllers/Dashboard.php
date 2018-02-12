@@ -599,6 +599,7 @@ foreach($this->data['user_group'] as $ug){
 		$riwayatJabatan = $this->Simpeg_model->getRiwayatJabatan($userLoggedin->nip);
 		$riwayatJabatan2 = $this->Simpeg_model->getRiwayatJabatan2($userLoggedin->nip);
 		$riwayatOrganisasi = $this->Simpeg_model->getRiwayatOrganisasi($userLoggedin->nip);
+		$riwayatOrganisasi2 = $this->Simpeg_model->getRiwayatOrganisasi2($userLoggedin->nip);
 		$riwayatJasa = $this->Simpeg_model->getRiwayatJasa($userLoggedin->nip);
 		$riwayatDpp = $this->Simpeg_model->getRiwayatDPP($userLoggedin->nip);
 		$riwayatHukuman = $this->Simpeg_model->getRiwayatHukuman($userLoggedin->nip);
@@ -614,6 +615,7 @@ foreach($this->data['user_group'] as $ug){
 		$riwayatKeluargaAnak = $this->Simpeg_model->getRiwayatKeluargaAnak($userLoggedin->nip);
 		$riwayatKeluargaAnak2 = $this->Simpeg_model->getRiwayatKeluargaAnak2($userLoggedin->nip);
 		$riwayatPendidikanUmum = $this->Simpeg_model->getRiwayatPendidikanUmum($userLoggedin->nip);
+		$riwayatPendidikanUmum2 = $this->Simpeg_model->getRiwayatPendidikanUmum2($userLoggedin->nip);
 		log_message('debug',print_r($riwayatPendidikanUmum,TRUE));
 		$riwayatPendidikanStruktural = $this->Simpeg_model->getRiwayatPendidikanStruktural($userLoggedin->nip);
 		$riwayatPendidikanStruktural2 = $this->Simpeg_model->getRiwayatPendidikanStruktural2($userLoggedin->nip);
@@ -651,6 +653,7 @@ foreach($this->data['user_group'] as $ug){
 		$this->data['riwayatJabatan']=$riwayatJabatan;
 		$this->data['riwayatJabatan2']=$riwayatJabatan2;
 		$this->data['riwayatOrganisasi']=$riwayatOrganisasi;
+		$this->data['riwayatOrganisasi2']=$riwayatOrganisasi2;
 		$this->data['riwayatJasa']=$riwayatJasa;
 		$this->data['riwayatDpp']=$riwayatDpp;
 		$this->data['riwayatHukuman']=$riwayatHukuman;
@@ -666,6 +669,7 @@ foreach($this->data['user_group'] as $ug){
 		$this->data['riwayatKeluargaAnak']=$riwayatKeluargaAnak;
 		$this->data['riwayatKeluargaAnak2']=$riwayatKeluargaAnak2;
 		$this->data['riwayatPendidikanUmum']=$riwayatPendidikanUmum;
+		$this->data['riwayatPendidikanUmum2']=$riwayatPendidikanUmum2;
 		$this->data['riwayatPendidikanStruktural']=$riwayatPendidikanStruktural;
 		$this->data['riwayatPendidikanStruktural2']=$riwayatPendidikanStruktural2;
 		$this->data['riwayatPendidikanFungsional']=$riwayatPendidikanFungsional;
@@ -1156,7 +1160,7 @@ foreach($this->data['user_group'] as $ug){
 		$crud = new grocery_CRUD();
 		$crud->set_table('pendidikan')
 		->set_subject('pendidikan')
-		->columns('nip','tahunLulus','tglTahunLulus','nomorIjazah','namaSekolah','tempat','glrDepan', 'glrBelakang','ktpu', 'KJUR','nkepsek','npdum')
+		->columns('nip','tahunLulus','tglTahunLulus','nomorIjazah','namaSekolah','tempat','glrDepan', 'glrBelakang','ktpu', 'KJUR', 'ktpukjur', 'nkepsek','npdum')
 		->display_as('nip', 'Nip')
 		->display_as('tahunLulus', 'Tahun Kelulusan')
 		->display_as('tglTahunLulus', 'Tanggal Kelulusan')
@@ -1167,9 +1171,11 @@ foreach($this->data['user_group'] as $ug){
 		->display_as('glrBelakang', 'Gelar Belakang')
 		->display_as('ktpu', 'KTPU')
 		->display_as('KJUR', 'Jurusan')
+		->display_as('ktpukjur', 'Nama Jurusan')
 		->display_as('nkepsek', 'Nama Kepala Sekolah')
 		->display_as('npdum', 'Nama Pendidikan Umum');
-		$crud->fields('nip','tahunLulus','tglTahunLulus','nomorIjazah','namaSekolah','tempat','glrDepan', 'glrBelakang','ktpu', 'KJUR','nkepsek','npdum');
+		$crud->fields('nip','tahunLulus','tglTahunLulus','nomorIjazah','namaSekolah','tempat','glrDepan', 'glrBelakang','ktpu', 'KJUR', 'ktpukjur', 'nkepsek','npdum');
+		$crud->set_relation('ktpukjur','jurpendidikan','NJUR');
 		$crud->required_fields('nip','tahunLulus','tglTahunLulus','nomorIjazah','namaSekolah','tempat','glrDepan', 'glrBelakang','ktpu', 'KJUR','nkepsek','npdum');
 		$output = $crud->render();
 		$this->load->view('dashboard/grid',$output);
@@ -1391,17 +1397,18 @@ foreach($this->data['user_group'] as $ug){
 		$crud = new grocery_CRUD();
 		$crud->set_table('riwayatorganisasi')
 		->set_subject('Organisasi')
-		->columns('NIP', 'JORG', 'NORG', 'JBORG', 'TMULAI', 'TAKHIR', 'NPIMP', 'TEMPAT')
+		->columns('NIP', 'idJORG', 'NORG', 'JBORG', 'TMULAI', 'TAKHIR', 'NPIMP', 'TEMPAT')
 		->display_as('NIP', 'Nip')
-		->display_as('JORG', 'Jenis Organisasi')
+		->display_as('idJORG', 'Jenis Organisasi')
 		->display_as('NORG', 'Nama Organisasi')
 		->display_as('JBORG', 'Jabatan Organisasi')
 		->display_as('TMULAI', 'Tanggal Mulai')
 		->display_as('TAKHIR', 'Tanggal Akhir')
 		->display_as('NPIMP', 'Nama Pemimpin')
 		->display_as('TEMPAT', 'Tempat');
-		$crud->fields('NIP', 'JORG', 'NORG', 'JBORG', 'TMULAI', 'TAKHIR', 'NPIMP', 'TEMPAT');
-		$crud->required_fields('NIP', 'JORG', 'NORG', 'JBORG', 'TMULAI', 'TAKHIR', 'NPIMP', 'TEMPAT');
+		$crud->fields('NIP', 'idJORG', 'NORG', 'JBORG', 'TMULAI', 'TAKHIR', 'NPIMP', 'TEMPAT');
+		$crud->set_relation('idJORG','jenisorganisasi','JORG');
+		$crud->required_fields('NIP', 'idJORG', 'NORG', 'JBORG', 'TMULAI', 'TAKHIR', 'NPIMP', 'TEMPAT');
 		$output = $crud->render();
 		$this->load->view('dashboard/grid',$output);
 	}
@@ -1972,17 +1979,18 @@ foreach($this->data['user_group'] as $ug){
 		  $crud = new grocery_CRUD();
 		  $crud->set_table('riwayatorganisasi')
 		  ->set_subject('Organisasi')
-		  ->columns('NIP', 'JORG', 'NORG', 'JBORG', 'TMULAI', 'TAKHIR', 'NPIMP', 'TEMPAT')
+		  ->columns('NIP', 'idJORG', 'NORG', 'JBORG', 'TMULAI', 'TAKHIR', 'NPIMP', 'TEMPAT')
 		  ->display_as('NIP', 'Nip')
-		  ->display_as('JORG', 'Jenis Organisasi')
+		  ->display_as('idJORG', 'Jenis Organisasi')
 		  ->display_as('NORG', 'Nama Organisasi')
 		  ->display_as('JBORG', 'Jabatan Organisasi')
 		  ->display_as('TMULAI', 'Tanggal Mulai')
 		  ->display_as('TAKHIR', 'Tanggal Akhir')
 		  ->display_as('NPIMP', 'Nama Pemimpin')
 		  ->display_as('TEMPAT', 'Tempat');
-		  $crud->fields('NIP', 'JORG', 'NORG', 'JBORG', 'TMULAI', 'TAKHIR', 'NPIMP', 'TEMPAT');
-		  $crud->required_fields('NIP', 'JORG', 'NORG', 'JBORG', 'TMULAI', 'TAKHIR', 'NPIMP', 'TEMPAT');
+		  $crud->fields('NIP', 'idJORG', 'NORG', 'JBORG', 'TMULAI', 'TAKHIR', 'NPIMP', 'TEMPAT');
+			$crud->set_relation('idJORG','jenisorganisasi','JORG');
+		  $crud->required_fields('NIP', 'idJORG', 'NORG', 'JBORG', 'TMULAI', 'TAKHIR', 'NPIMP', 'TEMPAT');
 		  $output = $crud->render();
 		  $this->load->view('dashboard/grid',$output);
 		}

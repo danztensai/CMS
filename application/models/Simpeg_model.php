@@ -405,6 +405,44 @@ WHERE NIP = '$nip'";
 					}
 		}
 
+		public function getRiwayatOrganisasi2($nip)
+		{
+				$querySQL = "SELECT rr.NIP, rj.JORG, rr.NORG, rr.JBORG, rr.TMULAI, rr.TAKHIR, rr.NPIMP, rr.TEMPAT
+FROM riwayatorganisasi rr
+LEFT JOIN jenisorganisasi rj on rj.id = rr.idJORG
+WHERE NIP = '$nip'";
+
+				$data = array();
+				$stackData = array();
+
+				log_message('debug','getRiwayatOrganisasi: '.$querySQL);
+				$query = $this->db->query($querySQL);
+
+				if($query->num_rows()>0)
+					{ $count = 1;
+						foreach($query->result() as $row)
+						{
+							$data['NIP']=$row->NIP;
+							$data['JORG']=$row->JORG;
+							$data['NORG']=$row->NORG;
+							$data['JBORG']=$row->JBORG;
+							$data['TMULAI']=$row->TMULAI;
+							$data['TAKHIR']=$row->TAKHIR;
+							$data['NPIMP']=$row->NPIMP;
+							$data['TEMPAT']=$row->TEMPAT;
+						 array_push($stackData,$data);
+						}
+						$query->free_result();
+						return $stackData;
+					}else
+					{
+
+						$query->free_result();
+						return $data;
+					}
+		}
+
+
 
 		public function getRiwayatJabatanPensiun($nip)
 		{
@@ -1660,6 +1698,53 @@ WHERE ra.NIP =  '$nip'";
 					return $stackData;
 				}
 			}
+
+			public function getRiwayatPendidikanUmum2($nip)
+			{
+
+				$querySQL = "SELECT rp.nip, rt.ntp, rp.npdum, rp.namaSekolah, rp.tempat, rp.nkepsek, rp.nomorIjazah, rp.tglTahunLulus, rj.NJUR, rs.statusAkhir
+FROM pendidikan rp
+LEFT JOIN jurpendidikan rj on rj.KJUR = rp.ktpukjur
+LEFT JOIN tingpend rt on rt.ktp = rj.tp
+LEFT JOIN statusterakhir rs on rs.ISAKHIR = rp.isPendidikanTerakhir
+WHERE rp.NIP = '$nip' ORDER BY rp.tglTahunLulus DESC";
+
+				$data = array();
+				$stackData = array();
+
+				log_message('debug','getRiwayatPendidikanUmum: '.$querySQL);
+				$query = $this->db->query($querySQL);
+
+
+				if($query->num_rows()>0)
+				{ $count = 1;
+					foreach($query->result() as $row)
+					{
+						$data['nip']=$row->nip;
+						$data['ntp']=$row->ntp;
+						$data['npdum']=$row->npdum;
+						$data['namaSekolah']=$row->namaSekolah;
+						$data['tempat']=$row->tempat;
+						$data['nkepsek']=$row->nkepsek;
+						$data['namaSekolah']=$row->namaSekolah;
+						$data['tempat']=$row->tempat;
+						$data['nkepsek']=$row->nkepsek;
+						$data['nomorIjazah']=$row->nomorIjazah;
+						$data['tglTahunLulus']=$row->tglTahunLulus;
+						$data['NJUR']=$row->NJUR;
+						$data['statusAkhir']=$row->statusAkhir;
+						array_push($stackData,$data);
+
+					}
+					$query->free_result();
+					return $stackData;
+				}else
+				{
+					$query->free_result();
+					return $stackData;
+				}
+			}
+
 
 			public function getRiwayatPendidikanStruktural($nip)
 			{
