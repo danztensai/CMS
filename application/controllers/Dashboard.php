@@ -3161,23 +3161,63 @@ $this->data['menu']=$this->Menu_model->menuMaster($gid);
 
 	public function arsipDokumenPegawai()
 	{
-		log_message('debug','Trying to load Grocer Ref Agama');
+		$this->load->library('gc_dependent_select');
+		log_message('debug','Trying to load Grocey Arsip Dokumen Pegawai');
 		$adminSts = $this->ion_auth->is_admin()===FALSE;
 		$userLoggedin = $this->ion_auth->user()->row();
-		$pathFolder = "assets/upload/files/".$userLoggedin->nip;
+		$pathFolder = "assets/upload/files/".$userLoggedin->nip.'_'.$userLoggedin->first_name;
 		if (!is_dir($pathFolder)) {
     		mkdir($pathFolder , 0777, TRUE);
 				}
 
 		$nip = $userLoggedin->nip;
 		log_message('debug','Nip From Get'.$nip);
+
 		$crud = new grocery_CRUD();
 		$crud->where('nip',$nip);
 		$crud->set_theme('flexigrid');
 		$crud->set_table('archive_pns');
-		$crud->fields('nip','name','path','documentType');
-		$crud->columns('nip','name','path','documentType');
+		$crud->columns('nip','name','path','documentType','document_folder_1_id','document_folder_2_id');
+
+
 		$crud->set_relation('documentType','document_type','name');
+		$crud->set_relation('document_folder_1_id','document_folder_1','name');
+		$crud->set_relation('document_folder_2_id','document_folder_2','name');
+
+		$fields = array(
+
+		// Field Provinsi
+		'documentType' => array( // first dropdown name
+		'table_name' => 'document_type', // table of country
+		'title' => 'nama', // country title
+		'relate' => null, // the first dropdown hasn't a relation
+		'data-placeholder' => 'Pilih Tipe Dokumen' //dropdown's data-placeholder:
+		),
+		// Field Kabupaten
+		'document_folder_1_id' => array( // second dropdown name
+		'table_name' => 'document_folder_1', // table of state
+		'title' => 'name', // state title
+		'id_field' => 'id', // table of state: primary key
+		'relate' => 'id_doc_type', // table of state:
+		'data-placeholder' => 'Pilih Folder ' //dropdown's data-placeholder:
+
+		),
+		// Field Kecamatan
+		'document_folder_2_id' => array(
+		'table_name' => 'document_folder_2',
+		'title' => 'name',  // now you can use this format )))
+		//'where' =>"post_code>'167'",  // string. It's an optional parameter.
+		//'order_by'=>"id_kab DESC",  // string. It's an optional parameter.
+		'id_field' => 'id',
+		'relate' => 'id_doc_folder_1',
+		'data-placeholder' => 'Pilih Sub Folder'
+		)
+		);
+
+
+
+
+
 		$crud->display_as('officeCode','Office City');
 		$crud->set_subject('Dokumen');
 		$crud->unset_read();
@@ -3199,26 +3239,49 @@ $this->data['menu']=$this->Menu_model->menuMaster($gid);
 							});
 		$crud->callback_before_update(function($post_array)
 							{
-								log_message('debug','iniloh Before update'.print_r($post_array,TRUE));
+								log_message('debug','iniloh Before Insert'.print_r($post_array,TRUE));
 								$this->db = $this->load->database('default',true);
 								$userLoggedin = $this->ion_auth->user()->row();
 								$nip = $userLoggedin->nip;
+								$nama =trim($userLoggedin->first_name);
 
 
 
 								$docType = $this->Simpeg_model->getDocumentTypeById($post_array['documentType']);
-								$pathFolderTemp = "assets/upload/files/".$nip;
-								$pathFolder="assets/upload/files/".$nip."/".$docType[0]['alias'];
+								$docFolder1 = $this->Simpeg_model->getDocumentFolderById($post_array['document_folder_1_id'],1);
+
+								if (!array_key_exists("document_folder_2_id",$post_array))
+							  {
+
+										$pathFolder="assets/upload/files/".$nip.'_'.$nama."/".$docType[0]['alias'].'/'.$docFolder1['alias'].'/';
+										$realPathFolder = $docType[0]['alias'].'/'.$docFolder1['alias'].'/';
+										$fileName = 	$docType[0]['kode'].$docFolder1['kode'];
+										log_message('debug','Sub Folder Exist ');
+								}
+							else
+							  {
+									log_message('debug','Sub Folder Not Exist ');
+									$docFolder2 = $this->Simpeg_model->getDocumentFolderById($post_array['document_folder_2_id'],2);
+									$pathFolder="assets/upload/files/".$nip.'_'.$nama."/".$docType[0]['alias'].'/'.$docFolder1['alias'].'/'.'{'.$docFolder2['kode'].'}'.preg_replace('/\s+/', '_', $docFolder2['name']);
+									$realPathFolder = $docType[0]['alias'].'/'.$docFolder1['alias'].'/'.'{'.$docFolder2['kode'].'}'.preg_replace('/\s+/', '_', $docFolder2['name']).'/';
+									$fileName = 	$docType[0]['kode'].$docFolder1['kode'].$docFolder2['kode'];
+							  }
+
+
+								$pathFolderTemp = "assets/upload/files/".$nip.'_'.$userLoggedin->first_name;;
+
+								log_message('debug','Pathnya : '.$pathFolder);
 								if (!is_dir($pathFolder)) {
-										mkdir($pathFolder , 0777, TRUE);
+						    		mkdir($pathFolder , 0777, TRUE);
 										}
-								$realPathFolder = base_url()."assets/upload/files/".$nip."/".$docType[0]['alias'].'/';
-								rename($pathFolderTemp.'/'.$post_array['path'],$pathFolder.'/'.$post_array['name'].'.pdf');
+								//$realPathFolder = base_url()."assets/upload/files/".$nip."/".$docType[0]['alias'].'/';
+
+								rename($pathFolderTemp.'/'.$post_array['path'],$pathFolder.'/'.$fileName.'.pdf');
 
 
-								$post_array['path']=$realPathFolder.$post_array['name'].'.pdf';
+								$post_array['path']=$realPathFolder.$fileName.'.pdf';
+
 								return $post_array;
-
 
 							});
 		$crud->callback_before_insert(function($post_array)
@@ -3227,28 +3290,66 @@ $this->data['menu']=$this->Menu_model->menuMaster($gid);
 			$this->db = $this->load->database('default',true);
 			$userLoggedin = $this->ion_auth->user()->row();
 			$nip = $userLoggedin->nip;
+			$nama =trim($userLoggedin->first_name);
 
 
 
 			$docType = $this->Simpeg_model->getDocumentTypeById($post_array['documentType']);
-			$pathFolderTemp = "assets/upload/files/".$nip;
-			$pathFolder="assets/upload/files/".$nip."/".$docType[0]['alias'];
+			$docFolder1 = $this->Simpeg_model->getDocumentFolderById($post_array['document_folder_1_id'],1);
+
+			if (!array_key_exists("document_folder_2_id",$post_array))
+		  {
+
+					$pathFolder="assets/upload/files/".$nip.'_'.$nama."/".$docType[0]['alias'].'/'.$docFolder1['alias'].'/';
+					$realPathFolder = $docType[0]['alias'].'/'.$docFolder1['alias'].'/';
+					$fileName = 	$docType[0]['kode'].$docFolder1['kode'];
+					log_message('debug','Sub Folder Exist ');
+			}
+		else
+		  {
+				log_message('debug','Sub Folder Not Exist ');
+				$docFolder2 = $this->Simpeg_model->getDocumentFolderById($post_array['document_folder_2_id'],2);
+				$pathFolder="assets/upload/files/".$nip.'_'.$nama."/".$docType[0]['alias'].'/'.$docFolder1['alias'].'/'.'{'.$docFolder2['kode'].'}'.preg_replace('/\s+/', '_', $docFolder2['name']);
+				$realPathFolder = $docType[0]['alias'].'/'.$docFolder1['alias'].'/'.'{'.$docFolder2['kode'].'}'.preg_replace('/\s+/', '_', $docFolder2['name']).'/';
+				$fileName = 	$docType[0]['kode'].$docFolder1['kode'].$docFolder2['kode'];
+		  }
+
+
+			$pathFolderTemp = "assets/upload/files/".$nip.'_'.$userLoggedin->first_name;;
+
+			log_message('debug','Pathnya : '.$pathFolder);
 			if (!is_dir($pathFolder)) {
 	    		mkdir($pathFolder , 0777, TRUE);
 					}
 			//$realPathFolder = base_url()."assets/upload/files/".$nip."/".$docType[0]['alias'].'/';
-			$realPathFolder = $docType[0]['alias'].'/';
-			rename($pathFolderTemp.'/'.$post_array['path'],$pathFolder.'/'.$post_array['name'].'.pdf');
+
+			rename($pathFolderTemp.'/'.$post_array['path'],$pathFolder.'/'.$fileName.'.pdf');
 
 
-			$post_array['path']=$realPathFolder.$post_array['name'].'.pdf';
+			$post_array['path']=$realPathFolder.$fileName.'.pdf';
 
 			return $post_array;
 
 
 		});
 
+		$config = array(
+		'main_table' => 'archive_pns',
+		'main_table_primary' => 'id',
+		"url" => site_url() . '/dashboard/arsipDokumenPegawai/',
+		'ajax_loader' => base_url() . 'assets/ajax-loader.gif'
+		);
+		$categories = new gc_dependent_select($crud, $fields, $config);
+
+		// first method:
+		//$output = $categories->render();
+
+		// the second method:
+		$js = $categories->get_js();
 		$output = $crud->render();
+		$output->output.= $js;
+
+
 
 		$this->load->view('dashboard/grid',$output);
 	}
