@@ -327,11 +327,10 @@ WHERE NIP = '$nip'";
 
 		public function getRiwayatJabatan2($nip)
 		{
-
 				$querySQL = "SELECT rj.nip, rj.nunkerUnitOrganisasi, rjn.namaJenisJabatan, re.nama, rj.njab, SUBSTRING(rj.kwil, 1,2) as 'kode_propinsi', SUBSTRING(rj.kwil, 3,2) as 'kode_kabupaten', rj.tmtJabatan, rj.nomorSk, rj.tanggalSk
 FROM jabatan rj
-INNER JOIN jnsjabatan rjn on rjn.JNSJAB = rj.jnsjab
-INNER JOIN eselon re on rj.KESELON = re.ideselon
+LEFT JOIN jnsjabatan rjn on rjn.JNSJAB = rj.jnsjab
+LEFT JOIN eselon re on rj.KESELON = re.ideselon
 WHERE rj.nip = '$nip'
 										ORDER BY rj.tmtJabatan asc ";
 
