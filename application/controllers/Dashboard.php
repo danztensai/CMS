@@ -832,7 +832,7 @@ foreach($this->data['user_group'] as $ug){
 		$column0Searchable = $this->input->get('columns[0][searchable]');
 		$searchColumn = $this->input->get('search[value]');
 		$searchQueryColumn=null;
-		$orderByColumn = $this->input->get('order[0][column]');
+		$orderByColumn = $this->input->get('order[0][columninc]');
 		$orderByDir = $this->input->get('order[0][dir]');
 		$limit=null;
 
@@ -3591,9 +3591,9 @@ return $tagImg;
 			$this->data['user_group']= $this->ion_auth->get_users_groups($userId)->result();
 			log_message('debug','User Group : '.print_r($this->data['user_group'],TRUE));
 			$gid =array();
-foreach($this->data['user_group'] as $ug){
-  $gid[]=$ug->id;
-}
+			foreach($this->data['user_group'] as $ug){
+			  $gid[]=$ug->id;
+			}
 			$gid =array();
 			foreach($this->data['user_group'] as $ug){
 				$gid[]=$ug->id;
@@ -3778,383 +3778,47 @@ $this->data['menu']=$this->Menu_model->menuMaster($gid);
 			$this->render('dashboard/group_view');
 		}
 
-		public function keyword($partner)
+		public function persentaseGenderPNS()
 		{
-			$partner = strtolower($partner);
-			$userId = $this->ion_auth->get_user_id();
-			$this->data['user']=$this->ion_auth->user()->row();
-			$this->data['partner']=$partner;
-			$this->data['users_partner']=$this->Users_model->getUsersPartner($userId );
-
-			log_message('INFO','User Id : '.$userId);
-
-			$this->db = $this->load->database($partner,true);
-			$crud = new grocery_CRUD();
-			$crud->set_theme('bootstrap-v4');
-			$crud->set_table('keywords');
-			$crud->set_subject('Keyword');
-			$crud->add_fields('group_id','keywords','type_keyword','status','shortcode','set_push_freetalk_sts','set_push_freetalk_sid');
-			$crud->required_fields('group_id','keywords','type_keyword','status','shortcode','set_push_freetalk_sts');
-			$crud->edit_fields('group_id','status','type_keyword','shortcode');
-			$crud->columns('keyword_id','group_id','type_keyword','shortcode','status','updatetime');
-			$crud->change_field_type('updateTime','invisible');
-			$crud->change_field_type('liferayid','invisible');
-			$crud->display_as('keywords','Keyword')->display_as('type_keyword','Keyword Type')->display_as('set_push_freetalk_sts','Freetalk Status')->display_as('group_id','Group Name');
-			$crud->change_field_type('status', 'true_false');
-			$crud->change_field_type('set_push_freetalk_sts', 'true_false');
-			$crud->set_relation('group_id','groups','group_name');
-
-			$crud->callback_after_update(function ($post_array,$primary_key) {
-				$updateTimeGroup = array("updatetime" => date('Y-m-d H:i:s'));
-
-				$this->db->update('keywords',$updateTimeGroup,array('keyword_id' => $primary_key));
-				return true;
-			});
-			$crud->callback_after_insert(function ($post_array,$primary_key) {
-
-				$updateLiferayId = array("liferayid" =>$this->userId );
-				$this->db->update('keywords',$updateLiferayId,array('keyword_id' => $primary_key));
-				return true;
-			});
-
-			$crud->field_type('type_keyword','dropdown',array('reg_msg' => 'Reg Message', 'reg_story' => 'Reg Message Story'));
-
-
-			$output = $crud->render();
-			$this->data['output']=$output;
-			$this->render('dashboard/keyword_view');
-
-		}
-
-		public function keyword2($partner)
-		{
-			$partner = strtolower($partner);
-			$userId = $this->ion_auth->get_user_id();
-			$this->data['user']=$this->ion_auth->user()->row();
-			$this->data['partner']=$partner;
-			$this->data['users_partner']=$this->Users_model->getUsersPartner($userId );
-
-			log_message('INFO','User Id : '.$userId);
-
-			$this->db = $this->load->database($partner,true);
-			$crud = new grocery_CRUD();
-			$crud->set_theme('bootstrap-v4');
-			$crud->set_table('key2');
-			$crud->set_subject('Keyword 2');
-			$crud->add_fields('group_id','key_nm','status','updatetime','liferayid');
-			$crud->required_fields('group_id','key_nm','status');
-			$crud->edit_fields('group_id','key_nm','status');
-			$crud->columns('group_id','key_nm','status');
-			$crud->change_field_type('updatetime','invisible');
-			$crud->change_field_type('liferayid','invisible');
-			$crud->display_as('key_nm','Keyword 2 Name')->display_as('status','Status')->display_as('group_id','Group Name');
-			$crud->change_field_type('status', 'true_false');
-			$crud->set_relation('group_id','groups','group_name');
-
-			$crud->callback_after_update(function ($post_array,$primary_key) {
-				$updateTimeGroup = array("updatetime" => date('Y-m-d H:i:s'));
-
-				$this->db->update('key2',$updateTimeGroup,array('order_id' => $primary_key));
-				return true;
-			});
-			$crud->callback_after_insert(function ($post_array,$primary_key) {
-
-				$updateLiferayId = array("liferayId" =>$this->userId );
-				$this->db->update('key2',$updateLiferayId,array('order_id' => $primary_key));
-				return true;
-			});
-
-
-			$output = $crud->render();
-			$this->data['output']=$output;
-			$this->render('dashboard/keyword_2_view');
-
-		}
-
-
-		public function message_register($partner)
-		{
-			$partner = strtolower($partner);
-			$userId = $this->ion_auth->get_user_id();
-			$this->data['user']=$this->ion_auth->user()->row();
-			$this->data['partner']=$partner;
-			$this->data['users_partner']=$this->Users_model->getUsersPartner($userId );
-
-			log_message('INFO','User Id : '.$userId);
-
-			$this->db = $this->load->database($partner,true);
-			$crud = new grocery_CRUD();
-			$crud->set_theme('bootstrap-v4');
-			$crud->set_table('msg_reg');
-			$crud->set_subject('Message Register');
-			$crud->add_fields('msg_reg','group_id','sid','url','objectid','order_id','msgtype','msgkind','waptype','updatetime','liferayid','msgstatus');
-			$crud->required_fields('group_id','msg_reg','sid','msgtype','msgkind','waptype');
-			$crud->edit_fields('group_id','msg_reg','sid','msgtype','msgkind','waptype','msgstatus');
-			$crud->columns('group_id','msg_reg','sid','msgtype','msgkind','waptype','msgstatus','updatetime');
-			$crud->change_field_type('updatetime','invisible');
-			$crud->change_field_type('liferayid','invisible');
-			$crud->display_as('msg_reg','SMS')->display_as('objectid','Object Id')->display_as('group_id','Group Name')->display_as('msgtype','Message Type')->display_as('msgkind','Message Kind')->display_as('waptype','SMS Type')->display_as('msgstatus','Status');
-
-			$crud->set_relation('group_id','groups','group_name');
-			$crud->set_relation('order_id','key2','key_nm');
-			$crud->change_field_type('msgstatus', 'true_false');
-			$crud->field_type('msgtype','dropdown',array('11' => 'Freetalk', '20' => 'No Freetalk'));
-			$crud->field_type('msgkind','dropdown',array('1' => 'Message Reg', '2' => 'Message URL + MSISDN','3'=>'Message Generate Code','4'=>'Message URL','5'=>'Message URL (Auto)','6'=>'Message URL M1M'));
-			$crud->field_type('waptype','dropdown',array('0' => 'SMS Biasa < 160 Karakter', '1' => 'SMS Binary','2'=>'SMS Message Binary'));
-
-			$crud->callback_after_update(function ($post_array,$primary_key) {
-				$updateTimeGroup = array("updatetime" => date('Y-m-d H:i:s'));
-
-				$this->db->update('msg_reg',$updateTimeGroup,array('msg_reg_id 	' => $primary_key));
-				return true;
-			});
-			$crud->callback_after_insert(function ($post_array,$primary_key) {
-
-				$updateLiferayId = array("liferayId" =>$this->userId,"updatetime" => date('Y-m-d H:i:s') );
-				$this->db->update('msg_reg',$updateLiferayId,array('msg_reg_id' => $primary_key));
-				return true;
-			});
-
-
-			$output = $crud->render();
-			$this->data['output']=$output;
-			$this->render('dashboard/msg_reg_view');
-
-		}
-
-		public function message_schedule($partner)
-		{
-			$partner = strtolower($partner);
-			$userId = $this->ion_auth->get_user_id();
-			$this->data['user']=$this->ion_auth->user()->row();
-			$this->data['partner']=$partner;
-			$this->data['users_partner']=$this->Users_model->getUsersPartner($userId );
-
-			log_message('INFO','User Id : '.$userId);
-
-			$this->db = $this->load->database($partner,true);
-			$crud = new grocery_CRUD();
-			$crud->set_theme('bootstrap-v4');
-			$crud->set_table('msg_schedule');
-			$crud->set_subject('Message Schedule');
-			$crud->add_fields('msg_schedule','group_id','sid','url','objectid','schedule_msg','liferayid','order_id','msgtype','msgkind','updatetime','liferayid');
-			$crud->required_fields('group_id','msg_schedule','sid','msgtype','msgkind','schedule_msg');
-			$crud->edit_fields('group_id','msg_reg','sid','msgtype','msgkind','schedule_msg');
-			$crud->columns('group_id','msg_schedule','sid','msgtype','msgkind','schedule_msg','msgstatus','updatetime');
-			$crud->change_field_type('updatetime','invisible');
-			$crud->change_field_type('liferayid','invisible');
-			$crud->display_as('msg_schedule','SMS')->display_as('objectid','Object Id')->display_as('group_id','Group Name')->display_as('msgtype','Message Type')->display_as('msgkind','Message Kind')->display_as('schedule_msg','Running Time')->display_as('msgstatus','Status');
-
-			$crud->set_relation('group_id','groups','group_name');
-
-			$crud->change_field_type('msgstatus', 'true_false');
-			$crud->field_type('msgtype','dropdown',array('11' => 'Freetalk', '20' => 'No Freetalk'));
-			$crud->field_type('msgkind','dropdown',array('1' => 'Message Reg', '2' => 'Message URL + MSISDN','3'=>'Message Generate Code','4'=>'Message URL','5'=>'Message URL (Auto)','6'=>'Message URL M1M'));
-			$crud->field_type('waptype','dropdown',array('0' => 'SMS Biasa < 160 Karakter', '1' => 'SMS Binary','2'=>'SMS Message Binary'));
-
-			$crud->callback_after_update(function ($post_array,$primary_key) {
-				$updateTimeGroup = array("updatetime" => date('Y-m-d H:i:s'));
-
-				$this->db->update('msg_schedule',$updateTimeGroup,array('msg_schedule_id' => $primary_key));
-				return true;
-			});
-			$crud->callback_after_insert(function ($post_array,$primary_key) {
-
-				$updateLiferayId = array("liferayId" =>$this->userId,"updatetime" => date('Y-m-d H:i:s') ,'msgstatus'=>0);
-				$this->db->update('msg_schedule',$updateLiferayId,array('msg_schedule_id' => $primary_key));
-				return true;
-			});
-
-
-			$output = $crud->render();
-			$this->data['output']=$output;
-			$this->render('dashboard/msg_schedule_view');
-
-		}
-
-		public function taskScheduleMsgStory($partner)
-		{
-			$partner = strtolower($partner);
-			$userId = $this->ion_auth->get_user_id();
-			$this->data['user']=$this->ion_auth->user()->row();
-			$this->data['partner']=$partner;
-			$this->data['users_partner']=$this->Users_model->getUsersPartner($userId );
-
-			log_message('INFO','User Id : '.$userId);
-
-			$this->db = $this->load->database($partner,true);
-			$crud = new grocery_CRUD();
-			$crud->set_theme('bootstrap-v4');
-			$crud->set_table('msg_story_task');
-			$crud->set_subject('Schedule Message Story');
-			$crud->add_fields('group_id','daysPush','timePush','task_msg_story','status','wapPush','liferayId');
-
-			$crud->edit_fields('group_id','task_msg_story','status','wapPush','updatetime');
-			$crud->columns('group_id','daysPush','task_msg_story','status','wapPush');
-			$crud->display_as('daysPush','Days To Push')->display_as('group_id','Group Name')->display_as('task_msg_story','Cron Schedule');
-			$crud->change_field_type('updatetime','invisible');
-			$crud->change_field_type('liferayId','invisible');
-			$crud->change_field_type('task_msg_story','invisible');
-			$crud->set_relation('group_id','groups','group_name');
-			$crud->change_field_type('status', 'true_false');
-			$crud->change_field_type('wapPush', 'true_false');
-
-			$crud->field_type('daysPush','multiselect',array( "MON"  => "Monday", "TUE" => "Tuesday", "WED" => "Wednesday","THU"=>"Thursday","FRI"=>"Friday","SAT"=>"Saturday","SUN"=>"Sunday"));
-			$crud->field_type('timePush','datetime');
-
-
-			$crud->callback_before_insert(function($post_array)
+			$kunker=$this->input->get('kunker');
+			if($kunker!='All')
 			{
-				$daysPush=$post_array['daysPush'];
-				$timePush=$post_array['timePush'];
-				$day=implode(",",$daysPush);
+				$result = $this->Simpeg_model->getPersentaseGenderPNS($kunker);
+			}else{
+				$result = $this->Simpeg_model->getPersentaseGenderPNS();
+			}
 
 
-				log_message('info',$timePush);
-				$timePush = str_replace('/','-', $timePush);
-				log_message('info',$timePush);
-
-				$date = strtotime($timePush);
-				log_message('debug',date('H', $date));
-				log_message('debug',date('i', $date));
-				log_message('debug',date('s', $date));
-
-				$time =date('H', $date).':'.date('i', $date);
-				log_message('debug','Push Time : '.$time);
-
-				$taskCron = date('s',$date).' '.date('i', $date).' '.date('H', $date).' '.'?'.' '.'*'.' '.$day;
-
-				$post_array['task_msg_story']=$taskCron;
 
 
-				log_message('info',$taskCron);
-				log_message('debug',print_r($post_array,TRUE));
-				return $post_array;
-
-
-			});
-
-
-			$crud->callback_after_update(function ($post_array,$primary_key) {
-				$updateTimeGroup = array("updatetime" => date('Y-m-d H:i:s'));
-
-				$this->db->update('msg_story_task',$updateTimeGroup,array('msg_story_task_id' => $primary_key));
-				return true;
-			});
-			$crud->callback_after_insert(function ($post_array,$primary_key) {
-
-				$updateLiferayId = array("liferayId" =>$this->userId,"updatetime" => date('Y-m-d H:i:s') );
-				$this->db->update('msg_story_task',$updateLiferayId,array('msg_story_task_id' => $primary_key));
-				return true;
-			});
-
-
-			$output = $crud->render();
-			$this->data['output']=$output;
-			$this->render('dashboard/story_task_schedule_view');
-
+			echo json_encode($result);
 		}
 
-		public function message_welcome($partner)
+		public function EISMainPage()
 		{
-			$partner = strtolower($partner);
+
 			$userId = $this->ion_auth->get_user_id();
 			$this->data['user']=$this->ion_auth->user()->row();
-			$this->data['partner']=$partner;
-			$this->data['users_partner']=$this->Users_model->getUsersPartner($userId );
+			log_message('INFO','is admin? :'.$this->ion_auth->is_admin());
+			$this->data['user_group']= $this->ion_auth->get_users_groups($userId)->result();
+			log_message('debug','User Group : '.print_r($this->data['user_group'],TRUE));
+			$gid =array();
+			foreach($this->data['user_group'] as $ug){
+				$gid[]=$ug->id;
+			}
+			$gid =array();
+			foreach($this->data['user_group'] as $ug){
+				$gid[]=$ug->id;
+			}
+			log_message('debug','User Group Array : '.print_r($gid,TRUE));
+			$this->data['menu']=$this->Menu_model->menuMaster($gid);
+			$this->data['users_instansi']=$this->Users_model->getUsersinstansi($userId );
+
+			$this->data['instansiUnkerja']=$this->Simpeg_model->getInstansi();
 
 			log_message('INFO','User Id : '.$userId);
 
-			$this->db = $this->load->database($partner,true);
-			$crud = new grocery_CRUD();
-			$crud->set_theme('bootstrap-v4');
-			$crud->set_table('msg_wellcome');
-			$crud->set_subject('Message Welcome');
-			$crud->add_fields('msg_reg','group_id','method','sid','url','objectid','msgtype','msgkind','updatetime','liferayId','msgstatus');
-			$crud->required_fields('group_id','method','msg_reg','sid','msgtype','msgkind','msgstatus');
-			$crud->edit_fields('group_id','msg_reg','sid','msgtype','msgkind','waptype','msgstatus');
-			$crud->columns('group_id','msg_reg','sid','msgtype','msgkind','method','msgstatus','updatetime');
-			$crud->change_field_type('updatetime','invisible');
-			$crud->change_field_type('liferayId','invisible');
-			$crud->display_as('msg_reg','SMS')->display_as('objectid','Object Id')->display_as('group_id','Group Name')->display_as('msgtype','Message Type')->display_as('msgkind','Message Kind')->display_as('waptype','SMS Type')->display_as('msgstatus','Status');
-
-			$crud->set_relation('group_id','groups','group_name');
-
-			$crud->field_type('msgstatus','dropdown',array('register' => 'Register', 'unregister' => 'UnReg','already_member'=>'Already Member','not_member'=>'Not Member'));
-			$crud->field_type('method','dropdown',array('pull' => 'Pull', 'push' => 'Push'));
-			$crud->field_type('msgtype','dropdown',array('11' => 'Freetalk', '20' => 'No Freetalk'));
-			$crud->field_type('msgkind','dropdown',array('1' => 'Message Reg', '2' => 'Message URL + MSISDN','3'=>'Message Generate Code','4'=>'Message URL','5'=>'Message URL (Auto)','6'=>'Message URL M1M'));
-
-
-			$crud->callback_after_update(function ($post_array,$primary_key) {
-				$updateTimeGroup = array("updatetime" => date('Y-m-d H:i:s'));
-
-				$this->db->update('msg_wellcome',$updateTimeGroup,array('msg_reg_id 	' => $primary_key));
-				return true;
-			});
-			$crud->callback_after_insert(function ($post_array,$primary_key) {
-
-				$updateLiferayId = array("liferayId" =>$this->userId,"updatetime" => date('Y-m-d H:i:s') );
-				$this->db->update('msg_wellcome',$updateLiferayId,array('msg_reg_id' => $primary_key));
-				return true;
-			});
-
-
-			$output = $crud->render();
-			$this->data['output']=$output;
-			$this->render('dashboard/msg_welcome_view');
-
-		}
-
-		public function message_story($partner)
-		{
-			$partner = strtolower($partner);
-			$userId = $this->ion_auth->get_user_id();
-			$this->data['user']=$this->ion_auth->user()->row();
-			$this->data['partner']=$partner;
-			$this->data['users_partner']=$this->Users_model->getUsersPartner($userId );
-
-			log_message('INFO','User Id : '.$userId);
-
-			$this->db = $this->load->database($partner,true);
-			$crud = new grocery_CRUD();
-			$crud->set_theme('bootstrap-v4');
-			$crud->set_table('msg_story');
-			$crud->set_subject('Message Story');
-			$crud->add_fields('msg_story','group_id','sequence_story','sid','url','objectid','msgtype','msgkind','updatetime','liferayId');
-			$crud->required_fields('group_id','method','msg_reg','sid','msgtype','msgkind','sequence_story');
-			$crud->edit_fields('group_id','msg_reg','sid','msgtype','msgkind','sequence_story');
-			$crud->columns('group_id','msg_reg','sid','msgtype','msgkind','sequence_story','updatetime');
-			$crud->change_field_type('updatetime','invisible');
-			$crud->change_field_type('liferayId','invisible');
-			$crud->display_as('msg_story','SMS')->display_as('objectid','Object Id')->display_as('group_id','Group Name')->display_as('msgtype','Message Type')->display_as('msgkind','Message Kind')->display_as('sequence_story','Story Sequence');
-
-			$crud->set_relation('group_id','groups','group_name');
-
-
-
-			$crud->field_type('msgtype','dropdown',array('11' => 'Freetalk', '20' => 'No Freetalk'));
-			$crud->field_type('msgkind','dropdown',array('1' => 'Message Reg', '2' => 'Message URL + MSISDN','3'=>'Message Generate Code','4'=>'Message URL','5'=>'Message URL (Auto)','6'=>'Message URL M1M'));
-
-
-			$crud->callback_after_update(function ($post_array,$primary_key) {
-				$updateTimeGroup = array("updatetime" => date('Y-m-d H:i:s'));
-
-				$this->db->update('msg_story',$updateTimeGroup,array('msg_story_id 	' => $primary_key));
-				return true;
-			});
-			$crud->callback_after_insert(function ($post_array,$primary_key) {
-
-				$updateLiferayId = array("liferayId" =>$this->userId,"updatetime" => date('Y-m-d H:i:s') );
-				$this->db->update('msg_story',$updateLiferayId,array('msg_story_id' => $primary_key));
-				return true;
-			});
-
-
-			$output = $crud->render();
-			$this->data['output']=$output;
-			$this->render('dashboard/msg_story_view');
-
+				$this->render('dashboard/eis_main_view');
 		}
 
 	}

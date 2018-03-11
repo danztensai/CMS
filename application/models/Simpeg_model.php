@@ -6,6 +6,76 @@
 
 		}
 
+
+
+		public function getPersentaseGenderPNS($instansi = null)
+		{
+			$querySQL = "select
+  concat(10*floor(age/10), '-', 10*floor(age/10) + 10) as `range`,
+  gender,
+  count(*) as count
+from (
+  select
+    TIMESTAMPDIFF(YEAR,TLAHIR,CURDATE()) AS age,jeniskelamin.NKELAMIN as gender
+  from
+    datautama left join jeniskelamin  on datautama.KJKEL = jeniskelamin.KJKEL where datautama.statusHidupPensiunPindah = 1
+) as t  group by `range`, gender";
+
+			if ($instansi !=null)
+			{
+				$querySQL = "select
+  concat(10*floor(age/10), '-', 10*floor(age/10) + 10) as `range`,
+  gender,
+  count(*) as count
+from (
+  select
+    TIMESTAMPDIFF(YEAR,TLAHIR,CURDATE()) AS age,jeniskelamin.NKELAMIN as gender
+  from
+    datautama left join jeniskelamin  on datautama.KJKEL = jeniskelamin.KJKEL left join jakhir6 ja on datautama.nipBaru = ja.NIP where datautama.statusHidupPensiunPindah = 1 and ja.kunkersInduk = '$instansi'
+) as t  group by `range`, gender;";
+			}
+			$data = array();
+			$stackData = array();
+
+			log_message('debug','getPersentaseGenderPNS: '.$querySQL);
+			$query = $this->db->query($querySQL);
+
+			if($query->num_rows()>0)
+				{ $count = 1;
+					foreach($query->result() as $row)
+					{
+						$data['range']=$row->range;
+						if($row->range==null)
+						{
+							if($row->gender=='LAKI-LAKI')
+							{
+								$data['range']=null;
+								$data['gender']='PEREMPUAN';
+								$data['count']=0;
+								array_push($stackData,$data);
+							}else {
+								$data['range']=null;
+								$data['gender']='LAKI-LAKI';
+								$data['count']=0;
+								array_push($stackData,$data);
+							}
+						}
+						$data['gender']=$row->gender;
+						$data['count']=$row->count;
+						array_push($stackData,$data);
+					}
+					$query->free_result();
+					return $stackData;
+				}else
+				{
+
+					$query->free_result();
+					return $data;
+				}
+
+
+		}
+
 		public function getRiwayatPangkat($nip)
 		{
 
@@ -37,6 +107,37 @@
 							$data['tanggalSk']=$row->tanggalSk;
 							$data['kpej']=$row->kpej;
 							$data['npej']=$row->npej;
+
+
+						 array_push($stackData,$data);
+						}
+						$query->free_result();
+						return $stackData;
+					}else
+					{
+
+						$query->free_result();
+						return $data;
+					}
+		}
+
+		public function getInstansi()
+		{
+
+				$querySQL = "select * from unkerja where kunker like '10%__00000000';";
+
+				$data = array();
+				$stackData = array();
+
+				log_message('debug','getInstansiUnkerja: '.$querySQL);
+				$query = $this->db->query($querySQL);
+
+				if($query->num_rows()>0)
+					{ $count = 1;
+						foreach($query->result() as $row)
+						{
+							$data['kunker']=$row->kunker;
+							$data['nunker']=$row->nunker;
 
 
 						 array_push($stackData,$data);
