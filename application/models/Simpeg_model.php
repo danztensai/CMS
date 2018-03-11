@@ -121,6 +121,95 @@ from (
 					}
 		}
 
+		public function getDaftarUrutKepangkatanByInstansi($instansi='1003')
+		{
+
+				$querySQL = "SELECT rg.NIP, rd.nama, jg.golNama, rg.TMTPANG, rj.NJAB, rj.TMTJAB ,rj.NJAB, YEAR(CURDATE()) - YEAR(rd.TLAHIR) as usia
+										FROM jakhir6 rj
+										LEFT JOIN golonganakhir2 rg on rg.nip = rj.NIP
+										LEFT JOIN datautama5 rd on rd.nipBaru = rj.NIP
+										left join jenisgolongan jg on jg.Golongan_id = rg.KGOLRU
+										WHERE rj.kunkers like '$instansi%' AND rg.statusHidupPensiunPindah = 1
+										ORDER BY rg.KGOLRU desc, rd.TLAHIR";
+
+				$data = array();
+				$stackData = array();
+
+				log_message('debug','getRiwayatPangkat: '.$querySQL);
+				$query = $this->db->query($querySQL);
+
+				if($query->num_rows()>0)
+					{ $count = 1;
+						foreach($query->result() as $row)
+						{
+							$data['NIP']=$row->NIP;
+							$data['nama']=$row->nama;
+							$data['golNama']=$row->golNama;
+							$data['TMTPANG']=$row->TMTPANG;
+							$data['NJAB']=$row->NJAB;
+							$data['TMTJAB']=$row->TMTJAB;
+							$data['NJAB']=$row->NJAB;
+							$data['usia']=$row->usia;
+							$data['masa_kerja']=$this->getMasaKerjaByNip($row->NIP);
+							$data['data_pendidikan_diklat']=$this->getRiwayatDiklatByNip($row->NIP);
+							$data['data_pendidikan_umum']=$this->getRiwayatPendidikanUmumByNip($row->NIP);
+						 array_push($stackData,$data);
+						}
+						$query->free_result();
+						return $stackData;
+					}else
+					{
+
+						$query->free_result();
+						return $data;
+					}
+		}
+		public function getDaftarUrutKepangkatanByInstansiJoinQuery($instansi='1030')
+		{
+
+				$querySQL = "select * from rekap_pns where kunkers like '$instansi%'";
+
+				$data = array();
+				$stackData = array();
+
+				log_message('debug','getDaftarUrutKepangkatanByInstansiJoinQuery: '.$querySQL);
+				$query = $this->db->query($querySQL);
+
+				if($query->num_rows()>0)
+					{ $count = 1;
+						foreach($query->result() as $row)
+						{
+							$data['NIP']=$row->NIP;
+							$data['nama']=$row->nama;
+							$data['golNama']=$row->golNama;
+							$data['TMTPANG']=$row->TMTPANG;
+							$data['NJAB']=$row->NJAB;
+							$data['TMTJAB']=$row->TMTJAB;
+							$data['masa_kerja']=$row->masakerja;
+							$data['namaDiklat']=$row->namaDiklat;
+							$data['bulan']=$row->bulan;
+							$data['tahun']=$row->tahun;
+							$data['JAM']=$row->JAM;
+							$data['npdum']=$row->npdum;
+							$data['NJUR']=$row->NJUR;
+							$data['namaSekolah']=$row->namaSekolah;
+							$data['tahunLulus']=$row->ntp;
+							$data['usia']=$row->usia;
+							$data['NTP']=$row->ntp;
+
+
+						 array_push($stackData,$data);
+						}
+						$query->free_result();
+						return $stackData;
+					}else
+					{
+
+						$query->free_result();
+						return $data;
+					}
+		}
+
 		public function getInstansi()
 		{
 
@@ -151,6 +240,105 @@ from (
 						return $data;
 					}
 		}
+		public function getMasaKerjaByNip($nip)
+		{
+
+				$querySQL = "select concat(FLOOR(( DATE_FORMAT(NOW(),'%Y%m%d') - DATE_FORMAT(tmtCpns,'%Y%m%d'))/10000)) AS years,
+       					FLOOR((1200 + DATE_FORMAT(NOW(),'%m%d') - DATE_FORMAT(tmtCpns,'%m%d'))/100) %12 AS months
+			 			from cpnspns where nipbaru=$nip";
+
+				$data = array();
+				$stackData = array();
+
+				log_message('debug','getMasaKerjaByNip: '.$querySQL);
+				$query = $this->db->query($querySQL);
+
+				if($query->num_rows()>0)
+					{ $count = 1;
+						foreach($query->result() as $row)
+						{
+							$data['masa_kerja']=$row->years.' Tahun '.$row->months.' Bulan';
+						 //	array_push($stackData,$data);
+						}
+						$query->free_result();
+						return $data;
+					}else
+					{
+
+						$query->free_result();
+						return $data;
+					}
+		}
+
+		public function getRiwayatDiklatByNip($nip)
+		{
+
+				$querySQL = "select namaDiklat, month(TAKHIR) as bulan, year(TAKHIR) as tahun, JAM	from riwayatdiklat where nip=$nip and ISAKHIR = 1";
+
+				$data = array();
+				$stackData = array();
+
+				log_message('debug','getRiwayatDiklatByNip: '.$querySQL);
+				$query = $this->db->query($querySQL);
+
+				if($query->num_rows()>0)
+					{ $count = 1;
+						foreach($query->result() as $row)
+						{
+							$data['nama_diklat']=$row->namaDiklat;
+							$data['bulan']=$row->bulan;
+							$data['tahun']=$row->tahun;
+							$data['jam']=$row->JAM;
+						 	array_push($stackData,$data);
+						}
+						$query->free_result();
+						return $stackData;
+					}else
+					{
+
+						$query->free_result();
+						return $data;
+					}
+		}
+
+		public function getRiwayatPendidikanUmumByNip($nip)
+		{
+
+				$querySQL = "SELECT  rp.npdum, rj.NJUR, rp.namaSekolah, rp.tahunLulus, rt.ntp,  rp.tempat, rp.tglTahunLulus FROM pendidikan rp
+											LEFT JOIN jurpendidikan rj on rj.KJUR = rp.ktpukjur
+											LEFT JOIN tingpend rt on rt.ktp = rj.tp
+											WHERE rp.NIP=$nip and isPendidikanTerakhir = 1
+											ORDER BY rp.tglTahunLulus DESC";
+
+				$data = array();
+				$stackData = array();
+
+				log_message('debug','getRiwayatPendidikanUmumByNip: '.$querySQL);
+				$query = $this->db->query($querySQL);
+
+				if($query->num_rows()>0)
+					{ $count = 1;
+						foreach($query->result() as $row)
+						{
+							$data['nama_pendidikan']=$row->npdum;
+							$data['nama_jurusan']=$row->NJUR;
+							$data['nama_sekolah']=$row->namaSekolah;
+							$data['tahun_lulus']=$row->tahunLulus;
+							$data['nama_tingkat_pendidikan']=$row->ntp;
+							$data['tempat']=$row->tempat;
+							$data['tahun_lulus']=$row->tglTahunLulus;
+						 //	array_push($stackData,$data);
+						}
+						$query->free_result();
+						return $data;
+					}else
+					{
+
+						$query->free_result();
+						return $data;
+					}
+		}
+
 
 		public function getRiwayatJasa($nip)
 		{

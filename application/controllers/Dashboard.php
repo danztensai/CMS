@@ -1,6 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-
+// ini_set('max_execution_time', 0);
+// ini_set('memory_limit','2048M');
 class Dashboard extends Auth_Controller
 {
 
@@ -3815,10 +3816,24 @@ $this->data['menu']=$this->Menu_model->menuMaster($gid);
 			$this->data['users_instansi']=$this->Users_model->getUsersinstansi($userId );
 
 			$this->data['instansiUnkerja']=$this->Simpeg_model->getInstansi();
-
+			$this->data['rekapPNSBKD']=$this->Simpeg_model->getDaftarUrutKepangkatanByInstansiJoinQuery();
 			log_message('INFO','User Id : '.$userId);
 
 				$this->render('dashboard/eis_main_view');
+		}
+		public function checkRekap()
+		{
+			$rekap =$this->Simpeg_model->getDaftarUrutKepangkatanByInstansiJoinQuery() ;
+			log_message('debug',print_r($rekap,TRUE));
+			$data_rekap_bkd =array('rekap'=>$rekap);
+			//print_r($data_rekap_bkd);
+			$this->load->view('eis_duk_bkd_pdf', $data_rekap_bkd, false);
+		}
+
+
+		public function testEIS()
+		{
+			echo json_encode($this->Simpeg_model->getDaftarUrutKepangkatanByInstansiJoinQuery());
 		}
 
 	}

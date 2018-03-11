@@ -1,6 +1,8 @@
 	<?php defined('BASEPATH') OR exit('No direct script access allowed');?>
-	<script src="<?php echo base_url()?>assets/chartjs/Chart.bundle.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js" type="text/javascript"></script>
 	<script src="<?php echo base_url()?>assets/chartjs/utils.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.2.61/jspdf.min.js" type="text/javascript"></script>
+	<script src="https://chartjs-plugin-datalabels.netlify.com/chartjs-plugin-datalabels.js"></script>
 	<script>
 	$( document ).ready(function() {
 
@@ -28,7 +30,35 @@
 									 title: {
 										 display: true,
 										 text: 'Persentase Jenis Kelamin PNS Di Jawa Barat'
+									 },
+									 plugins: {
+									 datalabels: {
+										 color: 'Black',
+										 display: function(context) {
+											 return context.dataset.data[context.dataIndex] > 15;
+										 },
+										 font: {
+											 weight: 'bold'
+										 },
+										 formatter: Math.round,
+										 align:'end'
 									 }
+								 },
+								 tooltips:{
+									callbacks:{
+												label: function(tooltipItem,data){
+													var allData = data.datasets[tooltipItem.datasetIndex].data;
+                    var tooltipLabel = data.labels[tooltipItem.index];
+                    var tooltipData = allData[tooltipItem.index];
+                    var total = 0;
+                    for (var i in allData) {
+                        total += allData[i];
+                    }
+                    var tooltipPercentage = Math.round((tooltipData / total) * 100);
+                    return tooltipLabel + ': ' + tooltipData + ' (' + tooltipPercentage + '%)';
+												}
+											}
+								 		}
 								 }
 							 });
 
@@ -52,12 +82,14 @@
 		  //use return_first variable here
 
 
-
+			var data1=0;
+			var data2=0;
 			for(var i =0;i<respJson.length;i++)
 			{
 				var result = respJson[i]
 				//console.log(result.count);
 				//label.push(result.range);
+
 				if(i==0)
 				{
 				barChartData.labels.push(result.range);
@@ -75,12 +107,28 @@
 				{
 					//data1.push(result.count);
 					barChartData.datasets[0].data.push(result.count);
+					data1 += parseInt(result.count);
 				}else if(result.gender=='PEREMPUAN') {
 
 						//data2.push(result.count);
 						barChartData.datasets[1].data.push(result.count);
-
+						data2 +=parseInt(result.count);
 				}
+				if(i==respJson.length-1)
+				{
+
+					console.log('Data Total 1:'+data1);
+					console.log('Data Total 2:'+data2);
+					var totalCount = data1+data2;
+					var percentage1 = Math.round((data1/totalCount)*100);
+					var percentage2 = Math.round((data2/totalCount)*100);
+					console.log("Persentase Pria "+percentage1);
+					console.log("Persentase Wanita "+percentage2);
+					barChartData.datasets[0].label='Pria ('+percentage1+' %) ';
+					barChartData.datasets[1].label='Wanita ('+percentage2+' %) ';
+				}
+
+
 				if(sts==0)
 				{
 					window.myBar.update();
@@ -88,13 +136,14 @@
 				}else {
 					myBar.update();
 				}
+
 			}
 
 		}
 
 		console.log("Ini :"+respJson);
 
-		var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
 	 var color = Chart.helpers.color;
 	 var barChartData = {
 		 labels: [],
@@ -127,14 +176,62 @@
 				 },
 				 title: {
 					 display: true,
-					 text: 'Persentase Jenis Kelamin PNS Di Jawa Barat'
-				 }
-			 }
+					 text: 'Analisa Persentase Jenis Kelamin PNS Di Jawa Barat'
+				 },
+				 plugins: {
+					datalabels: {
+						color: 'Black',
+						display: function(context) {
+							return context.dataset.data[context.dataIndex] > 15;
+						},
+						font: {
+							weight: 'bold'
+						},
+						formatter: Math.round,
+						align:'end'
+					}
+				},
+				// tooltips:{
+				//  callbacks:{
+				// 			 label: function(tooltipItem,data){
+				// 				 var allData = data.datasets[tooltipItem.datasetIndex].data;
+				// 	 var tooltipLabel = data.labels[tooltipItem.index];
+				// 	 var tooltipData = allData[tooltipItem.index];
+				// 	 var total = 0;
+				// 	 for (var i in allData) {
+				// 		 console.log(allData[i]);
+				// 			 total += parseInt(allData[i]);
+				// 	 }
+				// 	 console.log("Ini Totalnya : "+ total);
+				// 	 var tooltipPercentage = Math.round((tooltipData / total) * 100);
+				// 	 return tooltipLabel + ': ' + tooltipData + ' (' + tooltipPercentage + '%)';
+				// 			 }
+				// 		 }
+				// 	 }
+			 },
+
+
 		 });
+
+
 
 	 };
 
+	 document.getElementById('download-pdf').addEventListener("click", downloadPDF);
 
+	 //donwload pdf from original canvas
+	 function downloadPDF() {
+		 var canvas = document.querySelector('#canvas');
+		//creates image
+		var canvasImg = canvas.toDataURL("image/png", 1.0);
+		//console.log(canvasImg);
+		//creates PDF from img
+		var doc = new jsPDF('landscape');
+		doc.setFontSize(15);
+		//doc.text(15, 20, "Laporan Analisa Jenis Kelamin PNS");
+		doc.addImage(canvasImg, 'JPEG', 10, 10, 280, 150 );
+		doc.save('Laporan Analisa Jenis Kelamin PNS.pdf');
+	 }
 
 
 	});
@@ -172,7 +269,7 @@
           <!-- BAR CHART -->
           <div class="box box-success">
             <div class="box-header with-border">
-              <h3 class="box-title">Persentase Jenis Kelamin PNS </h3>
+              <h3 class="box-title">Analisa Jenis Kelamin PNS </h3>
             </div>
             <div class="box-body">
 							<div class="form-group">
@@ -190,6 +287,9 @@
               <div class="chart">
                 <!-- <canvas id="ageRange" style="height: 229px; width: 594px;" width="742" height="286"></canvas> -->
 								<canvas id="canvas"></canvas>
+								<button type="button" id="download-pdf" >
+								  Download PDF
+								</button>
 			</div>
 
               </div>
