@@ -1122,10 +1122,9 @@ foreach($this->data['user_group'] as $ug){
 		$crud = new grocery_CRUD();
 		$crud->set_table('jabatan')
 		->set_subject('Kepangkatan')
-		->columns('nip','kunkers','kunkersInduk','KINSIND','nunkerUnitOrganisasi','namaJenisJabatan','tmtJabatan', 'nomorSk','tanggalSk', 'jnsjab','kjab','kpej','tmtPelantikan', 'njab', 'kwil', 'nunkerUnitOrganisasi', 'JSUSPIM', 'KESELON')
+		->columns('nip','kunkers','KINSIND','nunkerUnitOrganisasi','namaJenisJabatan','tmtJabatan', 'nomorSk','tanggalSk', 'jnsjab', 'kpej','tmtPelantikan', 'njab', 'kwil', 'nunkerUnitOrganisasi', 'JSUSPIM', 'KESELON')
 		->display_as('nip', 'Nip')
-		->display_as('kunkers', 'Pemerintahan')
-		->display_as('kunkersInduk', 'Instansi')
+		->display_as('kunkers', 'Instansi')
 		->display_as('KINSIND', 'Instansi Induk')
 		->display_as('nunkerUnitOrganisasi', 'Nama Unit Organisasi')
 		->display_as('namaJenisJabatan', 'Nama Jenis Jabatan')
@@ -1133,7 +1132,6 @@ foreach($this->data['user_group'] as $ug){
 		->display_as('nomorSk', 'Nomor SK')
 		->display_as('tanggalSk', 'Tanggal Sk')
 		->display_as('jnsjab', 'Jenis Jabatan')
-		->display_as('kjab', 'Jabatan')
 		->display_as('kpej', 'Pejabat Menetapkan')
 		->display_as('tmtPelantikan', 'TMT Pelantikan')
 		->display_as('njab', 'Nama Jabatan')
@@ -1141,13 +1139,14 @@ foreach($this->data['user_group'] as $ug){
 		->display_as('nunkerUnitOrganisasi', 'Nama Unit Organisasi')
 		->display_as('JSUSPIM', 'JSUSPIM')
 		->display_as('KESELON', 'Eselon');
-		$crud->fields('nip','kunkers','kunkersInduk','KINSIND','nunkerUnitOrganisasi','namaJenisJabatan','tmtJabatan', 'nomorSk','tanggalSk', 'jnsjab','kjab','kpej','tmtPelantikan', 'njab', 'kwil', 'nunkerUnitOrganisasi', 'JSUSPIM', 'KESELON');
+		$crud->fields('nip','kunkers', 'KINSIND','nunkerUnitOrganisasi','namaJenisJabatan','tmtJabatan', 'nomorSk','tanggalSk', 'jnsjab','kpej','tmtPelantikan', 'njab', 'kwil', 'nunkerUnitOrganisasi', 'JSUSPIM', 'KESELON');
+		$crud->set_relation('kunkers','unkerja','nunker');
 		$crud->set_relation('KINSIND','insinduk','NINSIND');
 		$crud->set_relation('KESELON','eselon','nama');
 		$crud->set_relation('jnsjab','jnsjabatan','namaJenisJabatan');
 		$crud->set_relation('kpej','pejabatmenetapkan','npej');
 		$crud->set_relation('kwil','wilayah','nwil');
-		$crud->required_fields('nip','kunkers','kunkersInduk','KINSIND','nunkerUnitOrganisasi','namaJenisJabatan','tmtJabatan', 'nomorSk','tanggalSk', 'jnsjab','kjab','kpej','tmtPelantikan', 'njab', 'kwil', 'nunkerUnitOrganisasi', 'JSUSPIM', 'KESELON');
+		$crud->required_fields('nip','kunkers', 'KINSIND','nunkerUnitOrganisasi','namaJenisJabatan','tmtJabatan', 'nomorSk','tanggalSk', 'jnsjab' ,'kpej','tmtPelantikan', 'njab', 'kwil', 'nunkerUnitOrganisasi', 'JSUSPIM', 'KESELON');
 		$output = $crud->render();
 		$this->load->view('dashboard/grid',$output);
 	}
@@ -1161,7 +1160,7 @@ foreach($this->data['user_group'] as $ug){
 		$crud = new grocery_CRUD();
 		$crud->set_table('pendidikan')
 		->set_subject('pendidikan')
-		->columns('nip','tahunLulus','tglTahunLulus','nomorIjazah','namaSekolah','tempat','glrDepan', 'glrBelakang','ktpu', 'KJUR', 'ktpukjur', 'nkepsek','npdum')
+		->columns('nip','tahunLulus','tglTahunLulus','nomorIjazah','namaSekolah','tempat','glrDepan', 'glrBelakang', 'ktpukjur', 'nkepsek','npdum')
 		->display_as('nip', 'Nip')
 		->display_as('tahunLulus', 'Tahun Kelulusan')
 		->display_as('tglTahunLulus', 'Tanggal Kelulusan')
@@ -1170,14 +1169,12 @@ foreach($this->data['user_group'] as $ug){
 		->display_as('tempat', 'Tempat')
 		->display_as('glrDepan', 'Gelar Depan')
 		->display_as('glrBelakang', 'Gelar Belakang')
-		->display_as('ktpu', 'KTPU')
-		->display_as('KJUR', 'Jurusan')
 		->display_as('ktpukjur', 'Nama Jurusan')
 		->display_as('nkepsek', 'Nama Kepala Sekolah')
 		->display_as('npdum', 'Nama Pendidikan Umum');
-		$crud->fields('nip','tahunLulus','tglTahunLulus','nomorIjazah','namaSekolah','tempat','glrDepan', 'glrBelakang','ktpu', 'KJUR', 'ktpukjur', 'nkepsek','npdum');
+		$crud->fields('nip','tahunLulus','tglTahunLulus','nomorIjazah','namaSekolah','tempat','glrDepan', 'glrBelakang', 'ktpukjur', 'nkepsek','npdum');
 		$crud->set_relation('ktpukjur','jurpendidikan','NJUR');
-		$crud->required_fields('nip','tahunLulus','tglTahunLulus','nomorIjazah','namaSekolah','tempat','glrDepan', 'glrBelakang','ktpu', 'KJUR','nkepsek','npdum');
+		$crud->required_fields('nip','tahunLulus','tglTahunLulus','nomorIjazah','namaSekolah','tempat','glrDepan', 'glrBelakang', 'ktpukjur', 'nkepsek','npdum');
 		$output = $crud->render();
 		$this->load->view('dashboard/grid',$output);
 	}
@@ -1725,7 +1722,7 @@ foreach($this->data['user_group'] as $ug){
 			->display_as('JSUSPIM', 'JSUSPIM')
 			->display_as('KESELON', 'Eselon');
 			$crud->set_relation('KINSIND','insinduk','NINSIND');
-			$crud->set_relation('jnsjab','jenisjabatan','namaJenisJabatan');
+			$crud->set_relation('jnsjab','jnsjabatan','namaJenisJabatan');
 			$crud->set_relation('kpej','pejabatmenetapkan','npej');
 			$crud->set_relation('kwil','wilayah','nwil');
 			$crud->set_relation('KESELON','eselon','nama');
@@ -1744,7 +1741,7 @@ foreach($this->data['user_group'] as $ug){
 		  $crud = new grocery_CRUD();
 		  $crud->set_table('pendidikan')
 		  ->set_subject('pendidikan')
-		  ->columns('nip','tahunLulus','tglTahunLulus','nomorIjazah','namaSekolah','tempat','glrDepan', 'glrBelakang','ktpu', 'KJUR','nkepsek','npdum')
+		  ->columns('nip','tahunLulus','tglTahunLulus','nomorIjazah','namaSekolah','tempat','glrDepan', 'glrBelakang', 'ktpukjur', 'nkepsek','npdum')
 		  ->display_as('nip', 'Nip')
 		  ->display_as('tahunLulus', 'Tahun Kelulusan')
 		  ->display_as('tglTahunLulus', 'Tanggal Kelulusan')
@@ -1753,13 +1750,13 @@ foreach($this->data['user_group'] as $ug){
 		  ->display_as('tempat', 'Tempat')
 		  ->display_as('glrDepan', 'Gelar Depan')
 		  ->display_as('glrBelakang', 'Gelar Belakang')
-		  ->display_as('ktpu', 'Tingkat Pendidikan')
-		  ->display_as('KJUR', 'Jurusan')
+		  ->display_as('ktpukjur', 'Nama Pendidikan Umum')
 		  ->display_as('nkepsek', 'Nama Kepala Sekolah')
 		  ->display_as('npdum', 'Nama Pendidikan Umum');
 		  $crud->set_relation('ktpu','tpu','NJUR');
-		  $crud->fields('nip','tahunLulus','tglTahunLulus','nomorIjazah','namaSekolah','tempat','glrDepan', 'glrBelakang','ktpu', 'KJUR','nkepsek','npdum');
-		  $crud->required_fields('nip','tahunLulus','tglTahunLulus','nomorIjazah','namaSekolah','tempat','glrDepan', 'glrBelakang','ktpu', 'KJUR','nkepsek','npdum');
+			$crud->set_relation('ktpukjur','jurpendidikan','NJUR');
+		  $crud->fields('nip','tahunLulus','tglTahunLulus','nomorIjazah','namaSekolah','tempat','glrDepan', 'glrBelakang','ktpukjur','nkepsek','npdum');
+		  $crud->required_fields('nip','tahunLulus','tglTahunLulus','nomorIjazah','namaSekolah','tempat','glrDepan', 'glrBelakang','ktpukjur','nkepsek','npdum');
 		  $output = $crud->render();
 		  $this->load->view('dashboard/grid',$output);
 		}
@@ -2274,7 +2271,7 @@ foreach($this->data['user_group'] as $ug){
 		  ->display_as('JSUSPIM', 'JSUSPIM')
 		  ->display_as('KESELON', 'Eselon');
 		  $crud->set_relation('KINSIND','insinduk','NINSIND');
-		  $crud->set_relation('jnsjab','jenisjabatan','namaJenisJabatan');
+			$crud->set_relation('jnsjab','jnsjabatan','namaJenisJabatan');
 		  $crud->set_relation('kpej','pejabatmenetapkan','npej');
 		  $crud->set_relation('kwil','wilayah','nwil');
 			$crud->set_relation('KESELON','eselon','nama');
@@ -2293,7 +2290,7 @@ foreach($this->data['user_group'] as $ug){
 		  $crud = new grocery_CRUD();
 		  $crud->set_table('pendidikan')
 		  ->set_subject('pendidikan')
-		  ->columns('nip','tahunLulus','tglTahunLulus','nomorIjazah','namaSekolah','tempat','glrDepan', 'glrBelakang','ktpu', 'KJUR','nkepsek','npdum')
+		  ->columns('nip','tahunLulus','tglTahunLulus','nomorIjazah','namaSekolah','tempat','glrDepan', 'glrBelakang','ktpukjur','nkepsek','npdum')
 		  ->display_as('nip', 'Nip')
 		  ->display_as('tahunLulus', 'Tahun Kelulusan')
 		  ->display_as('tglTahunLulus', 'Tanggal Kelulusan')
@@ -2302,13 +2299,13 @@ foreach($this->data['user_group'] as $ug){
 		  ->display_as('tempat', 'Tempat')
 		  ->display_as('glrDepan', 'Gelar Depan')
 		  ->display_as('glrBelakang', 'Gelar Belakang')
-		  ->display_as('ktpu', 'Tingkat Pendidikan')
-		  ->display_as('KJUR', 'Jurusan')
+		  ->display_as('ktpukjur', 'Nama Pendidikan Umum')
 		  ->display_as('nkepsek', 'Nama Kepala Sekolah')
 		  ->display_as('npdum', 'Nama Pendidikan Umum');
 		  $crud->set_relation('ktpu','tpu','NJUR');
-		  $crud->fields('nip','tahunLulus','tglTahunLulus','nomorIjazah','namaSekolah','tempat','glrDepan', 'glrBelakang','ktpu', 'KJUR','nkepsek','npdum');
-		  $crud->required_fields('nip','tahunLulus','tglTahunLulus','nomorIjazah','namaSekolah','tempat','glrDepan', 'glrBelakang','ktpu', 'KJUR','nkepsek','npdum');
+			$crud->set_relation('ktpukjur','jurpendidikan','NJUR');
+		  $crud->fields('nip','tahunLulus','tglTahunLulus','nomorIjazah','namaSekolah','tempat','glrDepan', 'glrBelakang','ktpukjur','nkepsek','npdum');
+		  $crud->required_fields('nip','tahunLulus','tglTahunLulus','nomorIjazah','namaSekolah','tempat','glrDepan', 'glrBelakang','ktpukjur','nkepsek','npdum');
 		  $output = $crud->render();
 		  $this->load->view('dashboard/grid',$output);
 		}
@@ -2336,7 +2333,8 @@ foreach($this->data['user_group'] as $ug){
 		  ->display_as('JAM', 'Jam')
 		  ->display_as('NSTTPP', 'NSTTPP')
 		  ->display_as('TSTTPP', 'TSTTPP')
-		  ->display_as('namaDiklat', 'Nama Diklat');
+			->display_as('namaDiklat', 'Nama Diklat')
+			->display_as('ISAKHIR', 'Diklat Terakhir');
 			$crud->set_relation('kFungStrTek','dikstr','NDIKSTR');
 		  $crud->set_relation('kodeJenisDiklat','jenisdiklat','nama');
 			$crud->set_relation('ISAKHIR','statusterakhir','statusAkhir');
@@ -2861,7 +2859,7 @@ foreach($this->data['user_group'] as $ug){
 
 		log_message('debug','after Load new Db');
 		$crud = new grocery_CRUD();
-		$crud->set_table('tingkatpendidikan')
+		$crud->set_table('tingpend')
 		->set_subject('Tingkat Pendidikan')
 		->columns('ktp', 'ntp')
 		->display_as('ktp','Kode')
@@ -2916,7 +2914,7 @@ foreach($this->data['user_group'] as $ug){
 		log_message('debug','after Load new Db');
 		$crud = new grocery_CRUD();
 		$crud->where('JNSJAB','1');
-		$crud->set_table('jenisjabatan')
+		$crud->set_table('subjnsjabatan')
 		->set_subject('Jabatan Struktural')
 		->columns('KJAB', 'NJAB', 'KGOLRU', 'TUNJJAB', 'TPP', 'USIA', 'PAK')
 		->display_as('KJAB','Kode')
@@ -2940,7 +2938,7 @@ foreach($this->data['user_group'] as $ug){
 		log_message('debug','after Load new Db');
 		$crud = new grocery_CRUD();
 		$crud->where('JNSJAB','2');
-		$crud->set_table('jenisjabatan')
+		$crud->set_table('subjnsjabatan')
 		->set_subject('Jabatan Fungsional Khusus')
 		->columns('KJAB', 'NJAB', 'KGOLRU', 'TUNJJAB', 'TPP', 'USIA', 'PAK')
 		->display_as('KJAB','Kode')
@@ -2964,7 +2962,7 @@ foreach($this->data['user_group'] as $ug){
 		log_message('debug','after Load new Db');
 		$crud = new grocery_CRUD();
 		$crud->where('JNSJAB','3');
-		$crud->set_table('jenisjabatan')
+		$crud->set_table('subjnsjabatan')
 		->set_subject('Jabatan Negara')
 		->columns('KJAB', 'NJAB', 'KGOLRU', 'TUNJJAB', 'TPP', 'USIA', 'PAK')
 		->display_as('KJAB','Kode')
@@ -2988,7 +2986,7 @@ foreach($this->data['user_group'] as $ug){
 		log_message('debug','after Load new Db');
 		$crud = new grocery_CRUD();
 		$crud->where('JNSJAB','4');
-		$crud->set_table('jenisjabatan')
+		$crud->set_table('subjnsjabatan')
 		->set_subject('Jabatan Fungsional Umum')
 		->columns('KJAB', 'NJAB', 'KGOLRU', 'TUNJJAB', 'TPP', 'USIA', 'PAK')
 		->display_as('KJAB','Kode')
@@ -3012,7 +3010,7 @@ foreach($this->data['user_group'] as $ug){
 		log_message('debug','after Load new Db');
 		$crud = new grocery_CRUD();
 		$crud->where('JNSJAB','5');
-		$crud->set_table('jenisjabatan')
+		$crud->set_table('subjnsjabatan')
 		->set_subject('Jabatan KORPRI')
 		->columns('KJAB', 'NJAB', 'KGOLRU', 'TUNJJAB', 'TPP', 'USIA', 'PAK')
 		->display_as('KJAB','Kode')
@@ -3091,10 +3089,13 @@ foreach($this->data['user_group'] as $ug){
 
 		log_message('debug','after Load new Db');
 		$crud = new grocery_CRUD();
-		$crud->set_table('golruang')
+		$crud->set_table('jenisgolongan')
 		->set_subject('Status Pegawai')
-		->columns('KGOLRU', 'NGOLRU', 'PANGKAT');
-		$crud->fields('KGOLRU');
+		->columns('Golongan_id', 'golNama', 'golPangkat')
+		->display_as('Golongan_id','Golongan')
+		->display_as('golNama','Nama Golongan')
+		->display_as('golPangkat','Pangkat Golongan');
+		$crud->fields('Golongan_id', 'golNama', 'golPangkat');
 		$output = $crud->render();
 		$this->load->view('dashboard/grid',$output);
 	}
