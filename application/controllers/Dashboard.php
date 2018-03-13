@@ -3235,10 +3235,10 @@ $this->data['menu']=$this->Menu_model->menuMaster($gid);
 			 				<input type="hidden" value="'.$nip.'" name="nip"/>';
 		});
 		//$crud->callback_column('path',array($this,'_callback_webpage_url'));
-		$crud->callback_read_field('path', function ($value, $primary_key) {
-			$tagImg= '<a href="'.$value.'" class="image-thumbnail"><img src="'.$value.'" height="50px"></a>';
-							return $tagImg;
-							});
+		// $crud->callback_read_field('path', function ($value, $primary_key) {
+		// 	$tagImg= '<a href="'.$value.'" class="image-thumbnail"><img src="'.$value.'" height="50px"></a>';
+		// 					return $tagImg;
+		// 					});
 		$crud->callback_before_update(function($post_array)
 							{
 								log_message('debug','iniloh Before Insert'.print_r($post_array,TRUE));
