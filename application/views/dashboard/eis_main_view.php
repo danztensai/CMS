@@ -296,6 +296,34 @@
             </div>
             <!-- /.box-body -->
           </div>
+
+					<div class="col-md-6">
+				<!-- BAR CHART -->
+				<div class="box box-success">
+					<div class="box-header with-border">
+						<h3 class="box-title">Rekap Data Untuk BKD</h3>
+					</div>
+					<div class="box-body">
+						<div class="form-group">
+								<label>Pilih Instansi</label>
+								<select id="instansiUnker" class="form-control">
+									<option value="All">Semua</option>
+									<?php foreach($instansiUnkerja as $key)
+									{
+										?>
+										<option value="<?php echo $key['kunker']?>"><?php echo $key['nunker']?></option>
+									<?php
+									}?>
+								</select>
+							</div>
+						<a href="<?php echo base_url() ?>dashboard/checkRekap">Download Rekap PNS BKD</a>
+
+		</div>
+
+						</div>
+					</div>
+					<!-- /.box-body -->
+				</div>
           <!-- /.box -->
 
         </div>

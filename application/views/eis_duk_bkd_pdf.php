@@ -11,11 +11,11 @@
    <div class="layoutArea">
       <div class="column">
          <p style="text-align: center;">DAFTAR URUT KEPANGKATAN PEGAWAI NEGERI SIPIL<br /> DI LINGKUNGAN PEMERINTAH DAERAH PROVINSI JAWA BARAT KEADAAN : 2018</p>
-         <table style="height: 296px; width: 786px;" border="1">
+         <table border="1">
             <tbody>
                <tr>
                   <td style="width: 21.5px; text-align: center;" rowspan="2">NO&nbsp;</td>
-                  <td style="width: 136.71875px; text-align: center;" rowspan="2">
+                  <td style="width: 150px; text-align: center;" rowspan="2">
                      &nbsp;
                      <div class="page" title="Page 1">
                         <div class="section">
@@ -28,7 +28,7 @@
                      </div>
                      &nbsp;
                   </td>
-                  <td style="width: 66.125px; text-align: center;" colspan="2">
+                  <td style="width:100px; text-align: center;" colspan="2">
                      <div class="page" title="Page 1">
                         <div class="section">
                            <div class="layoutArea">
@@ -107,9 +107,9 @@
                   <td style="width: 104.953125px; text-align: center;" rowspan="2">CATATAN MUTASI KEPEGAWAIAN</td>
                </tr>
                <tr>
-                  <td style="width: 31.0625px; text-align: center;">GOL</td>
-                  <td style="width: 29.0625px; text-align: center;">TMT</td>
-                  <td style="width: 62.078125px; text-align: center;">
+                  <td style="width: 50.0625px; text-align: center;">GOL</td>
+                  <td style="width: 100px; text-align: center;">TMT</td>
+                  <td style="width: 250.078125px; text-align: center;">
                      &nbsp;
                      <div class="page" title="Page 1">
                         <div class="section">
@@ -121,7 +121,7 @@
                         </div>
                      </div>
                   </td>
-                  <td style="width: 29.0625px; text-align: center;">TMT</td>
+                  <td style="width: 100px; text-align: center;">TMT</td>
                   <td style="width: 41.421875px; text-align: center;">
                      &nbsp;
                      <div class="page" title="Page 1">
@@ -252,7 +252,8 @@
 
                <tr>
                   <td style="width: 21.5px;"><?php echo $counter?></td>
-                  <td style="width: 136.71875px;"><?php echo $rekap['nama']?></td>
+                  <td style="width: 136.71875px;"><?php echo $rekap['nama']?><br>
+                  <?php echo $rekap['NIP']?></td>
                   <td style="width: 31.0625px;"><?php echo $rekap['golNama']?></td>
                   <td style="width: 29.0625px;"><?php echo $rekap['TMTPANG']?>&nbsp;</td>
                   <td style="width: 62.078125px;"><?php echo $rekap['NJAB']?></td>
