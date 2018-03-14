@@ -1,5 +1,5 @@
 	<?php defined('BASEPATH') OR exit('No direct script access allowed');?>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js" type="text/javascript"></script>
+	<script src="<?php echo base_url()?>assets/chartjs/Chart.min.js" type="text/javascript"></script>
 	<script src="<?php echo base_url()?>assets/chartjs/utils.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.2.61/jspdf.min.js" type="text/javascript"></script>
 	<script src="https://chartjs-plugin-datalabels.netlify.com/chartjs-plugin-datalabels.js"></script>
@@ -10,6 +10,17 @@
 		var label =[];
 		var data1 = [];
 		var data2 = [];
+
+$('#rekapInstansiUnker').on('change', function (e) {
+	console.log('Rekap changed');
+	var optionSelected = $("option:selected", this);
+	var valueSelected = this.value;
+	$("a.downloadRekap").attr("href", function(i, href) {
+		var url = '<?php echo base_url() ?>dashboard/checkRekap'+ '?q='+valueSelected;
+	  return url;
+	});
+});
+
 
 		$('#instansiUnker').on('change', function (e) {
     var optionSelected = $("option:selected", this);
@@ -301,13 +312,13 @@
 				<!-- BAR CHART -->
 				<div class="box box-success">
 					<div class="box-header with-border">
-						<h3 class="box-title">Rekap Data Untuk BKD</h3>
+						<h3 class="box-title">Rekap Data PNS</h3>
 					</div>
 					<div class="box-body">
 						<div class="form-group">
 								<label>Pilih Instansi</label>
-								<select id="instansiUnker" class="form-control">
-									<option value="All">Semua</option>
+								<select id="rekapInstansiUnker" class="form-control">
+									<option value="100000000000">Semua (Memakan Waktu yang Lama Harap Bersabar)</option>
 									<?php foreach($instansiUnkerja as $key)
 									{
 										?>
@@ -316,7 +327,7 @@
 									}?>
 								</select>
 							</div>
-						<a href="<?php echo base_url() ?>dashboard/checkRekap">Download Rekap PNS BKD</a>
+						<a class="downloadRekap" href="<?php echo base_url() ?>dashboard/checkRekap">Download Rekap PNS</a>
 
 		</div>
 

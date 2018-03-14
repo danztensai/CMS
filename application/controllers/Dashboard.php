@@ -1,6 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-// ini_set('max_execution_time', 0);
+ ini_set('max_execution_time', 0);
 // ini_set('memory_limit','2048M');
 class Dashboard extends Auth_Controller
 {
@@ -3822,13 +3822,30 @@ $this->data['menu']=$this->Menu_model->menuMaster($gid);
 
 				$this->render('dashboard/eis_main_view');
 		}
+
+		public function testRekap()
+		{
+			$rekap =$this->Simpeg_model->getDaftarUrutKepangkatanByInstansi2() ;
+    //  log_message('debug',print_r($rekap[0],TRUE));
+			$data_rekap_bkd =array('rekap'=>$rekap);
+			$this->load->view('eis_duk_bkd_pdf0', $data_rekap_bkd, false);
+
+		}
+		public function testTable()
+		{
+			$rekap=$this->Simpeg_model->getDaftarUrutKepangkatanByInstansiJoinQueryTableGenerate() ;
+			$this->load->view('test', $rekap, false);
+		}
 		public function checkRekap()
 		{
-			$rekap =$this->Simpeg_model->getDaftarUrutKepangkatanByInstansiJoinQuery() ;
+			$key = $this->input->get('q');
+			$result = mb_substr($key, 0, 4);
+			log_message('debug','This is the code: '.$result);
+			$rekap =$this->Simpeg_model->getDaftarUrutKepangkatanByInstansi2($result) ;
 
 			$data_rekap_bkd =array('rekap'=>$rekap);
 			//print_r($data_rekap_bkd);
-			$this->load->view('eis_duk_bkd_pdf', $data_rekap_bkd, false);
+			//$this->load->view('eis_duk_bkd_pdf', $data_rekap_bkd, false);
 
 			//
 			$this->load->helper('download');
@@ -3837,12 +3854,12 @@ $this->data['menu']=$this->Menu_model->menuMaster($gid);
 
 			{
 				$dataEmail='';
-				ini_set('memory_limit','128M'); // boost the memory limit if it's low ;)
+				ini_set('memory_limit','750M'); // boost the memory limit if it's low ;)
 
 				$this->load->library('pdf');
 				$data_rekap_bkd =array('rekap'=>$rekap);
 
-				$html = $this->load->view('eis_duk_bkd_pdf', $data_rekap_bkd, true); // render the view into HTML
+				$html = $this->load->view('eis_duk_bkd_pdf0', $data_rekap_bkd, true); // render the view into HTML
 
 				$pdf = $this->pdf->load();
 				$pdf->AddPage('L', // L - landscape, P - portrait
@@ -3854,7 +3871,9 @@ $this->data['menu']=$this->Menu_model->menuMaster($gid);
 				 18, // margin header
 				 12); // ma
 				$pdf->SetFooter($_SERVER['HTTP_HOST'].'|{PAGENO}|'.date(DATE_RFC822)); // Add a footer for good measure ;)
-
+				$pdf->cacheTables = true;
+				$pdf->simpleTables=true;
+				$pdf->packTableData=true;
 				$pdf->WriteHTML($html); // write the HTML into the PDF
 
 				$pdf->Output($pdfFilePath, 'F'); // save to file because we can

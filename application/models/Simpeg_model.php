@@ -31,7 +31,7 @@ from (
   select
     TIMESTAMPDIFF(YEAR,TLAHIR,CURDATE()) AS age,jeniskelamin.NKELAMIN as gender
   from
-    datautama left join jeniskelamin  on datautama.KJKEL = jeniskelamin.KJKEL left join jakhir6 ja on datautama.nipBaru = ja.NIP where datautama.statusHidupPensiunPindah = 1 and ja.kunkersInduk = '$instansi'
+    datautama left join jeniskelamin  on datautama.KJKEL = jeniskelamin.KJKEL left join jakhir ja on datautama.nipBaru = ja.NIP where datautama.statusHidupPensiunPindah = 1 and ja.kunkersInduk = '$instansi'
 ) as t  group by `range`, gender;";
 			}
 			$data = array();
@@ -125,7 +125,7 @@ from (
 		{
 
 				$querySQL = "SELECT rg.NIP, rd.nama, jg.golNama, rg.TMTPANG, rj.NJAB, rj.TMTJAB ,rj.NJAB, YEAR(CURDATE()) - YEAR(rd.TLAHIR) as usia
-										FROM jakhir6 rj
+										FROM jakhir rj
 										LEFT JOIN golonganakhir2 rg on rg.nip = rj.NIP
 										LEFT JOIN datautama5 rd on rd.nipBaru = rj.NIP
 										left join jenisgolongan jg on jg.Golongan_id = rg.KGOLRU
@@ -164,11 +164,151 @@ from (
 						return $data;
 					}
 		}
+		public function getRiwayatDiklatRekap($nip)
+		{
+
+				$querySQL = "select namaDiklat,bulan,tahun,JAM from rekap_pns where NIP like '$nip%'";
+
+				$data = array();
+				$stackData = array();
+
+				log_message('debug','getRiwayatDiklatRekap: '.$querySQL);
+				$query = $this->db->query($querySQL);
+
+				if($query->num_rows()>0)
+					{ $count = 1;
+						foreach($query->result() as $row)
+						{
+
+							$data['namaDiklat']=$row->namaDiklat;
+							$data['bulan']=$row->bulan;
+							$data['tahun']=$row->tahun;
+							$data['JAM']=$row->JAM;
+
+
+
+
+						 array_push($stackData,$data);
+						}
+						$query->free_result();
+						return $stackData;
+					}else
+					{
+
+						$query->free_result();
+						return $data;
+					}
+		}
+		public function getDaftarUrutKepangkatanByInstansi2($instansi='1030')
+		{
+
+				if($instansi=='1000')
+				{
+					$querySQL = "select NIP,nama,golNama,TMTPANG,NJAB,TMTJAB,masakerja from rekap_pns";
+				}else{
+					$querySQL = "select NIP,nama,golNama,TMTPANG,NJAB,TMTJAB,masakerja from rekap_pns where kunkers like '$instansi%'";
+				}
+				$data = array();
+				$stackData = array();
+
+				log_message('debug','getDaftarUrutKepangkatanByInstansi: '.$querySQL);
+				$query = $this->db->query($querySQL);
+				$tempNip = "";
+				$counter = 0;
+				if($query->num_rows()>0)
+					{ $count = 1;
+						foreach($query->result() as $row)
+						{
+							if($counter ==0)
+							{
+								$tempNip = $row->NIP;
+								$data['NIP']=$row->NIP;
+								$data['nama']=$row->nama;
+								$data['golNama']=$row->golNama;
+								$data['TMTPANG']=$row->TMTPANG;
+								$data['NJAB']=$row->NJAB;
+								$data['TMTJAB']=$row->TMTJAB;
+								$data['masa_kerja']=$row->masakerja;
+
+								$data['riwayatDiklat']=$this->getRiwayatDiklatRekap($row->NIP);
+								$data['riwayatPendidikan']=$this->getRiwayatPendidikanRekap($row->NIP);
+								array_push($stackData,$data);
+							}else{
+								$tempNip = $query->result()[$counter-1]->NIP;
+							}
+
+							$currentNip =$row->NIP;
+							log_message('debug','Current Nip '.$currentNip);
+							log_message('debug','Prev NIP '.$tempNip);
+							if($currentNip != $tempNip)
+							{
+								$data['NIP']=$row->NIP;
+								$data['nama']=$row->nama;
+								$data['golNama']=$row->golNama;
+								$data['TMTPANG']=$row->TMTPANG;
+								$data['NJAB']=$row->NJAB;
+								$data['TMTJAB']=$row->TMTJAB;
+								$data['masa_kerja']=$row->masakerja;
+
+								$data['riwayatDiklat']=$this->getRiwayatDiklatRekap($row->NIP);
+								$data['riwayatPendidikan']=$this->getRiwayatPendidikanRekap($row->NIP);
+								array_push($stackData,$data);
+							}else {
+								log_message('debug','counter ke '.$counter);
+							}
+
+
+						 $counter++;
+						}
+						$query->free_result();
+						return $stackData;
+					}else
+					{
+
+						$query->free_result();
+						return $data;
+					}
+		}public function getRiwayatPendidikanRekap($nip)
+		{
+
+				$querySQL = "select distinct npdum,NJUR,namaSekolah,tahunLulus,usia,NTP from rekap_pns where NIP like '$nip%'";
+
+				$data = array();
+				$stackData = array();
+
+				log_message('debug','getRiwayatPendidikanRekap: '.$querySQL);
+				$query = $this->db->query($querySQL);
+
+				if($query->num_rows()>0)
+					{ $count = 1;
+						foreach($query->result() as $row)
+						{
+							$data['npdum']=$row->npdum;
+							$data['NJUR']=$row->NJUR;
+							$data['namaSekolah']=$row->namaSekolah;
+							$data['tahunLulus']=$row->tahunLulus;
+							$data['usia']=$row->usia;
+							$data['NTP']=$row->ntp;
+ 							array_push($stackData,$data);
+						}
+						$query->free_result();
+						return $stackData;
+					}else
+					{
+
+						$query->free_result();
+						return $data;
+					}
+		}
 		public function getDaftarUrutKepangkatanByInstansiJoinQuery($instansi='1030')
 		{
 
-				$querySQL = "select * from rekap_pns where kunkers like '$instansi%'";
-
+				if($instansi=='1000')
+				{
+					$querySQL = "select * from rekap_pns";
+				}else{
+					$querySQL = "select * from rekap_pns where kunkers like '$instansi%'";
+				}
 				$data = array();
 				$stackData = array();
 

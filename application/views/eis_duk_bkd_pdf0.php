@@ -259,16 +259,47 @@
                   <td style="width: 62.078125px;"><?php echo $rekap['NJAB']?></td>
                   <td style="width: 29.0625px;"><?php echo $rekap['TMTJAB']?>&nbsp;</td>
                   <td style="width: 44.15625px;"><?php echo $rekap['masa_kerja']?> Tahun&nbsp;</td>
-                  <td style="width: 41.421875px;"><?php echo $rekap['namaDiklat']?>&nbsp;</td>
-                  <td style="width: 47.6875px;"><?php echo $rekap['bulan']?>&nbsp;</td>
-                  <td style="width: 48.625px;"><?php echo $rekap['tahun']?>&nbsp;</td>
-                  <td style="width: 27.671875px;"><?php echo $rekap['JAM']?>&nbsp;</td>
-                  <td style="width: 90.875px;"><?php echo $rekap['npdum']?>&nbsp;</td>
-                  <td style="width: 66.078125px;"><?php echo $rekap['NJUR']?>&nbsp;</td>
-                  <td style="width: 66.890625px;"><?php echo $rekap['namaSekolah']?>&nbsp;</td>
-                  <td style="width: 48.625px;"><?php echo $rekap['tahunLulus']?>&nbsp;</td>
-                  <td style="width: 51.21875px;"><?php echo $rekap['NTP']?>&nbsp;</td>
-                  <td style="width: 35.28125px;"><?php echo $rekap['usia']?>&nbsp;</td>
+
+                  <?php
+                  $namaDiklat = "";
+                  $bulan = "";
+                  $tahun = "";
+                  $jam = "";
+                  foreach($rekap['riwayatDiklat'] as $riwayatDiklat)
+                  {
+                    $namaDiklat .=$riwayatDiklat['namaDiklat'].'<br></br><br></br>';
+                    $bulan .=$riwayatDiklat['bulan'].'<br></br><br></br>';
+                    $tahun .=$riwayatDiklat['tahun'].'<br></br><br></br>';
+                    $jam .=$riwayatDiklat['JAM'].'<br></br><br></br>';
+                  }
+                  ?>
+                  <td style="width: 41.421875px;"><?php echo $namaDiklat?>&nbsp;</td>
+                  <td style="width: 47.6875px;"><?php echo $bulan?>&nbsp;</td>
+                  <td style="width: 48.625px;"><?php echo $tahun?>&nbsp;</td>
+                  <td style="width: 27.671875px;"><?php echo $jam?>&nbsp;</td>
+                  <?php
+                  $npdum = "";
+                  $NJUR ="";
+                  $namaSekolah="";
+                  $tahunLulus="";
+                  $ntp="";
+                  $usia="";
+                  foreach($rekap['riwayatPendidikan'] as $riwayatPendidikan)
+                  {
+                    $npdum .=$riwayatPendidikan['npdum'].'<br></br><br></br>';
+                    $NJUR .=$riwayatPendidikan['NJUR'].'</br>';
+                    $namaSekolah .=$riwayatPendidikan['namaSekolah'].'<br></br><br></br>';
+                    $tahunLulus .=$riwayatPendidikan['tahunLulus'].'<br></br><br></br>';
+                    $ntp .=$riwayatPendidikan['NTP'].'<br></br><br></br>';
+                    $usia .=$riwayatPendidikan['usia'].'<br></br><br></br>';
+                  }
+                  ?>
+                  <td style="width: 90.875px;"><?php echo $npdum ?>&nbsp;</td>
+                  <td style="width: 66.078125px;"><?php echo $NJUR ?>&nbsp;</td>
+                  <td style="width: 66.890625px;"><?php echo   $namaSekolah ?>&nbsp;</td>
+                  <td style="width: 48.625px;"><?php echo $tahunLulus ?>&nbsp;</td>
+                  <td style="width: 51.21875px;"><?php echo $ntp ?>&nbsp;</td>
+                  <td style="width: 35.28125px;"><?php echo $usia ?>&nbsp;</td>
                   <td style="width: 104.953125px;">&nbsp;</td>
                </tr>
              <?php }
