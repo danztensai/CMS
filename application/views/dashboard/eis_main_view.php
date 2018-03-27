@@ -88,11 +88,16 @@ $('#rekapInstansiUnker').on('change', function (e) {
 				callback(data,0);
 		});
 
+		$.get('/cms/dashboard/persentasePendidikanPNS', function(data) {
+			console.log(data);
+
+				callbackPendidikan(data,0);
+		});
+
+
 		function callback(response,sts) {
 		  respJson = JSON.parse(response);
 		  //use return_first variable here
-
-
 			var data1=0;
 			var data2=0;
 			for(var i =0;i<respJson.length;i++)
@@ -152,6 +157,76 @@ $('#rekapInstansiUnker').on('change', function (e) {
 
 		}
 
+
+		function callbackPendidikan(response,sts) {
+			console.log('Inside Callback Pendidikan');
+			respJson = JSON.parse(response);
+			//use return_first variable here
+			var data1=0;
+			var data2=0;
+			if(sts==0){
+				barChartDataPendidikan.datasets.splice(0, 1);
+			}
+
+			for(var i =0;i<respJson.length;i++)
+			{
+				var result = respJson[i]
+				//console.log(result.count);
+				//label.push(result.range);
+
+				// if(i==0)
+				// {
+				// barChartDataPendidikan.labels.push(result.pendidikan);
+				// }
+				// else {
+				// 	var prevResult = respJson[i-1];
+				// 	if(prevResult.pendidikan != result.pendidikan)
+				// 	{
+				// 		barChartDataPendidikan.labels.push(result.pendidikan);
+				// 	}
+				// }
+				//
+				//
+				//
+				// 	//data1.push(result.count);
+				// 	barChartDataPendidikan.datasets[0].data.push(result.total);
+				// 	data1 += parseInt(result.total);
+
+
+					var colorNames = Object.keys(window.chartColors);
+					//add new datasets
+							var colorName = colorNames[barChartDataPendidikan.datasets.length % colorNames.length];
+							console.log(colorName);
+					var dsColor = window.chartColors[colorName];
+					var newDataset = {
+						label: result.pendidikan,
+						backgroundColor: color(dsColor).alpha(0.5).rgbString(),
+						borderColor: dsColor,
+						borderWidth: 1,
+						data: []
+					};
+
+					for (var index = 0; index < barChartData.labels.length; ++index) {
+						newDataset.data.push(result.total);
+					}
+
+					barChartDataPendidikan.datasets.push(newDataset);
+				//	window.myBar.update();
+
+
+				if(sts==0)
+				{
+					window.myBarPendidikan.update();
+
+				}else {
+					myBarPendidikan.update();
+				}
+
+			}
+
+		}
+
+
 		console.log("Ini :"+respJson);
 
 
@@ -172,6 +247,21 @@ $('#rekapInstansiUnker').on('change', function (e) {
 			 borderWidth: 1,
 			 data: [			 ]
 		 }]
+
+	 };
+
+
+	 var colorPendidikan = Chart.helpers.color;
+	 var barChartDataPendidikan = {
+		 labels: [],
+		 datasets: [{
+			 label: 'S1',
+			 backgroundColor: color(window.chartColors.red).alpha(0.5).rgbString(),
+			 borderColor: window.chartColors.red,
+			 borderWidth: 1,
+			 data: [
+			 ]
+		 },]
 
 	 };
 
@@ -225,6 +315,37 @@ $('#rekapInstansiUnker').on('change', function (e) {
 		 });
 
 
+
+		 var ctxPendidikan = document.getElementById('canvasPendidikan').getContext('2d');
+		window.myBarPendidikan = new Chart(ctxPendidikan, {
+			type: 'bar',
+			data: barChartDataPendidikan,
+			options: {
+				responsive: true,
+				legend: {
+					position: 'top',
+				},
+				title: {
+					display: true,
+					text: 'Analisa Pendidikan  PNS Di Jawa Barat'
+				},
+				plugins: {
+				 datalabels: {
+					 color: 'Black',
+					 display: function(context) {
+						 return context.dataset.data[context.dataIndex] > 15;
+					 },
+					 font: {
+						 weight: 'bold'
+					 },
+					 formatter: Math.round,
+					 align:'end'
+				 }
+			 },
+			},
+
+
+		});
 
 	 };
 
@@ -301,11 +422,12 @@ $('#rekapInstansiUnker').on('change', function (e) {
 								<button type="button" id="download-pdf" >
 								  Download PDF
 								</button>
-			</div>
+							</div>
 
               </div>
             </div>
             <!-- /.box-body -->
+
           </div>
 
 					<div class="col-md-6">
@@ -332,6 +454,35 @@ $('#rekapInstansiUnker').on('change', function (e) {
 		</div>
 
 						</div>
+						<!-- BAR CHART -->
+						<div class="box box-success">
+							<div class="box-header with-border">
+								<h3 class="box-title">Analisa Pendidikan PNS </h3>
+							</div>
+							<div class="box-body">
+								<div class="form-group">
+										<label>Pilih Instansi</label>
+										<select id="instansiUnkerPendidikan" class="form-control">
+											<option value="All">Semua</option>
+											<?php foreach($instansiUnkerja as $key)
+											{
+												?>
+												<option value="<?php echo $key['kunker']?>"><?php echo $key['nunker']?></option>
+											<?php
+											}?>
+										</select>
+									</div>
+								<div class="chartPendidikan">
+									<!-- <canvas id="ageRange" style="height: 229px; width: 594px;" width="742" height="286"></canvas> -->
+									<canvas id="canvasPendidikan"></canvas>
+									<button type="button" id="download-pdf-pendidikan" >
+										Download PDF
+									</button>
+								</div>
+
+								</div>
+							</div>
+							<!-- /.box-body -->
 					</div>
 					<!-- /.box-body -->
 				</div>

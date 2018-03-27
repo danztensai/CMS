@@ -3338,7 +3338,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($gid);
 		$config = array(
 		'main_table' => 'archive_pns',
 		'main_table_primary' => 'id',
-		"url" => site_url() . '/dashboard/arsipDokumenPegawai/',
+		"url" => base_url() . 'dashboard/arsipDokumenPegawai/',
 		'ajax_loader' => base_url() . 'assets/ajax-loader.gif'
 		);
 		$categories = new gc_dependent_select($crud, $fields, $config);
@@ -3789,12 +3789,22 @@ $this->data['menu']=$this->Menu_model->menuMaster($gid);
 			}else{
 				$result = $this->Simpeg_model->getPersentaseGenderPNS();
 			}
-
-
-
-
-			echo json_encode($result);
+      echo json_encode($result);
 		}
+
+    public function persentasePendidikanPNS()
+    {
+      $key = $this->input->get('kunker');
+      	$kunker = mb_substr($key, 0, 4);
+      if($kunker!='All')
+      {
+      $result = $this->Simpeg_model->getPersentasePendidikan($kunker);
+      }
+      else {
+        $result = $this->Simpeg_model->getPersentasePendidikan();
+      }
+      echo json_encode($result);
+    }
 
 		public function EISMainPage()
 		{

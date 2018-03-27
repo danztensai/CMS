@@ -6,7 +6,61 @@
 
 		}
 
+		public function getPersentasePendidikan($instansi = null)
+		{
+			$querySQL = "SELECT count(rt.ntp) as total ,rt.ntp as pendidikan FROM jakhir rj
+LEFT JOIN golonganakhir rg on rg.nip = rj.NIP
+LEFT JOIN datautama rd on rd.nipBaru = rj.NIP
+left join jenisgolongan jg on jg.Golongan_id = rg.KGOLRU
+left join cpnspns cpns on cpns.nipBaru = rj.nip
+left join riwayatdiklat rr on rr.nip = rj.nip
+left join pendidikan rp on rp.nip = rj.NIP
+LEFT JOIN jurpendidikan rjur on rjur.KJUR = rp.ktpukjur
+LEFT JOIN tingpend rt on rt.ktp = rjur.tp
+LEFT JOIN statusterakhir rs on rs.ISAKHIR = rp.isPendidikanTerakhir
+WHERE rd.statusHidupPensiunPindah = 1 and rr.ISAKHIR = 1 and rp.isPendidikanTerakhir = 1 and rj.kunkers like '$instansi%'
+ group by rt.ntp";
 
+ 	if($instansi == null)
+	{
+		$querySQL = "SELECT count(rt.ntp) as total ,rt.ntp as pendidikan FROM jakhir rj
+LEFT JOIN golonganakhir rg on rg.nip = rj.NIP
+LEFT JOIN datautama rd on rd.nipBaru = rj.NIP
+left join jenisgolongan jg on jg.Golongan_id = rg.KGOLRU
+left join cpnspns cpns on cpns.nipBaru = rj.nip
+left join riwayatdiklat rr on rr.nip = rj.nip
+left join pendidikan rp on rp.nip = rj.NIP
+LEFT JOIN jurpendidikan rjur on rjur.KJUR = rp.ktpukjur
+LEFT JOIN tingpend rt on rt.ktp = rjur.tp
+LEFT JOIN statusterakhir rs on rs.ISAKHIR = rp.isPendidikanTerakhir
+WHERE rd.statusHidupPensiunPindah = 1 and rr.ISAKHIR = 1 and rp.isPendidikanTerakhir = 1
+group by rt.ntp";
+	}
+			$data = array();
+			$stackData = array();
+
+			log_message('debug','getPersentaseGenderPNS: '.$querySQL);
+			$query = $this->db->query($querySQL);
+
+			if($query->num_rows()>0)
+				{ $count = 1;
+					foreach($query->result() as $row)
+					{
+						$data['total']=$row->total;
+						$data['pendidikan']=$row->pendidikan;
+						array_push($stackData,$data);
+					}
+					$query->free_result();
+					return $stackData;
+				}else
+				{
+
+					$query->free_result();
+					return $data;
+				}
+
+
+		}
 
 		public function getPersentaseGenderPNS($instansi = null)
 		{
