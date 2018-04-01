@@ -8,33 +8,27 @@
 
 		public function getPersentasePendidikan($instansi = null)
 		{
-			$querySQL = "SELECT count(rt.ntp) as total ,rt.ntp as pendidikan FROM jakhir rj
-LEFT JOIN golonganakhir rg on rg.nip = rj.NIP
-LEFT JOIN datautama rd on rd.nipBaru = rj.NIP
-left join jenisgolongan jg on jg.Golongan_id = rg.KGOLRU
-left join cpnspns cpns on cpns.nipBaru = rj.nip
-left join riwayatdiklat rr on rr.nip = rj.nip
-left join pendidikan rp on rp.nip = rj.NIP
-LEFT JOIN jurpendidikan rjur on rjur.KJUR = rp.ktpukjur
-LEFT JOIN tingpend rt on rt.ktp = rjur.tp
-LEFT JOIN statusterakhir rs on rs.ISAKHIR = rp.isPendidikanTerakhir
-WHERE rd.statusHidupPensiunPindah = 1 and rr.ISAKHIR = 1 and rp.isPendidikanTerakhir = 1 and rj.kunkers like '$instansi%'
- group by rt.ntp";
+			$querySQL = "SELECT COUNT(rt.ktp) as total, rt.ntp as pendidikan
+FROM pendidikanAkhir rp
+INNER JOIN jurpendidikan rj on rj.KJUR LIKE CONCAT(rp.KTPU,rp.KJUR)
+INNER JOIN tingpend rt on rt.ktp = rj.tp
+INNER JOIN datautama rd on rd.nipBaru = rp.NIP
+INNER join jakhir ja on ja.nip = rp.nip
+INNER join unkerja uk on uk.kunker = ja.kunkers
+WHERE rd.statusHidupPensiunPindah = 1 and ja.kunkers like '$instansi%'
+GROUP BY rt.ktp;";
 
  	if($instansi == null)
 	{
-		$querySQL = "SELECT count(rt.ntp) as total ,rt.ntp as pendidikan FROM jakhir rj
-LEFT JOIN golonganakhir rg on rg.nip = rj.NIP
-LEFT JOIN datautama rd on rd.nipBaru = rj.NIP
-left join jenisgolongan jg on jg.Golongan_id = rg.KGOLRU
-left join cpnspns cpns on cpns.nipBaru = rj.nip
-left join riwayatdiklat rr on rr.nip = rj.nip
-left join pendidikan rp on rp.nip = rj.NIP
-LEFT JOIN jurpendidikan rjur on rjur.KJUR = rp.ktpukjur
-LEFT JOIN tingpend rt on rt.ktp = rjur.tp
-LEFT JOIN statusterakhir rs on rs.ISAKHIR = rp.isPendidikanTerakhir
-WHERE rd.statusHidupPensiunPindah = 1 and rr.ISAKHIR = 1 and rp.isPendidikanTerakhir = 1
-group by rt.ntp";
+		$querySQL = "SELECT COUNT(rt.ktp) as total, rt.ntp as pendidikan
+FROM pendidikanAkhir rp
+INNER JOIN jurpendidikan rj on rj.KJUR LIKE CONCAT(rp.KTPU,rp.KJUR)
+INNER JOIN tingpend rt on rt.ktp = rj.tp
+INNER JOIN datautama rd on rd.nipBaru = rp.NIP
+INNER join jakhir ja on ja.nip = rp.nip
+INNER join unkerja uk on uk.kunker = ja.kunkers
+WHERE rd.statusHidupPensiunPindah = 1
+GROUP BY rt.ktp";
 	}
 			$data = array();
 			$stackData = array();
@@ -207,6 +201,100 @@ from (
 							$data['masa_kerja']=$this->getMasaKerjaByNip($row->NIP);
 							$data['data_pendidikan_diklat']=$this->getRiwayatDiklatByNip($row->NIP);
 							$data['data_pendidikan_umum']=$this->getRiwayatPendidikanUmumByNip($row->NIP);
+						 array_push($stackData,$data);
+						}
+						$query->free_result();
+						return $stackData;
+					}else
+					{
+
+						$query->free_result();
+						return $data;
+					}
+		}
+
+		public function getEselonByInstansi()
+		{
+
+				$querySQL = "select * from unkerja where kunker like '10%__00000000'";
+
+				$data = array();
+				$stackData = array();
+
+				log_message('debug','getRiwayatPangkat: '.$querySQL);
+				$query = $this->db->query($querySQL);
+
+				if($query->num_rows()>0)
+					{ $count = 1;
+						foreach($query->result() as $row)
+						{
+							$data['kunker']=$row->kunker;
+							$data['nunker']=$row->nunker;
+							$data['eselonCount']=$this->countEselonPerInstansi($row->kunker);
+						 array_push($stackData,$data);
+						}
+						$query->free_result();
+						return $stackData;
+					}else
+					{
+
+						$query->free_result();
+						return $data;
+					}
+		}
+		public function countEselonPerInstansi($instansi='103000000000')
+		{
+				$kunker = mb_substr($instansi, 0, 4);
+				$querySQL = "SELECT SUM(IF(KESELON LIKE '1%', 1, 0)) AS JumlahEselon1,
+SUM(IF(KESELON LIKE '2%', 1, 0)) AS JumlahEselon2,
+SUM(IF(KESELON LIKE '3%', 1, 0)) AS JumlahEselon3,
+SUM(IF(KESELON LIKE '4%', 1, 0)) AS JumlahEselon4,
+SUM(IF(KESELON REGEXP '^1|^2|^3|^4', 1, 0)) AS JumlahEselonKeseluruhan,
+SUM(IF(KESELON = 11, 1, 0)) AS JumlahEselonIA,
+SUM(IF(KESELON = 12, 1, 0)) AS JumlahEselonIB,
+SUM(IF(KESELON LIKE '1%', 1, 0)) AS JumlahEselonIVALID,
+SUM(IF(KESELON = 21, 1, 0)) AS JumlahEselonIIA,
+SUM(IF(KESELON = 22, 1, 0)) AS JumlahEselonIIB,
+SUM(IF(KESELON LIKE '2%', 1, 0)) AS JumlahEselonIIVALID,
+SUM(IF(KESELON = 31, 1, 0)) AS JumlahEselonIIIA,
+SUM(IF(KESELON = 32, 1, 0)) AS JumlahEselonIIIB,
+SUM(IF(KESELON LIKE '3%', 1, 0)) AS JumlahEselonIIIVALID,
+SUM(IF(KESELON = 41, 1, 0)) AS JumlahEselonIVA,
+SUM(IF(KESELON = 42, 1, 0)) AS JumlahEselonIVB,
+SUM(IF(KESELON LIKE '4%', 1, 0)) AS JumlahEselonIVVALID,
+SUM(IF(KESELON REGEXP '^1|^2|^3|^4', 1, 0)) AS JumlahEselon,
+(SELECT COUNT(ru.kunker) FROM unkerja ru WHERE ru.kunker LIKE '$instansi%'
+AND NOT EXISTS (SELECT 1 FROM jakhir rj WHERE kunkers = ru.kunker AND KESELON REGEXP '^1|^2|^3|^4' AND KESELON = ru.keselon)) as EselonTidakTerpenuhi
+FROM rekap_pns_eselon WHERE kunkers LIKE '$kunker%'";
+
+				$data = array();
+				$stackData = array();
+
+				log_message('debug','countEselonPerInstansi: '.$querySQL);
+				$query = $this->db->query($querySQL);
+
+				if($query->num_rows()>0)
+					{ $count = 1;
+						foreach($query->result() as $row)
+						{
+							$data['JumlahEselon1']=$row->JumlahEselon1;
+				       $data['JumlahEselon2']=$row->JumlahEselon2;
+				       $data['JumlahEselon3']=$row->JumlahEselon3;
+				       $data['JumlahEselon4']=$row->JumlahEselon4;
+				       $data['JumlahEselonIA']=$row->JumlahEselonIA;
+				       $data['JumlahEselonIB']=$row->JumlahEselonIB;
+				       $data['JumlahEselonIVALID']=$row->JumlahEselonIVALID;
+				       $data['JumlahEselonIIA']=$row->JumlahEselonIIA;
+				       $data['JumlahEselonIIB']=$row->JumlahEselonIIB;
+				       $data['JumlahEselonIIVALID']=$row->JumlahEselonIIVALID;
+				       $data['JumlahEselonIIIA']=$row->JumlahEselonIIIA;
+				       $data['JumlahEselonIIIB']=$row->JumlahEselonIIIB;
+				       $data['JumlahEselonIIIVALID']=$row->JumlahEselonIIIVALID;
+				       $data['JumlahEselonIVA']=$row->JumlahEselonIVA;
+				       $data['JumlahEselonIVB']=$row->JumlahEselonIVB;
+				       $data['JumlahEselonIVVALID']=$row->JumlahEselonIVVALID;
+				       $data['JumlahEselon']=$row->JumlahEselon;
+				       $data['EselonTidakTerpenuhi']=$row->EselonTidakTerpenuhi;
 						 array_push($stackData,$data);
 						}
 						$query->free_result();

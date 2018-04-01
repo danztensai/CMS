@@ -21,6 +21,63 @@ $('#rekapInstansiUnker').on('change', function (e) {
 	});
 });
 
+		$('#instansiUnkerPendidikan').on('change',function(e){
+			var optionSelected = $("option:selected", this);
+			var valueSelected = this.value;
+						console.log(this.value);
+						$.get('persentasePendidikanPNS',{kunker:this.value},function(data){
+								console.log(data);
+								window.myBarPendidikan.destroy()
+								var ctxPendidikan = document.getElementById('canvasPendidikan').getContext('2d');
+								myBarPendidikan = new Chart(ctxPendidikan, {
+ 								 type: 'bar',
+ 								 data: barChartDataPendidikan,
+ 								 options: {
+ 									 responsive: true,
+ 									 legend: {
+ 										 position: 'top',
+ 									 },
+ 									 title: {
+ 										 display: true,
+ 										 text: 'Persentase Pendidikan PNS Di Jawa Barat'
+ 									 },
+ 									 plugins: {
+ 									 datalabels: {
+ 										 color: 'Black',
+ 										 display: function(context) {
+ 											 return context.dataset.data[context.dataIndex] > 15;
+ 										 },
+ 										 font: {
+ 											 weight: 'bold'
+ 										 },
+ 										 formatter: Math.round,
+ 										 align:'end'
+ 									 }
+ 								 },
+ 								 tooltips:{
+ 									callbacks:{
+ 												label: function(tooltipItem,data){
+ 													var allData = data.datasets[tooltipItem.datasetIndex].data;
+                     var tooltipLabel = data.labels[tooltipItem.index];
+                     var tooltipData = allData[tooltipItem.index];
+                     var total = 0;
+                     for (var i in allData) {
+                         total += allData[i];
+                     }
+                     var tooltipPercentage = Math.round((tooltipData / total) * 100);
+                     return tooltipLabel + ': ' + tooltipData + ' (' + tooltipPercentage + '%)';
+ 												}
+ 											}
+ 								 		}
+ 								 }
+ 							 });//
+							 barChartDataPendidikan.labels=[];
+
+							barChartDataPendidikan.datasets=[];
+						 callbackPendidikan(data,1);
+						});
+
+		});
 
 		$('#instansiUnker').on('change', function (e) {
     var optionSelected = $("option:selected", this);
@@ -350,7 +407,7 @@ $('#rekapInstansiUnker').on('change', function (e) {
 	 };
 
 	 document.getElementById('download-pdf').addEventListener("click", downloadPDF);
-
+	 document.getElementById('download-pdf-pendidikan').addEventListener("click", downloadPDFPendidikan);
 	 //donwload pdf from original canvas
 	 function downloadPDF() {
 		 var canvas = document.querySelector('#canvas');
@@ -363,6 +420,18 @@ $('#rekapInstansiUnker').on('change', function (e) {
 		//doc.text(15, 20, "Laporan Analisa Jenis Kelamin PNS");
 		doc.addImage(canvasImg, 'JPEG', 10, 10, 280, 150 );
 		doc.save('Laporan Analisa Jenis Kelamin PNS.pdf');
+	 }
+	 function downloadPDFPendidikan() {
+		 var canvas = document.querySelector('#canvasPendidikan');
+		//creates image
+		var canvasImg = canvas.toDataURL("image/png", 1.0);
+		//console.log(canvasImg);
+		//creates PDF from img
+		var doc = new jsPDF('landscape');
+		doc.setFontSize(15);
+		//doc.text(15, 20, "Laporan Analisa Jenis Kelamin PNS");
+		doc.addImage(canvasImg, 'JPEG', 10, 10, 280, 150 );
+		doc.save('Laporan Analisa Tingkat Pendidikan PNS.pdf');
 	 }
 
 

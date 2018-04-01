@@ -3780,6 +3780,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($gid);
 			$this->render('dashboard/group_view');
 		}
 
+
 		public function persentaseGenderPNS()
 		{
 			$kunker=$this->input->get('kunker');
@@ -3900,4 +3901,8 @@ $this->data['menu']=$this->Menu_model->menuMaster($gid);
 			echo json_encode($this->Simpeg_model->getDaftarUrutKepangkatanByInstansiJoinQuery());
 		}
 
+    public function testEselon()
+    {
+        echo json_encode($this->Simpeg_model->getEselonByInstansi());
+    }
 	}
