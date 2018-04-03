@@ -433,7 +433,25 @@ $('#rekapInstansiUnker').on('change', function (e) {
 		doc.addImage(canvasImg, 'JPEG', 10, 10, 280, 150 );
 		doc.save('Laporan Analisa Tingkat Pendidikan PNS.pdf');
 	 }
+	 $('#rekapInstansiUnkerEselon').on('change', function (e) {
+	 	console.log('Rekap changed');
+	 	var optionSelected = $("option:selected", this);
+	 	var valueSelected = this.value;
+	 	$("a.downloadRekap").attr("href", function(i, href) {
+	 		var url = '<?php echo base_url() ?>dashboard/checkRekapEselon'+ '?q='+valueSelected;
+	 	  return url;
+	 	});
+	 });
 
+	 $('#rekapInstansiUnkerGolongan').on('change', function (e) {
+	 	console.log('Rekap Golongan changed');
+	 	var optionSelected = $("option:selected", this);
+	 	var valueSelected = this.value;
+	 	$("a.downloadRekap").attr("href", function(i, href) {
+	 		var url = '<?php echo base_url() ?>dashboard/checkRekapGolongan'+ '?q='+valueSelected;
+	 	  return url;
+	 	});
+	 });
 
 	});
 	</script>
@@ -467,6 +485,28 @@ $('#rekapInstansiUnker').on('change', function (e) {
 
 					<div class="row">
 						<div class="col-md-6">
+							<div class="box box-success">
+								<div class="box-header with-border">
+									<h3 class="box-title">Rekap Instansi Golongan</h3>
+								</div>
+								<div class="box-body">
+									<div class="form-group">
+											<label>Pilih Instansi</label>
+											<select id="rekapInstansiUnkerGolongan" class="form-control">
+												<option value="100000000000">Semua (Memakan Waktu yang Lama Harap Bersabar)</option>
+												<?php foreach($instansiUnkerja as $key)
+												{
+													?>
+													<option value="<?php echo $key['kunker']?>"><?php echo $key['nunker']?></option>
+												<?php
+												}?>
+											</select>
+										</div>
+									<a class="downloadRekap" href="<?php echo base_url() ?>dashboard/checkRekap">Download Rekap PNS</a>
+
+								</div>
+
+							</div>
           <!-- BAR CHART -->
           <div class="box box-success">
             <div class="box-header with-border">
@@ -500,27 +540,26 @@ $('#rekapInstansiUnker').on('change', function (e) {
           </div>
 
 					<div class="col-md-6">
-				<!-- BAR CHART -->
-				<div class="box box-success">
-					<div class="box-header with-border">
-						<h3 class="box-title">Rekap Data PNS</h3>
-					</div>
-					<div class="box-body">
-						<div class="form-group">
-								<label>Pilih Instansi</label>
-								<select id="rekapInstansiUnker" class="form-control">
-									<option value="100000000000">Semua (Memakan Waktu yang Lama Harap Bersabar)</option>
-									<?php foreach($instansiUnkerja as $key)
-									{
-										?>
-										<option value="<?php echo $key['kunker']?>"><?php echo $key['nunker']?></option>
-									<?php
-									}?>
-								</select>
+						<div class="box box-success">
+							<div class="box-header with-border">
+								<h3 class="box-title">Rekap Instansi Unker Eselon</h3>
 							</div>
-						<a class="downloadRekap" href="<?php echo base_url() ?>dashboard/checkRekap">Download Rekap PNS</a>
+							<div class="box-body">
+								<div class="form-group">
+										<label>Pilih Instansi</label>
+										<select id="rekapInstansiUnkerEselon" class="form-control">
+											<option value="100000000000">Semua (Memakan Waktu yang Lama Harap Bersabar)</option>
+											<?php foreach($instansiUnkerja as $key)
+											{
+												?>
+												<option value="<?php echo $key['kunker']?>"><?php echo $key['nunker']?></option>
+											<?php
+											}?>
+										</select>
+									</div>
+								<a class="downloadRekap" href="<?php echo base_url() ?>dashboard/checkRekap">Download Rekap PNS</a>
 
-		</div>
+							</div>
 
 						</div>
 						<!-- BAR CHART -->
@@ -552,6 +591,9 @@ $('#rekapInstansiUnker').on('change', function (e) {
 								</div>
 							</div>
 							<!-- /.box-body -->
+				<!-- BAR CHART -->
+
+
 					</div>
 					<!-- /.box-body -->
 				</div>
