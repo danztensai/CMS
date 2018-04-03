@@ -502,7 +502,7 @@ $('#rekapInstansiUnker').on('change', function (e) {
 												}?>
 											</select>
 										</div>
-									<a class="downloadRekap" href="<?php echo base_url() ?>dashboard/checkRekap">Download Rekap PNS</a>
+									<a class="downloadRekap" href="<?php echo base_url() ?>dashboard/checkRekapGolongan">Download Rekap PNS</a>
 
 								</div>
 
@@ -557,7 +557,7 @@ $('#rekapInstansiUnker').on('change', function (e) {
 											}?>
 										</select>
 									</div>
-								<a class="downloadRekap" href="<?php echo base_url() ?>dashboard/checkRekap">Download Rekap PNS</a>
+								<a class="downloadRekap" href="<?php echo base_url() ?>dashboard/checkRekapEselon">Download Rekap PNS</a>
 
 							</div>
 
