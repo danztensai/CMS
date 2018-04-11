@@ -3595,7 +3595,7 @@ return $tagImg;
       $user=  $this->ion_auth->user()->row();
       log_message('debug',$user->id);
       $this->ion_auth_model->update($primary_key, $data);
-      
+
 
     }
 
@@ -3915,7 +3915,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($gid);
   			$key = $this->input->get('q');
   			$result = mb_substr($key, 0, 4);
   			log_message('debug','This is the code: '.$result);
-  			$rekap =$this->Simpeg_model->getEselonByInstansi($result) ;
+  			$rekap =$this->Simpeg_model->getEselonByInstansi($key) ;
   		//	log_message(print_r($rekap,TRUE));
   			$data_rekap_bkd =array('rekap'=>$rekap);
   			$this->load->helper('download');

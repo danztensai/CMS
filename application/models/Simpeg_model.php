@@ -8,6 +8,7 @@
 
 		public function getUsiaByInstansi($instansi = null)
 						{
+							$queryAll=False;
 							if($instansi=='100000000000')
 							{
 								$instansi = null;
@@ -15,9 +16,11 @@
 
 							if($instansi == null){
 							$querySQL = "select * from unkerja where kunker like '10%__00000000'";
+							$queryAll = True;
 						}
 						else {
-							$querySQL = "select * from unkerja where kunker like '$instansi'";
+							$result = mb_substr($instansi, 0, 4);
+							$querySQL = "select * from unkerja where kunker like '$result%__000000'";
 						}
 							$data = array();
 							$stackData = array();
@@ -31,7 +34,7 @@
 								{
 								 $data['kunker']=$row->kunker;
 								 $data['nunker']=$row->nunker;
-								 $data['usiaCount']=$this->countUsiaPerInstansi($row->kunker);
+								 $data['usiaCount']=$this->countUsiaPerInstansi($row->kunker,$queryAll);
 								 array_push($stackData,$data);
 								}
 								$query->free_result();
@@ -45,9 +48,15 @@
 						}
 
 
-					public function countUsiaPerInstansi($instansi='103000000000')
+					public function countUsiaPerInstansi($instansi='103000000000',$queryAll)
 			{
-				$kunker = mb_substr($instansi, 0, 4);
+
+				if($queryAll==true){
+					$kunker = mb_substr($instansi, 0, 4);
+				}else{
+					$kunker = mb_substr($instansi, 0, 6);
+				}
+
 				$querySQL = "SELECT SUM(IF(YEAR(CURDATE()) - YEAR(TLAHIR) <= 25, 1, 0)) as 'usiakurangsamadengan25',
 		SUM(IF(YEAR(CURDATE()) - YEAR(TLAHIR) BETWEEN 26 and 30, 1, 0)) as 'usia26_30',
 		SUM(IF(YEAR(CURDATE()) - YEAR(TLAHIR) BETWEEN 31 and 35, 1, 0)) as 'usia31_35',
@@ -92,9 +101,13 @@
 				 }
 			}
 
-		public function countEselonPerInstansi($instansi='103000000000')
+		public function countEselonPerInstansi($instansi='103000000000',$queryAll)
 						  {
-						    $kunker = mb_substr($instansi, 0, 4);
+								if($queryAll==true){
+									$kunker = mb_substr($instansi, 0, 4);
+								}else{
+									$kunker = mb_substr($instansi, 0, 6);
+								}
 						    $querySQL = "SELECT SUM(IF(KESELON LIKE '1%', 1, 0)) AS JumlahEselon1,
 						SUM(IF(KESELON LIKE '2%', 1, 0)) AS JumlahEselon2,
 						SUM(IF(KESELON LIKE '3%', 1, 0)) AS JumlahEselon3,
@@ -158,21 +171,25 @@
 						  }
 							public function getGolonganByInstansi($instansi = null)
 					  {
-							if($instansi=='10000000000')
+							$queryAll=False;
+							if($instansi=='100000000000')
 							{
 								$instansi = null;
+								log_message('debug','Inside 1000000000');
 							}
 
 							if($instansi == null){
 					    $querySQL = "select * from unkerja where kunker like '10%__00000000'";
+							$queryAll=True;
 						}
 						else {
-							$querySQL = "select * from unkerja where kunker like '$instansi'";
+							$result = mb_substr($instansi, 0, 4);
+							$querySQL = "select * from unkerja where kunker like '$result%__000000'";
 						}
 					    $data = array();
 					    $stackData = array();
 
-					    log_message('debug','getRiwayatPangkat: '.$querySQL);
+					    log_message('debug','getGolonganByInstansi: '.$querySQL);
 					    $query = $this->db->query($querySQL);
 
 					    if($query->num_rows()>0)
@@ -181,7 +198,7 @@
 					      {
 					       $data['kunker']=$row->kunker;
 					       $data['nunker']=$row->nunker;
-					       $data['eselonCount']=$this->countGolonganPerInstansi($row->kunker);
+					       $data['eselonCount']=$this->countGolonganPerInstansi($row->kunker,$queryAll);
 					       array_push($stackData,$data);
 					      }
 					      $query->free_result();
@@ -195,9 +212,13 @@
 					  }
 
 
-					public function countGolonganPerInstansi($instansi='103000000000')
+					public function countGolonganPerInstansi($instansi='103000000000',$queryAll)
 			{
-				$kunker = mb_substr($instansi, 0, 4);
+				if($queryAll==true){
+					$kunker = mb_substr($instansi, 0, 4);
+				}else{
+					$kunker = mb_substr($instansi, 0, 6);
+				}
 				$querySQL = "SELECT SUM(IF(KGOLRU LIKE '1%', 1, 0)) as JumlahSemuaGolongan,
 SUM(IF(KGOLRU = '141', 1, 0)) as JumlahGolonganIVA,
 SUM(IF(KGOLRU = '142', 1, 0)) as JumlahGolonganIVB,
@@ -476,7 +497,7 @@ from (
 
 		public function getEselonByInstansi($key=null)
 		{
-
+			$queryAll=False;
 
 			if($key=='10000')
 			{
@@ -485,9 +506,11 @@ from (
 
 			if($key == null){
 			$querySQL = "select * from unkerja where kunker like '10%__00000000'";
+			$queryAll=True;
 			}
 			else {
-				$querySQL = "select * from unkerja where kunker like '$key%__000000'";
+					$result = mb_substr($key, 0, 4);
+				$querySQL = "select * from unkerja where kunker like '$result%__000000'";
 			}
 
 				//$querySQL = "select * from unkerja where kunker like '10%__00000000'";
@@ -504,7 +527,7 @@ from (
 						{
 							$data['kunker']=$row->kunker;
 							$data['nunker']=$row->nunker;
-							$data['eselonCount']=$this->countEselonPerInstansi($row->kunker);
+							$data['eselonCount']=$this->countEselonPerInstansi($row->kunker,$queryAll);
 						 array_push($stackData,$data);
 						}
 						$query->free_result();

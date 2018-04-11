@@ -15,7 +15,7 @@
 			console.log('Rekap changed');
 			var optionSelected = $("option:selected", this);
 			var valueSelected = this.value;
-			$("a.downloadRekap").attr("href", function(i, href) {
+			$("a.downloadRekapUsia").attr("href", function(i, href) {
 				var url = '<?php echo base_url() ?>dashboard/checkRekapUsia'+ '?q='+valueSelected;
 			  return url;
 			});
@@ -447,7 +447,7 @@ $('#rekapInstansiUnker').on('change', function (e) {
 	 	console.log('Rekap changed');
 	 	var optionSelected = $("option:selected", this);
 	 	var valueSelected = this.value;
-	 	$("a.downloadRekap").attr("href", function(i, href) {
+	 	$("a.downloadRekapEselon").attr("href", function(i, href) {
 	 		var url = '<?php echo base_url() ?>dashboard/checkRekapEselon'+ '?q='+valueSelected;
 	 	  return url;
 	 	});
@@ -457,7 +457,7 @@ $('#rekapInstansiUnker').on('change', function (e) {
 	 	console.log('Rekap Golongan changed');
 	 	var optionSelected = $("option:selected", this);
 	 	var valueSelected = this.value;
-	 	$("a.downloadRekap").attr("href", function(i, href) {
+	 	$("a.downloadRekapGolongan").attr("href", function(i, href) {
 	 		var url = '<?php echo base_url() ?>dashboard/checkRekapGolongan'+ '?q='+valueSelected;
 	 	  return url;
 	 	});
@@ -512,7 +512,7 @@ $('#rekapInstansiUnker').on('change', function (e) {
 												}?>
 											</select>
 										</div>
-									<a class="downloadRekap" href="<?php echo base_url() ?>dashboard/checkRekapGolongan">Download Rekap PNS</a>
+									<a class="downloadRekapGolongan" href="<?php echo base_url() ?>dashboard/checkRekapGolongan">Download Rekap PNS</a>
 
 								</div>
 
@@ -567,7 +567,7 @@ $('#rekapInstansiUnker').on('change', function (e) {
 											}?>
 										</select>
 									</div>
-								<a class="downloadRekap" href="<?php echo base_url() ?>dashboard/checkRekapEselon">Download Rekap PNS</a>
+								<a class="downloadRekapEselon" href="<?php echo base_url() ?>dashboard/checkRekapEselon">Download Rekap PNS</a>
 
 							</div>
 
@@ -619,7 +619,7 @@ $('#rekapInstansiUnker').on('change', function (e) {
 												}?>
 											</select>
 										</div>
-									<a class="downloadRekap" href="<?php echo base_url() ?>dashboard/checkRekapUsia">Download Rekap PNS Usia</a>
+									<a class="downloadRekapUsia" href="<?php echo base_url() ?>dashboard/checkRekapUsia">Download Rekap PNS Usia</a>
 
 								</div>
 
