@@ -3844,6 +3844,9 @@ $this->data['menu']=$this->Menu_model->menuMaster($gid);
 
 			$this->data['instansiUnkerja']=$this->Simpeg_model->getInstansi();
 			$this->data['rekapPNSBKD']=$this->Simpeg_model->getDaftarUrutKepangkatanByInstansiJoinQuery();
+
+      $this->data['totalPNSAktif']=$this->Simpeg_model->getTotalPNSAktif();
+      $this->data['totalGender']=$this->Simpeg_model->getCountJenisKelamin();
 			log_message('INFO','User Id : '.$userId);
 
 				$this->render('dashboard/eis_main_view');

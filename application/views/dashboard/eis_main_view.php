@@ -491,6 +491,61 @@ $('#rekapInstansiUnker').on('change', function (e) {
 			<!-- Main row -->
 			<div class="row">
 				<!-- Left col -->
+				<div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-yellow">
+            <div class="inner">
+              <h3><?php echo $totalPNSAktif[0]['total'];?></h3>
+
+              <p>Total Jumlah PNS</p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-users"></i>
+            </div>
+          </div>
+        </div>
+				<div class="col-lg-3 col-xs-6">
+				          <!-- small box -->
+				          <div class="small-box bg-red">
+				            <div class="inner">
+				              <h3><?php echo count($instansiUnkerja)?></h3>
+
+				              <p>Organisasi Perangkat Daerah</p>
+				            </div>
+				            <div class="icon">
+				              <i class="fa fa-briefcase"></i>
+				            </div>
+				          </div>
+			 </div>
+			 <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-aqua">
+            <div class="inner">
+              <h3><?php echo $totalGender[0]['total']?></h3>
+
+              <p>Total Laki-laki</p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-male"></i>
+            </div>
+          </div>
+        </div>
+
+				<div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-green">
+            <div class="inner">
+              <h3><?php echo $totalGender[1]['total']?></h3>
+
+              <p>Total Perempuan</p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-female"></i>
+            </div>
+
+          </div>
+        </div>
+				<!-- Mini Box Top  -->
 				<div class="col-md-12">
 
 					<div class="row">

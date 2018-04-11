@@ -756,6 +756,36 @@ from (
 						return $data;
 					}
 		}
+		public function getCountJenisKelamin()
+		{
+
+				$querySQL = "select count(KJKEL) as total, KJKEL from datautama where statusHidupPensiunPindah = 1 group by kjkel";
+
+				$data = array();
+				$stackData = array();
+
+				log_message('debug','getCountJenisKelamin: '.$querySQL);
+				$query = $this->db->query($querySQL);
+
+				if($query->num_rows()>0)
+					{ $count = 1;
+						foreach($query->result() as $row)
+						{
+							$data['total']=$row->total;
+							$data['KJKEL']=$row->KJKEL;
+
+
+						 array_push($stackData,$data);
+						}
+						$query->free_result();
+						return $stackData;
+					}else
+					{
+
+						$query->free_result();
+						return $data;
+					}
+		}
 		public function getMasaKerjaByNip($nip)
 		{
 
@@ -778,6 +808,34 @@ from (
 						}
 						$query->free_result();
 						return $data;
+					}else
+					{
+
+						$query->free_result();
+						return $data;
+					}
+		}
+
+		public function getTotalPNSAktif()
+		{
+
+				$querySQL = "select count(*) as total from datautama where statusHidupPensiunPindah = 1";
+
+				$data = array();
+				$stackData = array();
+
+				log_message('debug','getTotalPNSAktif: '.$querySQL);
+				$query = $this->db->query($querySQL);
+
+				if($query->num_rows()>0)
+					{ $count = 1;
+						foreach($query->result() as $row)
+						{
+							$data['total']=$row->total;
+						 	array_push($stackData,$data);
+						}
+						$query->free_result();
+						return $stackData;
 					}else
 					{
 
