@@ -1,13 +1,13 @@
 <script>  //Date picker
 $( document ).ready(function() {
   var $loading = $('.modal').hide();
-          $(document)
-            .ajaxStart(function () {
-              $loading.show();
-            })
-            .ajaxStop(function () {
-              $loading.hide();
-            });
+  //         $(document)
+  //           .ajaxStart(function () {
+  //             $loading.show();
+  //           })
+  //           .ajaxStop(function () {
+  //             $loading.hide();
+  //           });
 var stsUpdate = <?php echo $identitas['stsUpdate'] ?>;
 
 if(stsUpdate==0)
@@ -43,6 +43,7 @@ $(':checkbox').each(function(){
     format: 'yyyy-mm-dd'
   });
 $('#submitIdentitas').click(function(){
+  $loading.show();
   if (confirm('Anda Yakin Akan Merubah Data Identitas')) {
 
     var f = $("#formIdentitas").serialize()
@@ -74,7 +75,7 @@ $('#submitIdentitas').click(function(){
                           type: 'post',
                           success: function (response) {
                             console.log(response);
-
+ $loading.hide();
                             alert('Perubahan Berhasil, Menunggu Untuk Dikonfirmasi');
                              location.reload();
                           },
