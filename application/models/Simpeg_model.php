@@ -5,6 +5,93 @@
 			parent::__construct();
 
 		}
+
+		public function getUsiaByInstansi($instansi = null)
+						{
+							if($instansi=='100000000000')
+							{
+								$instansi = null;
+							}
+
+							if($instansi == null){
+							$querySQL = "select * from unkerja where kunker like '10%__00000000'";
+						}
+						else {
+							$querySQL = "select * from unkerja where kunker like '$instansi'";
+						}
+							$data = array();
+							$stackData = array();
+
+							log_message('debug','getUsiaByInstansi: '.$querySQL);
+							$query = $this->db->query($querySQL);
+
+							if($query->num_rows()>0)
+							 { $count = 1;
+								foreach($query->result() as $row)
+								{
+								 $data['kunker']=$row->kunker;
+								 $data['nunker']=$row->nunker;
+								 $data['usiaCount']=$this->countUsiaPerInstansi($row->kunker);
+								 array_push($stackData,$data);
+								}
+								$query->free_result();
+								return $stackData;
+							 }else
+							 {
+
+								$query->free_result();
+								return $data;
+							 }
+						}
+
+
+					public function countUsiaPerInstansi($instansi='103000000000')
+			{
+				$kunker = mb_substr($instansi, 0, 4);
+				$querySQL = "SELECT SUM(IF(YEAR(CURDATE()) - YEAR(TLAHIR) <= 25, 1, 0)) as 'usiakurangsamadengan25',
+		SUM(IF(YEAR(CURDATE()) - YEAR(TLAHIR) BETWEEN 26 and 30, 1, 0)) as 'usia26_30',
+		SUM(IF(YEAR(CURDATE()) - YEAR(TLAHIR) BETWEEN 31 and 35, 1, 0)) as 'usia31_35',
+		SUM(IF(YEAR(CURDATE()) - YEAR(TLAHIR) BETWEEN 26 and 40, 1, 0)) as 'usia36_40',
+		SUM(IF(YEAR(CURDATE()) - YEAR(TLAHIR) BETWEEN 26 and 45, 1, 0)) as 'usia41_45',
+		SUM(IF(YEAR(CURDATE()) - YEAR(TLAHIR) BETWEEN 26 and 50, 1, 0)) as 'usia46_50',
+		SUM(IF(YEAR(CURDATE()) - YEAR(TLAHIR) BETWEEN 26 and 55, 1, 0)) as 'usia51_55',
+		SUM(IF(YEAR(CURDATE()) - YEAR(TLAHIR) BETWEEN 26 and 60, 1, 0)) as 'usia56_60',
+		SUM(IF(YEAR(CURDATE()) - YEAR(TLAHIR) >= 61 , 1, 0)) as 'usialebihbesarsamadengan61',
+		SUM(IF(YEAR(CURDATE()) - YEAR(TLAHIR) BETWEEN 0 and 100, 1, 0)) as 'Jumlah'
+		FROM rekap_instansi WHERE kunkers LIKE '$kunker%'";
+
+				$data = array();
+				$stackData = array();
+
+				log_message('debug','countUsiaPerInstansi: '.$querySQL);
+				$query = $this->db->query($querySQL);
+
+				if($query->num_rows()>0)
+				 { $count = 1;
+					foreach($query->result() as $row)
+					{
+					 $data['usiakurangsamadengan25']=$row->usiakurangsamadengan25;
+					 $data['usia26_30']=$row->usia26_30;
+					 $data['usia31_35']=$row->usia31_35;
+					 $data['usia36_40']=$row->usia36_40;
+					 $data['usia41_45']=$row->usia41_45;
+					 $data['usia46_50']=$row->usia46_50;
+					 $data['usia51_55']=$row->usia51_55;
+					 $data['usia56_60']=$row->usia56_60;
+					 $data['usialebihbesarsamadengan61']=$row->usialebihbesarsamadengan61;
+					 $data['Jumlah']=$row->Jumlah;
+					 array_push($stackData,$data);
+					}
+					$query->free_result();
+					return $stackData;
+				 }else
+				 {
+
+					$query->free_result();
+					return $data;
+				 }
+			}
+
 		public function countEselonPerInstansi($instansi='103000000000')
 						  {
 						    $kunker = mb_substr($instansi, 0, 4);
@@ -71,7 +158,7 @@
 						  }
 							public function getGolonganByInstansi($instansi = null)
 					  {
-							if($instansi=='100000000000')
+							if($instansi=='10000000000')
 							{
 								$instansi = null;
 							}
@@ -232,7 +319,8 @@ GROUP BY rt.ktp";
 		public function getPersentaseGenderPNS($instansi = null)
 		{
 			$querySQL = "select
-  concat(10*floor(age/10), '-', 10*floor(age/10) + 10) as `range`,
+  concat(5*floor(age/5), '-', 5*floor(age/5
+	) + 5) as `range`,
   gender,
   count(*) as count
 from (
@@ -245,7 +333,7 @@ from (
 			if ($instansi !=null)
 			{
 				$querySQL = "select
-  concat(10*floor(age/10), '-', 10*floor(age/10) + 10) as `range`,
+  concat(5*floor(age/5), '-', 5*floor(age/5) + 5) as `range`,
   gender,
   count(*) as count
 from (
@@ -386,15 +474,28 @@ from (
 					}
 		}
 
-		public function getEselonByInstansi()
+		public function getEselonByInstansi($key=null)
 		{
 
-				$querySQL = "select * from unkerja where kunker like '10%__00000000'";
+
+			if($key=='10000')
+			{
+				$key = null;
+			}
+
+			if($key == null){
+			$querySQL = "select * from unkerja where kunker like '10%__00000000'";
+			}
+			else {
+				$querySQL = "select * from unkerja where kunker like '$key%__000000'";
+			}
+
+				//$querySQL = "select * from unkerja where kunker like '10%__00000000'";
 
 				$data = array();
 				$stackData = array();
 
-				log_message('debug','getRiwayatPangkat: '.$querySQL);
+				log_message('debug','getEselonByInstansi: '.$querySQL);
 				$query = $this->db->query($querySQL);
 
 				if($query->num_rows()>0)
@@ -415,7 +516,7 @@ from (
 						return $data;
 					}
 		}
-		
+
 		public function getRiwayatDiklatRekap($nip)
 		{
 

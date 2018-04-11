@@ -11,6 +11,16 @@
 		var data1 = [];
 		var data2 = [];
 
+		$('#rekapInstansiUnkerUsia').on('change', function (e) {
+			console.log('Rekap changed');
+			var optionSelected = $("option:selected", this);
+			var valueSelected = this.value;
+			$("a.downloadRekap").attr("href", function(i, href) {
+				var url = '<?php echo base_url() ?>dashboard/checkRekapUsia'+ '?q='+valueSelected;
+			  return url;
+			});
+		});
+
 $('#rekapInstansiUnker').on('change', function (e) {
 	console.log('Rekap changed');
 	var optionSelected = $("option:selected", this);
@@ -83,7 +93,7 @@ $('#rekapInstansiUnker').on('change', function (e) {
     var optionSelected = $("option:selected", this);
     var valueSelected = this.value;
   				console.log(this.value);
-					$.get('/cms/dashboard/persentaseGenderPNS',{ kunker: this.value } , function(data) {
+					$.get('<?php echo base_url() ?>dashboard/persentaseGenderPNS',{ kunker: this.value } , function(data) {
 					  console.log(data);
  					window.myBar.destroy();
   						 var ctx = document.getElementById('canvas').getContext('2d');
@@ -139,13 +149,13 @@ $('#rekapInstansiUnker').on('change', function (e) {
 				});
 
 
-		$.get('/cms/dashboard/persentaseGenderPNS', function(data) {
+		$.get('<?php echo base_url() ?>dashboard/persentaseGenderPNS', function(data) {
 		  console.log(data);
 
 				callback(data,0);
 		});
 
-		$.get('/cms/dashboard/persentasePendidikanPNS', function(data) {
+		$.get('<?php echo base_url() ?>dashboard/persentasePendidikanPNS', function(data) {
 			console.log(data);
 
 				callbackPendidikan(data,0);
@@ -253,7 +263,7 @@ $('#rekapInstansiUnker').on('change', function (e) {
 					var colorNames = Object.keys(window.chartColors);
 					//add new datasets
 							var colorName = colorNames[barChartDataPendidikan.datasets.length % colorNames.length];
-							console.log(colorName);
+						//	console.log(colorName);
 					var dsColor = window.chartColors[colorName];
 					var newDataset = {
 						label: result.pendidikan,
@@ -592,7 +602,28 @@ $('#rekapInstansiUnker').on('change', function (e) {
 							</div>
 							<!-- /.box-body -->
 				<!-- BAR CHART -->
+				<div class="box box-success">
+								<div class="box-header with-border">
+									<h3 class="box-title">Rekapitulasi PNS Do Berdasarkan Usia</h3>
+								</div>
+								<div class="box-body">
+									<div class="form-group">
+											<label>Pilih Instansi</label>
+											<select id="rekapInstansiUnkerUsia" class="form-control">
+												<option value="100000000000">Semua (Memakan Waktu yang Lama Harap Bersabar)</option>
+												<?php foreach($instansiUnkerja as $key)
+												{
+													?>
+													<option value="<?php echo $key['kunker']?>"><?php echo $key['nunker']?></option>
+												<?php
+												}?>
+											</select>
+										</div>
+									<a class="downloadRekap" href="<?php echo base_url() ?>dashboard/checkRekapUsia">Download Rekap PNS Usia</a>
 
+								</div>
+
+									</div>
 
 					</div>
 					<!-- /.box-body -->

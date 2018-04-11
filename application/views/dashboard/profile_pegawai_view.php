@@ -31,6 +31,7 @@
                                   <li class=""><a href="#riwayatPendidikan" data-toggle="tab" aria-expanded="false">Riwayat Pendidikan</a></li>
                                   <li class=""><a href="#riwayatKeluarga" data-toggle="tab" aria-expanded="false">Riwayat Keluarga</a></li>
                                   <li class=""><a href="#documentOnline" data-toggle="tab" aria-expanded="false">Arsip/Dokumen</a></li>
+                                  <li class=""><a href="#setting" data-toggle="tab" aria-expanded="false">Settings</a></li>
                                 </ul>
                                 <div class="tab-content">
                                 <?php
@@ -46,6 +47,35 @@
                                   echo $documentOnline;
 
                                 ?>
+                                <div class="tab-pane" id="setting">
+                                  <div class="box box-danger">
+            <div class="box-header with-border">
+              <h3 class="box-title">Ubah Kata Sandi</h3>
+            </div>
+            <!-- /.box-header -->
+            <!-- form start -->
+
+              <div class="box-body">
+                <div class="form-group">
+                  <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
+
+                  <div class="col-sm-4">
+                    <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+                  </div>
+                  <div class="col-sm-4">
+                      <button id="updatePass" class="btn btn-info pull-right">Ganti Password</button>
+                  </div>
+                </div>
+
+              </div>
+              <!-- /.box-body -->
+              <div class="box-footer">
+                <!-- <button type="submit" class="btn btn-info pull-right">Change Password</button> -->
+              </div>
+              <!-- /.box-footer -->
+
+          </div>
+                                </div>
                               </div>
                                 <!-- /.tab-content -->
                   </div>
@@ -57,3 +87,16 @@
       </div>
      </div>
     </div>
+    <script>
+    $(document).ready(function(){
+    $("#updatePass").click(function(){
+
+      var pass = $('#inputPassword').val();
+      console.log(pass);
+      $.post( "<?php echo base_url() ?>dashboard/updatePassword", { password: pass })
+            .done(function( data ) {
+              alert( "Password Berhasil Di Update");
+            });
+
+    });
+});</script>
