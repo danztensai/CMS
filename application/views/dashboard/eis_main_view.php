@@ -463,6 +463,16 @@ $('#rekapInstansiUnker').on('change', function (e) {
 	 	});
 	 });
 
+	 $('#rekapPendidikan').on('change', function (e) {
+	console.log('Rekap changed');
+	var optionSelected = $("option:selected", this);
+	var valueSelected = this.value;
+	$("a.downloadRekapPendidikan").attr("href", function(i, href) {
+		var url = '<?php echo base_url() ?>dashboard/checkRekapPendidikan'+ '?q='+valueSelected;
+	  return url;
+	});
+});
+
 	});
 	</script>
 	<!-- Content Wrapper. Contains page content -->
@@ -600,6 +610,28 @@ $('#rekapInstansiUnker').on('change', function (e) {
 
               </div>
             </div>
+						<div class="box box-success">
+					<div class="box-header with-border">
+						<h3 class="box-title">Rekapitulasi PNS Do Berdasarkan Pendidikan dan Instansi</h3>
+					</div>
+					<div class="box-body">
+						<div class="form-group">
+								<label>Pilih Instansi</label>
+								<select id="rekapPendidikan" class="form-control">
+									<option value="100000000000">Semua (Memakan Waktu yang Lama Harap Bersabar)</option>
+									<?php foreach($instansiUnkerja as $key)
+									{
+										?>
+										<option value="<?php echo $key['kunker']?>"><?php echo $key['nunker']?></option>
+									<?php
+									}?>
+								</select>
+							</div>
+						<a class="downloadRekapPendidikan" href="<?php echo base_url() ?>dashboard/checkRekapPendidikan">Download Rekap PNS Usia Pendidikan dan Instansi</a>
+
+					</div>
+
+						</div>
             <!-- /.box-body -->
 
           </div>
@@ -655,6 +687,7 @@ $('#rekapInstansiUnker').on('change', function (e) {
 
 								</div>
 							</div>
+
 							<!-- /.box-body -->
 				<!-- BAR CHART -->
 				<div class="box box-success">

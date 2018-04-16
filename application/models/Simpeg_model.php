@@ -5,7 +5,103 @@
 			parent::__construct();
 
 		}
+		public function getTingkatPendidikanByInstansi($instansi = null)
+			{
+				$queryAll=False;
+				if($instansi=='100000000000')
+				{
+					$instansi = null;
+				}
 
+				if($instansi == null){
+				$querySQL = "select * from unkerja where kunker like '10%__00000000'";
+					$queryAll = True;
+			}
+			else {
+				$result = mb_substr($instansi, 0, 4);
+				$querySQL = "select * from unkerja where kunker like '$result%__000000'";
+			}
+				$data = array();
+				$stackData = array();
+
+				log_message('debug','getTingkatPendidikanByInstansi: '.$querySQL);
+				$query = $this->db->query($querySQL);
+
+				if($query->num_rows()>0)
+				 { $count = 1;
+					foreach($query->result() as $row)
+					{
+					 $data['kunker']=$row->kunker;
+					 $data['nunker']=$row->nunker;
+					 $data['tingkatPendidikanCount']=$this->countTingkatPendidikanPerInstansi($row->kunker,$queryAll);
+					 array_push($stackData,$data);
+					}
+					$query->free_result();
+					return $stackData;
+				 }else
+				 {
+
+					$query->free_result();
+					return $data;
+				 }
+			}
+		public function countTingkatPendidikanPerInstansi($instansi='103000000000',$queryAll)
+		{
+
+		if($queryAll==true){
+			$kunker = mb_substr($instansi, 0, 4);
+		}else{
+			$kunker = mb_substr($instansi, 0, 6);
+		}
+		$querySQL = "SELECT SUM(IF(ktp = '10', 1, 0)) as JumlahS3,
+		SUM(IF(ktp = '09', 1, 0)) as JumlahS2,
+		SUM(IF(ktp = '08', 1, 0)) as JumlahS1,
+		SUM(IF(ktp = '07', 1, 0)) as JumlahDIV,
+		SUM(IF(ktp = '06', 1, 0)) as JumlahD3,
+		SUM(IF(ktp = '05', 1, 0)) as JumlahD2,
+		SUM(IF(ktp = '04', 1, 0)) as JumlahD1,
+		SUM(IF(ktp = '03', 1, 0)) as JumlahSMA,
+		SUM(IF(ktp = '02', 1, 0)) as JumlahSMP,
+		SUM(IF(ktp = '01', 1, 0)) as JumlahSD,
+		SUM(IF(ktp = '00', 1, 0)) as NonSD,
+		SUM(IF(ktp IS NULL , 1, 0)) as TidakAda,
+		SUM(IF(ktp LIKE '0%', 1, 0)) as JumlahSemua
+		FROM rekap_instansi WHERE kunkers LIKE '$kunker%'";
+
+		$data = array();
+		$stackData = array();
+
+		log_message('debug','countTingkatPendidikanPerInstansi: '.$querySQL);
+		$query = $this->db->query($querySQL);
+
+		if($query->num_rows()>0)
+		{ $count = 1;
+		foreach($query->result() as $row)
+		{
+		 $data['JumlahS3']=$row->JumlahS3;
+		 $data['JumlahS2']=$row->JumlahS2;
+		 $data['JumlahS1']=$row->JumlahS1;
+		 $data['JumlahDIV']=$row->JumlahDIV;
+		 $data['JumlahD3']=$row->JumlahD3;
+		 $data['JumlahD2']=$row->JumlahD2;
+		 $data['JumlahD1']=$row->JumlahD1;
+		 $data['JumlahSMA']=$row->JumlahSMA;
+		 $data['JumlahSMP']=$row->JumlahSMP;
+		 $data['JumlahSD']=$row->JumlahSD;
+		 $data['NonSD']=$row->NonSD;
+		 $data['TidakAda']=$row->TidakAda;
+		 $data['JumlahSemua']=$row->JumlahSemua;
+		 array_push($stackData,$data);
+		}
+		$query->free_result();
+		return $stackData;
+		}else
+		{
+
+		$query->free_result();
+		return $data;
+		}
+		}
 		public function getUsiaByInstansi($instansi = null)
 						{
 							$queryAll=False;

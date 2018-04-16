@@ -4055,7 +4055,50 @@ $this->data['menu']=$this->Menu_model->menuMaster($gid);
     force_download($pdfFilePath, NULL);
 
   }
+  public function checkRekapPendidikan()
+  		{
+  			$key = $this->input->get('q');
+  			$result = mb_substr($key, 0, 4);
+  			log_message('debug','This is the code: '.$result);
+  			$rekap =$this->Simpeg_model->getTingkatPendidikanByInstansi($key) ;
+  		//	log_message(print_r($rekap,TRUE));
+  			$data_rekap_bkd =array('rekap'=>$rekap);
+  			$this->load->helper('download');
+  			$pdfFilePath = "assets/".date("h_i_sa").".pdf";
+  			if (file_exists($pdfFilePath) == FALSE)
 
+  			{
+  				$dataEmail='';
+  				ini_set('memory_limit','750M'); // boost the memory limit if it's low ;)
+
+  				$this->load->library('pdf');
+  				$data_rekap_bkd =array('rekap'=>$rekap);
+
+  				$html = $this->load->view('eis_pendidikan_pdf', $data_rekap_bkd, true); // render the view into HTML
+
+  				$pdf = $this->pdf->load();
+  				$pdf->AddPage('L', // L - landscape, P - portrait
+  				 '', '', '', '',
+  				 30, // margin_left
+  				 30, // margin right
+  				 30, // margin top
+  				 30, // margin bottom
+  				 18, // margin header
+  				 12); // ma
+  				$pdf->SetFooter($_SERVER['HTTP_HOST'].'|{PAGENO}|'.date(DATE_RFC822)); // Add a footer for good measure ;)
+  				$pdf->cacheTables = true;
+  				$pdf->simpleTables=true;
+  				$pdf->packTableData=true;
+  				$pdf->WriteHTML($html); // write the HTML into the PDF
+
+  				$pdf->Output($pdfFilePath, 'F'); // save to file because we can
+
+  			}
+  			$pathAttachments =$pdfFilePath;
+  			force_download($pdfFilePath, NULL);
+
+  		}
+      
 
 
 	}
