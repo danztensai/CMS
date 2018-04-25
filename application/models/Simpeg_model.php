@@ -5,6 +5,360 @@
 			parent::__construct();
 
 		}
+
+		public function getCountTotalRowAllHistoryAbsensiBawahan($key,$limitStart,$limitLength,$searchColumn,$draw,$orderByColumn,$orderByDir,$nip)
+    {
+
+
+		    $querySQL = "SELECT count(*) as total FROM
+										h_presensi hp
+										left join m_pegawai mp on hp.pegawai_id = mp.pegawai_id
+										left join m_presensi_status mps on mps.presensi_status_id = hp.presensi_status_id
+										left join m_status ms on ms.status_id = hp.status_id  where mp.nip_atasan = '$nip' and mp.nama like '%$searchColumn%' ";
+
+				 $db2 = $this->load->database('absensi',true);
+		      log_message('debug','Query getCountTotalRowAllHistoryAbsensiBawahan :'.$querySQL);
+		      $query = $db2->query($querySQL);
+
+		      $total=0;
+		      if($query->num_rows()>0)
+		        { $count = 1;
+		          foreach($query->result() as $row)
+		          {
+		            $total=$row->total;
+
+
+		          }
+		          $query->free_result();
+
+
+		        }
+		        return $total;
+    }
+		function getHistoryAbsensiBawahan($key,$limitStart,$limitLength,$searchColumn,$draw,$orderByColumn,$orderByDir,$nip)
+		{
+			$orderBy = $orderByColumn;
+			$orderQuery = '';
+			if($orderByColumn != 0)
+			{
+				log_message('debug','Inside Order By 0');
+				$orderQuery = "order by ".($orderByColumn+1)." ".$orderByDir;
+
+
+			}
+			$querySQL = "SELECT mp.nip,mp.nama,hp.waktu,mps.status,hp.alasan,hp.isOnLocation,ms.status as statusApprove FROM
+									h_presensi hp
+									left join m_pegawai mp on hp.pegawai_id = mp.pegawai_id
+									left join m_presensi_status mps on mps.presensi_status_id = hp.presensi_status_id
+									left join m_status ms on ms.status_id = hp.status_id  where mp.nip_atasan = '$nip' ".$orderQuery." limit $limitStart,$limitLength";
+			// $querySQL = "select du.nipBaru as nip,du.nama as nama,k2.nunker as instansi,k1.nunker as subUnit ,ja.NJAB as jabatan,DATE_FORMAT(FROM_DAYS(TO_DAYS(NOW())-TO_DAYS(DU.TLAHIR)), '%Y')+0 AS age
+			// 							from datautama du
+			// 							left join jakhir ja on du.nipBaru = ja.nip
+			// 							left join unkerja k1 on k1.kunker = ja.kunkers
+			// 							left join unkerja k2 on k2.kunker = ja.kunkersInduk
+			// 							where du.kedudukanHukum=1 and du.statusHidupPensiunPindah =1  and MONTH(STR_TO_DATE(DU.TLAHIR, '%Y-%m-%d')) = MONTH(NOW()) and day(STR_TO_DATE(DU.TLAHIR, '%Y-%m-%d')) = day(NOW()) and ja.jnsjab=1 and
+			// 							du.nama like '%$searchColumn%' ".$orderQuery." limit $limitStart,$limitLength";
+
+			log_message('debug','Query getHistoryAbsensi :  '.$querySQL);
+
+			$stackData = array();
+			 $db2 = $this->load->database('absensi',true);
+			$query = $db2->query($querySQL);
+
+			if($query->num_rows()>0)
+				{ $count = 1;
+					foreach($query->result() as $row)
+					{
+						$data = array();
+						$data[]=$row->nip;
+						$data[]=$row->nama;
+						$data[]=$row->waktu;
+						$data[]=$row->status;
+						$data[]=$row->alasan;
+						$data[]=$row->isOnLocation;
+						$data[]=$row->statusApprove;
+
+
+						array_push($stackData,$data);
+					}
+					$query->free_result();
+					return $stackData;
+				}else
+				{
+
+					$query->free_result();
+					return null;
+				}
+		}
+
+
+
+
+		public function getCountAllStatusAbsensi($nip)
+		{
+
+
+				$querySQL = "SELECT count(mps.status) as total,mps.status,mps.presensi_status_id as kode FROM
+											h_presensi hp
+											left join m_pegawai mp on hp.pegawai_id = mp.pegawai_id
+											left join m_presensi_status mps on mps.presensi_status_id = hp.presensi_status_id
+											left join m_status ms on ms.status_id = hp.status_id  where mp.nip = $nip group by mps.status";
+				$data = array();
+				$stackData = array();
+				 $db2 = $this->load->database('absensi',true);
+					log_message('debug','Query getCountAllStatusAbsensi :'.$querySQL);
+					$query = $db2->query($querySQL);
+
+					if($query->num_rows()>0)
+					{ $count = 1;
+						foreach($query->result() as $row)
+						{
+							$data['total']=$row->total;
+							$data['status']=$row->status;
+							$data['kode']=$row->kode;
+
+							array_push($stackData,$data);
+						}
+						$query->free_result();
+						return $stackData;
+					}else
+					{
+
+						$query->free_result();
+						return $data;
+					}
+		}
+
+
+
+
+
+
+
+
+
+
+
+		public function getCountTotalRowAllHistory($key,$limitStart,$limitLength,$searchColumn,$draw,$orderByColumn,$orderByDir,$nip)
+    {
+
+
+		    $querySQL = "SELECT count(*) as total FROM
+										h_presensi hp
+										left join m_pegawai mp on hp.pegawai_id = mp.pegawai_id
+										left join m_presensi_status mps on mps.presensi_status_id = hp.presensi_status_id
+										left join m_status ms on ms.status_id = hp.status_id  where mp.nip = '$nip' and mp.nama like '%$searchColumn%' ";
+
+				 $db2 = $this->load->database('absensi',true);
+		      log_message('debug','Query getCountTotalRowAllHistory :'.$querySQL);
+		      $query = $db2->query($querySQL);
+
+		      $total=0;
+		      if($query->num_rows()>0)
+		        { $count = 1;
+		          foreach($query->result() as $row)
+		          {
+		            $total=$row->total;
+
+
+		          }
+		          $query->free_result();
+
+
+		        }
+		        return $total;
+    }
+		function getHistoryAbsensi ($key,$limitStart,$limitLength,$searchColumn,$draw,$orderByColumn,$orderByDir,$nip)
+		{
+			$orderBy = $orderByColumn;
+			$orderQuery = '';
+			if($orderByColumn != 0)
+			{
+				log_message('debug','Inside Order By 0');
+				$orderQuery = "order by ".($orderByColumn+1)." ".$orderByDir;
+
+
+			}
+			$querySQL = "SELECT mp.nip,mp.nama,hp.waktu,mps.status,hp.alasan,hp.isOnLocation,ms.status as statusApprove FROM
+									h_presensi hp
+									left join m_pegawai mp on hp.pegawai_id = mp.pegawai_id
+									left join m_presensi_status mps on mps.presensi_status_id = hp.presensi_status_id
+									left join m_status ms on ms.status_id = hp.status_id  where mp.nip = '$nip' ".$orderQuery." limit $limitStart,$limitLength";
+			// $querySQL = "select du.nipBaru as nip,du.nama as nama,k2.nunker as instansi,k1.nunker as subUnit ,ja.NJAB as jabatan,DATE_FORMAT(FROM_DAYS(TO_DAYS(NOW())-TO_DAYS(DU.TLAHIR)), '%Y')+0 AS age
+			// 							from datautama du
+			// 							left join jakhir ja on du.nipBaru = ja.nip
+			// 							left join unkerja k1 on k1.kunker = ja.kunkers
+			// 							left join unkerja k2 on k2.kunker = ja.kunkersInduk
+			// 							where du.kedudukanHukum=1 and du.statusHidupPensiunPindah =1  and MONTH(STR_TO_DATE(DU.TLAHIR, '%Y-%m-%d')) = MONTH(NOW()) and day(STR_TO_DATE(DU.TLAHIR, '%Y-%m-%d')) = day(NOW()) and ja.jnsjab=1 and
+			// 							du.nama like '%$searchColumn%' ".$orderQuery." limit $limitStart,$limitLength";
+
+			log_message('debug','Query getHistoryAbsensi :  '.$querySQL);
+
+			$stackData = array();
+			 $db2 = $this->load->database('absensi',true);
+			$query = $db2->query($querySQL);
+
+			if($query->num_rows()>0)
+				{ $count = 1;
+					foreach($query->result() as $row)
+					{
+						$data = array();
+						$data[]=$row->nip;
+						$data[]=$row->nama;
+						$data[]=$row->waktu;
+						$data[]=$row->status;
+						$data[]=$row->alasan;
+						$data[]=$row->isOnLocation;
+						$data[]=$row->statusApprove;
+
+
+						array_push($stackData,$data);
+					}
+					$query->free_result();
+					return $stackData;
+				}else
+				{
+
+					$query->free_result();
+					return null;
+				}
+		}
+
+
+		public function getTingkatPendidikanPns()
+{
+
+	$querySQL = "select * from tpu";
+
+	$data = array();
+	$stackData = array();
+
+	log_message('debug','getTingkatPendidikanPns: '.$querySQL);
+	$query = $this->db->query($querySQL);
+
+	if($query->num_rows()>0)
+	{ $count = 1;
+		foreach($query->result() as $row)
+		{
+			$data['KJUR']=$row->KJUR;
+			$data['NJUR']=$row->NJUR;
+
+
+			array_push($stackData,$data);
+		}
+		$query->free_result();
+		return $stackData;
+	}else
+	{
+
+		$query->free_result();
+		return $data;
+	}
+}
+public function getGolonganPerJurusan($kjur = null)
+	{
+		if($kjur == null){
+		$querySQL = "select * from tpu ORDER BY KJUR ASC";
+	}
+	else {
+		$querySQL = "select * from tpu where KJUR = '$kjur'";
+	}
+		$data = array();
+		$stackData = array();
+
+		log_message('debug','getJurusanPerGolongan: '.$querySQL);
+		$query = $this->db->query($querySQL);
+
+		if($query->num_rows()>0)
+		 { $count = 1;
+			foreach($query->result() as $row)
+			{
+			 $data['KJUR']=$row->KJUR;
+			 $data['NJUR']=$row->NJUR;
+			 $data['golonganJurusanCount']=$this->countGolonganPerJurusan($row->KJUR);
+			 array_push($stackData,$data);
+			}
+			$query->free_result();
+			return $stackData;
+		 }else
+		 {
+
+			$query->free_result();
+			return $data;
+		 }
+	}
+
+
+public function countGolonganPerJurusan($kjur='10')
+{
+$kunker = mb_substr($kjur, 0, 2);
+$querySQL = "SELECT SUM(IF(KGOLRU LIKE '1%', 1, 0)) as JumlahSemuaGolongan,
+SUM(IF(KGOLRU = '141', 1, 0)) as JumlahGolonganIVA,
+SUM(IF(KGOLRU = '142', 1, 0)) as JumlahGolonganIVB,
+SUM(IF(KGOLRU = '143', 1, 0)) as JumlahGolonganIVC,
+SUM(IF(KGOLRU = '144', 1, 0)) as JumlahGolonganIVD,
+SUM(IF(KGOLRU = '145', 1, 0)) as JumlahGolonganIVE,
+SUM(IF(KGOLRU like '14%', 1, 0)) as JumlahGolonganIV,
+SUM(IF(KGOLRU = '131', 1, 0)) as JumlahBGolonganIIIA,
+SUM(IF(KGOLRU = '132', 1, 0)) as JumlahGolonganIIIB,
+SUM(IF(KGOLRU = '133', 1, 0)) as JumlahGolonganIIIC,
+SUM(IF(KGOLRU = '134', 1, 0)) as JumlahGolonganIIID,
+SUM(IF(KGOLRU like '13%', 1, 0)) as JumlahGolonganIII,
+SUM(IF(KGOLRU = '121', 1, 0)) as JumlahGolonganIIA,
+SUM(IF(KGOLRU = '122', 1, 0)) as JumlahGolonganIIB,
+SUM(IF(KGOLRU = '123', 1, 0)) as JumlahGolonganIIC,
+SUM(IF(KGOLRU = '124', 1, 0)) as JumlahGolonganIID,
+SUM(IF(KGOLRU like '12%', 1, 0)) as JumlahGolonganII,
+SUM(IF(KGOLRU = '111', 1, 0)) as JumlahGolonganIA,
+SUM(IF(KGOLRU = '112', 1, 0)) as JumlahGolonganIB,
+SUM(IF(KGOLRU = '113', 1, 0)) as JumlahGolonganIC,
+SUM(IF(KGOLRU = '114', 1, 0)) as JumlahGolonganID,
+SUM(IF(KGOLRU like '11%', 1, 0)) as JumlahGolonganI
+FROM rekap_pendidikan WHERE KTPU = '$kunker'";
+
+$data = array();
+$stackData = array();
+
+log_message('debug','countGolonganPerJurusan: '.$querySQL);
+$query = $this->db->query($querySQL);
+
+if($query->num_rows()>0)
+{ $count = 1;
+foreach($query->result() as $row)
+{
+	$data['JumlahSemuaGolongan']=$row->JumlahSemuaGolongan;
+	$data['JumlahGolonganIVA']=$row->JumlahGolonganIVA;
+	$data['JumlahGolonganIVB']=$row->JumlahGolonganIVB;
+	$data['JumlahGolonganIVC']=$row->JumlahGolonganIVC;
+	$data['JumlahGolonganIVD']=$row->JumlahGolonganIVD;
+	$data['JumlahGolonganIVE']=$row->JumlahGolonganIVE;
+	$data['JumlahGolonganIV']=$row->JumlahGolonganIV;
+	$data['JumlahBGolonganIIIA']=$row->JumlahBGolonganIIIA;
+	$data['JumlahGolonganIIIB']=$row->JumlahGolonganIIIB;
+	$data['JumlahGolonganIIIC']=$row->JumlahGolonganIIIC;
+	$data['JumlahGolonganIIID']=$row->JumlahGolonganIIID;
+	$data['JumlahGolonganIII']=$row->JumlahGolonganIII;
+	$data['JumlahGolonganIIA']=$row->JumlahGolonganIIA;
+	$data['JumlahGolonganIIB']=$row->JumlahGolonganIIB;
+	$data['JumlahGolonganIIC']=$row->JumlahGolonganIIC;
+	$data['JumlahGolonganIID']=$row->JumlahGolonganIID;
+	$data['JumlahGolonganII']=$row->JumlahGolonganII;
+	$data['JumlahGolonganIA']=$row->JumlahGolonganIA;
+	$data['JumlahGolonganIB']=$row->JumlahGolonganIB;
+	$data['JumlahGolonganIC']=$row->JumlahGolonganIC;
+	$data['JumlahGolonganID']=$row->JumlahGolonganID;
+	$data['JumlahGolonganI']=$row->JumlahGolonganI;
+ array_push($stackData,$data);
+}
+$query->free_result();
+return $stackData;
+}else
+{
+
+$query->free_result();
+return $data;
+}
+}
 		public function getTingkatPendidikanByInstansi($instansi = null)
 			{
 				$queryAll=False;
@@ -3485,7 +3839,8 @@ WHERE nip = '$nip' ORDER BY tanggalAkhirKursus DESC";
                   left join jakhir ja on du.nipBaru = ja.nip
                   left join unkerja k1 on k1.kunker = ja.kunkers
                   left join unkerja k2 on k2.kunker = ja.kunkersInduk
-                  where du.kedudukanHukum=1 and du.statusHidupPensiunPindah =1  and ja.jnsjab=1 and MONTH(STR_TO_DATE(DU.TLAHIR, '%Y-%m-%d')) = MONTH(NOW()) and day(STR_TO_DATE(DU.TLAHIR, '%Y-%m-%d')) = day(NOW()) and
+                  where du.kedudukanHukum=1 and du.statusHidupPensiunPindah =1  and ja.jnsjab=1 and MONTH(STR_TO_DATE(DU.TLAHIR, '%Y-%m-%d'))
+									 = MONTH(NOW()) and day(STR_TO_DATE(DU.TLAHIR, '%Y-%m-%d')) = day(NOW()) and
                   du.nama like '%$searchColumn%' ";
 
 
@@ -3507,6 +3862,7 @@ WHERE nip = '$nip' ORDER BY tanggalAkhirKursus DESC";
         }
         return $total;
     }
+
 
     function getCurentDayBirthDay ($key,$limitStart,$limitLength,$searchColumn,$draw,$orderByColumn,$orderByDir)
     {

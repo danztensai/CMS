@@ -860,6 +860,78 @@ foreach($this->data['user_group'] as $ug){
 
 		echo $returnResponse;
 	}
+  public function getHistoryAbsensi()
+	{
+		$key = $this->input->get('key');
+		$draw = $this->input->get('draw');
+		$limitStart = $this->input->get('start');
+		$limitLength = $this->input->get('length');
+		$column0Searchable = $this->input->get('columns[0][searchable]');
+		$searchColumn = $this->input->get('search[value]');
+		$searchQueryColumn=null;
+		$orderByColumn = $this->input->get('order[0][columninc]');
+		$orderByDir = $this->input->get('order[0][dir]');
+		$limit=null;
+    $userLoggedin = $this->ion_auth->user()->row();
+
+		log_message('debug','Isi Draw : '.$draw);
+		log_message('debug','Isi limitStart :'.$limitStart);
+		log_message('debug','Isi limitLength :'.$limitLength);
+		log_message('debug','Isi $column0Searchable :'.$column0Searchable);
+		log_message('debug','Isi $orderByColumn :'.$orderByColumn);
+
+
+
+		$dataPegawai =$this->Simpeg_model->getHistoryAbsensi($key,$limitStart,$limitLength,$searchColumn,$draw,$orderByColumn,$orderByDir,$userLoggedin->nip);
+		$arrayReturn= array();
+
+		$arrayReturn['draw']=(int)$draw;
+		$arrayReturn['recordsTotal']=$this->Simpeg_model->getCountTotalRowAllHistory($key,$limitStart,$limitLength,$searchColumn,$draw,$orderByColumn,$orderByDir,$userLoggedin->nip);
+		$arrayReturn['recordsFiltered']=$this->Simpeg_model->getCountTotalRowAllHistory($key,$limitStart,$limitLength,$searchColumn,$draw,$orderByColumn,$orderByDir,$userLoggedin->nip);
+		$arrayReturn['data']=$dataPegawai;
+
+
+		$returnResponse = json_encode($arrayReturn);
+		log_message('debug',$returnResponse);
+
+		echo $returnResponse;
+	}
+  public function getHistoryAbsensiBawahan()
+  {
+    $key = $this->input->get('key');
+    $draw = $this->input->get('draw');
+    $limitStart = $this->input->get('start');
+    $limitLength = $this->input->get('length');
+    $column0Searchable = $this->input->get('columns[0][searchable]');
+    $searchColumn = $this->input->get('search[value]');
+    $searchQueryColumn=null;
+    $orderByColumn = $this->input->get('order[0][columninc]');
+    $orderByDir = $this->input->get('order[0][dir]');
+    $limit=null;
+    $userLoggedin = $this->ion_auth->user()->row();
+
+    log_message('debug','Isi Draw : '.$draw);
+    log_message('debug','Isi limitStart :'.$limitStart);
+    log_message('debug','Isi limitLength :'.$limitLength);
+    log_message('debug','Isi $column0Searchable :'.$column0Searchable);
+    log_message('debug','Isi $orderByColumn :'.$orderByColumn);
+
+
+
+    $dataPegawai =$this->Simpeg_model->getHistoryAbsensiBawahan($key,$limitStart,$limitLength,$searchColumn,$draw,$orderByColumn,$orderByDir,$userLoggedin->nip);
+    $arrayReturn= array();
+
+    $arrayReturn['draw']=(int)$draw;
+    $arrayReturn['recordsTotal']=$this->Simpeg_model->getCountTotalRowAllHistoryAbsensiBawahan($key,$limitStart,$limitLength,$searchColumn,$draw,$orderByColumn,$orderByDir,$userLoggedin->nip);
+    $arrayReturn['recordsFiltered']=$this->Simpeg_model->getCountTotalRowAllHistoryAbsensiBawahan($key,$limitStart,$limitLength,$searchColumn,$draw,$orderByColumn,$orderByDir,$userLoggedin->nip);
+    $arrayReturn['data']=$dataPegawai;
+
+
+    $returnResponse = json_encode($arrayReturn);
+    log_message('debug',$returnResponse);
+
+    echo $returnResponse;
+  }
 
 	public function groupManagement()
 	{
@@ -3632,6 +3704,36 @@ return $tagImg;
 				$this->render('dashboard/index_view');
 			}
 		}
+    public function historyAbsensi()
+		{
+
+			$userId = $this->ion_auth->get_user_id();
+			$this->data['user']=$this->ion_auth->user()->row();
+			log_message('INFO','is admin? :'.$this->ion_auth->is_admin());
+			$this->data['user_group']= $this->ion_auth->get_users_groups($userId)->result();
+			log_message('debug','User Group : '.print_r($this->data['user_group'],TRUE));
+			$gid =array();
+			foreach($this->data['user_group'] as $ug){
+			  $gid[]=$ug->id;
+			}
+			$gid =array();
+			foreach($this->data['user_group'] as $ug){
+				$gid[]=$ug->id;
+			}
+        $userLoggedin = $this->ion_auth->user()->row();
+        $nip = $userLoggedin->nip;
+			log_message('debug','User Group Array : '.print_r($gid,TRUE));
+			$this->data['menu']=$this->Menu_model->menuMaster($gid);
+			$this->data['users_instansi']=$this->Users_model->getUsersinstansi($userId );
+      $this->data['countAbsensi']=$this->Simpeg_model->getCountAllStatusAbsensi($nip);
+
+
+			log_message('INFO','User Id : '.$userId);
+
+
+				$this->render('dashboard/absensi_view');
+
+		}
 
 		public function referensi()
 		{
@@ -3843,6 +3945,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($gid);
 			$this->data['users_instansi']=$this->Users_model->getUsersinstansi($userId );
 
 			$this->data['instansiUnkerja']=$this->Simpeg_model->getInstansi();
+      $this->data['tingkatPendidikanPns']=$this->Simpeg_model->getTingkatPendidikanPns();
 			$this->data['rekapPNSBKD']=$this->Simpeg_model->getDaftarUrutKepangkatanByInstansiJoinQuery();
 
       $this->data['totalPNSAktif']=$this->Simpeg_model->getTotalPNSAktif();
@@ -4098,7 +4201,48 @@ $this->data['menu']=$this->Menu_model->menuMaster($gid);
   			force_download($pdfFilePath, NULL);
 
   		}
-      
+
+      public function checkRekapGolonganPerJurusan()
+      		{
+      			$key = $this->input->get('q');
+      			$rekap =$this->Simpeg_model->getGolonganPerJurusan($key) ;
+      		//	log_message(print_r($rekap,TRUE));
+      			$data_rekap_bkd =array('rekap'=>$rekap);
+      			$this->load->helper('download');
+      			$pdfFilePath = "assets/".date("h_i_sa").".pdf";
+      			if (file_exists($pdfFilePath) == FALSE)
+
+      			{
+      				$dataEmail='';
+      				ini_set('memory_limit','750M'); // boost the memory limit if it's low ;)
+
+      				$this->load->library('pdf');
+      				$data_rekap_bkd =array('rekap'=>$rekap);
+
+      				$html = $this->load->view('eis_golongan_jurusan_pdf', $data_rekap_bkd, true); // render the view into HTML
+
+      				$pdf = $this->pdf->load();
+      				$pdf->AddPage('L', // L - landscape, P - portrait
+      				 '', '', '', '',
+      				 30, // margin_left
+      				 30, // margin right
+      				 30, // margin top
+      				 30, // margin bottom
+      				 18, // margin header
+      				 12); // ma
+      				$pdf->SetFooter($_SERVER['HTTP_HOST'].'|{PAGENO}|'.date(DATE_RFC822)); // Add a footer for good measure ;)
+      				$pdf->cacheTables = true;
+      				$pdf->simpleTables=true;
+      				$pdf->packTableData=true;
+      				$pdf->WriteHTML($html); // write the HTML into the PDF
+
+      				$pdf->Output($pdfFilePath, 'F'); // save to file because we can
+
+      			}
+      			$pathAttachments =$pdfFilePath;
+      			force_download($pdfFilePath, NULL);
+
+      		}
 
 
 	}

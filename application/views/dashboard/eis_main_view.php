@@ -11,6 +11,16 @@
 		var data1 = [];
 		var data2 = [];
 
+		$('#rekapGolonganPerJurusan').on('change', function (e) {
+			console.log('Rekap changed');
+			var optionSelected = $("option:selected", this);
+			var valueSelected = this.value;
+			$("a.downloadRekapJurusan").attr("href", function(i, href) {
+				var url = '<?php echo base_url() ?>dashboard/checkRekapGolonganPerJurusan'+ '?q='+valueSelected;
+			  return url;
+			});
+		});
+
 		$('#rekapInstansiUnkerUsia').on('change', function (e) {
 			console.log('Rekap changed');
 			var optionSelected = $("option:selected", this);
@@ -690,6 +700,29 @@ $('#rekapInstansiUnker').on('change', function (e) {
 
 							<!-- /.box-body -->
 				<!-- BAR CHART -->
+				<div class="box box-success">
+ 					<div class="box-header with-border">
+ 						<h3 class="box-title">Rekapitulasi PNS Do Berdasarkan Golongan Per Jurusan</h3>
+ 					</div>
+ 					<div class="box-body">
+ 						<div class="form-group">
+ 								<label>Pilih Jurusan</label>
+ 								<select id="rekapGolonganPerJurusan" class="form-control">
+ 									<option value="01">Semua (Memakan Waktu yang Lama Harap Bersabar)</option>
+ 									<?php foreach($tingkatPendidikanPns as $key)
+ 									{
+ 										?>
+ 										<option value="<?php echo $key['KJUR']?>"><?php echo $key['NJUR']?></option>
+ 									<?php
+ 									}?>
+ 								</select>
+ 							</div>
+ 						<a class="downloadRekapJurusan" href="<?php echo base_url() ?>dashboard/checkRekapGolonganPerJurusan">Download Rekap PNS Golongan Per Jurusan</a>
+
+ 					</div>
+
+ 					</div>
+					<!-- //End Of Box -->
 				<div class="box box-success">
 								<div class="box-header with-border">
 									<h3 class="box-title">Rekapitulasi PNS Do Berdasarkan Usia</h3>
