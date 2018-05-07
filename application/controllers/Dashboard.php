@@ -862,6 +862,8 @@ foreach($this->data['user_group'] as $ug){
 	}
   public function getHistoryAbsensi()
 	{
+    $status=$this->input->get('StatusKey');
+    $bulan=$this->input->get('bulanKey');
 		$key = $this->input->get('key');
 		$draw = $this->input->get('draw');
 		$limitStart = $this->input->get('start');
@@ -882,22 +884,25 @@ foreach($this->data['user_group'] as $ug){
 
 
 
-		$dataPegawai =$this->Simpeg_model->getHistoryAbsensi($key,$limitStart,$limitLength,$searchColumn,$draw,$orderByColumn,$orderByDir,$userLoggedin->nip);
+		$dataPegawai =$this->Simpeg_model->getHistoryAbsensi($key,$limitStart,$limitLength,$searchColumn,$draw,$orderByColumn,$orderByDir,$userLoggedin->nip,$status,$bulan);
 		$arrayReturn= array();
 
 		$arrayReturn['draw']=(int)$draw;
-		$arrayReturn['recordsTotal']=$this->Simpeg_model->getCountTotalRowAllHistory($key,$limitStart,$limitLength,$searchColumn,$draw,$orderByColumn,$orderByDir,$userLoggedin->nip);
-		$arrayReturn['recordsFiltered']=$this->Simpeg_model->getCountTotalRowAllHistory($key,$limitStart,$limitLength,$searchColumn,$draw,$orderByColumn,$orderByDir,$userLoggedin->nip);
+		$arrayReturn['recordsTotal']=$this->Simpeg_model->getCountTotalRowAllHistory($key,$limitStart,$limitLength,$searchColumn,$draw,$orderByColumn,$orderByDir,$userLoggedin->nip,$status,$bulan);
+		$arrayReturn['recordsFiltered']=$this->Simpeg_model->getCountTotalRowAllHistory($key,$limitStart,$limitLength,$searchColumn,$draw,$orderByColumn,$orderByDir,$userLoggedin->nip,$status,$bulan);
 		$arrayReturn['data']=$dataPegawai;
 
 
 		$returnResponse = json_encode($arrayReturn);
+
 		log_message('debug',$returnResponse);
 
 		echo $returnResponse;
 	}
   public function getHistoryAbsensiBawahan()
   {
+    $status=$this->input->get('StatusKey');
+    $bulan=$this->input->get('bulanKey');
     $key = $this->input->get('key');
     $draw = $this->input->get('draw');
     $limitStart = $this->input->get('start');
@@ -918,12 +923,12 @@ foreach($this->data['user_group'] as $ug){
 
 
 
-    $dataPegawai =$this->Simpeg_model->getHistoryAbsensiBawahan($key,$limitStart,$limitLength,$searchColumn,$draw,$orderByColumn,$orderByDir,$userLoggedin->nip);
+    $dataPegawai =$this->Simpeg_model->getHistoryAbsensiBawahan($key,$limitStart,$limitLength,$searchColumn,$draw,$orderByColumn,$orderByDir,$userLoggedin->nip,$status,$bulan);
     $arrayReturn= array();
 
     $arrayReturn['draw']=(int)$draw;
-    $arrayReturn['recordsTotal']=$this->Simpeg_model->getCountTotalRowAllHistoryAbsensiBawahan($key,$limitStart,$limitLength,$searchColumn,$draw,$orderByColumn,$orderByDir,$userLoggedin->nip);
-    $arrayReturn['recordsFiltered']=$this->Simpeg_model->getCountTotalRowAllHistoryAbsensiBawahan($key,$limitStart,$limitLength,$searchColumn,$draw,$orderByColumn,$orderByDir,$userLoggedin->nip);
+    $arrayReturn['recordsTotal']=$this->Simpeg_model->getCountTotalRowAllHistoryAbsensiBawahan($key,$limitStart,$limitLength,$searchColumn,$draw,$orderByColumn,$orderByDir,$userLoggedin->nip,$status,$bulan);
+    $arrayReturn['recordsFiltered']=$this->Simpeg_model->getCountTotalRowAllHistoryAbsensiBawahan($key,$limitStart,$limitLength,$searchColumn,$draw,$orderByColumn,$orderByDir,$userLoggedin->nip,$status,$bulan);
     $arrayReturn['data']=$dataPegawai;
 
 
@@ -3726,7 +3731,7 @@ return $tagImg;
 			$this->data['menu']=$this->Menu_model->menuMaster($gid);
 			$this->data['users_instansi']=$this->Users_model->getUsersinstansi($userId );
       $this->data['countAbsensi']=$this->Simpeg_model->getCountAllStatusAbsensi($nip);
-
+      $this->data['statusPersensi']=$this->Simpeg_model->getPersensiStatus();
 
 			log_message('INFO','User Id : '.$userId);
 
@@ -4244,5 +4249,47 @@ $this->data['menu']=$this->Menu_model->menuMaster($gid);
 
       		}
 
+          public function checkRekapJenisKelaminPerInstansi()
+          		{
+          			$key = $this->input->get('q');
+          			$result = mb_substr($key, 0, 4);
+          			log_message('debug','This is the code: '.$result);
+          			$rekap =$this->Simpeg_model->getJenisKelaminByInstansi($key) ;
+          		//	log_message(print_r($rekap,TRUE));
+          			$data_rekap_bkd =array('rekap'=>$rekap);
+          			$this->load->helper('download');
+          			$pdfFilePath = "assets/".date("h_i_sa").".pdf";
+          			if (file_exists($pdfFilePath) == FALSE)
 
+          			{
+          				$dataEmail='';
+          				ini_set('memory_limit','750M'); // boost the memory limit if it's low ;)
+
+          				$this->load->library('pdf');
+          				$data_rekap_bkd =array('rekap'=>$rekap);
+
+          				$html = $this->load->view('eis_jeniskelamin_per_instansi_pdf', $data_rekap_bkd, true); // render the view into HTML
+
+          				$pdf = $this->pdf->load();
+          				$pdf->AddPage('L', // L - landscape, P - portrait
+          				 '', '', '', '',
+          				 30, // margin_left
+          				 30, // margin right
+          				 30, // margin top
+          				 30, // margin bottom
+          				 18, // margin header
+          				 12); // ma
+          				$pdf->SetFooter($_SERVER['HTTP_HOST'].'|{PAGENO}|'.date(DATE_RFC822)); // Add a footer for good measure ;)
+          				$pdf->cacheTables = true;
+          				$pdf->simpleTables=true;
+          				$pdf->packTableData=true;
+          				$pdf->WriteHTML($html); // write the HTML into the PDF
+
+          				$pdf->Output($pdfFilePath, 'F'); // save to file because we can
+
+          			}
+          			$pathAttachments =$pdfFilePath;
+          			force_download($pdfFilePath, NULL);
+
+          		}
 	}

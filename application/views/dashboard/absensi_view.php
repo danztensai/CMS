@@ -11,15 +11,82 @@
 <script type="text/javascript">
    $(document).ready(function(){
 
-     $('#HistoryAbsensi').DataTable( {
+     var statusPersensi = 0;
+     var bulan =0;
+     var tanggal =0;
+     $('#statusPersensi').on('change', function (e) {
+     			var optionSelected = $("option:selected", this);
+     			var valueSelected = this.value;
+         statusPersensi = this.value;
+         console.log("Status : "+statusPersensi);
+         //historyAbsensi.ajax.reload();
+         historyAbsensi.clear().draw();
+      //   historyAbsensi.columns.adjust().draw(); // Redraw the DataTable
+ 		});
+
+    $('#bulanAbsensi').on('change', function (e) {
+         var optionSelected = $("option:selected", this);
+         var valueSelected = this.value;
+        bulan = this.value;
+        console.log("Status : "+statusPersensi);
+        //historyAbsensi.ajax.reload();
+        historyAbsensi.clear().draw();
+     //   historyAbsensi.columns.adjust().draw(); // Redraw the DataTable
+   });
+
+  //  $('#tanggalAbsensi').on('change', function (e) {
+  //       var optionSelected = $("option:selected", this);
+  //       var valueSelected = this.value;
+  //      bulan = this.value;
+  //      console.log("Status : "+statusPersensi);
+  //      //historyAbsensi.ajax.reload();
+  //      historyAbsensi.clear().draw();
+  //   //   historyAbsensi.columns.adjust().draw(); // Redraw the DataTable
+  // });
+  $('#statusPersensiBawahan').on('change', function (e) {
+       var optionSelected = $("option:selected", this);
+       var valueSelected = this.value;
+      statusPersensi = this.value;
+      console.log("Status : "+statusPersensi);
+      //historyAbsensi.ajax.reload();
+      historyAbsensiBawahan.clear().draw();
+   //   historyAbsensi.columns.adjust().draw(); // Redraw the DataTable
+  });
+
+  $('#bulanAbsensiBawahan').on('change', function (e) {
+      var optionSelected = $("option:selected", this);
+      var valueSelected = this.value;
+     bulan = this.value;
+     console.log("Status : "+statusPersensi);
+     //historyAbsensi.ajax.reload();
+     historyAbsensiBawahan.clear().draw();
+  //   historyAbsensi.columns.adjust().draw(); // Redraw the DataTable
+  });
+  var historyAbsensi =   $('#HistoryAbsensi').DataTable( {
             "processing": true,
             "serverSide": true,
-            "ajax": "getHistoryAbsensi"
+            "ajax":{
+              "url":"getHistoryAbsensi",
+              "data":function (d){
+                console.log($('#statusPersensi').val());
+                  d.StatusKey = $('#statusPersensi').val();
+                  d.bulanKey = $('#bulanAbsensi').val();
+              }
+            }
+
+
         } );
-        $('#HistoryAbsensiBawahan').DataTable( {
+var historyAbsensiBawahan =        $('#HistoryAbsensiBawahan').DataTable( {
                "processing": true,
                "serverSide": true,
-               "ajax": "getHistoryAbsensiBawahan"
+               "ajax":{
+                 "url":"getHistoryAbsensiBawahan",
+                 "data":function (d){
+
+                     d.StatusKey = $('#statusPersensiBawahan').val();
+                     d.bulanKey = $('#bulanAbsensiBawahan').val();
+                 }
+               }
            } );
 
 
@@ -188,11 +255,62 @@
                   </div>
                   <!-- /.box-header -->
                   <div class="box-body">
+                      <div class="col-xs-3">
+                        <div class="form-group">
+      											<label>Pilih Status</label>
+      											<select id="statusPersensi" class="form-control">
+                              <option value="0">All</option>
+      												<?php foreach($statusPersensi as $key)
+      												{
+      													?>
+      													<option value="<?php echo $key['id']?>"><?php echo $key['status']?></option>
+      												<?php
+      												}?>
+      											</select>
+      										</div>
+                      </div>
+                      <div class="col-xs-3">
+                        <div class="form-group">
+      											<label>Pilih Bulan</label>
+      											<select id="bulanAbsensi" class="form-control">
+                              <option value="0">All</option>
+      											  <option value="1">Januari</option>
+                              <option value="2">Februari</option>
+                              <option value="3">Maret</option>
+                              <option value="4">April</option>
+                              <option value="5">Mei</option>
+                              <option value="6">Juni</option>
+                              <option value="7">Juli</option>
+                              <option value="8">Agustus</option>
+                              <option value="9">September</option>
+                              <option value="10">Oktober</option>
+                              <option value="11">November</option>
+                              <option value="12">Desember</option>
+      											</select>
+      										</div>
+                      </div>
+                      <!-- <div class="col-xs-3">
+                        <div class="form-group">
+      											<label>Pilih Tanggal</label>
+      											<select id="tanggalAbsensi" class="form-control">
+                              <option value="0">-</option>
+                              <?php
+                              for($i = 1; $i <=  31; $i++)
+                                  {
+                                ?>
+                                <option value="<?php echo $i;?>"><?php echo $i;?></option>
+                                <?php
+                                  }
+
+                              ?>
+      											</select>
+      										</div>
+                      </div> -->
                     <table id="HistoryAbsensi" class="display" cellspacing="0" width="100%">
                             <thead>
                                 <tr>
-                                    <th>NIP</th>
-                                    <th>Nama</th>
+                                    <!-- <th>NIP</th>
+                                    <th>Nama</th> -->
                                     <th>waktu</th>
                                     <th>Status</th>
                                     <th>Alasan</th>
@@ -202,8 +320,8 @@
                             </thead>
                             <tfoot>
                                 <tr>
-                                  <th>NIP</th>
-                                  <th>Nama</th>
+                                  <!-- <th>NIP</th>
+                                  <th>Nama</th> -->
                                   <th>Waktu</th>
                                   <th>Status</th>
                                   <th>Alasan</th>
@@ -224,6 +342,40 @@
                   </div>
                   <!-- /.box-header -->
                   <div class="box-body">
+                    <div class="col-xs-3">
+                      <div class="form-group">
+                          <label>Pilih Status</label>
+                          <select id="statusPersensiBawahan" class="form-control">
+                            <option value="0">All</option>
+                            <?php foreach($statusPersensi as $key)
+                            {
+                              ?>
+                              <option value="<?php echo $key['id']?>"><?php echo $key['status']?></option>
+                            <?php
+                            }?>
+                          </select>
+                        </div>
+                    </div>
+                    <div class="col-xs-3">
+                      <div class="form-group">
+                          <label>Pilih Bulan</label>
+                          <select id="bulanAbsensiBawahan" class="form-control">
+                            <option value="0">All</option>
+                            <option value="1">Januari</option>
+                            <option value="2">Februari</option>
+                            <option value="3">Maret</option>
+                            <option value="4">April</option>
+                            <option value="5">Mei</option>
+                            <option value="6">Juni</option>
+                            <option value="7">Juli</option>
+                            <option value="8">Agustus</option>
+                            <option value="9">September</option>
+                            <option value="10">Oktober</option>
+                            <option value="11">November</option>
+                            <option value="12">Desember</option>
+                          </select>
+                        </div>
+                    </div>
                     <table id="HistoryAbsensiBawahan" class="display" cellspacing="0" width="100%">
                             <thead>
                                 <tr>

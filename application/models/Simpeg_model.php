@@ -6,15 +6,97 @@
 
 		}
 
-		public function getCountTotalRowAllHistoryAbsensiBawahan($key,$limitStart,$limitLength,$searchColumn,$draw,$orderByColumn,$orderByDir,$nip)
+		public function getJenisKelaminByInstansi($instansi = null)
+			{
+				if($instansi=='100000000000')
+				{
+					$instansi = null;
+				}
+
+				if($instansi == null){
+				$querySQL = "select * from unkerja where kunker like '10%__00000000'";
+			}
+			else {
+				$querySQL = "select * from unkerja where kunker like '$instansi'";
+			}
+				$data = array();
+				$stackData = array();
+
+				log_message('debug','getJenisKelaminByInstansi: '.$querySQL);
+				$query = $this->db->query($querySQL);
+
+				if($query->num_rows()>0)
+				 { $count = 1;
+					foreach($query->result() as $row)
+					{
+					 $data['kunker']=$row->kunker;
+					 $data['nunker']=$row->nunker;
+					 $data['jenisKelaminCount']=$this->countJenisKelaminPerInstansi($row->kunker);
+					 array_push($stackData,$data);
+					}
+					$query->free_result();
+					return $stackData;
+				 }else
+				 {
+
+					$query->free_result();
+					return $data;
+				 }
+			}
+
+
+		public function countJenisKelaminPerInstansi($instansi='103000000000')
+		{
+		$kunker = mb_substr($instansi, 0, 4);
+		$querySQL = "SELECT SUM(IF(KJKEL = 1, 1, 0)) as Laki_Laki,
+		SUM(IF(KJKEL = 2, 1, 0)) as Perempuan,
+		SUM(IF(KJKEL = 1 OR KJKEL = 2 , 1, 0)) as Jumlah
+		FROM rekap_instansi WHERE kunkers LIKE '$kunker%'";
+
+		$data = array();
+		$stackData = array();
+
+		log_message('debug','countJenisKelaminPerInstansi: '.$querySQL);
+		$query = $this->db->query($querySQL);
+
+		if($query->num_rows()>0)
+		{ $count = 1;
+		foreach($query->result() as $row)
+		{
+		 $data['Laki_Laki']=$row->Laki_Laki;
+		 $data['Perempuan']=$row->Perempuan;
+		 $data['Jumlah']=$row->Jumlah;
+		 array_push($stackData,$data);
+		}
+		$query->free_result();
+		return $stackData;
+		}else
+		{
+
+		$query->free_result();
+		return $data;
+		}
+		}
+
+
+		public function getCountTotalRowAllHistoryAbsensiBawahan($key,$limitStart,$limitLength,$searchColumn,$draw,$orderByColumn,$orderByDir,$nip,$bulan,$status)
     {
 
+			$searchKey = "";
+			if($status!=0)
+			{
+				$searchKey=" and mps.presensi_status_id = ".$status;
+			}
+			if($bulan!=0)
+			{
+				$searchKey.=" and month(waktu)=".$bulan;
+			}
 
 		    $querySQL = "SELECT count(*) as total FROM
 										h_presensi hp
 										left join m_pegawai mp on hp.pegawai_id = mp.pegawai_id
 										left join m_presensi_status mps on mps.presensi_status_id = hp.presensi_status_id
-										left join m_status ms on ms.status_id = hp.status_id  where mp.nip_atasan = '$nip' and mp.nama like '%$searchColumn%' ";
+										left join m_status ms on ms.status_id = hp.status_id  where mp.nip_atasan = '$nip' and mp.nama like '%$searchColumn%' $searchKey ";
 
 				 $db2 = $this->load->database('absensi',true);
 		      log_message('debug','Query getCountTotalRowAllHistoryAbsensiBawahan :'.$querySQL);
@@ -35,7 +117,10 @@
 		        }
 		        return $total;
     }
-		function getHistoryAbsensiBawahan($key,$limitStart,$limitLength,$searchColumn,$draw,$orderByColumn,$orderByDir,$nip)
+
+
+
+		function getHistoryAbsensiBawahan($key,$limitStart,$limitLength,$searchColumn,$draw,$orderByColumn,$orderByDir,$nip,$status,$bulan)
 		{
 			$orderBy = $orderByColumn;
 			$orderQuery = '';
@@ -46,11 +131,20 @@
 
 
 			}
+			$searchKey = "";
+			if($status!=0)
+			{
+				$searchKey=" and mps.presensi_status_id = ".$status;
+			}
+			if($bulan!=0)
+			{
+				$searchKey.=" and month(waktu)=".$bulan;
+			}
 			$querySQL = "SELECT mp.nip,mp.nama,hp.waktu,mps.status,hp.alasan,hp.isOnLocation,ms.status as statusApprove FROM
 									h_presensi hp
 									left join m_pegawai mp on hp.pegawai_id = mp.pegawai_id
 									left join m_presensi_status mps on mps.presensi_status_id = hp.presensi_status_id
-									left join m_status ms on ms.status_id = hp.status_id  where mp.nip_atasan = '$nip' and mp.nama like '%$searchColumn%' ".$orderQuery." limit $limitStart,$limitLength";
+									left join m_status ms on ms.status_id = hp.status_id  where mp.nip_atasan = '$nip' and mp.nama like '%$searchColumn%' $searchKey ".$orderQuery." limit $limitStart,$limitLength";
 			// $querySQL = "select du.nipBaru as nip,du.nama as nama,k2.nunker as instansi,k1.nunker as subUnit ,ja.NJAB as jabatan,DATE_FORMAT(FROM_DAYS(TO_DAYS(NOW())-TO_DAYS(DU.TLAHIR)), '%Y')+0 AS age
 			// 							from datautama du
 			// 							left join jakhir ja on du.nipBaru = ja.nip
@@ -59,7 +153,7 @@
 			// 							where du.kedudukanHukum=1 and du.statusHidupPensiunPindah =1  and MONTH(STR_TO_DATE(DU.TLAHIR, '%Y-%m-%d')) = MONTH(NOW()) and day(STR_TO_DATE(DU.TLAHIR, '%Y-%m-%d')) = day(NOW()) and ja.jnsjab=1 and
 			// 							du.nama like '%$searchColumn%' ".$orderQuery." limit $limitStart,$limitLength";
 
-			log_message('debug','Query getHistoryAbsensi :  '.$querySQL);
+			log_message('debug','Query getHistoryAbsensiBawahan :  '.$querySQL);
 
 			$stackData = array();
 			 $db2 = $this->load->database('absensi',true);
@@ -82,16 +176,48 @@
 						array_push($stackData,$data);
 					}
 					$query->free_result();
+						log_message('debug',"INI LOH JSONNYA :".json_encode($stackData));
 					return $stackData;
 				}else
 				{
 
 					$query->free_result();
-					return null;
+					log_message('debug',"INI LOH JSONNYA :".json_encode($stackData));
+					return $stackData;
 				}
 		}
 
+		public function getPersensiStatus()
+		{
 
+		$querySQL = "select * from m_presensi_status";
+
+		$data = array();
+		$stackData = array();
+
+		log_message('debug','m_presensi_status: '.$querySQL);
+		$db2 = $this->load->database('absensi',true);
+		$query = $db2->query($querySQL);
+
+		if($query->num_rows()>0)
+		{ $count = 1;
+		foreach($query->result() as $row)
+		{
+			$data['id']=$row->presensi_status_id;
+			$data['status']=$row->status;
+
+
+			array_push($stackData,$data);
+		}
+		$query->free_result();
+		return $stackData;
+		}else
+		{
+
+		$query->free_result();
+		return $data;
+		}
+		}
 
 
 		public function getCountAllStatusAbsensi($nip)
@@ -129,28 +255,29 @@
 					}
 		}
 
-
-
-
-
-
-
-
-
-
-
-		public function getCountTotalRowAllHistory($key,$limitStart,$limitLength,$searchColumn,$draw,$orderByColumn,$orderByDir,$nip)
+		public function getCountTotalRowAllHistory($key,$limitStart,$limitLength,$searchColumn,$draw,$orderByColumn,$orderByDir,$nip,$status,$bulan)
     {
 
-
+			$searchKey = "";
+			if($status!=0)
+			{
+				$searchKey=" and mps.presensi_status_id = ".$status." ";
+			}
+			if($bulan!=0)
+			{
+				$searchKey.=" and month(waktu)=".$bulan ;
+			}
 		    $querySQL = "SELECT count(*) as total FROM
 										h_presensi hp
 										left join m_pegawai mp on hp.pegawai_id = mp.pegawai_id
 										left join m_presensi_status mps on mps.presensi_status_id = hp.presensi_status_id
-										left join m_status ms on ms.status_id = hp.status_id  where mp.nip = '$nip' and mp.nama like '%$searchColumn%' ";
+										left join m_status ms on ms.status_id = hp.status_id  where mp.nip = '$nip' and hp.alasan like '%$searchColumn%' $searchKey";
 
 				 $db2 = $this->load->database('absensi',true);
 		      log_message('debug','Query getCountTotalRowAllHistory :'.$querySQL);
+
+
+
 		      $query = $db2->query($querySQL);
 
 		      $total=0;
@@ -168,7 +295,7 @@
 		        }
 		        return $total;
     }
-		function getHistoryAbsensi ($key,$limitStart,$limitLength,$searchColumn,$draw,$orderByColumn,$orderByDir,$nip)
+		function getHistoryAbsensi ($key,$limitStart,$limitLength,$searchColumn,$draw,$orderByColumn,$orderByDir,$nip,$status,$bulan)
 		{
 			$orderBy = $orderByColumn;
 			$orderQuery = '';
@@ -179,11 +306,24 @@
 
 
 			}
+			$searchKey = "";
+			if($status!=0)
+			{
+				$searchKey=" and mps.presensi_status_id = ".$status;
+			}
+			if($bulan!=0)
+			{
+				$searchKey.=" and month(waktu)=".$bulan;
+			}
+
+			log_message('debug', $searchKey);
+
 			$querySQL = "SELECT mp.nip,mp.nama,hp.waktu,mps.status,hp.alasan,hp.isOnLocation,ms.status as statusApprove FROM
 									h_presensi hp
 									left join m_pegawai mp on hp.pegawai_id = mp.pegawai_id
 									left join m_presensi_status mps on mps.presensi_status_id = hp.presensi_status_id
-									left join m_status ms on ms.status_id = hp.status_id  where mp.nip = '$nip' ".$orderQuery." limit $limitStart,$limitLength";
+									left join m_status ms on ms.status_id = hp.status_id  where mp.nip = '$nip'  and hp.alasan like '%$searchColumn%' $searchKey  ".$orderQuery." limit $limitStart,$limitLength";
+
 			// $querySQL = "select du.nipBaru as nip,du.nama as nama,k2.nunker as instansi,k1.nunker as subUnit ,ja.NJAB as jabatan,DATE_FORMAT(FROM_DAYS(TO_DAYS(NOW())-TO_DAYS(DU.TLAHIR)), '%Y')+0 AS age
 			// 							from datautama du
 			// 							left join jakhir ja on du.nipBaru = ja.nip
@@ -203,8 +343,8 @@
 					foreach($query->result() as $row)
 					{
 						$data = array();
-						$data[]=$row->nip;
-						$data[]=$row->nama;
+						// $data[]=$row->nip;
+						// $data[]=$row->nama;
 						$data[]=$row->waktu;
 						$data[]=$row->status;
 						$data[]=$row->alasan;
@@ -220,7 +360,7 @@
 				{
 
 					$query->free_result();
-					return null;
+					return $stackData;
 				}
 		}
 

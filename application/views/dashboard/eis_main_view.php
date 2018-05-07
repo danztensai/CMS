@@ -40,6 +40,15 @@ $('#rekapInstansiUnker').on('change', function (e) {
 	  return url;
 	});
 });
+$('#rekapJenisKelamin').on('change', function (e) {
+	console.log('Rekap changed');
+	var optionSelected = $("option:selected", this);
+	var valueSelected = this.value;
+	$("a.downloadRekap").attr("href", function(i, href) {
+		var url = '<?php echo base_url() ?>dashboard/checkRekapJenisKelaminPerInstansi'+ '?q='+valueSelected;
+	  return url;
+	});
+});
 
 		$('#instansiUnkerPendidikan').on('change',function(e){
 			var optionSelected = $("option:selected", this);
@@ -642,6 +651,28 @@ $('#rekapInstansiUnker').on('change', function (e) {
 					</div>
 
 						</div>
+						<div class="box box-success">
+											<div class="box-header with-border">
+												<h3 class="box-title">Rekapitulasi PNS DO Berdasarkan Jenis Kelamin dan Instansi</h3>
+											</div>
+											<div class="box-body">
+												<div class="form-group">
+														<label>Pilih Instansi</label>
+														<select id="rekapJenisKelamin" class="form-control">
+															<option value="100000000000">Semua (Memakan Waktu yang Lama Harap Bersabar)</option>
+															<?php foreach($instansiUnkerja as $key)
+															{
+																?>
+																<option value="<?php echo $key['kunker']?>"><?php echo $key['nunker']?></option>
+															<?php
+															}?>
+														</select>
+													</div>
+												<a class="downloadRekap" href="<?php echo base_url() ?>dashboard/checkRekapJenisKelaminPerInstansi">Download Rekap PNS Jenis Kelamin dan Instansi</a>
+
+											</div>
+
+												</div>
             <!-- /.box-body -->
 
           </div>
