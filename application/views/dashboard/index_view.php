@@ -33,7 +33,8 @@
 							<div class="nav-tabs-custom">
 							            <ul class="nav nav-tabs">
 							              <li class="active"><a href="#tab_1" data-toggle="tab" aria-expanded="true">User Management</a></li>
-							              <li class=""><a href="#tab_2" data-toggle="tab" aria-expanded="false">Menu Management</a></li>
+														<li class=""><a href="#tab_5" data-toggle="tab" aria-expanded="false">Link Management</a></li>
+														<li class=""><a href="#tab_2" data-toggle="tab" aria-expanded="false">Menu Management</a></li>
 							              <li class=""><a href="#tab_3" data-toggle="tab" aria-expanded="false">Instansi Management</a></li>
 														<li class=""><a href="#tab_4" data-toggle="tab" aria-expanded="false">Group Management</a></li>
 
@@ -59,10 +60,17 @@
 														</div>
 							              </div>
 							              <!-- /.tab-pane -->
-														<div class="tab-pane active" id="tab_4">
+														<div class="tab-pane" id="tab_4">
 
 															<div class="intrinsic-container intrinsic-container-16x9">
 														<IFRAME SRC=<?php echo base_url('dashboard/groupManagement');?>></IFRAME>
+															</div>
+
+							              </div>
+														<div class="tab-pane" id="tab_5">
+
+															<div class="intrinsic-container intrinsic-container-16x9">
+																<IFRAME SRC=<?php echo base_url('dashboard/pageLinkManagement');?>></IFRAME>
 															</div>
 
 							              </div>

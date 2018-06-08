@@ -3512,6 +3512,7 @@ return $tagImg;
 		$crud->fields('menu_name','menu_link','parent_id','menu_order','groups');
 		$crud->set_relation_n_n('groups', 'group_menu', 'groups', 'menu_id', 'group_id', 'description');
 		$crud->set_relation('parent_id','menu','menu_name');
+    $crud->set_relation('menu_link','page_link','page_name');
 		$output = $crud->render();
 		if($this->ion_auth->is_admin()===FALSE)
 		{
@@ -3525,6 +3526,34 @@ return $tagImg;
 		}
 		// $this->load->view('dashboard/grid',$output);
 	}
+
+  public function pageLinkManagement()
+  {
+
+  		$userId = $this->ion_auth->get_user_id();
+  		$this->data['user']=$this->ion_auth->user()->row();
+  		log_message('INFO','is admin? : Menu Management'.$this->ion_auth->is_admin());
+  		$this->data['user_group']= $this->ion_auth->get_users_groups($userId)->result();
+  		log_message('debug','User Group : Menu Management '.print_r($this->data['user_group'],TRUE));
+
+  		$crud = new grocery_CRUD();
+  		$crud->set_table('page_link')
+  		->set_subject('Link Management')
+  		->columns('page_name','link','description','last_update');
+
+  		$crud->fields('page_name','link','description');
+  		$output = $crud->render();
+  		if($this->ion_auth->is_admin()===FALSE)
+  		{
+  			log_message('DEBUG','inside Not Admin');
+  			//$this->render('dashboard/member_index_view');
+  			$this->load->view('dashboard/member_index_view');
+  		}else
+  		{
+  			//$this->render('dashboard/index_view');
+  			$this->load->view('dashboard/grid',$output);
+  		}
+  }
 
 	public function createUser()
 	{

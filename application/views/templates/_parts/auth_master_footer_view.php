@@ -226,5 +226,5 @@
 <!-- Select2 -->
 <script src="<?php echo base_url()?>assets/adminLte/bower_components/select2/dist/js/select2.full.min.js"></script>
 
-</body>
-</html>
+</Body>
+</HTML>

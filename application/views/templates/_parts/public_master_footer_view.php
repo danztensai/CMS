@@ -6,4 +6,4 @@
 </div>
 <?php echo $before_closing_body;?>
 </body>
-</html>
+</HTML>
