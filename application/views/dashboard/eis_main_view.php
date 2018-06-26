@@ -611,7 +611,7 @@ $('#rekapJenisKelamin').on('change', function (e) {
                   <label>Pilih Instansi</label>
                   <select id="instansiUnker" class="form-control">
                     <option value="All">Semua</option>
-                    <?php foreach($instansiUnkerja as $key)
+                    <?php foreach($instansiUnkerjaPercentage as $key)
 										{
 											?>
 											<option value="<?php echo $key['kunker']?>"><?php echo $key['nunker']?></option>
@@ -710,7 +710,7 @@ $('#rekapJenisKelamin').on('change', function (e) {
 										<label>Pilih Instansi</label>
 										<select id="instansiUnkerPendidikan" class="form-control">
 											<option value="All">Semua</option>
-											<?php foreach($instansiUnkerja as $key)
+											<?php foreach($instansiUnkerjaPercentage as $key)
 											{
 												?>
 												<option value="<?php echo $key['kunker']?>"><?php echo $key['nunker']?></option>

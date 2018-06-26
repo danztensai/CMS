@@ -3967,6 +3967,7 @@ $this->data['menu']=$this->Menu_model->menuMaster($gid);
 			$this->data['user_group']= $this->ion_auth->get_users_groups($userId)->result();
 			log_message('debug','User Group : '.print_r($this->data['user_group'],TRUE));
 			$gid =array();
+      $stsOPD = TRUE;
 			foreach($this->data['user_group'] as $ug){
 				$gid[]=$ug->id;
 			}
@@ -3978,7 +3979,19 @@ $this->data['menu']=$this->Menu_model->menuMaster($gid);
 			$this->data['menu']=$this->Menu_model->menuMaster($gid);
 			$this->data['users_instansi']=$this->Users_model->getUsersinstansi($userId );
 
-			$this->data['instansiUnkerja']=$this->Simpeg_model->getInstansi();
+      $a = 	$this->data['user_group'][0]->name;
+      if (strpos($a, 'opd_bkd') !== false) {
+  	     $this->data['instansiUnkerja']=$this->Simpeg_model->getInstansi();
+        log_message('debug','MASUK TRUE');
+      }else {
+        $stsOPD =FALSE;
+        $kunkerByNip = $this->Simpeg_model->getKunkersByNip($this->data['user']->nip);
+        $this->data['instansiUnkerja']=$this->Simpeg_model->getStrukturInstansi($kunkerByNip[0]['kunkers']);
+        log_message('debug','MASUK False');
+      }
+
+			$this->data['instansiUnkerjaPercentage']=$this->Simpeg_model->getInstansi();
+
       $this->data['tingkatPendidikanPns']=$this->Simpeg_model->getTingkatPendidikanPns();
 			$this->data['rekapPNSBKD']=$this->Simpeg_model->getDaftarUrutKepangkatanByInstansiJoinQuery();
 
@@ -4052,10 +4065,22 @@ $this->data['menu']=$this->Menu_model->menuMaster($gid);
 
       public function checkRekapEselon()
   		{
+        	$userId = $this->ion_auth->get_user_id();
   			$key = $this->input->get('q');
   			$result = mb_substr($key, 0, 4);
   			log_message('debug','This is the code: '.$result);
-  			$rekap =$this->Simpeg_model->getEselonByInstansi($key) ;
+
+
+        $this->data['user_group']= $this->ion_auth->get_users_groups($userId)->result();
+        $stsOPDBKD = TRUE;
+        $a = 	$this->data['user_group'][0]->name;
+        if (strpos($a, 'opd_bkd') !== false) {
+            $rekap =$this->Simpeg_model->getEselonByInstansi($key) ;
+            }else {
+              $stsOPDBKD =FALSE;
+              $rekap =$this->Simpeg_model->getEselonByInstansi($key,$stsOPDBKD) ;
+            }
+  			//$rekap =$this->Simpeg_model->getEselonByInstansi($key) ;
   		//	log_message(print_r($rekap,TRUE));
   			$data_rekap_bkd =array('rekap'=>$rekap);
   			$this->load->helper('download');
@@ -4099,7 +4124,18 @@ $this->data['menu']=$this->Menu_model->menuMaster($gid);
   			$key = $this->input->get('q');
   			$result = mb_substr($key, 0, 4);
   			log_message('debug','This is the code: '.$result);
-  			$rekap =$this->Simpeg_model->getGolonganByInstansi($key) ;
+
+        	$userId = $this->ion_auth->get_user_id();
+        $this->data['user_group']= $this->ion_auth->get_users_groups($userId)->result();
+        $stsOPDBKD = TRUE;
+        $a = 	$this->data['user_group'][0]->name;
+        if (strpos($a, 'opd_bkd') !== false) {
+            $rekap =$this->Simpeg_model->getGolonganByInstansi($key) ;
+            }else {
+              $stsOPDBKD =FALSE;
+              $rekap =$this->Simpeg_model->getGolonganByInstansi($key,$stsOPDBKD) ;
+            }
+  		//	$rekap =$this->Simpeg_model->getGolonganByInstansi($key) ;
   		//	log_message(print_r($rekap,TRUE));
   			$data_rekap_bkd =array('rekap'=>$rekap);
   			$this->load->helper('download');

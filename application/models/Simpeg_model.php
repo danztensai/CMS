@@ -599,6 +599,7 @@ return $data;
 		public function getUsiaByInstansi($instansi = null)
 						{
 							$queryAll=False;
+
 							if($instansi=='100000000000')
 							{
 								$instansi = null;
@@ -691,12 +692,18 @@ return $data;
 				 }
 			}
 
-		public function countEselonPerInstansi($instansi='103000000000',$queryAll)
+		public function countEselonPerInstansi($instansi='103000000000',$queryAll,$subInstansi)
 						  {
 								if($queryAll==true){
 									$kunker = mb_substr($instansi, 0, 4);
 								}else{
-									$kunker = mb_substr($instansi, 0, 6);
+									if($subInstansi)
+									{
+												$kunker = mb_substr($instansi, 0, 8);
+									}
+									else{
+										$kunker = mb_substr($instansi, 0, 6);
+									}
 								}
 						    $querySQL = "SELECT SUM(IF(KESELON LIKE '1%', 1, 0)) AS JumlahEselon1,
 						SUM(IF(KESELON LIKE '2%', 1, 0)) AS JumlahEselon2,
@@ -759,9 +766,10 @@ return $data;
 						      return $data;
 						     }
 						  }
-							public function getGolonganByInstansi($instansi = null)
+							public function getGolonganByInstansi($instansi = null,$stsOPDBKD=TRUE)
 					  {
-							$queryAll=False;
+							$queryAll=FALSE;
+							$subInstansi = FALSE;
 							if($instansi=='100000000000')
 							{
 								$instansi = null;
@@ -770,15 +778,23 @@ return $data;
 
 							if($instansi == null){
 					    $querySQL = "select * from unkerja where kunker like '10%__00000000'";
-							$queryAll=True;
+							$queryAll=TRUE;
 						}
 						else {
-							$result = mb_substr($instansi, 0, 4);
-							$querySQL = "select * from unkerja where kunker like '$result%__000000'";
+
+							if($stsOPDBKD){
+									$result = mb_substr($instansi, 0, 4);
+								$querySQL = "select * from unkerja where kunker like '$result%__000000'";
+							}else {
+								$result = mb_substr($instansi, 0, 6);
+								$subInstansi=TRUE;
+							$querySQL = "select * from unkerja where kunker like '$result%__0000'";
+
+								}
 						}
 					    $data = array();
 					    $stackData = array();
-
+								log_message('debug','Status Query: '.$queryAll);
 					    log_message('debug','getGolonganByInstansi: '.$querySQL);
 					    $query = $this->db->query($querySQL);
 
@@ -788,7 +804,7 @@ return $data;
 					      {
 					       $data['kunker']=$row->kunker;
 					       $data['nunker']=$row->nunker;
-					       $data['eselonCount']=$this->countGolonganPerInstansi($row->kunker,$queryAll);
+					       $data['eselonCount']=$this->countGolonganPerInstansi($row->kunker,$queryAll,$subInstansi);
 					       array_push($stackData,$data);
 					      }
 					      $query->free_result();
@@ -802,12 +818,19 @@ return $data;
 					  }
 
 
-					public function countGolonganPerInstansi($instansi='103000000000',$queryAll)
+					public function countGolonganPerInstansi($instansi='103000000000',$queryAll,$subInstansi)
 			{
+				log_message('debug','Status Query: '.$queryAll);
 				if($queryAll==true){
 					$kunker = mb_substr($instansi, 0, 4);
 				}else{
+
+					if($subInstansi)
+					{
+						$kunker = mb_substr($instansi, 0, 8);
+					}else {
 					$kunker = mb_substr($instansi, 0, 6);
+					}
 				}
 				$querySQL = "SELECT SUM(IF(KGOLRU LIKE '1%', 1, 0)) as JumlahSemuaGolongan,
 SUM(IF(KGOLRU = '141', 1, 0)) as JumlahGolonganIVA,
@@ -904,7 +927,7 @@ GROUP BY rt.ktp";
 			$data = array();
 			$stackData = array();
 
-			log_message('debug','getPersentaseGenderPNS: '.$querySQL);
+			log_message('debug','getPersentasePendidikanPNS: '.$querySQL);
 			$query = $this->db->query($querySQL);
 
 			if($query->num_rows()>0)
@@ -1085,10 +1108,10 @@ from (
 					}
 		}
 
-		public function getEselonByInstansi($key=null)
+		public function getEselonByInstansi($key=null,$stsOPDBKD=True)
 		{
-			$queryAll=False;
-
+			$queryAll=FALSE;
+			$subInstansi=FALSE;
 			if($key=='10000')
 			{
 				$key = null;
@@ -1096,11 +1119,18 @@ from (
 
 			if($key == null){
 			$querySQL = "select * from unkerja where kunker like '10%__00000000'";
-			$queryAll=True;
+			$queryAll=TRUE;
 			}
 			else {
+				if($stsOPDBKD){
 					$result = mb_substr($key, 0, 4);
 				$querySQL = "select * from unkerja where kunker like '$result%__000000'";
+			}else {
+				$result = mb_substr($key, 0, 6);
+			$querySQL = "select * from unkerja where kunker like '$result%__0000'";
+			$subInstansi=TRUE;
+				}
+
 			}
 
 				//$querySQL = "select * from unkerja where kunker like '10%__00000000'";
@@ -1117,7 +1147,7 @@ from (
 						{
 							$data['kunker']=$row->kunker;
 							$data['nunker']=$row->nunker;
-							$data['eselonCount']=$this->countEselonPerInstansi($row->kunker,$queryAll);
+							$data['eselonCount']=$this->countEselonPerInstansi($row->kunker,$queryAll,$subInstansi);
 						 array_push($stackData,$data);
 						}
 						$query->free_result();
@@ -1335,6 +1365,63 @@ from (
 							$data['nunker']=$row->nunker;
 
 
+						 array_push($stackData,$data);
+						}
+						$query->free_result();
+						return $stackData;
+					}else
+					{
+
+						$query->free_result();
+						return $data;
+					}
+		}
+
+		public function getKunkersByNip($nip)
+		{
+
+				$querySQL = "select kunkers from jakhir where nip like '$nip';";
+
+				$data = array();
+				$stackData = array();
+
+				log_message('debug','getKunkersByNip: '.$querySQL);
+				$query = $this->db->query($querySQL);
+
+				if($query->num_rows()>0)
+					{ $count = 1;
+						foreach($query->result() as $row)
+						{
+							$data['kunkers']=$row->kunkers;
+						 array_push($stackData,$data);
+						}
+						$query->free_result();
+						return $stackData;
+					}else
+					{
+
+						$query->free_result();
+						return $data;
+					}
+		}
+		public function getStrukturInstansi($kunkers)
+		{
+
+				$key = substr($kunkers, 0, 4);
+				$querySQL = "select * from unkerja where kunker like '$key%__000000'";
+
+				$data = array();
+				$stackData = array();
+
+				log_message('debug','getKunkersByNip: '.$querySQL);
+				$query = $this->db->query($querySQL);
+
+				if($query->num_rows()>0)
+					{ $count = 1;
+						foreach($query->result() as $row)
+						{
+							$data['kunker']=$row->kunker;
+							$data['nunker']=$row->nunker;
 						 array_push($stackData,$data);
 						}
 						$query->free_result();
