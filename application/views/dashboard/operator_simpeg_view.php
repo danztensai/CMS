@@ -26,7 +26,12 @@
           <div class="box-body">
             <div class="nav-tabs-custom">
               <ul class="nav nav-tabs">
-                <li class="active"><a href="#kepangkatan" data-toggle="tab" aria-expanded="true">Kepangkatan</a></li>
+				<li class="active"><a href="#dataUtama" data-toggle="tab" aria-expanded="true">Profile</a></li>
+				<li class=""><a href="#suamiIstri" data-toggle="tab" aria-expanded="true">Suami/Istri</a></li>
+                <li class=""><a href="#anak" data-toggle="tab" aria-expanded="true">Anak</a></li>
+                <li class=""><a href="#ayah" data-toggle="tab" aria-expanded="true">Ayah</a></li>
+                <li class=""><a href="#ibu" data-toggle="tab" aria-expanded="true">Ibu</a></li>
+                <li class=""><a href="#kepangkatan" data-toggle="tab" aria-expanded="true">Kepangkatan</a></li>
                 <li class=""><a href="#jabatan" data-toggle="tab" aria-expanded="true">Jabatan</a></li>
                 <li class=""><a href="#pendidikan" data-toggle="tab" aria-expanded="true">Pendidikan</a></li>
                 <li class=""><a href="#struktural" data-toggle="tab" aria-expanded="true">Kepemimpinan</a></li>
@@ -41,13 +46,15 @@
                 <li class=""><a href="#bahasa" data-toggle="tab" aria-expanded="true">Bahasa</a></li>
                 <li class=""><a href="#dppp" data-toggle="tab" aria-expanded="true">DPPP</a></li>
                 <li class=""><a href="#hukuman" data-toggle="tab" aria-expanded="true">Hukuman</a></li>
-                <li class=""><a href="#suamiIstri" data-toggle="tab" aria-expanded="true">Suami/Istri</a></li>
-                <li class=""><a href="#anak" data-toggle="tab" aria-expanded="true">Anak</a></li>
-                <li class=""><a href="#ayah" data-toggle="tab" aria-expanded="true">Ayah</a></li>
-                <li class=""><a href="#ibu" data-toggle="tab" aria-expanded="true">Ibu</a></li>
+                
               </ul>
               <div class="tab-content">
-                <div class="tab-pane active" id="kepangkatan">
+			  <div class="tab-pane active" id="dataUtama">
+                  <div class="intrinsic-container intrinsic-container-16x9">
+                    <IFRAME SRC=<?php echo base_url('dashboard/addNewPNSDataUtama');?>></IFRAME>
+                  </div>
+                </div>
+                <div class="tab-pane" id="kepangkatan">
                   <div class="intrinsic-container intrinsic-container-16x9">
                     <IFRAME SRC=<?php echo base_url('dashboard/operatorSimpegKepangkatan');?>></IFRAME>
                   </div>

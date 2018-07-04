@@ -54,3 +54,5 @@ assets/197411241999031005_20171211042810.png
 assets/loading_cricle.gif
 *.pdf
 *.rar
+application/config/development/database.php
+application/config/development/database.php

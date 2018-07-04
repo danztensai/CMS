@@ -1147,9 +1147,9 @@ foreach($this->data['user_group'] as $ug){
 		$this->data['users_instansi']=$this->Users_model->getUsersinstansi($userId );
 
 		$gid =array();
-foreach($this->data['user_group'] as $ug){
-  $gid[]=$ug->id;
-}
+			foreach($this->data['user_group'] as $ug){
+			  $gid[]=$ug->id;
+			}
 		$this->data['menu']=$this->Menu_model->menuMaster($gid);
 
 		log_message('INFO','User Id : '.$userId);
@@ -1726,15 +1726,74 @@ foreach($this->data['user_group'] as $ug){
 			$this->data['users_instansi']=$this->Users_model->getUsersinstansi($userId );
 
 			$gid =array();
-foreach($this->data['user_group'] as $ug){
-  $gid[]=$ug->id;
-}
+			foreach($this->data['user_group'] as $ug){
+			  $gid[]=$ug->id;
+			}
 			$this->data['menu']=$this->Menu_model->menuMaster($gid);
 
 			log_message('INFO','User Id : '.$userId);
 			log_message('DEBUG','inside Admin');
 			$this->render('dashboard/operator_simpeg_view');
 		}
+		
+		public function addNewPNSDataUtama()
+		{
+			$crud = new grocery_CRUD();
+	 
+			$crud->set_table('datautama');
+			$crud->fields('nipBaru','nipLama','nama','gelarDepan','gelarBlk','jenisKawin','KTLAHIR','TLAHIR','KJKEL','KGOLDAR','statusHidupPensiunPindah','ALRT','ALRW','kwil','KPOS','NKARIS_SU','FILE_BMP','agamaId','email','alamat',
+			'nomorTelpon','kartuPegawai','askesNomor','taspen','npwpNomor');
+			$crud->columns(array('nipBaru','nipLama','nama','gelarDepan','gelarBlk','jenisKawin','KTLAHIR','TLAHIR','KJKEL','KGOLDAR','statusHidupPensiunPindah','ALRT','ALRW','kwil','KPOS','NKARIS_SU','FILE_BMP','agamaId','email','alamat',
+			'nomorTelpon','jenisPegawai','kartuPegawai','askesNomor','taspen','npwpNomor'));
+			$crud->edit_fields(array('nipBaru','nipLama','nama','gelarDepan','gelarBlk','KTLAHIR','TLAHIR','KJKEL','KGOLDAR','statusHidupPensiunPindah','ALRT','ALRW','kwil','KPOS','NKARIS_SU','FILE_BMP','agamaId','email','alamat',
+			'nomorTelpon','jenisPegawai','kartuPegawai','askesNomor','taspen','npwpNomor'));
+			$crud->set_subject('Data PNS');
+			$crud->set_relation('agamaId','agama','nama');
+			$crud->display_as('nipBaru', 'NIP');
+			$crud->display_as('nipLama', 'NIP Lama');
+			$crud->display_as('gelarDepan', 'Gelar Depan');
+			$crud->display_as('gelarBlk', 'Gelar Belakang');
+			$crud->display_as('KTLAHIR', 'Tempat Lahir');
+			$crud->display_as('TLAHIR', 'Tanggal Lahir');
+			$crud->display_as('KGOLDAR', 'Golongan Darah');
+			$crud->display_as('statusHidupPensiunPindah', 'Status');
+			$crud->display_as('ALRT', 'RT');
+			$crud->display_as('ALRW', 'RW');
+			$crud->display_as('KJKEL', 'Jenis Kelamin');
+			$crud->display_as('kwil', 'Kode Wilayah');
+			$crud->display_as('KPOS', 'Kode Pos');
+			$crud->display_as('NKARIS_SU', 'No Karis SU');
+			$crud->display_as('FILE_BMP', 'Foto');
+			$crud->display_as('agamaId', 'Agama');
+			$crud->display_as('nomorTelpon', 'No Telepon');
+			$crud->display_as('jenisPegawai', 'Jenis Pegawai');
+			$crud->display_as('kartuPegawai', 'Kartu Pegawai');
+			$crud->display_as('askesNomor', 'No Askes');
+			$crud->display_as('nipBaru', 'NIP');
+			$crud->display_as('npwpNomor', 'No NPWP');
+			$crud->display_as('jenisKawin', 'Status Nikah');
+			
+			$crud->set_relation('jenisKawin','statusperkawinan','nama');
+			$crud->set_relation('jenisPegawai','jenispegawai','nama');
+			$crud->set_relation('KJKEL','jeniskelamin','NKELAMIN');
+			$crud->set_relation('KGOLDAR','golongandarah','NGOLDAR');
+			$crud->set_relation('statusHidupPensiunPindah','statushiduppensiunpindah','namaStatus');
+			$crud->set_field_upload('FILE_BMP','assets/foto');
+			
+			$output = $crud->render();
+			 
+				
+			//$output = $crud->render();
+
+			if($this->ion_auth->is_admin()===FALSE)
+			{
+				$this->load->view('dashboard/grid',$output);
+			}else
+			{
+				//$this->render('dashboard/index_view');
+				$this->load->view('dashboard/grid',$output);
+			}
+		}	
 
 		public function operatorSimpegKepangkatan()
 		{
