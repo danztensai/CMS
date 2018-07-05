@@ -2,7 +2,7 @@
 <div class="page" title="Page 1">
 <div class="layoutArea">
 <div class="column">
-<h4 style="text-align: center;"><strong>P E ME R I N T A H &nbsp; P R O V I N S I</strong><br /><strong> J A W A &nbsp;BA R A T</strong><br /><strong> REKAPITULASI PNS DO BERDASARKAN JENIS KELAMIN DI LINGKUNGAN&nbsp;PEMERINTAH PROPINSI JAWA BARAT PERIODE</strong><br /><strong>2018</strong></h4>
+<h4 style="text-align: center;"><strong>P E ME R I N T A H &nbsp; P R O V I N S I</strong><br /><strong> J A W A &nbsp;BA R A T</strong><br /><strong> REKAPITULASI PNS DO BERDASARKAN JENIS KELAMIN DI LINGKUNGAN&nbsp;PEMERINTAH PROPINSI JAWA BARAT PERIODE</strong><br /><strong><?php setlocale(LC_ALL, 'IND');echo strftime('%B');?> <?php echo date("Y");?></strong></h4>
 <table style="height: 41px;" border="1" width="100%">
 <tbody>
 <tr>

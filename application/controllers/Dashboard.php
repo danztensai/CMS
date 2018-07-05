@@ -225,56 +225,7 @@ foreach($this->data['user_group'] as $ug){
 		$userLoggedin = $this->ion_auth->user()->row();
 		$this->data['user']=$userLoggedin;
 		//log_message('debug',print_r($userLoggedin,TRUE));
-		$identitasSimpeg = $this->Simpeg_model->getIdentitasPegawai($userLoggedin->nip);
-		$cpnspnsSimpeg = $this->Simpeg_model->getCPNSPNSInfoByNip($userLoggedin->nip);
-		$pangkatTerakhir = $this->Simpeg_model->getPangkatAkhirByNip($userLoggedin->nip);
-		$riwayatPangkat = $this->Simpeg_model->getRiwayatPangkat($userLoggedin->nip);
-		//log_message('debug',print_r($cpnspnsSimpeg,TRUE));
-
-		//log_message('debug',print_r($userLoggedin,TRUE));
-		$agama =$this->Simpeg_model->getAgama();
-		//log_message('debug',print_r($agama,TRUE));
-		$relationShipSts = $this->Simpeg_model->getRelationStatus();
-		//log_message('debug',print_r($relationShipSts,TRUE));
-		$jenisPegawai = $this->Simpeg_model->getJenisPegawai();
-		$statusPegawai = $this->Simpeg_model->getStatusPegawai();
-		$kedudukanPegawai = $this->Simpeg_model->getKedudukanPegawai();
-		$jenisPejabatMenetapkan = $this->Simpeg_model->getJenisPejabatMenetapkan();
-		$jenisGolongan = $this->Simpeg_model->getJenisGolongan();
-		$jenisSTLUD = $this->Simpeg_model->getStlud();
-		$jenisNaikPangkat = $this->Simpeg_model->getJenisNaikPangkat();
-		$gajiBerkalaPegawaiPensiun = $this->Simpeg_model->getGajiBerkalaPegawaiPensiun($userLoggedin->nip);
-		$tempatPegawaiPensiun = $this->Simpeg_model->getTempatPegawaiPensiun($userLoggedin->nip);
-		$riwayatPensiunKeluargaAyah = $this->Simpeg_model->getRiwayatPensiunKeluargaAyah($userLoggedin->nip);
-		$riwayatPensiunKeluargaIbu = $this->Simpeg_model->getRiwayatPensiunKeluargaIbu($userLoggedin->nip);
-		$riwayatPensiunKeluargaSuamiIstri = $this->Simpeg_model->getRiwayatPensiunKeluargaSuamiIstri($userLoggedin->nip);
-		$riwayatPensiunKeluargaAnak = $this->Simpeg_model->getRiwayatPensiunKeluargaAnak($userLoggedin->nip);
-		$riwayatJabatanPensiun = $this->Simpeg_model->getRiwayatJabatanPensiun($userLoggedin->nip);
-
-
-		$this->data['riwayatPensiunKeluargaIbu']=$riwayatPensiunKeluargaIbu;
-		$this->data['riwayatPensiunKeluargaAyah']=$riwayatPensiunKeluargaAyah;
-		$this->data['riwayatPensiunKeluargaSuamiIstri']=$riwayatPensiunKeluargaSuamiIstri;
-		$this->data['riwayatPensiunKeluargaAnak']=$riwayatPensiunKeluargaAnak;
-		$this->data['gajiBerkalaPegawaiPensiun']=$gajiBerkalaPegawaiPensiun;
-		$this->data['tempatPegawaiPensiun']=$tempatPegawaiPensiun;
-		$this->data['riwayatJabatanPensiun']=$riwayatJabatanPensiun;
-		$this->data['identitas']=$identitasSimpeg;
-		$this->data['riwayatPangkat']=$riwayatPangkat;
-
-		$this->data['cpnspns']=$cpnspnsSimpeg;
-		$this->data['pangkatTerakhir']=$pangkatTerakhir;
-		$this->data['kedudukanPegawai']=$kedudukanPegawai;
-		$this->data['statusPegawai']=$statusPegawai;
-		$this->data['jenisPegawai'] = $jenisPegawai;
-		$this->data['pejabat'] = $jenisPejabatMenetapkan;
-		$this->data['jenisGolongan']=$jenisGolongan;
-		$this->data['jenisNaikPangkat']=$jenisNaikPangkat;
-		$this->data['stlud']=$jenisSTLUD;
-
-
-		$this->data['agama']=$agama;
-		$this->data['relationShipSts'] = $relationShipSts;
+		
 		//log_message('INFO','is admin? :'.$this->ion_auth->is_admin());
 		$this->data['user_group']= $this->ion_auth->get_users_groups($userId)->result();
 		//log_message('debug','User Group : '.print_r($this->data['user_group'],TRUE));
@@ -2619,8 +2570,16 @@ foreach($this->data['user_group'] as $ug){
 	{
 		log_message('debug','Trying to load Grocer Ref Unit Kerja');
 		$adminSts = $this->ion_auth->is_admin()===FALSE;
-
-		log_message('debug','after Load new Db');
+	
+		$user = $this->ion_auth->user()->row();
+		$nip = $user->nip;
+		$kunkers = $this->Simpeg_model->getKunkersByNip($nip);
+		log_message('debug',print_r($user,TRUE));
+		
+		$kunker = mb_substr($kunkers[0]['kunkers'], 0, 4);
+		log_message('debug',print_r($kunkers,TRUE));
+		
+		
 		$crud = new grocery_CRUD();
 		$crud->set_table('unkerja')
 		->set_subject('Unit Kerja')
@@ -2629,10 +2588,12 @@ foreach($this->data['user_group'] as $ug){
 		->display_as('nunker','Nama Unit Kerja')
 		->display_as('keselon','Eselon')
 		->display_as('unkerjagrade','Grade');
+		
 		$crud->set_relation('keselon','eselon','nama');
 		$crud->fields('kunker','nunker', 'keselon', 'unkerjagrade');
 		$crud->required_fields('kunker','nunker', 'keselon', 'unkerjagrade');
 		$crud->set_relation('keselon','eselon','nama');
+		$crud->like('kunker',$kunker,'after');
 		$output = $crud->render();
 		$this->load->view('dashboard/grid',$output);
 	}

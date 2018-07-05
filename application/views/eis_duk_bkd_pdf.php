@@ -10,7 +10,7 @@
    </div>
    <div class="layoutArea">
       <div class="column">
-         <p style="text-align: center;">DAFTAR URUT KEPANGKATAN PEGAWAI NEGERI SIPIL<br /> DI LINGKUNGAN PEMERINTAH DAERAH PROVINSI JAWA BARAT KEADAAN : 2018</p>
+         <p style="text-align: center;">DAFTAR URUT KEPANGKATAN PEGAWAI NEGERI SIPIL<br /> DI LINGKUNGAN PEMERINTAH DAERAH PROVINSI JAWA BARAT KEADAAN : <?php setlocale(LC_ALL, 'IND');echo strftime('%B');?> <?php echo date("Y");?></p>
          <table border="1">
             <tbody>
                <tr>

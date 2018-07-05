@@ -7,8 +7,8 @@ class MY_Controller extends CI_Controller {
     function __construct()
     {
         parent::__construct();
-        $this->data['page_title'] = 'Dashboard Badan Kepegawaian Jawa Barat';
-        $this->data['page_description'] = 'Dashboard SIMPEG BKD';
+        $this->data['page_title'] = 'Sistem Informasi Aparatur Jabar';
+        $this->data['page_description'] = 'Dashboard SIAp Jabar BKD';
         $this->data['before_closing_head'] = '';
         $this->data['before_closing_body'] = '';
     }

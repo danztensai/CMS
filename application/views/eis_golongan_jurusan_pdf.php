@@ -4,7 +4,7 @@
 <div class="page" title="Page 1">
 <div class="layoutArea">
 <div class="column">
-<p style="text-align: center;"><strong>P E ME R I N T A H &nbsp;D A E R A H &nbsp;P R O V I N S I &nbsp;J A W A &nbsp;B A R A T </strong><br /><strong>REKAPITULASI PNS DO BERDASARKAN JURUSAN DAN GOLONGAN RUANG DI LINGKUNGAN </strong><br /><strong>PEMERINTAH DAERAH PROVINSI JAWA BARAT PERIODE</strong><br /><strong>2018</strong></p>
+<p style="text-align: center;"><strong>P E ME R I N T A H &nbsp;D A E R A H &nbsp;P R O V I N S I &nbsp;J A W A &nbsp;B A R A T </strong><br /><strong>REKAPITULASI PNS DO BERDASARKAN JURUSAN DAN GOLONGAN RUANG DI LINGKUNGAN </strong><br /><strong>PEMERINTAH DAERAH PROVINSI JAWA BARAT PERIODE</strong><br /><strong><?php setlocale(LC_ALL, 'IND');echo strftime('%B');?> <?php echo date("Y");?></strong></p>
 </div>
 </div>
 </div>

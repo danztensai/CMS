@@ -3806,7 +3806,7 @@ WHERE nip = '$nip' ORDER BY tanggalAkhirKursus DESC";
     }
     public function getIdInstansiByName($name)
     {
-        $querySQL = "SELECT * FROM simpegnew.instansi where instansi_name like '%$name%'";
+        $querySQL = "SELECT * FROM instansi where instansi_name like '%$name%'";
 
         $id=0;
 

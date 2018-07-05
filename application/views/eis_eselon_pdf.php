@@ -23,7 +23,7 @@ tr:nth-child(even) {
   <p class="p1" style="text-align: center;"><strong>P E ME R I N T A H  D A E R A H P R O V I N S I  J A W A B A R A T</strong></p>
   <p class="p1" style="text-align: center;">REKAPITULASI PNS DO BERDASARKAN Eselon</p>
   <p class="p1" style="text-align: center;">DI LINGKUNGAN PEMERINTAH DAERAH PROVINSI JAWA BARAT PERIODE</p>
-  <p class="p1" style="text-align: center;">2018</p>
+  <p class="p1" style="text-align: center;"><?php setlocale(LC_ALL, 'IND');echo strftime('%B');?> <?php echo date("Y");?></p>
 <table  border="1">
 <tbody>
 <tr>
