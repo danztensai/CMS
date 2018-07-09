@@ -20,7 +20,7 @@ $('ul.treeview-menu a').filter(function() {
     <section class="sidebar">
       <div class="user-panel">
         <div class="pull-left image">
-          <img src="<?php echo base_url()?>assets/uploads/files/<?php echo $user->profile_pic;?>" class="user-image" alt="User Image">
+          <img src="<?php echo base_url()?>assets/foto/<?php echo $user->profile_pic;?>" class="user-image" alt="User Image">
 
         </div>
         <div class="pull-left info">

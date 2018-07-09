@@ -3612,7 +3612,7 @@ return $tagImg;
 		$crud->set_relation_n_n('groups', 'users_groups', 'groups', 'user_id', 'group_id', 'name');
 		$crud->columns(array('id','nip','username','email','profile_pic','first_name','last_name'));
 		$crud->field_type('password', 'password');
-		$crud->set_field_upload('profile_pic','assets/uploads/files');
+		$crud->set_field_upload('profile_pic','assets/foto/');
 		$crud->callback_insert(function ($post_array) {
 			$username = $post_array['username'];
 			$password = $post_array['password'];
