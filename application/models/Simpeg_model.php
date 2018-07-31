@@ -1818,15 +1818,15 @@ WHERE NIP = '$nip'";
 
     public function getTempatPegawai($nip)
     {
-        $querySQL = "		 SELECT rw1.kwil as kwi1, rw1.nwil as nwil1, rw2.kwil AS kwil2, rw2.nwil as nwil2, rw3.kwil as kwil3,
+        $querySQL = "SELECT rw1.kwil as kwi1, rw1.nwil as nwil1, rw2.kwil AS kwil2, rw2.nwil as nwil2, rw3.kwil as kwil3,
 		 rw3.nwil as nwil3, rw4.kwil as kwil4, rw4.nwil as nwil4, ru.kunker as kunker, ru.nunker as nunker, ru2.kunker as kunker2, ru2.nunker as nunker2
 		FROM jakhir rj
 		LEFT JOIN wilayah rw1 on rw1.kwil = CONCAT(SUBSTRING(rj.kwil, 1,2), '00000000')
 		LEFT JOIN wilayah rw2 on rw2.kwil = CONCAT(SUBSTRING(rj.kwil, 1,4), '000000')
 		LEFT JOIN wilayah rw3 on rw3.kwil = CONCAT(SUBSTRING(rj.kwil, 1,6), '0000')
 		LEFT JOIN wilayah rw4 on rw4.kwil = rj.kwil
-		LEFT JOIN unkerja2 ru on ru.kunker = CONCAT(SUBSTRING(rj.kunkers, 1,4), '00000000')
-		LEFT JOIN unkerja2 ru2 on ru2.kunker = CONCAT(SUBSTRING(rj.kunkers, 1,6), '000000')
+		LEFT JOIN unkerja ru on ru.kunker = CONCAT(SUBSTRING(rj.kunkers, 1,4), '00000000')
+		LEFT JOIN unkerja ru2 on ru2.kunker = CONCAT(SUBSTRING(rj.kunkers, 1,6), '000000')
 		WHERE rj.NIP = '$nip'";
 
         $data = array();
@@ -2397,8 +2397,8 @@ INNER JOIN agama a on a.kode = d.agamaId WHERE d.nipbaru = '$nip'";
 	LEFT JOIN wilayah rw2 on rw2.kwil = CONCAT(SUBSTRING(rj.kwil, 1,4), '000000')
 	LEFT JOIN wilayah rw3 on rw3.kwil = CONCAT(SUBSTRING(rj.kwil, 1,6), '0000')
 	LEFT JOIN wilayah rw4 on rw4.kwil = rj.kwil
-	LEFT JOIN unkerja2 ru on ru.kunker = CONCAT(SUBSTRING(rj.kunkers, 1,4), '00000000')
-	LEFT JOIN unkerja2 ru2 on ru2.kunker = CONCAT(SUBSTRING(rj.kunkers, 1,6), '000000')
+	LEFT JOIN unkerja ru on ru.kunker = CONCAT(SUBSTRING(rj.kunkers, 1,4), '00000000')
+	LEFT JOIN unkerja ru2 on ru2.kunker = CONCAT(SUBSTRING(rj.kunkers, 1,6), '000000')
 	WHERE rj.NIP = '$nip'";
 
         $data = array();
