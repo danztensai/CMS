@@ -145,6 +145,8 @@ foreach($this->data['user_group'] as $ug){
 
 	}
 
+
+
 	public function dataPegawaiPensiun()
 	{
 		$userId = $this->ion_auth->get_user_id();
@@ -225,7 +227,7 @@ foreach($this->data['user_group'] as $ug){
 		$userLoggedin = $this->ion_auth->user()->row();
 		$this->data['user']=$userLoggedin;
 		//log_message('debug',print_r($userLoggedin,TRUE));
-		
+
 		//log_message('INFO','is admin? :'.$this->ion_auth->is_admin());
 		$this->data['user_group']= $this->ion_auth->get_users_groups($userId)->result();
 		//log_message('debug','User Group : '.print_r($this->data['user_group'],TRUE));
@@ -1361,6 +1363,21 @@ foreach($this->data['user_group'] as $ug){
 		$this->load->view('dashboard/grid',$output);
 	}
 
+  public function adminSimpegRiwayatKesehatan()
+  {
+    log_message('debug','Trying to load Grocer adminSimpegRiwayatKesehatan');
+    $adminSts = $this->ion_auth->is_admin()===FALSE;
+
+    log_message('debug','after Load new Db');
+    $crud = new grocery_CRUD();
+    $crud->set_table('riwayatkesehatan')
+    ->set_subject('Riwayat Kesehatan')
+    ->columns('NIP','usia','berat','tinggi','tensiDarah', 'ciriFisik','penyakit','tahunAwal','tahunAkhir','noLab','tanggalDiperiksa','namaRS','namaDokter','hematologi','urine','fungsiHati','lipidProfil','fungsiGinjal','glukosaDarah','thoraxPA','ecg','kesimpulan','saran','dokumen');
+    $crud->set_field_upload('dokumen','assets');
+    $output = $crud->render();
+    $this->load->view('dashboard/grid',$output);
+  }
+
 	public function adminSimpegKursus()
 	{
 		log_message('debug','Trying to load Grocer adminSimpegKursus');
@@ -1686,11 +1703,11 @@ foreach($this->data['user_group'] as $ug){
 			log_message('DEBUG','inside Admin');
 			$this->render('dashboard/operator_simpeg_view');
 		}
-		
+
 		public function addNewPNSDataUtama()
 		{
 			$crud = new grocery_CRUD();
-	 
+
 			$crud->set_table('datautama');
 			$crud->fields('nipBaru','nipLama','nama','gelarDepan','gelarBlk','jenisKawin','KTLAHIR','TLAHIR','KJKEL','KGOLDAR','statusHidupPensiunPindah','ALRT','ALRW','kwil','KPOS','NKARIS_SU','FILE_BMP','agamaId','email','alamat',
 			'nomorTelpon','kartuPegawai','askesNomor','taspen','npwpNomor');
@@ -1723,17 +1740,17 @@ foreach($this->data['user_group'] as $ug){
 			$crud->display_as('nipBaru', 'NIP');
 			$crud->display_as('npwpNomor', 'No NPWP');
 			$crud->display_as('jenisKawin', 'Status Nikah');
-			
+
 			$crud->set_relation('jenisKawin','statusperkawinan','nama');
 			$crud->set_relation('jenisPegawai','jenispegawai','nama');
 			$crud->set_relation('KJKEL','jeniskelamin','NKELAMIN');
 			$crud->set_relation('KGOLDAR','golongandarah','NGOLDAR');
 			$crud->set_relation('statusHidupPensiunPindah','statushiduppensiunpindah','namaStatus');
 			$crud->set_field_upload('FILE_BMP','assets/foto');
-			
+
 			$output = $crud->render();
-			 
-				
+
+
 			//$output = $crud->render();
 
 			if($this->ion_auth->is_admin()===FALSE)
@@ -1744,7 +1761,7 @@ foreach($this->data['user_group'] as $ug){
 				//$this->render('dashboard/index_view');
 				$this->load->view('dashboard/grid',$output);
 			}
-		}	
+		}
 
 		public function operatorSimpegKepangkatan()
 		{
@@ -2570,16 +2587,16 @@ foreach($this->data['user_group'] as $ug){
 	{
 		log_message('debug','Trying to load Grocer Ref Unit Kerja');
 		$adminSts = $this->ion_auth->is_admin()===FALSE;
-	
+
 		$user = $this->ion_auth->user()->row();
 		$nip = $user->nip;
 		$kunkers = $this->Simpeg_model->getKunkersByNip($nip);
 		log_message('debug',print_r($user,TRUE));
-		
+
 		$kunker = mb_substr($kunkers[0]['kunkers'], 0, 4);
 		log_message('debug',print_r($kunkers,TRUE));
-		
-		
+
+
 		$crud = new grocery_CRUD();
 		$crud->set_table('unkerja')
 		->set_subject('Unit Kerja')
@@ -2588,7 +2605,7 @@ foreach($this->data['user_group'] as $ug){
 		->display_as('nunker','Nama Unit Kerja')
 		->display_as('keselon','Eselon')
 		->display_as('unkerjagrade','Grade');
-		
+
 		$crud->set_relation('keselon','eselon','nama');
 		$crud->fields('kunker','nunker', 'keselon', 'unkerjagrade');
 		$crud->required_fields('kunker','nunker', 'keselon', 'unkerjagrade');
